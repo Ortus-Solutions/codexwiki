@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
@@ -11,7 +11,7 @@
 		<Setting name="EnableColdfusionLogging" 	value="false" />
 		<Setting name="EnableColdboxLogging"		value="true" />
 		<Setting name="ColdboxLogsLocation"			value="logs" />
-		<Setting name="DefaultEvent" 				value="wiki.dsppage"/>
+		<Setting name="DefaultEvent" 				value="wiki.show"/>
 		<Setting name="RequestStartHandler" 		value="main.onRequestStart"/>
 		<Setting name="RequestEndHandler" 			value="main.onRequestEnd"/>
 		<Setting name="ApplicationStartHandler" 	value="main.onAppInit"/>
@@ -19,7 +19,7 @@
 		<Setting name="EnableBugReports" 			value="false"/>
 		<Setting name="UDFLibraryFile" 				value="" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
-		<Setting name="onInvalidEvent" 				value="wiki.showpage" />
+		<Setting name="onInvalidEvent" 				value="wiki.show" />
 		<Setting name="CustomErrorTemplate"			value="includes/generic_error.cfm" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
@@ -27,16 +27,11 @@
 		<Setting name="MyPluginsLocation"   		value="" />
 		<Setting name="HandlerCaching" 				value="false"/>
 		<Setting name="IOCFramework"				value="coldspring" />
-		<Setting name="IOCDefinitionFile"			value="includes/coldspring.xml.cfm" />
+		<Setting name="IOCDefinitionFile"			value="config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
 	</Settings>
 
 	<YourSettings>
-		<!--Transfer Settings -->
-		<Setting name="Transfer.dsnPath"          value="config/datasource.xml.cfm" />
-		<Setting name="Transfer.configPath"       value="config/transfer.xml.cfm" />
-		<Setting name="Transfer.definitionsPath"  value="config/definitions" />
-		
 	</YourSettings>
 
 	<MailServerSettings>
@@ -58,11 +53,11 @@
 	<Layouts>
 		<!--Declare the default layout, MANDATORY-->
 		<DefaultLayout>Layout.Main.cfm</DefaultLayout>
-		
+
 		<!--Default View, OPTIONAL
 		<DefaultView>home</DefaultView>
 		-->
-		
+
 		<!--
 		Declare other layouts, with view assignments if needed, else do not write them
 		<Layout file="Layout.Popup.cfm" name="popup">
@@ -73,9 +68,9 @@
 	</Layouts>
 
 	<i18N />
-	
+
 	<Datasources />
-	
+
 	<Cache>
 		<ObjectDefaultTimeout>30</ObjectDefaultTimeout>
 		<ObjectDefaultLastAccessTimeout>10</ObjectDefaultLastAccessTimeout>
@@ -83,8 +78,8 @@
 		<MaxObjects>50</MaxObjects>
 		<FreeMemoryPercentageThreshold>1</FreeMemoryPercentageThreshold>
 	</Cache>
-	
-	<!-- Interceptor Declarations 
+
+	<!-- Interceptor Declarations
 	<Interceptors>
 		<CustomInterceptionPoints>comma-delimited list</CustomInterceptionPoints>
 		<Interceptor class="full class name">
@@ -95,5 +90,5 @@
 		<Interceptor class="no property" />
 	</Interceptors>
 	-->
-	
+
 </Config>
