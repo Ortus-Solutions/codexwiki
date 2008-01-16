@@ -73,22 +73,21 @@
 
 	<Cache>
 		<ObjectDefaultTimeout>30</ObjectDefaultTimeout>
-		<ObjectDefaultLastAccessTimeout>10</ObjectDefaultLastAccessTimeout>
+		<ObjectDefaultLastAccessTimeout>15</ObjectDefaultLastAccessTimeout>
 		<ReapFrequency>1</ReapFrequency>
 		<MaxObjects>50</MaxObjects>
-		<FreeMemoryPercentageThreshold>1</FreeMemoryPercentageThreshold>
+		<FreeMemoryPercentageThreshold>10</FreeMemoryPercentageThreshold>
+		<UseLastAccessTimeouts>true</UseLastAccessTimeouts>
 	</Cache>
 
-	<!-- Interceptor Declarations
 	<Interceptors>
-		<CustomInterceptionPoints>comma-delimited list</CustomInterceptionPoints>
-		<Interceptor class="full class name">
-			<Property name="myProp">value</Property>
-			<Property name="myArray">[1,2,3]</Property>
-			<Property name="myStruct">{ key1:1, key2=2 }</Property>
-		</Inteceptor>
-		<Interceptor class="no property" />
+		<Interceptor class="coldbox.system.interceptors.autowire">
+			<Property name="debugMode">false</Property>
+		</Interceptor>
+		<Interceptor class="coldbox.system.interceptors.ses">
+			<Property name="configFile">config/routes.cfm</Property>
+		</Interceptor>
 	</Interceptors>
-	-->
+	
 
 </Config>

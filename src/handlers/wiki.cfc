@@ -7,7 +7,7 @@ Description :
 
 Modification History:
 10/12/2007 - Created Template
-----------------------------------------------------------------------><cfcomponent name="wiki" extends="coldbox.system.eventhandler" output="false" hint="This is our main wiki handler">
+----------------------------------------------------------------------><cfcomponent name="wiki" extends="coldbox.system.eventhandler" output="false" hint="This is our main wiki handler" autowire="true">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
@@ -15,8 +15,6 @@ Modification History:
 	<cfargument name="controller" type="any" required="yes">
 	<cfscript>
 		super.init(arguments.controller);
-
-		setWikiService(getPlugin("ioc").getBean("WikiService"));
 
 		return this;
 	</cfscript>
