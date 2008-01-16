@@ -17,11 +17,14 @@
 	<bean id="Transfer" factory-bean="TransferFactory" factory-method="getTransfer" />
 	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasouce" />
 
-	<bean id="TDOBeanInjectorObserver" class="model.transfer.TDOBeanInjectorObserver" lazy-init="false" />
+	<!-- Trasfer related beans -->
+
+	<bean id="TDOBeanInjectorObserver" class="codex.model.transfer.TDOBeanInjectorObserver" lazy-init="false" />
+	<bean id="BeanPopulator" class="codex.model.transfer.BeanPopulator"/>
 
 
 	<!-- wiki -->
 
-	<bean id="WikiService" class="model.wiki.WikiService" />
+	<bean id="WikiService" class="codex.model.wiki.WikiService" />
 
 </beans>

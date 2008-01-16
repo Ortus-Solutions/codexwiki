@@ -1,9 +1,9 @@
-<cfcomponent extends="transfer.com.TransferDecorator" output="false">
+<cfcomponent extends="transfer.com.TransferDecorator" hint="An actual wiki page" output="false">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="setWikiService" access="public" returntype="void" output="false">
-	<cfargument name="wikiService" type="model.wiki.WikiService" required="true">
+	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 
@@ -11,7 +11,7 @@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="getWikiService" access="private" returntype="model.wiki.WikiService" output="false">
+<cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
 	<cfreturn instance.wikiService />
 </cffunction>
 

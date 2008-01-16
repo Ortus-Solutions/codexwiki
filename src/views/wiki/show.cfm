@@ -1,9 +1,21 @@
 <!--- display a wiki page --->
+<cfscript>
+	content = event.getValue("content");
+</cfscript>
 
 <cfoutput>
-	Wiki Page Title: #event.getValue("page")#
+	<h1>#content.getPage().getName()#</h1>
+	<p>
+		#content.getContent()#
+	</p>
+	<hr />
+	<p>
 
-	<hr>
-	<a href="#event.getValue("onEditWiki")#&page=#event.getValue("page")#">Edit Page</a><br/>
-	<a href="#event.getValue("onDeleteWiki")#&page=#event.getValue("page")#">Delete Page</a>
+
+
+		<a href="?event=#event.getValue("onEditWiki")#&amp;page=#URLEncodedFormat(event.getValue("page"))#">Edit Page</a><br/>
+
+
+		<a href="?event=#event.getValue("onDeleteWiki")#&amp;page=#URLEncodedFormat(event.getValue("page"))#">Delete Page</a>
+	</p>
 </cfoutput>
