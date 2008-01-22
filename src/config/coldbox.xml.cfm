@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
-		<Setting name="DebugMode" 					value="false" />
+		<Setting name="DebugMode" 					value="true" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -23,9 +23,9 @@
 		<Setting name="CustomErrorTemplate"			value="includes/generic_error.cfm" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
-		<Setting name="ConfigAutoReload"          	value="false" />
+		<Setting name="ConfigAutoReload"          	value="true" />
 		<Setting name="MyPluginsLocation"   		value="" />
-		<Setting name="HandlerCaching" 				value="true"/>
+		<Setting name="HandlerCaching" 				value="false"/>
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
