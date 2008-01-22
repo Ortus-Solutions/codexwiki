@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
-		<Setting name="DebugMode" 					value="true" />
+		<Setting name="DebugMode" 					value="false" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -20,51 +20,37 @@
 		<Setting name="UDFLibraryFile" 				value="" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="wiki.show" />
-		<Setting name="CustomErrorTemplate"			value="includes/generic_error.cfm" />
+		<Setting name="CustomErrorTemplate"			value="" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
-		<Setting name="ConfigAutoReload"          	value="true" />
+		<Setting name="ConfigAutoReload"          	value="false" />
 		<Setting name="MyPluginsLocation"   		value="" />
-		<Setting name="HandlerCaching" 				value="false"/>
+		<Setting name="HandlerCaching" 				value="true"/>
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
 	</Settings>
 
 	<YourSettings>
+		<!--Transfer Settings -->
+		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
+		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
+		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>	
+		<!-- Page Show Key -->
+		<Setting name="showKey" 					value="show"/>
 	</YourSettings>
 
-	<MailServerSettings>
-		<MailServer></MailServer>
-		<MailPort></MailPort>
-		<MailUsername></MailUsername>
-		<MailPassword></MailPassword>
-	</MailServerSettings>
+	<MailServerSettings />
 
-	<BugTracerReports></BugTracerReports>
+	<BugTracerReports />
 
-	<DevEnvironments>
-		<url>dev</url>
-		<url>dev1</url>
-	</DevEnvironments>
-
-	<WebServices></WebServices>
+	<DevEnvironments />
+	
+	<WebServices />
 
 	<Layouts>
 		<!--Declare the default layout, MANDATORY-->
 		<DefaultLayout>Layout.Main.cfm</DefaultLayout>
-
-		<!--Default View, OPTIONAL
-		<DefaultView>home</DefaultView>
-		-->
-
-		<!--
-		Declare other layouts, with view assignments if needed, else do not write them
-		<Layout file="Layout.Popup.cfm" name="popup">
-			<View>vwTest</View>
-			<View>vwMyView</View>
-		</Layout>
-		-->
 	</Layouts>
 
 	<i18N />
@@ -76,8 +62,9 @@
 		<ObjectDefaultLastAccessTimeout>15</ObjectDefaultLastAccessTimeout>
 		<ReapFrequency>1</ReapFrequency>
 		<MaxObjects>50</MaxObjects>
-		<FreeMemoryPercentageThreshold>10</FreeMemoryPercentageThreshold>
+		<FreeMemoryPercentageThreshold>5</FreeMemoryPercentageThreshold>
 		<UseLastAccessTimeouts>true</UseLastAccessTimeouts>
+		<EvictionPolicy>LFU</EvictionPolicy>
 	</Cache>
 
 	<Interceptors>
@@ -85,10 +72,13 @@
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 		</Interceptor>
+		<Interceptor class="coldbox.system.interceptors.environmentControl">
+			<Property name="configFile">config/environments.xml.cfm</Property>
+		</Interceptor>
 		<Interceptor class="coldbox.system.interceptors.ses">
 			<Property name="configFile">config/routes.cfm</Property>
-		</Interceptor>
-
+		</Interceptor>		
+		
 		<Interceptor class="codex.interceptors.wiki.WikiText" />
 	</Interceptors>
 
