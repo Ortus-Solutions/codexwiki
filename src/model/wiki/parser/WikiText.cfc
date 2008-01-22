@@ -16,8 +16,6 @@
 	<cfscript>
 		setJavaLoader(createObject("component", "coldbox.system.extras.javaloader.JavaLoader").init(paths));
 
-		setParser(getJavaLoader().create("info.bliki.wiki.model.WikiModel").init("/{image}", "/?page=${title}"));
-
 		return this;
 	</cfscript>
 </cffunction>
@@ -25,7 +23,9 @@
 <cffunction name="render" hint="renders out wiki text to html" access="public" returntype="string" output="false">
 	<cfargument name="wikiText" hint="the wiki text to render" type="string" required="Yes">
 	<cfscript>
-		return getParser().render(arguments.wikiText);
+		var model = createModel();
+
+		return model.render(arguments.wikiText);
 	</cfscript>
 </cffunction>
 
@@ -33,13 +33,8 @@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="getParser" access="private" returntype="any" output="false">
-	<cfreturn instance.Parser />
-</cffunction>
-
-<cffunction name="setParser" access="private" returntype="void" output="false">
-	<cfargument name="Parser" type="any" required="true">
-	<cfset instance.Parser = arguments.Parser />
+<cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
+	<cfreturn getJavaLoader().create("info.bliki.wiki.model.WikiModel").init("/${image}", "index.cfm/show/${title}") />
 </cffunction>
 
 <cffunction name="getJavaLoader" access="private" returntype="coldbox.system.extras.javaloader.JavaLoader" output="false">
