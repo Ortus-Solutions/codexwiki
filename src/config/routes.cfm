@@ -38,7 +38,7 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 
 	For SEO purposes it's always best to have one URL for everything, not 3!
 --->
-<cfset setUniqueURLs(false)>
+<cfset setUniqueURLs(true)>
 
 <!--- 
 	The Base URL for your site. This will only be used for forwarding requests if 
@@ -107,9 +107,15 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 	<cfset addCourse(":handler/:action")>
 	<cfset addCourse(":handler")>			
 -------------------------------------------- --->
-					
+					<!--  -->
 <!--- CUSTOM COURSES GO HERE (they will be checked in order) --->
 
+<!--- show Key matching --->
+<cfset addCourse(pattern="#getSetting('showKey')#/:page/:print",handler="wiki",action="show")>
+<cfset addCourse(pattern="#getSetting('showKey')#/:page",handler="wiki",action="show")>
+<!--- Page Actions with Page Name and ID --->
+<cfset addCourse(":handler/:action/:page")>
+<cfset addCourse(":handler/:action/id/:contentid")>
 
 <!--- STANDARD COLDBOX COURSES, DO NOT MODIFY UNLESS YOU DON'T LIKE THEM --->
 <cfset addCourse(":handler/:action/:id")>

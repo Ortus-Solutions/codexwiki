@@ -8,4 +8,36 @@ Description :
 Modification History:
 10/12/2007 - Created Template
 ---------------------------------------------------------------------->
-<cfcomponent name="wiki" extends="coldbox.system.eventhandler" output="false" hint="This is our main wiki handler, all of our funky implicit invocations.">	<cffunction name="onAppInit" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Application Start Here --->	</cffunction>	<cffunction name="onRequestStart" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- On Request Start Code Here --->	</cffunction>	<cffunction name="onRequestEnd" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Request End Here --->	</cffunction>	<cffunction name="onException" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Exception Handler Here --->		<cfscript>			//Grab Exception From request collection, placed by ColdBox			var exceptionBean = event.getValue("ExceptionBean");			//Place exception handler below:		</cfscript>	</cffunction></cfcomponent>
+<cfcomponent name="wiki" extends="coldbox.system.eventhandler" output="false" hint="This is our main wiki handler, all of our funky implicit invocations.">	<cffunction name="onAppInit" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Application Start Here --->	</cffunction>	<cffunction name="onRequestStart" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- CF Debug Mode or Not --->
+		<cfsetting showdebugoutput="#getDebugMode()#">
+		<cfscript>
+			/* Printable Doctype Check */
+			isPrintFormat(arguments.event);	
+		</cfscript>	</cffunction>	<cffunction name="onRequestEnd" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Request End Here --->	</cffunction>	<cffunction name="onException" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<!--- ON Exception Handler Here --->		<cfscript>			//Grab Exception From request collection, placed by ColdBox			var exceptionBean = event.getValue("ExceptionBean");			//Place exception handler below:		</cfscript>	</cffunction>
+
+<!------------------------------------------- PACKAGE ------------------------------------------->
+
+<!------------------------------------------- PRIVATE ------------------------------------------->
+
+	
+	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfscript>
+		if( not reFindNoCase("flashpaper|pdf",event.getValue("print","")) ){
+			return;
+		}
+		else{
+			/* Change Layout */
+			Event.setLayout("Layout.Print");
+			/* Set Extensions */
+			if ( Event.getValue("print") eq "pdf" )
+			{
+				event.setValue("layout_extension","pdf");
+			}
+			else{
+				event.setValue("layout_extension","swf");
+			}				
+		}
+		</cfscript>
+	</cffunction>
+	</cfcomponent>

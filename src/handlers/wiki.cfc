@@ -30,9 +30,9 @@ Modification History:
 
 		content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
 		arguments.event.setValue("content", content);
-		arguments.event.setValue("onEditWiki","wiki.manage");
-		arguments.event.setValue("onCreateWiki","wiki.manage");
-		arguments.event.setValue("onDeleteWiki","wiki.delete");
+		arguments.event.setValue("onEditWiki","wiki/manage");
+		arguments.event.setValue("onCreateWiki","wiki/manage");
+		arguments.event.setValue("onDeleteWiki","wiki/delete");
 
 		if(content.getIsPersisted())
 		{
@@ -52,8 +52,8 @@ Modification History:
 		arguments.event.setValue("content", content);
 		arguments.event.setValue("cssAppendList", "uni-form");
 
-		arguments.event.setValue("onSubmit","wiki.process");
-		arguments.event.setValue("onCancel","wiki.show");
+		arguments.event.setValue("onSubmit","wiki/process");
+		arguments.event.setValue("onCancel","wiki/show");
 
 		arguments.event.setView("wiki/manage");
 	</cfscript>
@@ -73,7 +73,7 @@ Modification History:
 		//move the page name to the page, so it can be persisted
 		arguments.event.setValue("page", arguments.event.getValue("pageName"));
 
-		setNextEvent(event="wiki.show", persist="page");
+		setNextRoute(route="wiki/show", persist="page");
 	</cfscript>
 </cffunction>
 

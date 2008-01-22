@@ -67,6 +67,8 @@
 
 <cffunction name="setInterceptorService" access="public" returntype="void" output="false">
 	<cfargument name="interceptorService" type="coldbox.system.services.interceptorService" required="true">
+	<!--- <cfargument name="interceptorService" type="any" required="true">
+	<cfdump var="#getMetadata(arguments.interceptorService)#"><cfabort> --->
 	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>
 

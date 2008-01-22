@@ -52,10 +52,13 @@
   display:block;
   width:53.5%; /* Required property */
 }
+/* commented to get right styles for Editor.
 .uniForm .blockLabels textarea{
-  width:53%; /* Required property */
+  width: 53%; 
   height:12em; 
 }
+*/
+
 .uniForm .blockLabels .formHint{
   width:45%; /* Required property */
 }

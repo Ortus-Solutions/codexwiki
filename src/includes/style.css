@@ -1,0 +1,373 @@
+/********************************************
+   AUTHOR:  			Erwin Aligam 
+   WEBSITE:   			http://www.styleshout.com/
+   TEMPLATE NAME: 	Underground
+	TEMPLATE CODE:		S-0006
+   VERSION:          1.1          	
+ *******************************************/
+ 
+/********************************************
+   HTML ELEMENTS
+********************************************/ 
+
+/* top elements */
+* { margin: 0;	padding: 0; }
+
+body {
+	margin: 0; padding: 0;
+	font: 70%/1.5 Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	color: #333; 
+	background: #FFF url(images/bg.gif) repeat-x;	
+}
+
+/* links */
+a {
+	color: #003366;
+	background-color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: #CC0001; 
+	background-color: inherit;
+}
+
+/* headers */
+h1, h2, h3, h4 {
+	font-family: Arial, 'Trebuchet MS', Sans-Serif;
+	font-weight: bold;
+	color: #333;
+	padding: 0;		
+	margin: 5px;
+}
+p{
+	padding: 0px;
+	margin:5px	
+}
+h1 {
+	font-size: 120%;
+	letter-spacing: .5px;
+}
+h2 {
+	font-size: 115%; 		
+}
+h3 {
+	font-size: 115%;
+	color: #003366;		
+}
+h4{
+	font-size: 100%;
+	color: #003366;
+}
+
+/* images */
+img {
+	border: 2px solid #CCC;
+}
+img.float-right {
+  margin: 5px 0px 10px 10px;  
+}
+img.float-left {
+  margin: 5px 10px 10px 0px;
+}
+
+ul, ol {
+	margin: 10px 20px;
+	padding: 0 20px;
+}
+
+code {
+  margin: 10px 0;
+  padding: 10px;
+  text-align: left;
+  display: block;
+  overflow: auto;  
+  font: 500 1.1em/1.5em 'Lucida Console', 'courier new', monospace;
+  /* white-space: pre; */
+  background: #FAFAFA;
+  border: 1px solid #f2f2f2;  
+  border-left: 4px solid #CC0000;
+}
+acronym {
+  cursor: help;
+  border-bottom: 1px solid #777;
+}
+blockquote {
+	margin: 10px;
+ 	padding: 0 0 0 32px;  	
+  	background: #FAFAFA url(images/quote.gif) no-repeat 5px 10px !important; 
+	background-position: 8px 10px;
+	border: 1px solid #f2f2f2; 
+	border-left: 4px solid #CC0000; 
+	font-weight: bold; 
+	min-height: 50px; 
+}
+
+/* form elements */
+form {
+	margin:10px; padding: 0 5px;
+	border: 1px solid #f2f2f2; 
+	background-color: #FAFAFA; 
+}
+label {
+	display:block;
+	font-weight:bold;
+	margin:5px 0;
+}
+input {
+	padding: 2px;
+	border:1px solid #eee;
+	font: normal 1em Verdana, sans-serif;
+	color:#777;
+}
+input.button { 
+	margin: 0; 
+	font: bolder 12px Verdana, Sans-serif; 
+	border: 1px solid #CCC; 
+	padding: 1px; 
+	background: #FFF;
+	color: #CC0000;
+}
+input[type=button], input[type=submit], input[type=reset] { 
+	margin: 0; 
+	font-size: 100%; 
+	font-family: Arial, Sans-serif; 
+	border: 1px solid #CCC; 
+	background: #FFFFFF url(images/headerbg.gif) repeat-x bottom left; 
+	padding: 3px; 
+	font-weight: bold; 
+	color: #333;
+	cursor: pointer;
+}
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+ background: #FFFFF0;
+ border: 1px inset #ccc;
+}
+input[type=button][disabled], input[type=submit][disabled],input[type=reset][disabled] {
+ background: #f6f6f6;
+ border-style: solid;
+ color: #999;
+}
+fieldset{
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+}
+textarea{
+	font: normal 12px Verdana, sans-serif;
+	border: 1px solid #d7d7d7;
+	padding:2px;
+	width: 100%;
+}
+input[type=text], input[type=password], input[type=checkbox], select { 
+	font: normal 12px Verdana, sans-serif;
+	border: 1px solid #d7d7d7;
+	padding:2px;
+}
+input[type=text], input[type=password], input[type=checkbox], select { padding: .20em .3em }
+input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=checkbox]:focus, select:focus {
+	border: 1px solid #886;
+}
+.tablelisting{
+	border: 1px solid #cccccc;
+}
+.tablelisting tr.even{
+	background-color: #EFF6FF;
+}
+.tablelisting tr:hover { background: #d7eafe}
+.tablelisting th {
+	text-align: left;
+	background-color: #CC0000;
+	color: #ffffff;
+	padding: 5px;
+}
+.tablelisting td{
+	padding: 5px;
+}
+/* search form */
+form.search {
+	position: absolute;
+	top: 5px; right: 5px;
+	padding: 0; margin: 0;
+	border: none;
+	background-color: transparent; 
+}
+form.search input.textbox { 
+	margin: 0; 
+	width: 150px;
+	border: 1px solid #CCC; 
+	background: #f7f7f7;
+	color: #333;
+	font-size:12px;
+}
+form.search input.textbox:focus {
+	border: 1px solid #886;
+	background: #fff;
+}
+
+/**********************************
+  LAYOUT 
+***********************************/
+#wrap {
+	margin: 0 auto; 
+	width: 100%;
+}
+
+/* header */
+#header {
+	position: relative;
+	margin: 0; padding: 0;
+	height: 60px;
+}
+#header span#slogan {
+	z-index: 3;
+	position: absolute;
+	left: 5px; bottom: 7px;
+	font: bold 1.2em Verdana, Arial, Tahoma,  Sans-serif;	
+	color: #FFF;	
+}
+
+#header-logo {
+	position: relative;
+	clear: both;
+	height: 50px; 
+	margin: 0; padding: 0;	
+}
+#header-logo #logo {
+	position: absolute;
+	top: 3px; left: 5px;
+	font: bold 30px "trebuchet MS", Arial, Tahoma, Sans-Serif;
+	margin: 0; padding: 0;
+	letter-spacing: -1px;
+	color: #000;
+}
+
+/* navigation tabs */
+#header ul {
+	position: absolute;
+   	margin:0;
+   	list-style:none;
+	right:-15px ; bottom: 3px;
+	font: bold 13px 'Trebuchet MS', Arial, Sans-serif;
+}
+#header li {
+   display:inline;
+   margin:0; padding:0;
+}
+#header a {
+   float:left;
+   background: url(images/tableft.gif) no-repeat left top;
+   margin:0;
+   padding:0 0 0 4px;
+   text-decoration:none;
+}
+#header a span {
+   float:left;
+   display:block;
+   background: url(images/tabright.gif) no-repeat right top;
+   padding:5px 15px 4px 6px;
+   color:#FFF;
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#header a span {float:none;}
+/* End IE5-Mac hack */
+#header a:hover span {
+	color:#FFF;
+}
+#header a:hover {
+   background-position:0% -42px;
+}
+#header a:hover span {
+   background-position:100% -42px;
+}
+#header #current a {
+   background-position:0% -42px;
+}
+#header #current a span {
+   background-position:100% -42px;
+}
+
+/* main column */
+#main {
+	margin:0pt 2em 0pt 240px;
+}
+#main h1 {
+	margin: 10px 0;
+	padding: 4px 0 4px 8px; 
+	font-size: 105%;
+	color: #FFF;
+	text-transform: uppercase; 
+	background-color: #CC0000;	
+	letter-spacing: .5px;
+}
+
+/* sidebar */
+#sidebar {
+	float: left;
+	width: 220px;
+	margin: 0px 10px 0px 0px; 
+	padding: 0;
+	padding-left: 5px;
+	background-color: #FFFFFF; 	
+}
+#sidebar h1 {
+	margin: 10px 0 0 0; 
+	padding: 4px 0 4px 8px; 
+	font: bold 105% Arial, Sans-Serif;
+	color: #FFF;
+	text-transform: uppercase; 
+	background: #333; 
+	letter-spacing: 1px;	
+}
+#sidebar .left-box {
+	border: 1px solid #EBEBEB;
+	margin: 0 0 5px 0;	
+	background: #FFF;
+}
+#sidebar ul.sidemenu {
+	list-style: none;
+	text-align: left;
+	margin: 3px 0px 8px 0; padding: 0;
+	text-decoration: none;		
+}
+#sidebar ul.sidemenu li {
+	border-bottom: 1px solid #f2f2f2; 
+	background: url(images/bullet.gif) no-repeat 3px 2px;	
+	padding: 3px 5px 3px 25px;
+	margin: 0;	
+}
+#sidebar ul.sidemenu a {
+	font-weight: bolder;
+	padding: 3px 0px;	
+	background: none;
+}
+
+/* footer */
+.footer { 
+	clear: both; 	
+	border-top: 1px solid #f2f2f2;
+	background: #FFF url(images/footerbg.gif) repeat-x;
+	padding: 2px 0 10px 0; 
+	text-align: center;  
+	line-height: 1.5em;	
+	font-size: 95%;
+	margin-top:100px;
+}
+.footer a { 
+	text-decoration: none; 
+	font-weight: bold;		
+}
+
+/* alignment classes */
+.float-left  { float: left; }
+.float-right { float: right; }
+.align-left  { text-align: left; }
+.align-right { text-align: right; }
+
+/* display and additional classes  */
+.clear {	clear: both; }
+.red   { color: #CC0000; }
+.comments { 
+	margin: 20px 10px 5px 10px; 
+	padding: 3px 0;
+	border-bottom: 1px dashed #EFF0F1; 	
+	border-top: 1px dashed #EFF0F1;	
+}

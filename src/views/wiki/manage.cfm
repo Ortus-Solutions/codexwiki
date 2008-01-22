@@ -1,27 +1,23 @@
 <!--- create a non found wiki page --->
-<cfscript>
-	content = event.getValue("content");
-</cfscript>
-
 <cfoutput>
-	<h1>#content.getPage().getName()#</h1>
+<h1>#rc.content.getPage().getName()#</h1>
 
-	<form action="?event=#event.getValue("onSubmit")#" method="post" class="uniForm">
-		<div class="blockLabels">
-
-		<cfif content.getIsPersisted()>
-			<input type="hidden" name="contentid" value="#content.getContentID()#" />
+<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#" method="post" class="uniForm">
+	<div class="blockLabels">
+		<cfif rc.content.getIsPersisted()>
+			<input type="hidden" name="contentid" value="#rc.content.getContentID()#" />
 		</cfif>
-		<input type="hidden" name="pageName" value="#content.getPage().getName()#" />
-
-          <div class="ctrlHolder">
-            <label for="content"><em>*</em> Wiki Content</label>
-            <textarea name="content" id="content" rows="25" cols="50">#content.getContent()#</textarea>
-          </div>
-		</div>
- 		<div class="buttonHolder">
-      		<button type="button" class="cancelButton" onclick="window.location='?event=#event.getValue("onCancel")#'">Cancel</button>
-      		<button type="submit" class="submitButton">Submit</button>
-    	</div>
-	</form>
+		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
+	
+	    <div class="ctrlHolder">
+	      <label for="content"><em>*</em> Wiki Content</label>
+	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>
+	    </div>
+	</div>
+	
+	<div class="buttonHolder">
+   		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#rc.onCancel#'" value="cancel"></input>
+   		<input type="submit" class="submitButton" value="submit"></input>
+   	</div>
+</form>
 </cfoutput>

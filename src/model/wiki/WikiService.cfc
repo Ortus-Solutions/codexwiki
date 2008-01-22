@@ -46,11 +46,13 @@
 
 <cffunction name="saveContent" hint="saves the content, and cascades to the page" access="public" returntype="void" output="false">
 	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+	<cftransaction>
 	<cfscript>
-		getTransfer().save(arguments.content.getPage());
+		getTransfer().save(arguments.content.getPage(),false);
 
-		getTransfer().save(arguments.content);
+		getTransfer().save(arguments.content,false);
 	</cfscript>
+	</cftransaction>
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
