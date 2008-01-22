@@ -4,12 +4,6 @@
 </cfscript>
 
 <cfoutput>
-	<!--- how to we want to handle header inclusion? --->
-	<cfsavecontent variable="head">
-		<link rel="stylesheet" type="text/css" href="includes/css/uni-form.css" />
-	</cfsavecontent>
-	<cfhtmlhead text="#head#">
-
 	<h1>#content.getPage().getName()#</h1>
 
 	<form action="?event=#event.getValue("onSubmit")#" method="post" class="uniForm">

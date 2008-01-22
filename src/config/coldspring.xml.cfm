@@ -17,14 +17,23 @@
 	<bean id="Transfer" factory-bean="TransferFactory" factory-method="getTransfer" />
 	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasouce" />
 
-	<!-- Trasfer related beans -->
+	<!-- Transfer related beans -->
 
 	<bean id="TDOBeanInjectorObserver" class="codex.model.transfer.TDOBeanInjectorObserver" lazy-init="false" />
 	<bean id="BeanPopulator" class="codex.model.transfer.BeanPopulator"/>
 
+	<!-- ColdBox Related Beans -->
+
+	<bean id="ColdboxFactory" class="coldbox.system.extras.ColdboxFactory" autowire="no" />
+
+	<bean id="ColdBoxController" factory-bean="ColdBoxFactory" factory-method="getColdBox" />
+	<bean id="InterceptorService" factory-bean="ColdBoxController" factory-method="getinterceptorService" />
 
 	<!-- wiki -->
 
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
+
+	<!-- Parsers -->
+	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />
 
 </beans>

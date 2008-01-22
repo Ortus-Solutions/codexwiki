@@ -6,7 +6,7 @@
 <cfoutput>
 	<h1>#content.getPage().getName()#</h1>
 	<p>
-		#content.getContent()#
+		#content.render()#
 	</p>
 	<hr />
 	<p>

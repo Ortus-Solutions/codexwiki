@@ -81,13 +81,16 @@
 	</Cache>
 
 	<Interceptors>
+        <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 		</Interceptor>
 		<Interceptor class="coldbox.system.interceptors.ses">
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>
+
+		<Interceptor class="codex.interceptors.wiki.WikiText" />
 	</Interceptors>
-	
+
 
 </Config>
