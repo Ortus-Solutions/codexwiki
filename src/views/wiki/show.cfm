@@ -4,8 +4,8 @@
 
 <!--- Print Bar --->
 <div align="right" style="float:right">
-	<a href="#getSetting('sesBaseURL')#/#getSetting('showKey')#/#URLEncodedFormat(rc.page)#/pdf">PDF</a> | 
-	<a href="#getSetting('sesBaseURL')#/#getSetting('showKey')#/#URLEncodedFormat(rc.page)#/flashpaper">SWF</a>
+	<a href="#getSetting('sesBaseURL')#/#getSetting('showKey')#/#URLEncodedFormat(rc.page)#/pdf.cfm">PDF</a> | 
+	<a href="#getSetting('sesBaseURL')#/#getSetting('showKey')#/#URLEncodedFormat(rc.page)#/flashpaper.cfm">SWF</a>
 </div>
 
 <p>
@@ -13,10 +13,10 @@
 </p>
 <hr size="1"/>
 <p>
-	<a href="#getSetting('sesBaseURL')#/#rc.onEditWiki#/#URLEncodedFormat(rc.page)#">
+	<a href="#getSetting('sesBaseURL')#/#rc.onEditWiki#/#URLEncodedFormat(rc.page)#.cfm">
 		<input type="button" value="Edit Page">
 	</a>
-	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/#URLEncodedFormat(rc.page)#">
+	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/#URLEncodedFormat(rc.page)#.cfm">
 		<input type="button" value="Delete Page">
 	</a>
 </p>

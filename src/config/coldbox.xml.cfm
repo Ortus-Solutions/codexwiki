@@ -11,7 +11,7 @@
 		<Setting name="EnableColdfusionLogging" 	value="false" />
 		<Setting name="EnableColdboxLogging"		value="true" />
 		<Setting name="ColdboxLogsLocation"			value="logs" />
-		<Setting name="DefaultEvent" 				value="wiki.show"/>
+		<Setting name="DefaultEvent" 				value="page.show"/>
 		<Setting name="RequestStartHandler" 		value="main.onRequestStart"/>
 		<Setting name="RequestEndHandler" 			value="main.onRequestEnd"/>
 		<Setting name="ApplicationStartHandler" 	value="main.onAppInit"/>
@@ -19,7 +19,7 @@
 		<Setting name="EnableBugReports" 			value="false"/>
 		<Setting name="UDFLibraryFile" 				value="" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
-		<Setting name="onInvalidEvent" 				value="wiki.show" />
+		<Setting name="onInvalidEvent" 				value="page.show" />
 		<Setting name="CustomErrorTemplate"			value="" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
@@ -36,8 +36,9 @@
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>	
-		<!-- Page Show Key -->
-		<Setting name="showKey" 					value="show"/>
+		<!-- Show Key -->
+		<Setting name="ShowKey" 					value="wiki"/>
+		<Setting name="DefaultPage" 				value="Dashboard"/>
 	</YourSettings>
 
 	<MailServerSettings />
@@ -69,13 +70,16 @@
 
 	<Interceptors>
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
+		
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 		</Interceptor>
+		
 		<Interceptor class="coldbox.system.interceptors.environmentControl">
 			<Property name="configFile">config/environments.xml.cfm</Property>
 		</Interceptor>
-		<Interceptor class="coldbox.system.interceptors.ses">
+		
+		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>		
 		

@@ -11,8 +11,8 @@
 <hr size="1"/>
 
 <p>
-	<a href="#getSetting('sesBaseURL')#/#rc.onCreateWiki#/#URLEncodedFormat(rc.page)#">
-		<input type="button" value="Create Page">
+	<a href="#getSetting('sesBaseURL')#/#rc.onCreateWiki#/#URLEncodedFormat(rc.page)#.cfm">
+		<input type="button" value="Create Page" />
 	</a>
 </p>
 </cfoutput>

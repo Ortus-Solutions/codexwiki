@@ -2,7 +2,7 @@
 <cfoutput>
 <h1>#rc.content.getPage().getName()#</h1>
 
-<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#" method="post" class="uniForm">
+<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
 	<div class="blockLabels">
 		<cfif rc.content.getIsPersisted()>
 			<input type="hidden" name="contentid" value="#rc.content.getContentID()#" />
@@ -16,7 +16,7 @@
 	</div>
 	
 	<div class="buttonHolder">
-   		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#rc.onCancel#'" value="cancel"></input>
+   		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
 </form>

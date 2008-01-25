@@ -4,7 +4,7 @@
 	
 	<environment name="development" urls="jfetmac">
 		<Setting name="HandlerCaching"			value="false" />
-		<Setting name="HandlersIndexAutoReload" value="false" />
+		<Setting name="HandlersIndexAutoReload" value="true" />
 		<Setting name="DebugMode"	 			value="true" />
 		<Setting name="ConfigAutoReload"        value="false" />
 		<Setting name="DebugPassword" 			value="" />

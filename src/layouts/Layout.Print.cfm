@@ -29,7 +29,7 @@ Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	
 	<!--- SES Base --->
-	<base href="#getSetting('htmlBaseURL')#">
+	<base href="#getSetting('htmlBaseURL')#/">
 	
 	<!--- Main CSS --->
 	<link rel="stylesheet" type="text/css" href="includes/style.css" />

@@ -38,7 +38,7 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 
 	For SEO purposes it's always best to have one URL for everything, not 3!
 --->
-<cfset setUniqueURLs(true)>
+<cfset setUniqueURLs(false)>
 
 <!--- 
 	The Base URL for your site. This will only be used for forwarding requests if 
@@ -59,9 +59,9 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 	Else, htmlBaseURL and sesBaseURL should be the same.
 --->
 <cfif len(getSetting("AppMapping")) lte 1>
-	<cfset setBaseURL("http://#cgi.HTTP_HOST#/index.cfm")>
+	<cfset setBaseURL("http://#cgi.HTTP_HOST#")>
 <cfelse>
-	<cfset setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/index.cfm")>
+	<cfset setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#")>
 </cfif>
 
 <!--- -------------------------------------------
@@ -107,18 +107,19 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 	<cfset addCourse(":handler/:action")>
 	<cfset addCourse(":handler")>			
 -------------------------------------------- --->
-					<!--  -->
+
 <!--- CUSTOM COURSES GO HERE (they will be checked in order) --->
 
-<!--- show Key matching --->
-<cfset addCourse(pattern="#getSetting('showKey')#/:page/:print",handler="wiki",action="show")>
-<cfset addCourse(pattern="#getSetting('showKey')#/:page",handler="wiki",action="show")>
+<!--- show Key matchings --->
+<cfset addCourse(pattern="#getSetting('ShowKey')#/:page/:print",handler="page",action="show")>
+<cfset addCourse(pattern="#getSetting('ShowKey')#/:page",handler="page",action="show")>
+<cfset addCourse(pattern="#getSetting('ShowKey')#",handler="page",action="show")>
+
 <!--- Page Actions with Page Name and ID --->
-<cfset addCourse(":handler/:action/:page")>
 <cfset addCourse(":handler/:action/id/:contentid")>
+<cfset addCourse(":handler/:action/:page")>
 
 <!--- STANDARD COLDBOX COURSES, DO NOT MODIFY UNLESS YOU DON'T LIKE THEM --->
-<cfset addCourse(":handler/:action/:id")>
 <cfset addCourse(":handler/:action")>
 <cfset addCourse(":handler")>
 
