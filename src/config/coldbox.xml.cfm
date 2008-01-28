@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
-		<Setting name="DebugMode" 					value="false" />
+		<Setting name="DebugMode" 					value="true" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -22,20 +22,21 @@
 		<Setting name="onInvalidEvent" 				value="page.show" />
 		<Setting name="CustomErrorTemplate"			value="" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
-		<Setting name="HandlersIndexAutoReload"   	value="false" />
-		<Setting name="ConfigAutoReload"          	value="false" />
+		<Setting name="HandlersIndexAutoReload"   	value="true" />
+		<Setting name="ConfigAutoReload"          	value="true" />
 		<Setting name="MyPluginsLocation"   		value="" />
-		<Setting name="HandlerCaching" 				value="true"/>
+		<Setting name="HandlerCaching" 				value="false"/>
 		<Setting name="IOCFramework"				value="coldspring" />
-		<Setting name="IOCDefinitionFile"			value="config/coldspring.xml.cfm" />
+		<Setting name="IOCDefinitionFile"			value="/codex/config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
+		<Setting name="AppMapping"					value=""/>
 	</Settings>
 
 	<YourSettings>
 		<!--Transfer Settings -->
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
-		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>	
+		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>
 		<!-- Show Key -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
@@ -46,7 +47,7 @@
 	<BugTracerReports />
 
 	<DevEnvironments />
-	
+
 	<WebServices />
 
 	<Layouts>
@@ -70,20 +71,23 @@
 
 	<Interceptors>
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
-		
+
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
+			<Property name="completeDIMethodName">onDIComplete</Property>
 		</Interceptor>
-		
+
 		<Interceptor class="coldbox.system.interceptors.environmentControl">
 			<Property name="configFile">config/environments.xml.cfm</Property>
 		</Interceptor>
-		
+
 		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
-		</Interceptor>		
-		
-		<Interceptor class="codex.interceptors.wiki.WikiText" />
+		</Interceptor>
+
+		<Interceptor class="codex.interceptors.wiki.WikiText">
+			<Property name="ignoreXMLTagList">feed</Property>
+		</Interceptor>
 	</Interceptors>
 
 
