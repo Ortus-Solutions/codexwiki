@@ -88,6 +88,10 @@
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed</Property>
 		</Interceptor>
+
+		<Interceptor class="codex.interceptors.wiki.Feed">
+		</Interceptor>
+
 	</Interceptors>
 
 

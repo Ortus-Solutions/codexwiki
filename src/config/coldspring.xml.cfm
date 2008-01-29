@@ -35,5 +35,6 @@
 
 	<!-- Parsers -->
 	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />
+	<bean id="Feed" class="codex.model.wiki.parser.Feed" />
 
 </beans>
