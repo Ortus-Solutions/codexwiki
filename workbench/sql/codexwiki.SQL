@@ -1,3 +1,14 @@
+CREATE TABLE wiki_page_category
+(
+	FKcategory_id VARCHAR(36) NOT NULL,
+	FKpagecontent_id VARCHAR(36) NOT NULL,
+	PRIMARY KEY (FKcategory_id, FKpagecontent_id),
+	KEY (FKcategory_id),
+	KEY (FKpagecontent_id)
+) 
+;
+
+
 CREATE TABLE wiki_pagecontent
 (
 	pagecontent_id VARCHAR(36) NOT NULL,
@@ -17,6 +28,17 @@ CREATE TABLE wiki_page
 	page_id VARCHAR(36) NOT NULL,
 	page_name VARCHAR(255) NOT NULL,
 	PRIMARY KEY (page_id)
+) 
+;
+
+
+CREATE TABLE wiki_category
+(
+	category_id VARCHAR(36) NOT NULL,
+	category_name VARCHAR(255) NOT NULL,
+	category_createdate DATETIME NOT NULL,
+	PRIMARY KEY (category_id),
+	UNIQUE (category_name)
 ) 
 ;
 

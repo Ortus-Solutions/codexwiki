@@ -42,12 +42,19 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="render" hint="renders out wiki text to html" access="public" returntype="string" output="false">
+<cffunction name="render" hint="parses the wiki, and returns a struct with {html : 'the renders html', categories : ''}" access="public" returntype="struct" output="false">
 	<cfargument name="wikiText" hint="the wiki text to render" type="string" required="Yes">
 	<cfscript>
+		var result = StructNew();
 		var model = createModel();
 
-		return model.render(arguments.wikiText);
+		result.content = model.render(arguments.wikiText);
+
+		//use a cf array, as it's easier
+		result.categories = ArrayNew(1);
+		result.categories.addAll(model.getCategories());
+
+		return result;
 	</cfscript>
 </cffunction>
 

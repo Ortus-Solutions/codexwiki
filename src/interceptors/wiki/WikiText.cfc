@@ -15,21 +15,21 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="_dump">
-	<cfargument name="s">
-	<cfargument name="abort" default="true">
-	<cfset var g = "">
-		<cfdump var="#arguments.s#">
-		<cfif arguments.abort>
-		<cfabort>
-		</cfif>
-</cffunction>
-
 <cffunction name="onWikiPageTranslate" access="public" returntype="void" hint="Intercept Wiki Page Translation" output="false" >
 	<cfargument name="event" required="true" type="coldbox.system.beans.requestContext" hint="The event object.">
 	<cfargument name="interceptData" required="true" type="struct" hint="interceptData of intercepted info.">
 	<cfscript>
-		arguments.interceptData.content = getWikiText().render(arguments.interceptData.content);
+		var result = getWikiText().render(arguments.interceptData.content);
+
+		if(NOT StructKeyExists(arguments.interceptData, "categories"))
+		{
+			arguments.interceptData.categories = ArrayNew(1);
+		}
+
+		//use java, because it's fast ;)
+		arguments.interceptData.categories.addAll(result.categories);
+
+		arguments.interceptData.content = result.content;
 	</cfscript>
 </cffunction>
 
