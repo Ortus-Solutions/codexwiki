@@ -44,11 +44,49 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getCategory" hint="returns a Category Object" access="public" returntype="codex.model.wiki.Category" output="false">
+	<cfargument name="categoryID" hint="the specific category id" type="string" required="no">
+	<cfargument name="categoryName" hint="the category name" type="string" required="no">
+	<cfscript>
+		var category = 0;
+		// retrieve by id
+		if(StructKeyExists(arguments, "categoryID") AND len(arguments.categoryID))
+		{
+			return getTransfer().get("wiki.Category", arguments.categoryID);
+		}
+		else if(StructKeyExists(arguments, "categoryName") AND len(arguments.categoryName))
+		{
+			category = getTransfer().readByProperty("wiki.Category", "name", arguments.categoryName);
+
+			//if the category is not persisted, we'll give it the name
+			if(NOT category.getIsPersisted())
+			{
+				category.setName(arguments.categoryName);
+			}
+
+			return category;
+		}
+
+		return getTransfer().new("wiki.Category");
+	</cfscript>
+</cffunction>
+
 <cffunction name="saveContent" hint="saves the content, and cascades to the page" access="public" returntype="void" output="false">
 	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+	<cfscript>
+		var iterator = content.getCategoryIterator();
+		var category = 0;
+	</cfscript>
 	<cftransaction>
 	<cfscript>
 		getTransfer().save(arguments.content.getPage(),false);
+
+		while(iterator.hasNext())
+		{
+			//TODO: when creating a category, need to create a default page for it.
+			category = iterator.next();
+			getTransfer().save(category, false);
+		}
 
 		getTransfer().save(arguments.content,false);
 	</cfscript>

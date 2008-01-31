@@ -1,0 +1,19 @@
+div#categories {
+	border-top: 1px solid #EBEBEB;
+	text-align: right;
+	margin-top: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+div#categories ul {
+	display: inline;
+	margin: 0;
+	padding: 0 0 0 10px;
+}
+
+div#categories ul li {
+	display: inline;
+	margin: 0px;
+	padding: 0 10px 0 0;
+}

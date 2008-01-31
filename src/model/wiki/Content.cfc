@@ -16,7 +16,7 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="processForm" hint="processes the form details" access="public" returntype="void" output="false">
+<cffunction name="populate" hint="processes the form details" access="public" returntype="void" output="false">
 	<cfargument name="memento" hint="takes a memento" type="struct" required="Yes">
 	<cfscript>
 		getBeanPopulator().populate(this, arguments.memento);
@@ -25,22 +25,14 @@
 </cffunction>
 
 <cffunction name="render" hint="renders the page content" access="public" returntype="string" output="false">
-	<cfset var data = 0 />
-	<cfif NOT hasRenderedContent()>
-		<cflock name="codex.wiki.content.render.#getContentID()#" throwontimeout="true" timeout="60">
-		<cfscript>
-			if(NOT hasRenderedContent())
-			{
-				data = StructNew();
-				data.content = getContent();
-				getInterceptorService().processState("onWikiPageTranslate",data);
-				setRenderedContent(data.content);
+	<cfscript>
+		if(NOT hasRenderedContent())
+		{
+			translate();
+		}
 
-			}
-		</cfscript>
-		</cflock>
-	</cfif>
-	<cfreturn getRenderedContent() />
+		return getRenderedContent();
+	</cfscript>
 </cffunction>
 
 <cffunction name="setContent" hint="sets the value of the content, clears the rendered content" access="public" returntype="void" output="false">
@@ -51,6 +43,7 @@
 		if(getIsDirty())
 		{
 			clearRenderedContent();
+			translate(true);
 		}
 	</cfscript>
 </cffunction>
@@ -67,14 +60,47 @@
 
 <cffunction name="setInterceptorService" access="public" returntype="void" output="false">
 	<cfargument name="interceptorService" type="coldbox.system.services.interceptorService" required="true">
-	<!--- <cfargument name="interceptorService" type="any" required="true">
-	<cfdump var="#getMetadata(arguments.interceptorService)#"><cfabort> --->
 	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
+
+<cffunction name="translate" hint="translates the wiki page content" access="public" returntype="string" output="false">
+	<cfargument name="setCategories" hint="whether or not to set the page categories from the parsed markup" type="boolean" required="No" default="false">
+	<cfscript>
+		var data = 0;
+		var category = 0;
+		var counter = 1;
+		var len = 0;
+	</cfscript>
+	<cfif NOT hasRenderedContent()>
+		<cflock name="codex.wiki.content.render.#getContentID()#" throwontimeout="true" timeout="60">
+		<cfscript>
+			if(NOT hasRenderedContent())
+			{
+				data = StructNew();
+				data.content = getContent();
+				getInterceptorService().processState("onWikiPageTranslate",data);
+				setRenderedContent(data.content);
+
+				if(arguments.setCategories AND StructKeyExists(data, "categories"))
+				{
+					clearCategory();
+
+					len = ArrayLen(data.categories);
+					for(; counter <= len; counter++)
+					{
+						category = getWikiService().getCategory(categoryName=data.categories[counter]);
+						addCategory(category);
+					}
+				}
+			}
+		</cfscript>
+		</cflock>
+	</cfif>
+</cffunction>
 
 <cffunction name="getRenderedContent" access="private" returntype="string" output="false">
 	<cfreturn instance.renderedContent />

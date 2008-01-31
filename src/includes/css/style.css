@@ -17,7 +17,7 @@ body {
 	margin: 0; padding: 0;
 	font: 70%/1.5 Verdana, Tahoma, Arial, Helvetica, sans-serif;
 	color: #333; 
-	background: #FFF url(images/bg.gif) repeat-x;	
+	background: #FFF url(../images/bg.gif) repeat-x;	
 }
 
 /* links */
@@ -94,7 +94,7 @@ acronym {
 blockquote {
 	margin: 10px;
  	padding: 0 0 0 32px;  	
-  	background: #FAFAFA url(images/quote.gif) no-repeat 5px 10px !important; 
+  	background: #FAFAFA url(../images/quote.gif) no-repeat 5px 10px !important; 
 	background-position: 8px 10px;
 	border: 1px solid #f2f2f2; 
 	border-left: 4px solid #CC0000; 
@@ -132,7 +132,7 @@ input[type=button], input[type=submit], input[type=reset] {
 	font-size: 100%; 
 	font-family: Arial, Sans-serif; 
 	border: 1px solid #CCC; 
-	background: #FFFFFF url(images/headerbg.gif) repeat-x bottom left; 
+	background: #FFFFFF url(../images/headerbg.gif) repeat-x bottom left; 
 	padding: 3px; 
 	font-weight: bold; 
 	color: #333;
@@ -254,7 +254,7 @@ form.search input.textbox:focus {
 }
 #header a {
    float:left;
-   background: url(images/tableft.gif) no-repeat left top;
+   background: url(../images/tableft.gif) no-repeat left top;
    margin:0;
    padding:0 0 0 4px;
    text-decoration:none;
@@ -262,7 +262,7 @@ form.search input.textbox:focus {
 #header a span {
    float:left;
    display:block;
-   background: url(images/tabright.gif) no-repeat right top;
+   background: url(../images/tabright.gif) no-repeat right top;
    padding:5px 15px 4px 6px;
    color:#FFF;
 }
@@ -330,7 +330,7 @@ form.search input.textbox:focus {
 }
 #sidebar ul.sidemenu li {
 	border-bottom: 1px solid #f2f2f2; 
-	background: url(images/bullet.gif) no-repeat 3px 2px;	
+	background: url(../images/bullet.gif) no-repeat 3px 2px;	
 	padding: 3px 5px 3px 25px;
 	margin: 0;	
 }
@@ -344,7 +344,7 @@ form.search input.textbox:focus {
 .footer { 
 	clear: both; 	
 	border-top: 1px solid #f2f2f2;
-	background: #FFF url(images/footerbg.gif) repeat-x;
+	background: #FFF url(../images/footerbg.gif) repeat-x;
 	padding: 2px 0 10px 0; 
 	text-align: center;  
 	line-height: 1.5em;	

@@ -23,6 +23,8 @@
 			//default page is the dashboard
 			arguments.event.paramValue("page", getSetting('DefaultPage') );
 
+			arguments.event.setValue("cssAppendList", "wiki.show");
+
 			content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
 			arguments.event.setValue("content", content);
 			arguments.event.setValue("onEditWiki","page/manage");
@@ -60,7 +62,7 @@
 		<cfscript>
 			var content = getWikiService().getContent(contentid=arguments.event.getValue("contentid", ""));
 
-			content.processForm(arguments.event.getCollection());
+			content.populate(arguments.event.getCollection());
 
 			//TODO: may want to validate here later, once a decision has been made on validation
 
