@@ -16,8 +16,20 @@
 			<manytoone name="Page">
 				<link column="FKpage_id" to="wiki.Page"/>
 			</manytoone>
+			<manytomany name="Category" table="wiki_pagecontent_category">
+				<link column="FKpagecontent_id" to="wiki.Content"/>
+				<link column="FKcategory_id" to="wiki.Category"/>
+				<collection type="array">
+					<order property="name"/>
+				</collection>
+			</manytomany>
 		</object>
 
+		<object name="Category" table="wiki_category" decorator="codex.model.wiki.Category">
+			<id name="category_id" type="UUID" generate="true"/>
+			<property name="name" type="string" column="category_name"/>
+			<property name="createdDate" type="date" column="category_createddate"/>
+		</object>
   	</package>
   </objectDefinitions>
 </transfer>
