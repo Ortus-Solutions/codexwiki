@@ -26,12 +26,19 @@
 
 <cffunction name="render" hint="renders the page content" access="public" returntype="string" output="false">
 	<cfscript>
+		var args = StructNew();
+
+		args.stringBuilder = createObject("java", "java.lang.StringBuilder").init();
+
 		if(NOT hasRenderedContent())
 		{
 			translate();
 		}
 
-		return getRenderedContent();
+		//use a closure
+		eachRenderable(renderRenderableClosure, args);
+
+		return args.stringBuilder.toString();
 	</cfscript>
 </cffunction>
 
@@ -43,7 +50,7 @@
 		if(getIsDirty())
 		{
 			clearRenderedContent();
-			translate(true);
+			translate();
 		}
 	</cfscript>
 </cffunction>
@@ -63,12 +70,36 @@
 	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>
 
+<cffunction name="visitContent" hint="takes a visitor object and calls 'vistContent' on each of the Content items" access="public" returntype="void" output="false">
+	<cfargument name="visitor" hint="the visitor that comes in" type="any" required="Yes">
+	<cfargument name="visitData" hint="the struct of visitor data" type="struct" required="Yes">
+	<cfargument name="visitDynamicContent" hint="whether or not to visit dyanmic content. Defaults to false." type="boolean" required="No" default="false">
+	<cfscript>
+		if(hasRenderedContent())
+		{
+			arguments.content = getRenderedContent();
+		}
+		else
+		{
+			/*
+			use an array list, as it passes by reference.
+			Don't need to synchronise it, as it only ever get's populated by a single thread, and then it is read only
+			*/
+			arguments.content = createObject("java", "java.util.ArrayList").init();
+			ArrayAppend(arguments.content, createObject("component", "codex.model.wiki.parser.renderable.StaticRenderable").init(getContent()));
+		}
+
+		eachRenderable(visitContentClosure, arguments, arguments.content);
+
+		setRenderedContent(arguments.content);
+	</cfscript>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 <cffunction name="translate" hint="translates the wiki page content" access="public" returntype="string" output="false">
-	<cfargument name="setCategories" hint="whether or not to set the page categories from the parsed markup" type="boolean" required="No" default="false">
 	<cfscript>
 		var data = 0;
 		var category = 0;
@@ -81,19 +112,21 @@
 			if(NOT hasRenderedContent())
 			{
 				data = StructNew();
-				data.content = getContent();
+				data.content = this;
 				getInterceptorService().processState("onWikiPageTranslate",data);
-				setRenderedContent(data.content);
 
-				if(arguments.setCategories AND StructKeyExists(data, "categories"))
+				if(getIsDirty()) //only do this if the content has been changed - i.e. not on populate
 				{
-					clearCategory();
-
-					len = ArrayLen(data.categories);
-					for(; counter <= len; counter++)
+					if(StructKeyExists(data, "categories"))
 					{
-						category = getWikiService().getCategory(categoryName=data.categories[counter]);
-						addCategory(category);
+						clearCategory();
+
+						len = ArrayLen(data.categories);
+						for(; counter <= len; counter++)
+						{
+							category = getWikiService().getCategory(categoryName=data.categories[counter]);
+							addCategory(category);
+						}
 					}
 				}
 			}
@@ -102,12 +135,75 @@
 	</cfif>
 </cffunction>
 
-<cffunction name="getRenderedContent" access="private" returntype="string" output="false">
+<cffunction name="eachRenderable" hint="runs a closure against each visitor" access="private" returntype="void" output="false">
+	<cfargument name="closure" hint="a method closure" type="any" required="Yes">
+	<cfargument name="closureArgs" hint="the closure arguments" type="struct" required="false" default="#StrctNew()#">
+	<cfargument name="renderedContent" hint="the rendered content collection" type="array" required="no" default="#getRenderedContent()#">
+	<cfscript>
+		var len = ArrayLen(arguments.renderedContent);
+		var counter = 1;
+		var call = arguments.closure;
+
+		for(; counter <= len; counter++)
+		{
+			arguments.closureArgs.renderable = arguments.renderedContent[counter];
+			arguments.closureArgs.index = counter;
+
+			//this won't work if it's arguments.closure - go figure.
+			call(argumentCollection=arguments.closureArgs);
+		}
+	</cfscript>
+</cffunction>
+
+<!--- closures --->
+
+<cffunction name="renderRenderableClosure" hint="a closure for displaying a renderable item" access="private" returntype="void" output="false">
+	<cfargument name="renderable" hint="a renderable object" type="any" required="Yes">
+	<cfargument name="stringBuilder" hint="the string builder to build this from" type="any" required="Yes">
+	<cfscript>
+		arguments.stringBuilder.append(arguments.renderable.render());
+	</cfscript>
+</cffunction>
+
+<cffunction name="visitContentClosure" hint="a closure to enable visitors to visit each renderable item" access="public" returntype="string" output="false">
+	<cfargument name="renderable" hint="a renderable object" type="any" required="Yes">
+	<cfargument name="content" hint="the array of renderable content" type="array" required="Yes">
+	<cfargument name="index" hint="the index of the current item we are at" type="numeric" required="Yes">
+	<cfargument name="visitor" hint="the visitor that comes in" type="any" required="Yes">
+	<cfargument name="visitData" hint="the struct of visitor data" type="struct" required="Yes">
+	<cfargument name="visitDynamicContent" hint="whether or not to visit dyanmic content. Defaults to false." type="boolean" required="No" default="false">
+	<cfscript>
+		//use local, as may return null
+		var local = StructNew();
+
+		//if you can visit dynamic content, then visit it, otherwise, ignore it
+		if(NOT arguments.renderable.getIsDynamic() OR visitDynamicContent == true)
+		{
+			local.returnVar = arguments.visitor.visitRenderable(arguments.renderable, arguments.visitData);
+
+			if(StructKeyExists(local, "returnVar"))
+			{
+				//if an object replace
+				if(isObject(local.returnVar))
+				{
+					arguments.content[arguments.index] = local.returnVar;
+				}
+				else if(isArray(local.returnVar)) //if an array, repace that item with the array contents
+				{
+					arguments.content.addAll(index, local.returnVar);
+					ArrayDeleteAt(arguments.content, index);
+				}
+			}
+		}
+	</cfscript>
+</cffunction>
+
+<cffunction name="getRenderedContent" access="private" returntype="array" output="false">
 	<cfreturn instance.renderedContent />
 </cffunction>
 
 <cffunction name="setRenderedContent" access="private" returntype="void" output="false">
-	<cfargument name="renderedContent" type="string" required="true">
+	<cfargument name="renderedContent" type="array" required="true">
 	<cfset instance.renderedContent = arguments.RenderedContent />
 </cffunction>
 

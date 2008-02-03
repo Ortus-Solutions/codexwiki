@@ -6,7 +6,7 @@
 	<cfargument name="event" required="true" type="coldbox.system.beans.requestContext" hint="The event object.">
 	<cfargument name="interceptData" required="true" type="struct" hint="interceptData of intercepted info.">
 	<cfscript>
-		arguments.interceptData.content = getFeed().render(arguments.interceptData.content);
+		arguments.interceptData.content.visitContent(getFeed(), arguments.interceptData);
 	</cfscript>
 </cffunction>
 

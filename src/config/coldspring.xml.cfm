@@ -28,6 +28,7 @@
 
 	<bean id="ColdBoxController" factory-bean="ColdBoxFactory" factory-method="getColdBox" />
 	<bean id="InterceptorService" factory-bean="ColdBoxController" factory-method="getinterceptorService" />
+	<bean id="ColdboxOCM" factory-bean="ColdboxFactory" factory-method="getColdBoxOCM" />
 
 	<!-- wiki -->
 

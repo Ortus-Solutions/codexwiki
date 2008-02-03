@@ -42,19 +42,21 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="render" hint="parses the wiki, and returns a struct with {html : 'the renders html', categories : ''}" access="public" returntype="struct" output="false">
-	<cfargument name="wikiText" hint="the wiki text to render" type="string" required="Yes">
+<cffunction name="visitRenderable" hint="visits a renderable item" access="public" returntype="any" output="false">
+	<cfargument name="renderable" hint="renderable object, should be static" type="any" required="Yes">
+	<cfargument name="visitData" hint="struct of data that gets passed around" type="struct" required="Yes">
 	<cfscript>
-		var result = StructNew();
 		var model = createModel();
 
-		result.content = model.render(arguments.wikiText);
+		arguments.renderable.setContent(model.render(arguments.renderable.getContent()));
 
-		//use a cf array, as it's easier
-		result.categories = ArrayNew(1);
-		result.categories.addAll(model.getCategories());
+		if(NOT StructKeyExists(arguments.visitData, "categories"))
+		{
+			arguments.visitData.categories = ArrayNew(1);
+		}
 
-		return result;
+		//use java, it's fast
+		arguments.visitData.categories.addAll(model.getCategories());
 	</cfscript>
 </cffunction>
 
