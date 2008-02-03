@@ -54,9 +54,6 @@ Description :
 			if( len(cleanedScriptName) gt 0)
 				cleanedPathInfo = replaceNocase(getSESElement('path_info'),cleanedScriptName,'');
 
-			//put this back in, as the base ses interceptor expects it
-			cleanedPathInfo = "/" & cleanedPathInfo;
-
 			/* Find a course */
 			acourse = findCourse( cleanedPathInfo, event );
 
