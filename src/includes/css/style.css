@@ -44,14 +44,17 @@ p{
 	margin:5px	
 }
 h1 {
-	font-size: 120%;
+	font-size: 18px;
 	letter-spacing: .5px;
 }
 h2 {
-	font-size: 115%; 		
+	font-size: 14px;
+	border-bottom:1px solid #AAAAAA;
+	padding-bottom:0.17em;
+	padding-top:0.5em;;	
 }
 h3 {
-	font-size: 115%;
+	font-size: 12px;
 	color: #003366;		
 }
 h4{
@@ -288,15 +291,6 @@ form.search input.textbox:focus {
 /* main column */
 #main {
 	margin:0pt 2em 0pt 240px;
-}
-#main h1 {
-	margin: 10px 0;
-	padding: 4px 0 4px 8px; 
-	font-size: 105%;
-	color: #FFF;
-	text-transform: uppercase; 
-	background-color: #CC0000;	
-	letter-spacing: .5px;
 }
 
 /* sidebar */

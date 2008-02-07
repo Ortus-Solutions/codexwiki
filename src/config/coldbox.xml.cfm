@@ -3,6 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
+		<Setting name="AppMapping"					value=""/>
 		<Setting name="DebugMode" 					value="true" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
@@ -17,7 +18,7 @@
 		<Setting name="ApplicationStartHandler" 	value="main.onAppInit"/>
 		<Setting name="OwnerEmail" 					value="myemail@gmail.com" />
 		<Setting name="EnableBugReports" 			value="false"/>
-		<Setting name="UDFLibraryFile" 				value="" />
+		<Setting name="UDFLibraryFile" 				value="includes/viewhelper.cfm" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="page.show" />
 		<Setting name="CustomErrorTemplate"			value="" />
@@ -29,7 +30,6 @@
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="/codex/config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
-		<Setting name="AppMapping"					value=""/>
 	</Settings>
 
 	<YourSettings>
@@ -71,14 +71,15 @@
 
 	<Interceptors>
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
-
+		
+		<Interceptor class="coldbox.system.interceptors.environmentControl">
+			<Property name="configFile">config/environments.xml.cfm</Property>
+			<Property name="fireOnInit">true</Property>
+		</Interceptor>
+		
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 			<Property name="completeDIMethodName">onDIComplete</Property>
-		</Interceptor>
-
-		<Interceptor class="coldbox.system.interceptors.environmentControl">
-			<Property name="configFile">config/environments.xml.cfm</Property>
 		</Interceptor>
 
 		<Interceptor class="codex.interceptors.util.ses">

@@ -18,7 +18,7 @@
 	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
-		if( not reFindNoCase("flashpaper|pdf",event.getValue("print","")) ){
+		if( not reFindNoCase("flashpaper|pdf|HTML",event.getValue("print","")) ){
 			return;
 		}
 		else{
@@ -29,9 +29,9 @@
 			{
 				event.setValue("layout_extension","pdf");
 			}
-			else{
+			else if( event.getValue("print") eq "flashpaper"){
 				event.setValue("layout_extension","swf");
-			}				
+			}			else{				Event.setLayout("Layout.html");			}	
 		}
 		</cfscript>
 	</cffunction>
