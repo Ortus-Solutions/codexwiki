@@ -71,6 +71,38 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getNamespace" hint="returns a namespace Object" access="public" returntype="codex.model.wiki.Namespace" output="false">
+	<cfargument name="namespaceID" hint="the specific namespace id" type="string" required="no">
+	<cfargument name="namespaceName" hint="the namespace name" type="string" required="no">
+	<cfscript>
+		var namespace = 0;
+		// retrieve by id
+		if(StructKeyExists(arguments, "namespaceID") AND len(arguments.namespaceID))
+		{
+			return getTransfer().get("wiki.Namespace", arguments.namespaceID);
+		}
+		else if(StructKeyExists(arguments, "namespaceName") AND len(arguments.namespaceName))
+		{
+			namespace = getTransfer().readByProperty("wiki.Namespace", "name", arguments.namespaceName);
+
+			//if the namespace is not persisted, we'll give it the name
+			if(NOT namespace.getIsPersisted())
+			{
+				namespace.setName(arguments.namespaceName);
+				namespace.setDescription(arguments.namespaceName);
+			}
+
+			return namespace;
+		}
+
+		return getTransfer().new("wiki.Namespace");
+	</cfscript>
+</cffunction>
+
+<cffunction name="getDefaultNamespace" hint="gets the default namespace" access="public" returntype="codex.model.wiki.Namespace" output="false">
+	<cfreturn getTransfer().readByProperty("wiki.Namespace", "isDefault", true) />
+</cffunction>
+
 <cffunction name="saveContent" hint="saves the content, and cascades to the page" access="public" returntype="void" output="false">
 	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
 	<cfscript>
@@ -79,6 +111,9 @@
 	</cfscript>
 	<cftransaction>
 	<cfscript>
+		//save the name space first
+		getTransfer().save(arguments.content.getPage().getNamespace(), false);
+
 		getTransfer().save(arguments.content.getPage(),false);
 
 		while(iterator.hasNext())

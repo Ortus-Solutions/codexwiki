@@ -2,6 +2,26 @@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
+<cffunction name="setName" hint="stes the page name, and sets the namespace as required" access="public" returntype="void" output="false">
+	<cfargument name="name" hint="the name of the page" type="string" required="Yes">
+	<cfscript>
+		var nameSpace = 0;
+
+		getTransferObject().setName(arguments.name);
+
+		if(ListLen(arguments.name, ":") gte 2)
+		{
+			nameSpace = getWikiService().getNamespace(namespaceName=ListGetAt(arguments.name, 1, ":"));
+		}
+		else
+		{
+			nameSpace = getWikiService().getDefaultNameSpace();
+		}
+
+		setNamespace(namespace);
+	</cfscript>
+</cffunction>
+
 <cffunction name="setWikiService" access="public" returntype="void" output="false">
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />

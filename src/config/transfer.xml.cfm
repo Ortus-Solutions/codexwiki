@@ -5,6 +5,16 @@
 		<object name="Page" table="wiki_page" decorator="codex.model.wiki.Page">
 			<id name="pageID" column="page_id" type="UUID" generate="true"/>
 			<property name="name" type="string" column="page_name"/>
+			<manytoone name="Namespace">
+				<link column="FKnamespace_id" to="wiki.Namespace"/>
+			</manytoone>
+		</object>
+
+		<object name="Namespace" table="wiki_namespace" decorator="codex.model.wiki.Namespace">
+			<id name="namespace_id" type="UUID" generate="true"/>
+			<property name="name" type="string" column="namespace_name"/>
+			<property name="description" type="string" column="namespace_description"/>
+			<property name="isDefault" type="boolean" column="namespace_isdefault"/>
 		</object>
 
 		<object name="Content" table="wiki_pagecontent" decorator="codex.model.wiki.Content">
