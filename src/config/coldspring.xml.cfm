@@ -38,4 +38,6 @@
 	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />
 	<bean id="Feed" class="codex.model.wiki.parser.Feed" />
 
+	<!-- rss -->
+	<bean id="RSSManager" class="codex.model.rss.RSSManager" />
 </beans>
