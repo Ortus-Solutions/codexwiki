@@ -4,6 +4,7 @@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="FeedRenderable" output="false">
 	<cfargument name="feedTag" hint="" type="string" required="Yes">
+	<cfargument name="baseURL" hint="the base url to draw links from" type="string" required="Yes">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
 	<cfscript>
 		var xFeed = 0;
@@ -44,6 +45,16 @@
 		if(StructKeyExists(xFeed, "display") AND xFeed.display eq "numbered")
 		{
 			xFeed.listType = "ol";
+		}
+
+		//check for codex:// protocol, and do some security
+		if(xFeed.url.startsWith("codex://"))
+		{
+			xFeed.url = replaceNoCase(xFeed.url, "codex://", arguments.baseURL & "/");
+		}
+		else if(NOT xFeed.url.startsWth("http://"))
+		{
+			xFeed.url = "http://" & xFeed.url;
 		}
 
 		setFeedData(xFeed);
@@ -114,7 +125,7 @@
 
 	<!--- if anything goes wrong, display error --->
 	<cftry>
-		<cffeed action="read" source="#feedData.url#" name="data">
+		<cffeed action="read" source="#feedData.url#" name="data" timeout="30">
 		<cfcatch type="Application">
 			<cfsavecontent variable="html">
 			<cfoutput>

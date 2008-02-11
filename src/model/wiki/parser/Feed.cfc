@@ -4,7 +4,10 @@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="Feed" output="false">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
+	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
 	<cfscript>
+		setBaseURL(arguments.coldBoxController.getSetting("sesBaseURL"));
+
 		setCacheManager(arguments.coldboxOCM);
 
 		return this;
@@ -34,7 +37,7 @@
 			matcher.reset();
 
 			//going to pass off parsing and validation to the FeedRenderable object
-			feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(feedTag, getCacheManager());
+			feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(feedTag, getBaseURL(), getCacheManager());
 
 			ArrayAppend(results, static);
 			ArrayAppend(results, feed);
@@ -68,6 +71,15 @@
 <cffunction name="setCacheManager" access="private" returntype="void" output="false">
 	<cfargument name="cacheManager" type="coldbox.system.cache.cacheManager" required="true">
 	<cfset instance.cacheManager = arguments.cacheManager />
+</cffunction>
+
+<cffunction name="getBaseURL" access="private" returntype="string" output="false">
+	<cfreturn instance.baseURL />
+</cffunction>
+
+<cffunction name="setBaseURL" access="private" returntype="void" output="false">
+	<cfargument name="baseURL" type="string" required="true">
+	<cfset instance.baseURL = arguments.baseURL />
 </cffunction>
 
 </cfcomponent>

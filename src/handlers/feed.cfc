@@ -7,7 +7,11 @@
 	<cfscript>
 		var rc = arguments.event.getCollection();
 
-		rc.feedData = getRssManager().getRSS(rc.source, rc.feed, rc);
+		rc.rss = getRssManager().getRSS(rc.source, rc.feed, rc);
+
+		setDebugMode(false);
+
+		arguments.event.setLayout("Layout.xml");
 
 		arguments.event.setView("rss/rss");
 	</cfscript>

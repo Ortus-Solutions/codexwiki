@@ -3,32 +3,81 @@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="directory" output="false">
+	<cfargument name="baseURL" hint="the base feed url for the links" type="string" required="Yes">
 	<cfscript>
+		setBaseURl(arguments.baseURL);
+
 		return this;
 	</cfscript>
 </cffunction>
 
-<cffunction name="list" displayname="RSS Feed List" hint="A list of all the feeds currently available in this wiki" access="public" returntype="struct" output="false">
+<cffunction name="list"
+			displayname="RSS Feed List"
+			hint="A list of all the feeds currently available in this wiki"
+			access="public"
+			returntype="xml"
+			rss = "true"
+			output="false">
 	<cfscript>
 		var rss = StructNew();
+		var meta = 0;
+		var func = 0;
+		var qCFCs = getRSSCFCs();
+		var item = 0;
+
 		rss.title = "Rss Feed list";
-		rss.link = "/feed/directory/list.cfm";
+		rss.link = getBaseURL() & "directory/list.cfm";
 		rss.description = "A list of all the feeds currently available in this wiki";
 		rss.version = "rss_2.0";
 
-
-		return rss;
+		rss.item = ArrayNew(1);
 	</cfscript>
-</cffunction>
 
-<!--- <cfset meta.title = "Art Orders">
-<cfset meta.link = "http://feedlink">
-<cfset meta.description = "Orders at the art gallery">
-<cfset meta.version = "rss_2.0">
- --->
+	<cfloop query="qCFCs">
+		<cfscript>
+			meta = getComponentMetaData("codex.model.rss.source." & Left(name, Len(name) - 4));
+		</cfscript>
+		<cfloop array="#meta.functions#" index="func">
+			<cfscript>
+				//if not 'rss=true' annotation, then it doesn't display
+				if(NOT structKeyExists(func, "access") OR func.access eq "public" AND StructKeyExists(func, "rss") AND func.rss)
+				{
+					item = StructNew();
+
+					item.title = func.displayName;
+					item.description.value = func.hint;
+					item.link = getBaseURL() & ListGetAt(meta.name, ListLen(meta.name, "."), ".") & "/" & func.name & ".cfm";
+
+					ArrayAppend(rss.item, item);
+				}
+			</cfscript>
+		</cfloop>
+	</cfloop>
+
+	<cffeed action="create" name="#rss#" xmlVar="rss">
+
+	<cfreturn rss />
+</cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
+
+<cffunction name="getRSSCFCs" hint="returns a query of all the rss cfcs" access="public" returntype="query" output="false">
+	<cfscript>
+		var qCFCs = 0;
+	</cfscript>
+	<cfdirectory action="list" directory="#getDirectoryFromPath(getMetaData(this).path)#" filter="*.cfc" name="qCFCs">
+	<cfreturn qCFCs />
+</cffunction>
+
+<cffunction name="getBaseURL" access="private" returntype="string" output="false">
+	<cfreturn instance.baseURL />
+</cffunction>
+
+<cffunction name="setBaseURL" access="private" returntype="void" output="false">
+	<cfargument name="baseURL" type="string" required="true">
+	<cfset instance.baseURL = arguments.baseURL />
+</cffunction>
 
 </cfcomponent>
