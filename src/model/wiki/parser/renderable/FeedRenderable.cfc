@@ -47,14 +47,10 @@
 			xFeed.listType = "ol";
 		}
 
-		//check for codex:// protocol, and do some security
-		if(xFeed.url.startsWith("codex://"))
+		//allow for relative links, and security
+		if(NOT xFeed.url.startsWith("http://"))
 		{
-			xFeed.url = replaceNoCase(xFeed.url, "codex://", arguments.baseURL & "/");
-		}
-		else if(NOT xFeed.url.startsWth("http://"))
-		{
-			xFeed.url = "http://" & xFeed.url;
+			xFeed.url = arguments.baseURL & xFeed.url;
 		}
 
 		setFeedData(xFeed);
