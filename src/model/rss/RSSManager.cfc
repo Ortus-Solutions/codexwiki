@@ -19,7 +19,7 @@
 	<cfargument name="feedArgs" hint="the rss feed arguments" type="struct" required="Yes">
 	<cfscript>
 		var source = getSource(arguments.sourceName);
-		var result = "<feednotfound></feednotfound>";
+		var result = "<error>Feed not found</error>";
 	</cfscript>
 
 	<cfif isObject(source) AND StructKeyExists(source, arguments.feed)>
@@ -31,9 +31,49 @@
 	</cfscript>
 </cffunction>
 
+<!--- Dependency injection methods for Bean Factory. --->
+
+<cffunction name="setBeanFactory" access="public" returntype="void" output="false" hint="I set the BeanFactory.">
+	<cfargument name="beanFactory" type="coldspring.beans.BeanFactory" required="true" />
+	<cfset instance.beanFactory = arguments.beanFactory />
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
+
+<cffunction name="autowire" hint="autowires the source from CS" access="public" returntype="void" output="false">
+	<cfargument name="source" hint="the source to autowire" type="any" required="Yes">
+	<cfscript>
+		var keys = StructKeyArray(arguments.source);
+		var key = 0;
+		var meta = 0;
+		var args = 0;
+		var beanName = 0;
+	</cfscript>
+	<cfloop array="#keys#" index="key">
+		<cfif LCase(key).startsWith("set") AND isCustomFunction(arguments.source[key])>
+			<cfset meta = getMetaData(arguments.source[key]) />
+			<cfif NOT StructKeyExists(meta, "access") OR meta.access eq "public" AND arrayLen(meta.arguments) eq 1>
+				<cfset beanName = Right(key, Len(Key) - 3) />
+				<cfif getBeanFactory().containsBean(beanName)>
+					<cfset args = StructNew() />
+					<cfset args[meta.arguments[1].name] = getBeanFactory().getBean(beanName) />
+					<cftry>
+						<cfinvoke component="#arguments.source#" method="#key#" argumentcollection="args">
+						<cfcatch>
+							<!--- do nothing --->
+						</cfcatch>
+					</cftry>
+				</cfif>
+			</cfif>
+		</cfif>
+	</cfloop>
+</cffunction>
+
+<cffunction name="getBeanFactory" access="private" returntype="any" output="false" hint="I return the BeanFactory.">
+	<cfreturn instance.beanFactory />
+</cffunction>
 
 <cffunction name="getSource" hint="Returns the source CFC" access="private" returntype="any" output="false">
 	<cfargument name="sourceName" hint="the name of the souce" type="string" required="Yes">
@@ -51,6 +91,7 @@
 				}
 
 				source = createObject("component", "codex.model.rss.source.#arguments.sourceName#").init(getBaseURL());
+				autowire(source);
 
 				StructInsert(getFeedCollection(), arguments.sourceName, source);
 			}
@@ -58,7 +99,7 @@
 		</cflock>
 	</cfif>
 	<cfreturn StructFind(getFeedCollection(), arguments.sourceName) />
-</cffunction>sesBaseURL
+</cffunction>
 
 <cffunction name="getFeedCollection" access="private" returntype="struct" output="false">
 	<cfreturn instance.feedCollection />
