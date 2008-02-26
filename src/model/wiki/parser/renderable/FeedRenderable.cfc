@@ -47,7 +47,7 @@
 			xFeed.listType = "ol";
 		}
 
-		//allow for relative links, and security
+		//allow for relative links, and security - TODO: if internal link, go through internal means, and not use URL to get to RSS feed.
 		if(NOT xFeed.url.startsWith("http://"))
 		{
 			xFeed.url = arguments.baseURL & xFeed.url;

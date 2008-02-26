@@ -40,12 +40,17 @@
 		<cfloop array="#meta.functions#" index="func">
 			<cfscript>
 				//if not 'rss=true' annotation, then it doesn't display
-				if(NOT structKeyExists(func, "access") OR func.access eq "public" AND StructKeyExists(func, "rss") AND func.rss)
+				if((NOT StructKeyExists(func, "access")
+						OR func.access eq "public"
+					)
+					AND StructKeyExists(func, "rss")
+					AND func.rss)
 				{
 					item = StructNew();
 
 					item.title = func.displayName;
-					item.description.value = func.hint;
+					item.description.value = buildFeedDescription(func);
+
 					item.link = getBaseURL() & ListGetAt(meta.name, ListLen(meta.name, "."), ".") & "/" & func.name & ".cfm";
 
 					ArrayAppend(rss.item, item);
@@ -62,6 +67,31 @@
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
+
+<cffunction name="buildFeedDescription" hint="builds the feed description from the functionmeta" access="private" returntype="string" output="false">
+	<cfargument name="functionMeta" hint="the function meta" type="struct" required="Yes">
+	<cfscript>
+		var description = createObject("java", "java.lang.StringBuilder").init(arguments.functionMeta.hint);
+		var len = arrayLen(arguments.functionMeta.parameters);
+		var counter = 1;
+		var arg = 0;
+
+		if(len)
+		{
+			description.append("<p>URL Parameters: <ul>");
+
+			for(; counter <= len; counter++)
+			{
+				arg = arguments.functionMeta.parameters[counter];
+				description.append("<li>#arg.name# - #arg.hint#</li>");
+			}
+
+			description.append("</ul></p>");
+		}
+
+		return description.toString();
+	</cfscript>
+</cffunction>
 
 <cffunction name="getRSSCFCs" hint="returns a query of all the rss cfcs" access="public" returntype="query" output="false">
 	<cfscript>

@@ -16,6 +16,7 @@
 
 	<bean id="Transfer" factory-bean="TransferFactory" factory-method="getTransfer" />
 	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasouce" />
+	<bean id="Transaction" factory-bean="TransferFactory" factory-method="getTransaction" />
 
 	<!-- Transfer related beans -->
 

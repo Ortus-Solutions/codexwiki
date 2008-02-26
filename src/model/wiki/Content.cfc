@@ -35,8 +35,8 @@
 			translate();
 		}
 
-		//use a closure
-		eachRenderable(renderRenderableClosure, args);
+		//use a command
+		eachRenderable(renderRenderableCommand, args);
 
 		return args.stringBuilder.toString();
 	</cfscript>
@@ -89,7 +89,7 @@
 			ArrayAppend(arguments.content, createObject("component", "codex.model.wiki.parser.renderable.StaticRenderable").init(getContent()));
 		}
 
-		eachRenderable(visitContentClosure, arguments, arguments.content);
+		eachRenderable(visitContentCommand, arguments, arguments.content);
 
 		setRenderedContent(arguments.content);
 	</cfscript>
@@ -135,29 +135,29 @@
 	</cfif>
 </cffunction>
 
-<cffunction name="eachRenderable" hint="runs a closure against each visitor" access="private" returntype="void" output="false">
-	<cfargument name="closure" hint="a method closure" type="any" required="Yes">
-	<cfargument name="closureArgs" hint="the closure arguments" type="struct" required="false" default="#StrctNew()#">
+<cffunction name="eachRenderable" hint="runs a command against each visitor" access="private" returntype="void" output="false">
+	<cfargument name="command" hint="a method command" type="any" required="Yes">
+	<cfargument name="commandArgs" hint="the comand arguments" type="struct" required="false" default="#StrctNew()#">
 	<cfargument name="renderedContent" hint="the rendered content collection" type="array" required="no" default="#getRenderedContent()#">
 	<cfscript>
 		var len = ArrayLen(arguments.renderedContent);
 		var counter = 1;
-		var call = arguments.closure;
+		var call = arguments.command;
 
 		for(; counter <= len; counter++)
 		{
-			arguments.closureArgs.renderable = arguments.renderedContent[counter];
-			arguments.closureArgs.index = counter;
+			arguments.commandArgs.renderable = arguments.renderedContent[counter];
+			arguments.commandArgs.index = counter;
 
-			//this won't work if it's arguments.closure - go figure.
-			call(argumentCollection=arguments.closureArgs);
+			//this won't work if it's arguments.command - go figure.
+			call(argumentCollection=arguments.commandArgs);
 		}
 	</cfscript>
 </cffunction>
 
-<!--- closures --->
+<!--- Commands --->
 
-<cffunction name="renderRenderableClosure" hint="a closure for displaying a renderable item" access="private" returntype="void" output="false">
+<cffunction name="renderRenderableCommand" hint="a commnd for displaying a renderable item" access="private" returntype="void" output="false">
 	<cfargument name="renderable" hint="a renderable object" type="any" required="Yes">
 	<cfargument name="stringBuilder" hint="the string builder to build this from" type="any" required="Yes">
 	<cfscript>
@@ -165,7 +165,7 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="visitContentClosure" hint="a closure to enable visitors to visit each renderable item" access="public" returntype="string" output="false">
+<cffunction name="visitContentCommand" hint="a command to enable visitors to visit each renderable item" access="public" returntype="string" output="false">
 	<cfargument name="renderable" hint="a renderable object" type="any" required="Yes">
 	<cfargument name="content" hint="the array of renderable content" type="array" required="Yes">
 	<cfargument name="index" hint="the index of the current item we are at" type="numeric" required="Yes">

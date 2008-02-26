@@ -4,10 +4,13 @@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiService" output="false">
 	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+	<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 	<cfscript>
 		instance = StructNew();
 
 		setTransfer(arguments.transfer);
+
+		arguments.transaction.advise(this, "^save");
 
 		return this;
 	</cfscript>
@@ -109,7 +112,6 @@
 		var iterator = content.getCategoryIterator();
 		var category = 0;
 	</cfscript>
-	<cftransaction>
 	<cfscript>
 		//save the name space first
 		getTransfer().save(arguments.content.getPage().getNamespace(), false);
@@ -118,14 +120,58 @@
 
 		while(iterator.hasNext())
 		{
-			//TODO: when creating a category, need to create a default page for it.
 			category = iterator.next();
+
+			if(NOT category.getIsPersisted())
+			{
+				category.createCategoryPage();
+			}
+
 			getTransfer().save(category, false);
 		}
 
 		getTransfer().save(arguments.content,false);
 	</cfscript>
-	</cftransaction>
+</cffunction>
+
+<cffunction name="getPagesByCategory" hint="Returns Pages by Category" access="public" returntype="query" output="false">
+	<cfargument name="category" hint="the category name" type="string" required="No" default="">
+	<cfscript>
+		var tql = 0;
+		var query = 0;
+	</cfscript>
+	<cfsavecontent variable="tql">
+	<cfoutput>
+		select
+			page.name,
+			content.createdDate
+		from
+			wiki.Page as page
+			join
+			wiki.Content as content
+			left outer join
+			wiki.Category as category
+		where
+			content.isActive = :true
+			and
+			<cfif Len(arguments.category)>
+				category.name = :categoryName
+			<cfelse>
+				category.name IS NULL
+			</cfif>
+		order by
+		page.name
+	</cfoutput>
+	</cfsavecontent>
+	<cfscript>
+		query = getTransfer().createQuery(tql);
+		query.setCacheEvaluation(true);
+
+		query.setParam("true", true, "boolean");
+		query.setParam("categoryName", arguments.category);
+
+		return getTransfer().listByQuery(query);
+	</cfscript>
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
@@ -178,6 +224,50 @@
 <cffunction name="setTransfer" access="private" returntype="void" output="false">
 	<cfargument name="transfer" type="transfer.com.Transfer" required="true">
 	<cfset instance.transfer = arguments.transfer />
+</cffunction>
+
+<cffunction name="transaction" hint="Runs a method inside a transaction, if one already doesn't exist" access="private" returntype="void" output="false">
+	<cfargument name="command" hint="the command method to run in a transaction" type="any" required="Yes">
+	<cfargument name="commandArgs" hint="the command arguments" type="struct" required="Yes">
+	<cfscript>
+		var call = arguments.command;
+	</cfscript>
+	<cfif getInTransaction()>
+		<cfset call(argumentCollection=arguments.commandArgs) />
+	<cfelse>
+		<cftransaction>
+			<cfscript>
+				getTransactionLocal().set(true);
+				call(argumentCollection=arguments.commandArgs);
+			</cfscript>
+		</cftransaction>
+		<cfscript>
+			getTransactionLocal().set(false);
+		</cfscript>
+	</cfif>
+</cffunction>
+
+<cffunction name="getInTransaction" hint="returnsif we are in a transaction" access="private" returntype="boolean" output="false">
+	<cfscript>
+		var local = StructNew();
+		local.in = getTransactionLocal().get();
+
+		if(NOT StructKeyExists(local, "in"))
+		{
+			getTransactionLocal().set(false);
+		}
+
+		return getTransactionLocal().get();
+	</cfscript>
+</cffunction>
+
+<cffunction name="getTransactionLocal" access="private" returntype="any" output="false">
+	<cfreturn instance.transactionLocal />
+</cffunction>
+
+<cffunction name="setTansactionLocal" access="private" returntype="void" output="false">
+	<cfargument name="transactionLocal" type="any" required="true">
+	<cfset instance.transactionLocal = arguments.transactionLocal />
 </cffunction>
 
 </cfcomponent>

@@ -54,13 +54,13 @@
 	<cfloop array="#keys#" index="key">
 		<cfif LCase(key).startsWith("set") AND isCustomFunction(arguments.source[key])>
 			<cfset meta = getMetaData(arguments.source[key]) />
-			<cfif NOT StructKeyExists(meta, "access") OR meta.access eq "public" AND arrayLen(meta.arguments) eq 1>
+			<cfif NOT StructKeyExists(meta, "access") OR meta.access eq "public" AND arrayLen(meta.parameters) eq 1>
 				<cfset beanName = Right(key, Len(Key) - 3) />
 				<cfif getBeanFactory().containsBean(beanName)>
 					<cfset args = StructNew() />
-					<cfset args[meta.arguments[1].name] = getBeanFactory().getBean(beanName) />
+					<cfset args[meta.parameters[1].name] = getBeanFactory().getBean(beanName) />
 					<cftry>
-						<cfinvoke component="#arguments.source#" method="#key#" argumentcollection="args">
+						<cfinvoke component="#arguments.source#" method="#key#" argumentcollection="#args#">
 						<cfcatch>
 							<!--- do nothing --->
 						</cfcatch>
