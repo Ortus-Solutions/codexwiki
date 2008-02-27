@@ -2,7 +2,7 @@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-<cffunction name="setPageName" hint="sets the page name, if a page does not exist, creates it" access="public" returntype="void" output="false">
+<!--- <cffunction name="setPageName" hint="sets the page name, if a page does not exist, creates it" access="public" returntype="void" output="false">
 	<cfargument name="pageName" hint="the page name" type="string" required="Yes">
 	<cfscript>
 		var page = 0;
@@ -14,13 +14,13 @@
 
 		getPage().setName(arguments.pageName);
 	</cfscript>
-</cffunction>
+</cffunction> --->
 
 <cffunction name="populate" hint="processes the form details" access="public" returntype="void" output="false">
 	<cfargument name="memento" hint="takes a memento" type="struct" required="Yes">
 	<cfscript>
 		getBeanPopulator().populate(this, arguments.memento);
-		setPageName(arguments.memento.pageName);
+		//setPageName(arguments.memento.pageName);
 	</cfscript>
 </cffunction>
 

@@ -36,11 +36,24 @@
 
 <cffunction name="getPage" hint="returns a specific page object" access="public" returntype="codex.model.wiki.Page" output="false">
 	<cfargument name="pageID" hint="the specific page id" type="string" required="no">
+	<cfargument name="pageName" hint="the page name" type="string" required="no">
 	<cfscript>
 		// retrieve by id
 		if(StructKeyExists(arguments, "pageID") AND len(arguments.pageID))
 		{
 			return getTransfer().get("wiki.Page", arguments.pageID);
+		}
+		else if(StructKeyExists(arguments, "pageName") AND len(arguments.pageName))
+		{
+			page = getTransfer().readByProperty("wiki.Page", "name", arguments.pageName);
+
+			//if the page is not persisted, we'll give it the name
+			if(NOT page.getIsPersisted())
+			{
+				page.setName(arguments.pageName);
+			}
+
+			return page;
 		}
 
 		return getTransfer().new("wiki.Page");
@@ -114,9 +127,9 @@
 	</cfscript>
 	<cfscript>
 		//save the name space first
-		getTransfer().save(arguments.content.getPage().getNamespace(), false);
+		getTransfer().save(arguments.content.getPage().getNamespace());
 
-		getTransfer().save(arguments.content.getPage(),false);
+		getTransfer().save(arguments.content.getPage());
 
 		while(iterator.hasNext())
 		{
@@ -127,10 +140,23 @@
 				category.createCategoryPage();
 			}
 
-			getTransfer().save(category, false);
+			getTransfer().save(category);
 		}
 
-		getTransfer().save(arguments.content,false);
+		getTransfer().save(arguments.content);
+	</cfscript>
+</cffunction>
+
+<cffunction name="saveContentVersion" hint="saves the content versions, making the new content the active one" access="public" returntype="void" output="false">
+	<cfargument name="oldContent" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+	<cfargument name="newContent" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+	<cfscript>
+		arguments.oldContent.setIsActive(false);
+		arguments.newContent.setIsActive(true);
+		arguments.newContent.setVersion(arguments.oldContent.getVersion() + 1);
+
+		saveContent(arguments.oldContent);
+		saveContent(arguments.newContent);
 	</cfscript>
 </cffunction>
 
@@ -210,7 +236,7 @@
 		//if the object is not persisted, we'll pass in the title of the page
 		if(NOT content.getIsPersisted())
 		{
-			content.setPageName(arguments.pageName);
+			content.setPage(getPage(pageName=arguments.pageName));
 		}
 
 		return content;
@@ -224,50 +250,6 @@
 <cffunction name="setTransfer" access="private" returntype="void" output="false">
 	<cfargument name="transfer" type="transfer.com.Transfer" required="true">
 	<cfset instance.transfer = arguments.transfer />
-</cffunction>
-
-<cffunction name="transaction" hint="Runs a method inside a transaction, if one already doesn't exist" access="private" returntype="void" output="false">
-	<cfargument name="command" hint="the command method to run in a transaction" type="any" required="Yes">
-	<cfargument name="commandArgs" hint="the command arguments" type="struct" required="Yes">
-	<cfscript>
-		var call = arguments.command;
-	</cfscript>
-	<cfif getInTransaction()>
-		<cfset call(argumentCollection=arguments.commandArgs) />
-	<cfelse>
-		<cftransaction>
-			<cfscript>
-				getTransactionLocal().set(true);
-				call(argumentCollection=arguments.commandArgs);
-			</cfscript>
-		</cftransaction>
-		<cfscript>
-			getTransactionLocal().set(false);
-		</cfscript>
-	</cfif>
-</cffunction>
-
-<cffunction name="getInTransaction" hint="returnsif we are in a transaction" access="private" returntype="boolean" output="false">
-	<cfscript>
-		var local = StructNew();
-		local.in = getTransactionLocal().get();
-
-		if(NOT StructKeyExists(local, "in"))
-		{
-			getTransactionLocal().set(false);
-		}
-
-		return getTransactionLocal().get();
-	</cfscript>
-</cffunction>
-
-<cffunction name="getTransactionLocal" access="private" returntype="any" output="false">
-	<cfreturn instance.transactionLocal />
-</cffunction>
-
-<cffunction name="setTansactionLocal" access="private" returntype="void" output="false">
-	<cfargument name="transactionLocal" type="any" required="true">
-	<cfset instance.transactionLocal = arguments.transactionLocal />
 </cffunction>
 
 </cfcomponent>

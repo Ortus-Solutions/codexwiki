@@ -3,7 +3,7 @@
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('htmlBaseURL')#">Dashboard</a></li>
-		<li><a href="#getSetting('htmlBaseURL')#/wiki/Help.cfm">Help</a></li>
+		<li><a href="#getSetting('htmlBaseURL')#/wiki/Help:Contents.cfm">Help</a></li>
 		<li><a href="#getSetting('htmlBaseURL')#/wiki/Special:Feeds.cfm">Rss Feeds</a></li>
 	</ul>
 </div>

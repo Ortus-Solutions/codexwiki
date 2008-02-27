@@ -17,3 +17,7 @@ div#categories ul li {
 	margin: 0px;
 	padding: 0 10px 0 0;
 }
+
+p.buttons {
+	text-align: right;
+}

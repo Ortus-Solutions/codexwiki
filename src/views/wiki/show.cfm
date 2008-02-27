@@ -30,7 +30,7 @@
 <!--- Management Tool Bar --->
 <cfif not event.valueExists("print")>
 <br />
-<p>
+<p class="buttons">
 	<a href="#getSetting('sesBaseURL')#/#rc.onEditWiki#/#URLEncodedFormat(rc.page)#.cfm">
 		<input type="button" value="Edit Page">
 	</a>
