@@ -10,7 +10,7 @@
 
 <hr size="1"/>
 
-<p>
+<p class="buttons">
 	<a href="#getSetting('sesBaseURL')#/#rc.onCreateWiki#/#URLEncodedFormat(rc.page)#.cfm">
 		<input type="button" value="Create Page" />
 	</a>

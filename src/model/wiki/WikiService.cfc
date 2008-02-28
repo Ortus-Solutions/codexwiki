@@ -200,6 +200,41 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getPageHistory" hint="get's a page's history" access="public" returntype="query" output="false">
+	<cfargument name="pageName" hint="the page name" type="string" required="Yes">
+	<cfscript>
+		var tql = 0;
+		var query = 0;
+	</cfscript>
+	<cfsavecontent variable="tql">
+	<cfoutput>
+		select
+			page.name,
+			page.pageid,
+			content.contentid,
+			content.version,
+			content.createdDate,
+			content.isActive
+		from
+			wiki.Page as page
+			join
+			wiki.Content as content
+		where
+			page.name = :name
+		order by
+			content.version desc
+	</cfoutput>
+	</cfsavecontent>
+	<cfscript>
+		query = getTransfer().createQuery(tql);
+		query.setCacheEvaluation(true);
+
+		query.setParam("name", arguments.pageName);
+
+		return getTransfer().listByQuery(query);
+	</cfscript>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

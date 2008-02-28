@@ -30,6 +30,7 @@
 		arguments.event.setValue("onEditWiki","page/manage");
 		arguments.event.setValue("onCreateWiki","page/manage");
 		arguments.event.setValue("onDeleteWiki","page/delete");
+		arguments.event.setValue("onShowHistory","page/showHistory");
 
 		/* Set views according to persistance */
 		if(content.getIsPersisted())
@@ -60,19 +61,6 @@
 <cffunction name="process" hint="processes the wiki details" access="public" returntype="void" output="false">
 	<cfargument name="event" type="coldbox.system.beans.requestContext">
 	<cfscript>
-		/*
-		var content = getWikiService().getContent(contentid=arguments.event.getValue("contentid", ""));
-
-		if(content.getIsPersisted())
-		{
-			content.setIsActive(false);
-			getWikiService().saveContent(content);
-			content = getWikiService().getContent();
-			content.setPage(content.getPage());
-		}
-
-		content.populate(arguments.event.getCollection());
-		*/
 		var pageName = arguments.event.getValue("pageName");
 		var page = getWikiService().getPage(pageName=pageName);
 
@@ -80,11 +68,36 @@
 
 		//TODO: may want to validate here later, once a decision has been made on validation
 
-		//getWikiService().saveContent(content);
-
-		//make the page have the right URL
 		setNextRoute(route="wiki/" & pageName, persist="page");
 	</cfscript>
+</cffunction>
+
+<cffunction name="showHistory" hint="shows a page's history" access="public" returntype="void" output="false">
+	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfscript>
+		var pageName = arguments.event.getValue("page");
+		var page = getWikiService().getPage(pageName=pageName);
+		var qHistory = getWikiService().getPageHistory(pageName);
+
+
+		arguments.event.setValue("onRollback", "rollbackContent");
+		arguments.event.setValue("onDelete", "deleteContent");
+		arguments.event.setValue("page", page);
+
+		arguments.event.setValue("history", qHistory);
+
+		arguments.event.setView("wiki/showHistory");
+	</cfscript>
+</cffunction>
+
+<cffunction name="_dump">
+	<cfargument name="s">
+	<cfargument name="abort" default="true">
+	<cfset var g = "">
+		<cfdump var="#arguments.s#">
+		<cfif arguments.abort>
+		<cfabort>
+		</cfif>
 </cffunction>
 
 <cffunction name="setWikiService" access="public" returntype="void" output="false">
