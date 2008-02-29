@@ -147,17 +147,35 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="saveContentVersion" hint="saves the content versions, making the new content the active one" access="public" returntype="void" output="false">
-	<cfargument name="oldContent" hint="The content object" type="codex.model.wiki.Content" required="Yes">
-	<cfargument name="newContent" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+<cffunction name="deleteContent" hint="deletes a content object" access="public" returntype="void" output="false">
+	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
 	<cfscript>
-		arguments.oldContent.setIsActive(false);
-		arguments.newContent.setIsActive(true);
-		arguments.newContent.setVersion(arguments.oldContent.getVersion() + 1);
-
-		saveContent(arguments.oldContent);
-		saveContent(arguments.newContent);
+		getTransfer().delete(arguments.content);
 	</cfscript>
+</cffunction>
+
+<cffunction name="saveContentVersion" hint="saves the content versions, making the new content the active one" access="public" returntype="void" output="false">
+	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
+	<cfscript>
+		var activeContent = 0;
+	</cfscript>
+	<!--- lock this, so we only have 1 active content at any given time --->
+	<cflock name="codex.wiki.saveContentVersion.#arguments.content.getPage().getName()#" timeout="60">
+		<cfscript>
+			activeContent = getContent(pageName=arguments.content.getPage().getName());
+
+			if(activeContent.getIsPersisted())
+			{
+				activeContent.setIsActive(false);
+				arguments.content.setVersion(activeContent.getVersion() + 1);
+				saveContent(activeContent);
+			}
+
+			arguments.content.setIsActive(true);
+
+			saveContent(arguments.content);
+		</cfscript>
+	</cflock>
 </cffunction>
 
 <cffunction name="getPagesByCategory" hint="Returns Pages by Category" access="public" returntype="query" output="false">

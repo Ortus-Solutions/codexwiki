@@ -80,8 +80,8 @@
 		var qHistory = getWikiService().getPageHistory(pageName);
 
 
-		arguments.event.setValue("onRollback", "rollbackContent");
-		arguments.event.setValue("onDelete", "deleteContent");
+		arguments.event.setValue("onReplaceActive", "page/replaceActive");
+		arguments.event.setValue("onDelete", "page/deleteContent");
 		arguments.event.setValue("page", page);
 
 		arguments.event.setValue("history", qHistory);
@@ -90,14 +90,28 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="_dump">
-	<cfargument name="s">
-	<cfargument name="abort" default="true">
-	<cfset var g = "">
-		<cfdump var="#arguments.s#">
-		<cfif arguments.abort>
-		<cfabort>
-		</cfif>
+<cffunction name="deleteContent" hint="delete's a content object" access="public" returntype="string" output="false">
+	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfscript>
+		var content = getWikiService().getContent(arguments.event.getValue("contentid"));
+		var page = content.getPage();
+
+		getWikiService().deleteContent(content);
+
+		setNextRoute(route="page/showHistory/" & page.getName());
+	</cfscript>
+</cffunction>
+
+<cffunction name="replaceActive" hint="delete's a content object" access="public" returntype="string" output="false">
+	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfscript>
+		var content = getWikiService().getContent(arguments.event.getValue("contentid"));
+		var page = content.getPage();
+
+		content.replaceActive();
+
+		setNextRoute(route="page/showHistory/" & page.getName());
+	</cfscript>
 </cffunction>
 
 <cffunction name="setWikiService" access="public" returntype="void" output="false">

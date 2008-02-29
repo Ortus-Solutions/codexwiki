@@ -5,16 +5,11 @@
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiText" output="false">
 	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
 	<cfscript>
-		var path = getDirectoryFromPath(getMetaData(this).path) & "/lib/bliki/";
-		var qFiles = 0;
-		var paths = ArrayNew(1);
-	</cfscript>
-	<cfdirectory action="list" filter="*.jar" directory="#path#" name="qFiles">
-	<cfloop query="qFiles">
-		<cfset ArrayAppend(paths, directory & "/" & name) />
-	</cfloop>
-	<cfscript>
-		setJavaLoader(createObject("component", "coldbox.system.extras.javaloader.JavaLoader").init(paths));
+		variables.instance = StructNew();
+		variables.static = StructNew();
+		variables.static.SERVER_SCOPE_KEY = "6351BB9B-D46D-51D0-D7D22F30A344B7B4";
+
+		initJavaLoader();
 
 		setLinkPattern(arguments.coldBoxController.getSetting('htmlBaseURL') & "/" & arguments.coldboxController.getSetting("ShowKey") & "/${title}.cfm");
 
@@ -64,17 +59,43 @@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
-	<cfreturn getJavaLoader().create("info.bliki.wiki.model.WikiModel").init(getConfiguration(), "/${image}", getLinkPattern()) />
+<cffunction name="initJavaLoader" hint="initialised the java loaded in the server scope" access="private" returntype="void" output="false">
+	<cfscript>
+		var path = getDirectoryFromPath(getMetaData(this).path) & "/lib/bliki/";
+		var qFiles = 0;
+		var paths = ArrayNew(1);
+	</cfscript>
+
+	<cfif NOT StructKeyExists(server, static.SERVER_SCOPE_KEY)>
+		<cflock name="codex.model.wiki.parser.WikiText" throwontimeout="true" timeout="60">
+			<cfif NOT StructKeyExists(server, static.SERVER_SCOPE_KEY)>
+				<cfscript>
+					println("putting wikitext javaloader in server scope...");
+					path = getDirectoryFromPath(getMetaData(this).path) & "/lib/bliki/";
+					paths = ArrayNew(1);
+				</cfscript>
+				<cfdirectory action="list" filter="*.jar" directory="#path#" name="qFiles">
+				<cfloop query="qFiles">
+					<cfset ArrayAppend(paths, directory & "/" & name) />
+				</cfloop>
+				<cfset server[static.SERVER_SCOPE_KEY] = createObject("component", "coldbox.system.extras.javaloader.JavaLoader").init(paths) />
+			</cfif>
+		</cflock>
+	</cfif>
+</cffunction>
+<cffunction name="println" hint="" access="private" returntype="void" output="false">
+	<cfargument name="str" hint="" type="string" required="Yes">
+	<cfscript>
+		createObject("Java", "java.lang.System").out.println(arguments.str);
+	</cfscript>
 </cffunction>
 
 <cffunction name="getJavaLoader" access="private" returntype="coldbox.system.extras.javaloader.JavaLoader" output="false">
-	<cfreturn instance.javaLoader />
+	<cfreturn server[static.SERVER_SCOPE_KEY] />
 </cffunction>
 
-<cffunction name="setJavaLoader" access="private" returntype="void" output="false">
-	<cfargument name="javaLoader" type="coldbox.system.extras.javaloader.JavaLoader" required="true">
-	<cfset instance.javaLoader = arguments.javaLoader />
+<cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
+	<cfreturn getJavaLoader().create("info.bliki.wiki.model.WikiModel").init(getConfiguration(), "/${image}", getLinkPattern()) />
 </cffunction>
 
 <cffunction name="getLinkPattern" access="private" returntype="string" output="false">
@@ -104,5 +125,7 @@
 	<cfargument name="Configuration" type="any" required="true">
 	<cfset instance.Configuration = arguments.Configuration />
 </cffunction>
+
+
 
 </cfcomponent>

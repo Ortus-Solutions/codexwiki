@@ -365,3 +365,13 @@ form.search input.textbox:focus {
 	border-bottom: 1px dashed #EFF0F1; 	
 	border-top: 1px dashed #EFF0F1;	
 }
+
+/* AJAX UI ELements */
+.loading {
+	background-image:  url("../images/loading.gif");
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding: 2px 0 2px 20px;
+	height: 18px;
+	
+}

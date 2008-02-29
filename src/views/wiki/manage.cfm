@@ -1,6 +1,42 @@
 <!--- create a non found wiki page --->
+
+<!--- js --->
+<cfsavecontent variable="js">
 <cfoutput>
-<h1>#rc.content.getPage().getName()#</h1>
+	<script type="text/javascript">
+		$(document).ready(function()
+			{
+				content = $("##content");
+				resizeContent();
+
+				content.keyup(function(event)
+					{
+						if(event.keyCode == 13)
+						{
+							resizeContent();
+						}
+					}
+				);
+
+			}
+		);
+
+		function resizeContent()
+		{
+			var rows = parseInt(content.attr("rows"));
+			var length = content.val().split("\n").length;
+			if(length + 3 >= rows)
+			{
+				content.attr("rows", length + 3);
+			}
+		}
+	</script>
+</cfoutput>
+</cfsavecontent>
+<cfhtmlhead text="#js#">
+
+<cfoutput>
+<h1><a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getName()#</a></h1>
 
 <form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
 	<div class="blockLabels">

@@ -95,6 +95,27 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="replaceActive" hint="replaces the currently active content, with a copy of this one" access="public" returntype="void" output="false">
+	<cfscript>
+		getWikiService().saveContentVersion(copy());
+	</cfscript>
+</cffunction>
+
+<cffunction name="copy" hint="makes a copy of this object" access="public" returntype="Content" output="false">
+	<cfscript>
+		var content = getWikiService().getContent();
+		var memento = getPropertyMemento();
+
+		StructDelete(memento, "isActive");
+		StructDelete(memento, "createDate");
+
+		content.populate(memento);
+		content.setPage(getPage());
+
+		return content;
+	</cfscript>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
@@ -218,7 +239,7 @@
 <cffunction name="configure" hint="initial setup" access="public" returntype="string" output="false">
 	<cfscript>
 		setVersion(1);
-		setIsActive(true);
+		setIsActive(false);
 	</cfscript>
 </cffunction>
 
