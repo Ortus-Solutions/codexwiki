@@ -50,6 +50,7 @@
 		var content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
 		arguments.event.setValue("content", content);
 		arguments.event.setValue("cssAppendList", "uni-form");
+		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack");
 
 		arguments.event.setValue("onSubmit","page/process");
 		arguments.event.setValue("onCancel","wiki");

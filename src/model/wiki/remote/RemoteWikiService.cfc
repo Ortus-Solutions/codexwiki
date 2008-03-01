@@ -1,7 +1,7 @@
-<cfcomponent hint="Remote access to wiki services" output="false">
+<cfcomponent hint="Remote access to wiki services" extends="model.remote.AbstractRemoteFacade" output="false">
 <cfsetting showdebugoutput="false">
 <cfscript>
-	setWikiService(application.cbController.getPlugin("ioc").getBean("WikiService"));
+	setWikiService(getIOC().getBean("WikiService"));
 </cfscript>
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
@@ -10,6 +10,16 @@
 	<cfargument name="contentid" hint="the id of the content item to displlay" type="string" required="Yes">
 	<cfscript>
 		var content = getWikiService().getContent(arguments.contentid);
+		return content.render();
+	</cfscript>
+</cffunction>
+
+<cffunction name="getPreviewHTML" hint="the previous html" access="public" returntype="string" output="false" returnFormat="plain">
+	<cfargument name="content" hint="the contenxt text" type="string" required="Yes">
+	<cfscript>
+		var content = getWikiService().getContent();
+		content.populate(arguments);
+
 		return content.render();
 	</cfscript>
 </cffunction>

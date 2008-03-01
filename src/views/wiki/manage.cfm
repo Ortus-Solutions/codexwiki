@@ -1,5 +1,7 @@
 <!--- create a non found wiki page --->
 
+<cfsetting showdebugoutput="false">
+
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
@@ -30,6 +32,11 @@
 				content.attr("rows", length + 3);
 			}
 		}
+
+		function preview()
+		{
+			$('<div><p style="text-align: right;"><a href="javascript:$.modal.close();">close</a></p>'+ content.val() +'</div>').modal({close:false});
+		}
 	</script>
 </cfoutput>
 </cfsavecontent>
@@ -49,7 +56,8 @@
 	</div>
 
 	<div class="buttonHolder">
-   		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
+		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
+   		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
 </form>

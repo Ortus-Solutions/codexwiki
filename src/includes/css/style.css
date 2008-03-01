@@ -375,3 +375,10 @@ form.search input.textbox:focus {
 	height: 18px;
 	
 }
+
+/* Overlay */
+#modalOverlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#modalContainer {height:70%; width:50%; left:50%; top:15%; left:25%; background-color:#fff; border:3px solid #ccc;}
+#modalContainer #basicModalContent {padding:8px;}
