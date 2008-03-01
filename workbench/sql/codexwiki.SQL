@@ -85,7 +85,8 @@ CREATE TABLE wiki_users
 	user_active BIT NOT NULL DEFAULT 1,
 	user_confirmed BIT NOT NULL DEFAULT 0,
 	user_create_date TIMESTAMP NOT NULL,
-	user_modify_date DATETIME NULL,
+	user_modify_date DATETIME,
+	user_isDefault BIT NOT NULL DEFAULT 0,
 	FKrole_id VARCHAR(36) NOT NULL,
 	PRIMARY KEY (user_id),
 	KEY (FKrole_id)
