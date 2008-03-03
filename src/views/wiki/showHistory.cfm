@@ -33,7 +33,10 @@
 
 
 <cfoutput>
-	<h1><a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page..getName()#</a>: History</h1>
+	<h1>
+		<img src="#getSetting('sesBaseURL')#/includes/images/history.png" border="0" align="absmiddle"> 
+		<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page..getName()#</a>: History
+	</h1>
 
 	<ol>
 		<cfloop query="rc.history">

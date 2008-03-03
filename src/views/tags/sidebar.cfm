@@ -1,5 +1,5 @@
 <cfoutput>
-<h1>Sidebar Menu</h1>
+<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/home.png" align="absmiddle"> Main Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('htmlBaseURL')#">Dashboard</a></li>
@@ -8,7 +8,7 @@
 	</ul>
 </div>
 
-<h1>Wise Words</h1>
+<!--- <h1>Wise Words</h1>
 <div class="left-box">
 	<p>&quot;Big men and big personalities make mistakes and admit them.
 	 It is the little man who is afraid to admit he has been wrong&quot;</p>
@@ -22,5 +22,5 @@
 	welcome to make a small donation through the
 	<a href="http://www.styleshout.com/">donate link</a> on my website - it will
 	be a great help and will surely be appreciated.</p>
-</div>
+</div> --->
 </cfoutput>

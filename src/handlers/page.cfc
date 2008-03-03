@@ -2,7 +2,8 @@
 			 extends="baseHandler"
 			 output="false"
 			 hint="This is our main page handler"
-			 autowire="true">
+			 autowire="true"
+			 cache="true" cacheTimeout="0">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

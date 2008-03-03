@@ -4,7 +4,7 @@
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
 		<Setting name="AppMapping"					value=""/>
-		<Setting name="DebugMode" 					value="true" />
+		<Setting name="DebugMode" 					value="false" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -23,10 +23,11 @@
 		<Setting name="onInvalidEvent" 				value="page.show" />
 		<Setting name="CustomErrorTemplate"			value="" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
-		<Setting name="HandlersIndexAutoReload"   	value="true" />
-		<Setting name="ConfigAutoReload"          	value="true" />
+		<Setting name="HandlersIndexAutoReload"   	value="false" />
+		<Setting name="ConfigAutoReload"          	value="false" />
 		<Setting name="MyPluginsLocation"   		value="" />
 		<Setting name="HandlerCaching" 				value="false"/>
+		<Setting name="EventCaching" 				value="false"/>
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="/codex/config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
@@ -60,13 +61,13 @@
 	<Datasources />
 
 	<Cache>
-		<ObjectDefaultTimeout>30</ObjectDefaultTimeout>
+		<ObjectDefaultTimeout>45</ObjectDefaultTimeout>
 		<ObjectDefaultLastAccessTimeout>15</ObjectDefaultLastAccessTimeout>
 		<ReapFrequency>1</ReapFrequency>
 		<MaxObjects>50</MaxObjects>
-		<FreeMemoryPercentageThreshold>5</FreeMemoryPercentageThreshold>
+		<FreeMemoryPercentageThreshold>3</FreeMemoryPercentageThreshold>
 		<UseLastAccessTimeouts>true</UseLastAccessTimeouts>
-		<EvictionPolicy>LFU</EvictionPolicy>
+		<EvictionPolicy>LRU</EvictionPolicy>
 	</Cache>
 
 	<Interceptors>

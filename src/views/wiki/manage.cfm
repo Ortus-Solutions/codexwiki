@@ -43,13 +43,34 @@
 <cfhtmlhead text="#js#">
 
 <cfoutput>
-<h1><a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getName()#</a></h1>
+<h1>
+	<img src="#getSetting('htmlBaseURL')#/includes/images/page_edit.png" align="absmiddle"> Editing: 
+	<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getName()#</a>
+</h1>
 
 <form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
-
-	    <div class="ctrlHolder">
+		
+		<div id="wikiToolbarRight">
+			<label for="winheight">Adjust edit area height: </label> 
+			<select onchange="resizeTextArea('content', this.options[selectedIndex].value)" 
+					id="winheight" 
+					name="winheight" 
+					size="1">
+			  <option value="8">8</option>
+			  <option value="12">12</option>
+			  <option value="16">16</option>
+			  <option selected="selected" value="20">20</option>
+			  <option value="24">24</option>
+			  <option value="28">28</option>
+			  <option value="32">32</option>
+			  <option value="36">36</option>
+			  <option value="40">40</option>
+			</select>
+	     </div>
+	     
+		<div class="ctrlHolder">
 	      <label for="content"><em>*</em> Wiki Content</label>
 	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	    </div>
