@@ -387,6 +387,11 @@ form.search input.textbox:focus {
 /* Container */
 #modalContainer {height:70%; width:50%; left:50%; top:15%; left:25%; background-color:#fff; border:3px solid #ccc;}
 #modalContainer #basicModalContent {padding:8px;}
+#modalData { 
+	padidng: 0px; 
+	margin: 0px;
+	text-align: left;
+}
 
 /* Wiki ToolBars */
 #wikiToolbarRight{

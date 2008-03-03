@@ -35,7 +35,32 @@
 
 		function preview()
 		{
-			$('<div><p style="text-align: right;"><a href="javascript:$.modal.close();">close</a></p>'+ content.val() +'</div>').modal({close:false});
+			var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
+				close:false,
+				onOpen: function(dialog)
+					{
+					 	dialog.overlay.fadeIn("normal", function()
+						 	{
+						 		dialog.container.fadeIn("fast", function()
+						 			{
+										var data = {method: "getPreviewHTML", content: content.val()};
+
+										$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
+											function(string, status)
+											{
+												dialog.container.html('<div><p style="text-align: right;"><a href="javascript:$.modal.close();">close</a></p>' + string + '</div>');
+											}
+										);
+						 			}
+						 		)
+
+						 	}
+						 )
+					}
+				});
+
+
+
 		}
 	</script>
 </cfoutput>
@@ -44,19 +69,19 @@
 
 <cfoutput>
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/page_edit.png" align="absmiddle"> Editing: 
+	<img src="#getSetting('htmlBaseURL')#/includes/images/page_edit.png" align="absmiddle"> Editing:
 	<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getName()#</a>
 </h1>
 
 <form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
-		
+
 		<div id="wikiToolbarRight">
-			<label for="winheight">Adjust edit area height: </label> 
-			<select onchange="resizeTextArea('content', this.options[selectedIndex].value)" 
-					id="winheight" 
-					name="winheight" 
+			<label for="winheight">Adjust edit area height: </label>
+			<select onchange="resizeTextArea('content', this.options[selectedIndex].value)"
+					id="winheight"
+					name="winheight"
 					size="1">
 			  <option value="8">8</option>
 			  <option value="12">12</option>
@@ -69,7 +94,7 @@
 			  <option value="40">40</option>
 			</select>
 	     </div>
-	     
+
 		<div class="ctrlHolder">
 	      <label for="content"><em>*</em> Wiki Content</label>
 	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>

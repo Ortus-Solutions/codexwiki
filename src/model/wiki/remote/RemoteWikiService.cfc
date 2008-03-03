@@ -14,13 +14,13 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="getPreviewHTML" hint="the previous html" access="public" returntype="string" output="false" returnFormat="plain">
+<cffunction name="getPreviewHTML" hint="the previous html" access="remote" returntype="string" output="false" returnFormat="plain">
 	<cfargument name="content" hint="the contenxt text" type="string" required="Yes">
 	<cfscript>
-		var content = getWikiService().getContent();
-		content.populate(arguments);
+		var oContent = getWikiService().getContent();
+		oContent.populate(arguments);
 
-		return content.render();
+		return oContent.render();
 	</cfscript>
 </cffunction>
 
