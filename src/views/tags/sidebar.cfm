@@ -8,6 +8,26 @@
 	</ul>
 </div>
 
+<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login</h1>
+<div class="left-box">
+	<p>
+	<label for="username">Username</label>
+	<input type="text" name="username" id="username" size="20" />
+	
+	<label for="username">Password</label>
+	<input type="password" name="password" id="password" size="20" />
+	
+	<br />
+	
+	<div align="center">
+	<a href="">Forgot Password?</a>
+	<input type="submit" class="submitButton" value="Log In"></input>
+	</div>
+	<br />
+	</p>
+</div>
+
+
 <!--- <h1>Wise Words</h1>
 <div class="left-box">
 	<p>&quot;Big men and big personalities make mistakes and admit them.

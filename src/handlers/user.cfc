@@ -1,0 +1,7 @@
+<cfcomponent name="user" 			 extends="baseHandler" 			 output="false" 			 hint="Our main handler for user interactivity."			 cache="true" cacheTimeout="0"><!------------------------------------------- PUBLIC ------------------------------------------->	<cffunction name="doLogin" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<cfscript>							</cfscript>	</cffunction>		<cffunction name="logout" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<cfscript>							</cfscript>	</cffunction>		<cffunction name="passwordReminder" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<cfscript>							</cfscript>	</cffunction>		<cffunction name="doPasswordReminder" access="public" returntype="void" output="false">		<cfargument name="Event" type="coldbox.system.beans.requestContext">		<cfscript>							</cfscript>	</cffunction>	
+
+<!------------------------------------------- PACKAGE ------------------------------------------->
+
+<!------------------------------------------- PRIVATE ------------------------------------------->
+
+	</cfcomponent>

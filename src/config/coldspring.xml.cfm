@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE beans SYSTEM "/home/mark/wwwroot/codexWiki/src/config/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE beans SYSTEM "spring-beans.dtd">
 <beans default-autowire="byName">
 
 	<!--Transfer Factory: PERSISTANCE MANAGED BY COLDSPRING -->
@@ -30,6 +30,11 @@
 	<bean id="ColdBoxController" factory-bean="ColdBoxFactory" factory-method="getColdBox" />
 	<bean id="InterceptorService" factory-bean="ColdBoxController" factory-method="getinterceptorService" />
 	<bean id="ColdboxOCM" factory-bean="ColdboxFactory" factory-method="getColdBoxOCM" />
+	<bean id="sessionstorage" factory-bean="ColdboxFactory" factory-method="getPlugin">
+		<constructor-arg name="plugin">
+	       <value>sessionstorage</value>
+	   </constructor-arg>
+	</bean>
 
 	<!-- wiki -->
 
@@ -41,4 +46,15 @@
 
 	<!-- rss -->
 	<bean id="RSSManager" class="codex.model.rss.RSSManager" />
+	
+	<!-- Security -->
+	<bean id="SecurityService" class="codex.model.security.SecurityService">
+		<property name="sessionstorage">
+			<ref bean="sessionstorage"/>
+		</property>
+		<!--User service autowired-->
+	</bean>
+	<bean id="UserService" class="codex.model.security.UserService" />
+		
+	
 </beans>
