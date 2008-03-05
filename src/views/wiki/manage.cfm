@@ -32,6 +32,11 @@
 				content.attr("rows", length + 3);
 			}
 		}
+		
+		function resizeTextArea(id, rows) {
+		  var textarea = $('##' + id);
+		  textarea.attr('rows',rows);
+		}
 
 		function preview()
 		{
@@ -48,7 +53,7 @@
 										$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
 											function(string, status)
 											{
-												dialog.container.html('<div><p style="text-align: right;"><a href="javascript:$.modal.close();">close</a></p>' + string + '</div>');
+												dialog.container.html('<div><p class="align-right"><img src="#getSetting('htmlBaseURL')#/includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p>' + string + '</div>');
 											}
 										);
 						 			}

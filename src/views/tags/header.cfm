@@ -5,7 +5,9 @@
 	<cfif not findnocase("Layout.Print",event.getCurrentLayout())>
 	<ul>
 		<li id="current"><a href="#getSetting('sesBaseURL')#"><span>Home</span></a></li>
-		<li><a href="index.cfm"><span>Admin</span></a></li>		
+		
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#"><span>Admin</span></a></li>		
+	
 	</ul>
 	</cfif>
 </div>

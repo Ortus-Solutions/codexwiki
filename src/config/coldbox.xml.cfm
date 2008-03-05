@@ -20,7 +20,7 @@
 		<Setting name="EnableBugReports" 			value="false"/>
 		<Setting name="UDFLibraryFile" 				value="includes/viewhelper.cfm" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
-		<Setting name="onInvalidEvent" 				value="page.show" />
+		<Setting name="onInvalidEvent" 				value="" />
 		<Setting name="CustomErrorTemplate"			value="" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
@@ -41,6 +41,8 @@
 		<!-- Show Key -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
+		<!-- Lookup Tables To Manage -->
+		<Setting name="SystemLookups" value="{Permissions:security.Permission, Roles:security.Role, SecurityRules:security.SecurityRules}"></Setting>
 	</YourSettings>
 
 	<MailServerSettings />

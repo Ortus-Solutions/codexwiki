@@ -16,13 +16,13 @@
 		<cfscript>
 			var errors = Arraynew(1);
 			
-			if( len(getSecureList()()) eq 0 ){
+			if( len(getSecureList()) eq 0 ){
 				ArrayAppend(errors,"Please set a valid securelist");
 			}
-			if( len(getRoles()()) eq 0 ){
+			if( len(getRoles()) eq 0 ){
 				ArrayAppend(errors,"Please set a valid roles list");
 			}
-			if( len(getRedirect()()) eq 0 ){
+			if( len(getRedirect()) eq 0 ){
 				ArrayAppend(errors,"Please set a valid redirect event");
 			}
 			return errors;
@@ -36,7 +36,7 @@
 			/* Table Config for scaffolding*/
 			var tableConfig = structnew();
 			
-			tableConfig.SortBy = "role";
+			tableConfig.SortBy = "roles";
 			tableConfig.securelist.validate = "text";
 			tableConfig.securelist.maxlength = 255;
 			tableConfig.roles.validate = "text";

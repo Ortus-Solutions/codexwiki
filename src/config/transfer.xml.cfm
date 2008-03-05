@@ -46,12 +46,12 @@
 	<!--Security Package -->
 	<package name="security">
 
-		<object name="Permission" table="wiki_permissions" decorator="codex.model.wiki.security.Permission">
+		<object name="Permission" table="wiki_permissions" decorator="codex.model.security.Permission">
 			<id name="permissionID" column="permission_id" type="UUID" generate="true"/>
 			<property name="permission" type="string" column="permission"/>
 		</object>
 
-		<object name="Role" table="wiki_roles" decorator="codex.model.wiki.security.Role">
+		<object name="Role" table="wiki_roles" decorator="codex.model.security.Role">
 			<id name="roleID" column="role_id" type="UUID" generate="true"/>
 			<property name="role" type="string" column="role"/>
 			<manytomany name="Permission" table="wiki_role_permissions" lazy="true">
@@ -61,7 +61,7 @@
 			</manytomany>
 		</object>
 
-		<object name="User" table="wiki_users" decorator="codex.model.wiki.security.User">
+		<object name="User" table="wiki_users" decorator="codex.model.security.User">
 			<id name="userID" column="user_id" type="UUID" generate="true"/>
 			<property name="fname" type="string" column="user_fname"/>
 			<property name="lname" type="string" column="user_lname"/>
@@ -83,7 +83,7 @@
 			</manytomany>
 		</object>
 
-		<object name="securityrules" table="securityrules" decorator="codex.model.wiki.security.SecurityRule">
+		<object name="SecurityRules" table="wiki_securityrules" decorator="codex.model.security.SecurityRule">
 			<id name="securityruleID" type="UUID" column="securityrule_id" generate="true"/>
 			<property name="whitelist" type="string" column="whitelist"/>
 			<property name="securelist" type="string" column="securelist"/>

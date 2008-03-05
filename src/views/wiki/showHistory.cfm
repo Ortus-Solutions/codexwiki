@@ -43,10 +43,10 @@
 		<li>
 			<a href="javascript: doDisplay('#contentid#')">Version #version#, created on #DateFormat(createddate, "dd-mmmm-yyyy")# #TimeFormat(createddate, "hh:mm:ss tt")#</a>
 			<cfif isActive>
-			| Active Version
+			| <img src="#getSetting('sesBaseURL')#/includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
 			<cfelse>
-			| <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
-			| <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
+			| <img src="#getSetting('sesBaseURL')#/includes/images/arrow_merge.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
+			| <img src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
 			</cfif>
 			<div>
 				#XMLFormat(comment)#

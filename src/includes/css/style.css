@@ -175,13 +175,16 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=c
 .tablelisting{
 	border: 1px solid #cccccc;
 }
+.tablelisting tr{
+	background-color: #eaeaea;
+}
 .tablelisting tr.even{
-	background-color: #EFF6FF;
+	background-color: #ffffff;
 }
 .tablelisting tr:hover { background: #d7eafe}
 .tablelisting th {
 	text-align: left;
-	background-color: #CC0000;
+	background-color: #999999;
 	color: #ffffff;
 	padding: 5px;
 }
@@ -358,6 +361,7 @@ form.search input.textbox:focus {
 .float-right { float: right; }
 .align-left  { text-align: left; }
 .align-right { text-align: right; }
+.align-center  { text-align: center; }
 .hidden { display: none; }
 .show { display:block; }
 
@@ -396,7 +400,7 @@ form.search input.textbox:focus {
 /* Wiki ToolBars */
 #wikiToolbarRight{
 	float: right;
-	font-size: 80%;
+	font-size: 10px;
 	margin-right: 5px;
 }
 #wikiToolbarRight label{
