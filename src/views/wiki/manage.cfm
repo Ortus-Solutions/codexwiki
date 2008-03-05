@@ -99,6 +99,11 @@
 	      <label for="content"><em>*</em> Wiki Content</label>
 	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	    </div>
+
+		<div class="ctrlHolder">
+	      <label for="comment"><em>*</em> Edit Comment</label>
+	      <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+	    </div>
 	</div>
 
 	<div class="buttonHolder">

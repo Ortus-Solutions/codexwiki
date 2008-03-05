@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
-		<Setting name="AppMapping"					value="/applications/CodexWiki/src"/>
+		<Setting name="AppMapping"					value="/"/>
 		<Setting name="DebugMode" 					value="false" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
@@ -72,12 +72,12 @@
 
 	<Interceptors>
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
-		
+
 		<Interceptor class="coldbox.system.interceptors.environmentControl">
 			<Property name="configFile">config/environments.xml.cfm</Property>
 			<Property name="fireOnInit">true</Property>
 		</Interceptor>
-		
+
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 			<Property name="completeDIMethodName">onDIComplete</Property>

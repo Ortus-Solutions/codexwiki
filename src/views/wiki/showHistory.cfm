@@ -34,7 +34,7 @@
 
 <cfoutput>
 	<h1>
-		<img src="#getSetting('sesBaseURL')#/includes/images/history.png" border="0" align="absmiddle"> 
+		<img src="#getSetting('sesBaseURL')#/includes/images/history.png" border="0" align="absmiddle">
 		<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page..getName()#</a>: History
 	</h1>
 
@@ -48,6 +48,9 @@
 			| <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
 			| <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
 			</cfif>
+			<div>
+				#XMLFormat(comment)#
+			</div>
 			<div style="display: none;" id="contentshow_#contentid#" loaded="0">
 			 <span class="loading">Loading...</span>
 			</div>

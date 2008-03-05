@@ -230,6 +230,7 @@
 			page.name,
 			page.pageid,
 			content.contentid,
+			content.comment,
 			content.version,
 			content.createdDate,
 			content.isActive
