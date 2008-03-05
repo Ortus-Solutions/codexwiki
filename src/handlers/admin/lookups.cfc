@@ -121,7 +121,7 @@
 			}
 			//view to display
 			event.setView("lookups/vwEdit");
-		}
+		
 
 		</cfscript>
 	</cffunction>
@@ -265,7 +265,7 @@
 
 			//Relocate to edit
 			setnextEvent("lookups.dspEdit","lookup=#rc.lookup#&id=#rc.id#");
-		}
+		
 
 		</cfscript>
 	</cffunction>
@@ -290,7 +290,7 @@
 			}
 			//Relocate back to listing
 			setnextEvent("lookups.dspLookups","lookup=#rc.lookupclass#");
-		}
+		
 
 		</cfscript>
 	</cffunction>
