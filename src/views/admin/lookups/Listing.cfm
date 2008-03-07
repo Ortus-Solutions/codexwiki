@@ -148,7 +148,7 @@
 	
 			<!--- Display Commands --->
 			<td align="center">
-				<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=#rc.lookupClass#&id=#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
+				<a href="#getSetting('sesBaseURL')#/#rc.xehLookupEdit#?lookupClass=#rc.lookupClass#&id=#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
 				<img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 				

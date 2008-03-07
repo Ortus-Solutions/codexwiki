@@ -158,54 +158,50 @@
 		<cfscript>
 		var rc = event.getCollection();
 		var i = 1;
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
 		var tmpAlias = "";
-
-
-			//LookupCheck
-			fncLookupCheck(event);
-
-			//Get the passed id's TO Object
-			rc.oLookup = getLookupService().getListingObject(rc.lookup,rc.id);
-
-			//Get Lookup's md Dictionary
-			rc.mdDictionary = getLookupService().getDictionary(rc.lookup);
-			rc.pkValue = evaluate("rc.oLookup.get#rc.mdDictionary.PK#()");
-
-			//Check ManyToOne Relations
-			if ( ArrayLen(rc.mdDictionary.ManyToOneArray) ){
-				//Get Lookup Listings
-				for (i=1;i lte ArrayLen(rc.mdDictionary.ManyToOneArray); i=i+1){
-					structInsert(rc,"q#rc.mdDictionary.ManyToOneArray[i].alias#",getLookupService().getListing(rc.mdDictionary.ManyToOneArray[i].className));
-				}
-			}
-			//Check ManyToMany Relations
-			if ( rc.mdDictionary.hasManyToMany ){
-				for (i=1;i lte ArrayLen(rc.mdDictionary.manyToManyArray); i=i+1){
-					tmpAlias = rc.mdDictionary.manyToManyArray[i].alias;
-					//Get m2m relation query
-					structInsert(rc,"q#tmpAlias#",getLookupService().getListing(rc.mdDictionary.manyToManyArray[i].linkToTO));
-					//Get m2m array memento
-					structInsert(rc,"#tmpAlias#Array", evaluate("rc.oLookup.get#tmpAlias#Memento()"));
-				}
-			}
-			//view to display
-			event.setView("lookups/vwEdit");
 		
+		//LookupCheck
+		fncLookupCheck(event);
+		
+		/* exit handlers */
+		rc.xehLookupCreate = "admin.lookups/doUpdate.cfm";
+		
+		//Get the passed id's TO Object
+		rc.oLookup = getLookupService().getLookupObject(rc.lookupClass,rc.id);
 
+		//Get Lookup's md Dictionary
+		rc.mdDictionary = getLookupService().getDictionary(rc.lookupClass);
+		rc.pkValue = evaluate("rc.oLookup.get#rc.mdDictionary.PK#()");
+
+		//Check ManyToOne Relations
+		if ( ArrayLen(rc.mdDictionary.ManyToOneArray) ){
+			//Get Lookup Listings
+			for (i=1;i lte ArrayLen(rc.mdDictionary.ManyToOneArray); i=i+1){
+				structInsert(rc,"q#rc.mdDictionary.ManyToOneArray[i].alias#",getLookupService().getListing(rc.mdDictionary.ManyToOneArray[i].className));
+			}
+		}
+		//Check ManyToMany Relations
+		if ( rc.mdDictionary.hasManyToMany ){
+			for (i=1;i lte ArrayLen(rc.mdDictionary.manyToManyArray); i=i+1){
+				tmpAlias = rc.mdDictionary.manyToManyArray[i].alias;
+				//Get m2m relation query
+				structInsert(rc,"q#tmpAlias#",getLookupService().getListing(rc.mdDictionary.manyToManyArray[i].linkToTO));
+				//Get m2m array memento
+				structInsert(rc,"#tmpAlias#Array", evaluate("rc.oLookup.get#tmpAlias#Memento()"));
+			}
+		}
+		//view to display
+		event.setView("admin/lookups/Edit");
 		</cfscript>
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
-	
 	
 	<cffunction name="doUpdate" output="false" access="public" returntype="void" hint="Update Lookup">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
 		var rc = event.getCollection();
 		var oLookup = "";
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
 		var tmpFKTO = "";
 		//Get the Transfer Object's Metadata Dictionary
 		var mdDictionary = "";
@@ -215,19 +211,17 @@
 			fncLookupCheck(event);
 
 			//Metadata
-			mdDictionary = getLookupService().getDictionary(rc.lookup);
-
+			mdDictionary = getLookupService().getDictionary(rc.lookupClass);
 			//Get Lookup Transfer Object to update
-			oLookup = getLookupService().getListingObject(rc.lookup, rc.id);
-
+			oLookup = getLookupService().getLookupObject(rc.lookupClass, rc.id);
 			//Populate it with RC data
 			getPlugin("beanFactory").populateBean(oLookup);
-
+			
 			//Check for FK Relations
 			if ( ArrayLen(mdDictionary.ManyToOneArray) ){
 				//Loop Through relations
 				for ( i=1;i lte ArrayLen(mdDictionary.ManyToOneArray); i=i+1 ){
-					tmpFKTO = getLookupService().getListingObject(mdDictionary.ManyToOneArray[i].className,rc["fk_"&mdDictionary.ManyToOneArray[1].alias]);
+					tmpFKTO = getLookupService().getLookupObject(mdDictionary.ManyToOneArray[i].className,rc["fk_"&mdDictionary.ManyToOneArray[1].alias]);
 					//add the tmpTO to oLookup
 					evaluate("oLookup.set#mdDictionary.ManyToOneArray[1].alias#(tmpFKTO)");
 				}
@@ -236,9 +230,8 @@
 			//Save Record
 			getLookupService().save(oLookup);
 
-			//Relocate to listing
-			setnextEvent("lookups.dspLookups","lookup=#rc.lookup#");
-
+			/* Relocate back to listing */
+			setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 

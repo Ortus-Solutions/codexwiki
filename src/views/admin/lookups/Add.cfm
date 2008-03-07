@@ -34,11 +34,14 @@
 	<cfloop from="1" to="#arrayLen(rc.mdDictionary.ManyToOneArray)#" index="i">
 	<cfset qListing = rc["q#rc.mdDictionary.ManyToOneArray[i].alias#"]>
 		<label style="width: 180px">#rc.mdDictionary.ManyToOneArray[i].alias#</label>
-		<select name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#" id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#" class="required">
+		<cfselect name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#" 
+				  id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
+				  required="true"
+				  message="#rc.mdDictionary.ManyToOneArray[i].alias# is required">
 			<cfloop query="qListing">
 			<option value="#qListing[rc.mdDictionary.ManyToOneArray[i].PK][currentrow]#">#qListing[rc.mdDictionary.ManyToOneArray[i].DisplayColumn][currentRow]#</option>
 			</cfloop>
-		</select>
+		</cfselect>
 		<br/>
 	</cfloop>
 
