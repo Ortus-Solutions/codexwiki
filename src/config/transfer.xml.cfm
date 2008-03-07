@@ -85,7 +85,7 @@
 
 		<object name="SecurityRules" table="wiki_securityrules" decorator="codex.model.security.SecurityRule">
 			<id name="securityruleID" type="UUID" column="securityrule_id" generate="true"/>
-			<property name="whitelist" type="string" column="whitelist"/>
+			<property name="whitelist" type="string" column="whitelist" nullable="true"/>
 			<property name="securelist" type="string" column="securelist"/>
 			<property name="roles" type="string" column="roles"/>
 			<property name="redirect" type="string" column="redirect"/>
