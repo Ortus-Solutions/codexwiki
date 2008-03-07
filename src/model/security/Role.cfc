@@ -32,7 +32,6 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "role";
-			tableConfig.role.validate = "text";
 			tableConfig.role.maxlength = 100;
 			
 			/* Set the config */

@@ -1,5 +1,6 @@
 <cfoutput>
 <cfsetting showdebugoutput="false">
+<div id="content">
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
@@ -8,35 +9,58 @@
 			window.location='#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=' + lookupClass;
 		}
 		function submitForm(){
+			$('##_loader').fadeIn();
 			$('##lookupForm').submit();
 		}
-		function confirmDelete(){
+		function confirmDelete(recordID){
 			if( confirm("Do you wish to remove the selected record(s)?") ){
-				return submitForm();
+				if( recordID != null ){
+					$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
+					$("input[@name='lookupid']").each(function(){
+						if( this.value == recordID ){ this.checked = true;}
+						else{ this.checked = false; }
+					});
+				}	
+				//Submit Form
+				submitForm();
 			}
-			else
-				return false;
 		}
 	</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<h2>System Lookup Manager - #rc.lookupClass#</h2>
+<!--- Title --->
+<h2>System Lookup Manager</h2>
 <p>From here you can manage all the lookup tables in the system.</p>
+
+<!--- Render Messagebox. --->
+#getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form>
+	
+	<div id="_loader" class="float-right hidden" style="margin:5px 5px 0px 0px;">
+		<p>
+			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		</p>
+	</div>
+	
 	<p><strong>Choose a table to manage:</strong>
 	<select name="lookupClass" id="lookupClass" onChange="loadLookup(this.value)">
 		<cfloop from="1" to="#ArrayLen(rc.SystemLookupsKeys)#" index="i">
 			<option value="#rc.systemLookups[rc.SystemLookupsKeys[i]]#" <cfif rc.lookupClass eq rc.systemLookups[rc.SystemLookupsKeys[i]]>selected</cfif>>#rc.SystemLookupsKeys[i]#</option>
 		</cfloop>
 	</select>
+	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
+		<span>
+			<img src="#getSetting('sesBaseURL')#/includes/images/arrow_refresh.png" border="0" align="absmiddle">
+			Reload
+		</span>
+	</a>
 	</p>
 </form>
-
-
 
 <!--- Results Form --->
 <div>
@@ -45,16 +69,21 @@
 	<input type="hidden" name="lookupclass" id="lookupclass" value="#rc.lookupClass#">
 	
 	<!--- Add / Delete --->
-	<p class="buttons align-right">
-		<a href="#getSetting('sesBaseURL')#/#rc.xehLookupCreate#?lookupClass=#rc.lookupClass#')" id="buttonLinks">
-			<span>Add Record</span>
+	<div class="buttons float-right" style="margin-top:12px;">
+		<a href="#getSetting('sesBaseURL')#/#rc.xehLookupCreate#?lookupClass=#rc.lookupClass#" id="buttonLinks">
+			<span>
+				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
+				Add Record
+			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" id="buttonLinks">
-			<span>Delete Record(s)</span>
+			<span>
+				<img src="#getSetting('sesBaseURL')#/includes/images/stop.png" border="0" align="absmiddle">
+				Delete Record(s)
+			</span>
 		</a>
-	</p>
-	
+	</div>
 	<!--- Records Found --->
 	<div style="margin-top: 12px">
 		<p>
@@ -63,6 +92,7 @@
 	</div>
 	
 	<cfif rc.qListing.recordcount>
+	<br />
 	<!--- Render Results --->
 	<table class="tablelisting" width="100%">
 	
@@ -81,15 +111,15 @@
 					<!--- Sort Column --->
 					<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=#rc.lookupClass#&sortby=#rc.mdDictionary.FieldsArray[i].alias#&sortOrder=#rc.sortOrder#">
 						#rc.mdDictionary.FieldsArray[i].alias#
-					   </a>
-					   <!--- Sort Orders --->
-					   <cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>
-					   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
-					   </cfif>
+					</a>
+				   <!--- Sort Orders --->
+				   <cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>
+				   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
+				   </cfif>
 					</th>
 				</cfif>
 			</cfloop>
-			<th align="center" width="60">CMDS</th>
+			<th align="center" width="60">ACTIONS</th>
 		</tr>
 	
 		<!--- Loop Through Query Results --->
@@ -116,14 +146,14 @@
 				</cfif>
 			</cfloop>
 	
-			<!--- Display Edit Command --->
+			<!--- Display Commands --->
 			<td align="center">
 				<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=#rc.lookupClass#&id=#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
 				<img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 				
-				<a href="" title="Edit Record">
-				<img src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Edit Record">
+				<a href="javascript:confirmDelete('#rc.qListing[rc.mdDictionary.PK][currentrow]#')" title="Edit Record">
+				<img id="delete_#rc.qListing[rc.mdDictionary.PK][currentrow]#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 			</td>
 	
@@ -131,6 +161,9 @@
 		</cfloop>
 	</table>
 	</cfif>
+	
+	<div  style="margin-top:20px"></div>
 	</form>
+</div>
 </div>
 </cfoutput>

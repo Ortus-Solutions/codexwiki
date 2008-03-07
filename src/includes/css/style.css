@@ -156,6 +156,7 @@ input[type=button][disabled], input[type=submit][disabled],input[type=reset][dis
 fieldset{
 	background-color: #f5f5f5;
 	border: 1px solid #ddd;
+	margin: 10px;
 }
 textarea{
 	font: normal 12px Verdana, sans-serif;
@@ -190,6 +191,15 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=c
 }
 .tablelisting td{
 	padding: 5px;
+}
+.tablelisting a {
+	color: #ffffff;
+	background-color: inherit;
+	text-decoration: none;
+}
+.tablelisting a:hover {
+	color: #CC0001; 
+	background-color: inherit;
 }
 /* search form */
 form.search {
@@ -364,10 +374,13 @@ form.search input.textbox:focus {
 .align-center  { text-align: center; }
 .hidden { display: none; }
 .show { display:block; }
+.inline { display: inline; }
+.clear { clear: both; }
+.red   { color: #CC0000; }
+.blue   { color: #003366; }
+.bold { font-weight: bold; }
 
 /* display and additional classes  */
-.clear {	clear: both; }
-.red   { color: #CC0000; }
 .comments { 
 	margin: 20px 10px 5px 10px; 
 	padding: 3px 0;

@@ -3,7 +3,7 @@
 	xsi:noNamespaceSchemaLocation="http://www.coldboxframework.com/schema/config_2.5.0.xsd">
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
-		<Setting name="AppMapping"					value="/"/>
+		<Setting name="AppMapping"					value="/applications/codexwiki/src"/>
 		<Setting name="DebugMode" 					value="false" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>

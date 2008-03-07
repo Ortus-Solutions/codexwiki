@@ -54,30 +54,100 @@
 
 	<!--- ************************************************************* --->
 	
+	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete A Lookup">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfscript>
+		var i = 1;
+		var rc = event.getCollection();
+		
+		//Check that listing sent in
+		if ( event.getValue("lookupid","") neq "" ){
+			//Loop throught listing and delete objects
+			for(i=1; i lte listlen(rc.lookupid); i=i+1){
+				//Delete Entry
+				getLookupService().delete(rc.lookupclass,listgetAt(rc.lookupid,i));
+			}
+			/* Messagebox. */
+			getPlugin("messagebox").setMessage("info", "Record(s) Deleted Successfully.");
+		}
+		else{
+			/* Messagebox. */
+			getPlugin("messagebox").setMessage("warning", "No Records Selected");
+		}
+				
+		/* Relocate back to listing */
+		setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
+		</cfscript>
+	</cffunction>
+
+	<!--- ************************************************************* --->
+	
 	<cffunction name="dspCreate" output="false" access="public" returntype="void" hint="Create Lookup">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
 		//collection reference
 		var rc = event.getCollection();
 		var i = 1;
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
+		
+		//LookupCheck
+		fncLookupCheck(event);
+		
+		/* exit handlers */
+		rc.xehLookupCreate = "admin.lookups/doCreate.cfm";
 
-			//LookupCheck
-			fncLookupCheck(event);
+		//Get Lookup's md Dictionary
+		rc.mdDictionary = getlookupService().getDictionary(rc.lookupclass);
 
-			//Get Lookup's md Dictionary
-			rc.mdDictionary = getPlugin("ioc").getBean("lookupService").getDictionary(rc.lookup);
-
-			//Check Relations
-			if ( rc.mdDictionary.hasManyToOne ){
-				//Get Lookup Listings
-				for (i=1;i lte ArrayLen(rc.mdDictionary.ManyToOneArray); i=i+1){
-					structInsert(rc,"q#rc.mdDictionary.ManyToOneArray[i].alias#",getLookupService().getListing(rc.mdDictionary.ManyToOneArray[i].className));
-				}
+		//Check Relations
+		if ( rc.mdDictionary.hasManyToOne ){
+			//Get Lookup Listings
+			for (i=1;i lte ArrayLen(rc.mdDictionary.ManyToOneArray); i=i+1){
+				structInsert(rc,"q#rc.mdDictionary.ManyToOneArray[i].alias#",getLookupService().getListing(rc.mdDictionary.ManyToOneArray[i].className));
 			}
-			//Set view.
-			event.setView("lookups/vwAdd");
+		}
+		//Set view.
+		event.setView("admin/lookups/Add");
+		</cfscript>
+	</cffunction>
 
+	<!--- ************************************************************* --->
+	
+	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="Create Lookup">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfscript>
+		var rc = event.getCollection();
+		var oLookup = "";
+		var tmpFKTO = "";
+		//Get the Transfer Object's Metadata Dictionary
+		var mdDictionary = "";
+		var i = 1;
+
+
+		//LookupCheck
+		fncLookupCheck(event);
+
+		//Metadata
+		mdDictionary = getLookupService().getDictionary(rc.lookupClass);
+
+		//Get New Lookup Transfer Object to save
+		oLookup = getLookupService().getLookupObject(rc.lookupClass);
+
+		//Populate it with RC data
+		getPlugin("beanFactory").populateBean(oLookup);
+
+		//Check for FK Relations
+		if ( ArrayLen(mdDictionary.ManyToOneArray) ){
+			//Loop Through relations
+			for ( i=1;i lte ArrayLen(mdDictionary.ManyToOneArray); i=i+1 ){
+				tmpFKTO = getLookupService().getLookupObject(mdDictionary.ManyToOneArray[i].className,rc["fk_"&mdDictionary.ManyToOneArray[1].alias]);
+				//add the tmpTO to oLookup
+				evaluate("oLookup.set#mdDictionary.ManyToOneArray[1].alias#(tmpFKTO)");
+			}
+		}
+		//Tell service to save object
+		getLookupService().save(oLookup);		
+		/* Relocate back to listing */
+		setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -128,49 +198,7 @@
 
 	<!--- ************************************************************* --->
 	
-	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="Create Lookup">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
-		<cfscript>
-		var rc = event.getCollection();
-		var oLookup = "";
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
-		var tmpFKTO = "";
-		//Get the Transfer Object's Metadata Dictionary
-		var mdDictionary = "";
-		var i = 1;
-
-
-			//LookupCheck
-			fncLookupCheck(event);
-
-			//Metadata
-			mdDictionary = getLookupService().getDictionary(rc.lookup);
-
-			//Get New Lookup Transfer Object to save
-			oLookup = getLookupService().getListingObject(rc.lookup);
-
-			//Populate it with RC data
-			getPlugin("beanFactory").populateBean(oLookup);
-
-			//Check for FK Relations
-			if ( ArrayLen(mdDictionary.ManyToOneArray) ){
-				//Loop Through relations
-				for ( i=1;i lte ArrayLen(mdDictionary.ManyToOneArray); i=i+1 ){
-					tmpFKTO = getLookupService().getListingObject(mdDictionary.ManyToOneArray[i].className,rc["fk_"&mdDictionary.ManyToOneArray[1].alias]);
-					//add the tmpTO to oLookup
-					evaluate("oLookup.set#mdDictionary.ManyToOneArray[1].alias#(tmpFKTO)");
-				}
-			}
-
-			//Tell service to save object
-			getLookupService().save(oLookup);
-			//Relocate to listing
-			setnextEvent("lookups.dspLookups","lookup=#rc.lookup#");
-
-		</cfscript>
-	</cffunction>
-
-	<!--- ************************************************************* --->
+	
 	
 	<cffunction name="doUpdate" output="false" access="public" returntype="void" hint="Update Lookup">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
@@ -272,30 +300,6 @@
 
 	<!--- ************************************************************* --->
 	
-	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete Lookup">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
-		<cfscript>
-		var i = 1;
-		var rc = event.getCollection();
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
-
-
-			//Check that listing sent in
-			if ( event.getValue("lookupid","") neq "" ){
-				//Loop throught listing and delete objects
-				for(i=1; i lte listlen(rc.lookupid); i=i+1){
-					//Delete Entry
-					getLookupService().delete(rc.lookupclass,listgetAt(rc.lookupid,i));
-				}
-			}
-			//Relocate back to listing
-			setnextEvent("lookups.dspLookups","lookup=#rc.lookupclass#");
-		
-
-		</cfscript>
-	</cffunction>
-
-	<!--- ************************************************************* --->
 
 <!----------------------------------- IOC DEPENDENCIES ------------------------------>
 
@@ -313,8 +317,8 @@
 	<cffunction name="fncLookupCheck" output="false" access="private" returntype="void" hint="Do a parameter check, else redirect">
 		<cfargument name="event" type="any" required="true"/>
 		<cfscript>
-		if ( event.getValue("lookup","") eq "")
-			setnextEvent("lookups.dspLookups");
+		if ( event.getValue("lookupclass","") eq "")
+			setNextRoute("admin.lookups/display");
 		</cfscript>
 	</cffunction>
 

@@ -37,11 +37,8 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "roles";
-			tableConfig.securelist.validate = "text";
 			tableConfig.securelist.maxlength = 255;
-			tableConfig.roles.validate = "text";
 			tableConfig.roles.maxlength = 255;
-			tableConfig.redirect.validate = "text";
 			tableConfig.redirect.maxlength = 255;
 			
 			/* Set the config */

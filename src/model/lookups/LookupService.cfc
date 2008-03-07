@@ -86,13 +86,14 @@
 	<!--- Delete Listing --->
 	<cffunction name="delete" access="public" returntype="void" output="false" hint="Hard Delete a lookup object">
 		<!--- ************************************************************* --->
-		<cfargument name="lookupClass" 	type="string" required="true">
-		<cfargument name="id"     		type="string" required="true">
+		<cfargument name="lookupClass" 	type="string" required="false" default="">
+		<cfargument name="id"     		type="string" required="false" default="">
 		<cfargument name="lookupObject" required="false" type="any" hint="You can send the lookup object to delete. MUTEX with lookupClass and id.">
 		<!--- ************************************************************* --->
 		<cfscript>
 			var oLookup = "";
 			
+			/* Deleting with TO? */
 			if( structKeyExists(arguments,"lookupObject") ){
 				oLookup = arguments.lookupObject;
 			}

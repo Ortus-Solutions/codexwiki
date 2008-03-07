@@ -32,7 +32,6 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "permission";
-			tableConfig.permission.validate = "text";
 			tableConfig.permission.maxlength = 100;
 			
 			/* Set the config */
