@@ -168,6 +168,9 @@
 <!--- ************************************************************************************** --->
 <!--- Many To Many Relations --->
 <cfif rc.mdDictionary.hasManyToMany>
+	<!--- Title --->
+	<h3>Many to Many Manager(s)</h3>
+
 	<cfloop from="1" to="#arrayLen(rc.mdDictionary.manytomanyarray)#" index="relIndex">
 	<!--- Working MD M2M Array --->
 	<cfset thisArray = rc.mdDictionary.manytomanyarray[relIndex]>
