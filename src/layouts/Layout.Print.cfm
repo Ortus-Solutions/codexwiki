@@ -28,18 +28,19 @@ Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
 	<cfoutput>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	
-	<!--- SES Base --->
-	<base href="#getSetting('htmlBaseURL')#/">
-	
 	<!--- Main CSS --->
-	<link rel="stylesheet" type="text/css" href="includes/style.css" />
+	<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/style.css" />
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
-		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />
+		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
 	</cfloop>
 	
 	<!--- Page Title --->
-	<title>CodeX Wiki</title>
+	<title>
+		CodeX Wiki
+		<cfif event.valueExists("content") > - #rc.content.getPage().getName()#</cfif>
+		<cfif event.valueExists("pageTitle")> - #rc.pageTitle#</cfif>
+	</title>
 	</cfoutput>
 </head>
 <body>

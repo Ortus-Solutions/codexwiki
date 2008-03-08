@@ -6,7 +6,6 @@ Design by: <a href="http://www.styleshout.com/">styleshout</a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="#getSetting('htmlBaseURL')#">Home</a> |  	
-  	<a href="#getSetting('htmlBaseURL')#">Site Map</a> |
-	<a href="#getSetting('htmlBaseURL')#">RSS Feed</a>				
+  	<a href="#getSetting('htmlBaseURL')#">Site Map</a>				
 </p>
 </cfoutput>
