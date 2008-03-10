@@ -15,7 +15,7 @@
 	</bean>
 
 	<bean id="Transfer" factory-bean="TransferFactory" factory-method="getTransfer" />
-	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasouce" />
+	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasource" />
 	<bean id="Transaction" factory-bean="TransferFactory" factory-method="getTransaction" />
 
 	<!-- Transfer related beans -->
@@ -46,7 +46,7 @@
 
 	<!-- rss -->
 	<bean id="RSSManager" class="codex.model.rss.RSSManager" />
-	
+
 	<!-- Security -->
 	<bean id="SecurityService" class="codex.model.security.SecurityService">
 		<property name="sessionstorage">
@@ -55,9 +55,9 @@
 		<!--User service autowired-->
 	</bean>
 	<bean id="UserService" class="codex.model.security.UserService" />
-	
+
 	<!-- Lookups -->
 	<bean id="LookupService" class="codex.model.Lookups.LookupService" />
-		
-	
+
+
 </beans>

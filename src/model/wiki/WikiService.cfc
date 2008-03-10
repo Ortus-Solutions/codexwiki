@@ -4,13 +4,16 @@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiService" output="false">
 	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+	<cfargument name="datasource" hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
 	<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 	<cfscript>
 		instance = StructNew();
 
 		setTransfer(arguments.transfer);
+		setDatasource(arguments.datasource);
 
 		arguments.transaction.advise(this, "^save");
+		arguments.transaction.advise(this, "^delete");
 
 		return this;
 	</cfscript>
@@ -254,6 +257,56 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="deletePage" hint="deletes a whole page, and all it's versions from the system" access="public" returntype="void" output="false">
+	<cfargument name="pageid" hint="the id of the page to delete" type="uuid" required="Yes">
+	<cfscript>
+		var qDelete = 0;
+	</cfscript>
+
+	<!--- TODO: include deletion of security permissions --->
+
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_pagecontent_category
+		WHERE
+		FKpagecontent_id IN
+			(
+				SELECT
+					wiki_pagecontent.pagecontent_id
+				FROM
+					wiki_pagecontent
+				WHERE
+					FKpage_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">
+			)
+	</cfquery>
+
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_pagecontent
+		WHERE
+			(FKpage_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
+	</cfquery>
+
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_page
+		WHERE
+		(page_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
+	</cfquery>
+
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_page
+		WHERE
+		(page_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
+	</cfquery>
+
+	<cfscript>
+		//we shouldn't need to discard more than this, as it will cascade
+		getTransfer().discardByClassAndKey("wiki.Page", arguments.pageid);
+	</cfscript>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
@@ -304,6 +357,15 @@
 <cffunction name="setTransfer" access="private" returntype="void" output="false">
 	<cfargument name="transfer" type="transfer.com.Transfer" required="true">
 	<cfset instance.transfer = arguments.transfer />
+</cffunction>
+
+<cffunction name="getDatasource" access="private" returntype="transfer.com.sql.Datasource" output="false">
+	<cfreturn instance.datasource />
+</cffunction>
+
+<cffunction name="setDatasource" access="private" returntype="void" output="false">
+	<cfargument name="datasource" type="transfer.com.sql.Datasource" required="true">
+	<cfset instance.datasource = arguments.datasource />
 </cffunction>
 
 </cfcomponent>

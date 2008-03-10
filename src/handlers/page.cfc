@@ -117,6 +117,19 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="delete" hint="delete a wiki page" access="public" returntype="void" output="false">
+	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfscript>
+		//s'not really a content id, it's a page id
+		var pageid = arguments.event.getValue("contentid");
+		var page = getWikiService().getPage(pageid);
+
+		getWikiService().deletePage(pageid);
+
+		setNextRoute(route="wiki/" & page.getName(), persist="page");
+	</cfscript>
+</cffunction>
+
 <cffunction name="setWikiService" access="public" returntype="void" output="false">
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />

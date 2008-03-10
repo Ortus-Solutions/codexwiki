@@ -5,16 +5,16 @@
 <!--- Print & Floating Top Bar --->
 <cfif not event.valueExists("print")>
 <div align="right" style="margin-bottom:15px;">
-	<img src="#getSetting('htmlBaseURL')#/includes/images/history.png" border="0" align="absmiddle"> 
+	<img src="#getSetting('htmlBaseURL')#/includes/images/history.png" border="0" align="absmiddle">
 	<a href="#getSetting('sesBaseURL')#/#rc.onShowHistory#/#urlPage#.cfm">View History</a> |
-	
-	<img src="#getSetting('htmlBaseURL')#/includes/images/pdf_16x16.png" border="0" align="absmiddle"> 
+
+	<img src="#getSetting('htmlBaseURL')#/includes/images/pdf_16x16.png" border="0" align="absmiddle">
 	<a href="#pageShowRoot()##urlPage#/pdf.cfm" target="_blank">PDF</a> |
-	
-	<img src="#getSetting('htmlBaseURL')#/includes/images/flash_16x16.png" border="0" align="absmiddle"> 
+
+	<img src="#getSetting('htmlBaseURL')#/includes/images/flash_16x16.png" border="0" align="absmiddle">
 	<a href="#pageShowRoot()##urlPage#/flashpaper.cfm" target="_blank">SWF</a> |
-	
-	<img src="#getSetting('htmlBaseURL')#/includes/images/html_16x16.png" border="0" align="absmiddle"> 
+
+	<img src="#getSetting('htmlBaseURL')#/includes/images/html_16x16.png" border="0" align="absmiddle">
 	<a href="#pageShowRoot()##urlPage#/HTML.cfm" target="_blank">HTML</a>
 </div>
 </cfif>
@@ -46,7 +46,7 @@
 		<span>Edit Page</span>
 	</a>
 	&nbsp;
-	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/#urlPage#.cfm" id="buttonLinks">
+	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/id/#rc.content.getPage().getPageID()#.cfm" id="buttonLinks">
 		<span>Delete Page</span>
 	</a>
 </p>
