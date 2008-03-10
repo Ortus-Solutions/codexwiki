@@ -429,7 +429,16 @@ form.search input.textbox:focus {
 #modalOverlay {background-color:#000; cursor:wait;}
 
 /* Container */
-#modalContainer {height:70%; width:70%; left:15%; top:15%; background-color:#fff; border:3px solid #ccc; overflow:auto;}
+#modalContainer {
+	height:70%; 
+	width:70%; 
+	left:15%; 
+	top:15%; 
+	background-color:#fff; 
+	border:3px solid #ccc; 
+	overflow:auto;
+}
+
 #modalContainer #basicModalContent {padding:8px;}
 #modalData { 
 	padding: 0px; 

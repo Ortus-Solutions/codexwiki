@@ -1,0 +1,16 @@
+/* css for history */
+
+
+div.historyload {
+	display: none; 
+	padding: 5px;
+}
+
+div.history {
+	border:3px solid #ccc;
+}
+
+div.overflow {
+	overflow: auto;
+	height: 300px;
+}

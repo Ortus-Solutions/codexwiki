@@ -81,6 +81,7 @@
 		var page = getWikiService().getPage(pageName=pageName);
 		var qHistory = getWikiService().getPageHistory(pageName);
 
+		arguments.event.setValue("cssAppendList", "page.showHistory");
 
 		arguments.event.setValue("onReplaceActive", "page/replaceActive");
 		arguments.event.setValue("onDelete", "page/deleteContent");

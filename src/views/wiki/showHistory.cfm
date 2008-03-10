@@ -19,9 +19,19 @@
 				$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
 					function(string, status)
 					{
-						 show.slideUp("normal");
-						 show.html(string)
-						 show.slideDown("normal");
+						var length = string.split("\n").length;
+						show.slideUp("normal",
+							function()
+							{
+								var class = "history";
+								if(length > 10)
+								{
+									class = class += " overflow";
+								}
+								show.html('<div class="'+ class +'">' + string + '</div>');
+								show.slideDown("normal");
+							}
+							);
 					}
 				);
 			}
@@ -32,7 +42,7 @@
 <cfhtmlhead text="#js#">
 
 <cfoutput>
-<!--- Title --->	
+<!--- Title --->
 <h1>
 	<img src="#getSetting('htmlBaseURL')#/includes/images/history.png" border="0" align="absmiddle">
 	<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page..getName()#</a>: History
@@ -51,7 +61,7 @@
 		<div>
 			#XMLFormat(comment)#
 		</div>
-		<div style="display: none;" id="contentshow_#contentid#" loaded="0">
+		<div class="historyload" id="contentshow_#contentid#" loaded="0">
 		 <span class="loading">Loading...</span>
 		</div>
 	</li>
