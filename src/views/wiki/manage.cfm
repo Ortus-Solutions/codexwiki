@@ -6,33 +6,6 @@
 <cfsavecontent variable="js">
 <cfoutput>
 	<script type="text/javascript">
-		$(document).ready(function()
-			{
-				content = $("##content");
-				resizeContent();
-
-				content.keyup(function(event)
-					{
-						if(event.keyCode == 13)
-						{
-							resizeContent();
-						}
-					}
-				);
-
-			}
-		);
-
-		function resizeContent()
-		{
-			var rows = parseInt(content.attr("rows"));
-			var length = content.val().split("\n").length;
-			if(length + 3 >= rows)
-			{
-				content.attr("rows", length + 3);
-			}
-		}
-		
 		function resizeTextArea(id, rows) {
 		  var textarea = $('##' + id);
 		  textarea.attr('rows',rows);
@@ -83,7 +56,7 @@
 <form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
-		
+
 		<!--- Right Floating Toolbar --->
 		<div id="wikiToolbarRight">
 			<label for="winheight">Adjust edit area height: </label>
@@ -102,26 +75,26 @@
 			  <option value="40">40</option>
 			</select>
 	     </div>
-		
+
 		<!--- Control Holder & Text Area --->
 		<div class="ctrlHolder">
 	      <label for="content"><em>*</em> Wiki Content</label>
 	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	    </div>
-		
+
 		<!--- Comment Editing --->
 		<div class="ctrlHolder">
 	      <label for="comment"><em>*</em> Edit Comment</label>
 	      <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
 	    </div>
 	</div>
-	
+
 	<!--- Management Toolbar --->
 	<div class="buttonHolder">
 		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
    		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
-	
+
 </form>
 </cfoutput>
