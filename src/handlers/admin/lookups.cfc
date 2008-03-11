@@ -200,12 +200,12 @@
 	<cffunction name="doUpdate" output="false" access="public" returntype="void" hint="Update Lookup">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
-		var rc = event.getCollection();
-		var oLookup = "";
-		var tmpFKTO = "";
-		//Get the Transfer Object's Metadata Dictionary
-		var mdDictionary = "";
-		var i = 1;
+			var rc = event.getCollection();
+			var oLookup = "";
+			var tmpFKTO = "";
+			//Get the Transfer Object's Metadata Dictionary
+			var mdDictionary = "";
+			var i = 1;
 
 			//LookupCheck
 			fncLookupCheck(event);
@@ -222,12 +222,12 @@
 				//Loop Through relations
 				for ( i=1;i lte ArrayLen(mdDictionary.ManyToOneArray); i=i+1 ){
 					tmpFKTO = getLookupService().getLookupObject(mdDictionary.ManyToOneArray[i].className,rc["fk_"&mdDictionary.ManyToOneArray[1].alias]);
-					//add the tmpTO to oLookup
+					//add the tmpTO to current oLookup before saving.
 					evaluate("oLookup.set#mdDictionary.ManyToOneArray[1].alias#(tmpFKTO)");
 				}
 			}
 
-			//Save Record
+			//Save Record(s)
 			getLookupService().save(oLookup);
 
 			/* Relocate back to listing */
@@ -240,28 +240,29 @@
 	<cffunction name="doUpdateRelation" output="false" access="public" returntype="void" hint="Update a TO's m2m relation">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
-		//Local Variables
-		var rc = event.getCollection();
-		var oLookup = "";
-		var oLookupService = getPlugin("ioc").getBean("lookupService");
-		var mdDictionary = "";
-		var oRelation = "";
-		var i = 1;
-		var deleteRelationList = "";
-
+			//Local Variables
+			var rc = event.getCollection();
+			var mdDictionary = "";
+			var oLookup = "";
+			var oRelation = "";
+			var i = 1;
+			var deleteRelationList = "";
+			
+			/* Incoming Args: lookupClass, Lookup id, addrelation[boolean], linkTO, linkAlias, m2m_{alias} = listing */
 
 			//LookupCheck
 			fncLookupCheck(event);
 
 			//Get Lookup Transfer Object to update
-			oLookup = getLookupService().getListingObject(rc.lookup, rc.id);
+			oLookup = getLookupService().getLookupObject(rc.lookupClass, rc.id);
+			
 			//Metadata
-			mdDictionary = getLookupService().getDictionary(rc.lookup);
+			mdDictionary = getLookupService().getDictionary(rc.lookupClass);
 
 			//Adding or Deleting
 			if ( rc.addrelation ){
 				//Get the relation object
-				oRelation = getLookupService().getListingObject(rc.linkTO, rc["m2m_#rc.linkAlias#"]);
+				oRelation = getLookupService().getLookupObject(rc.linkTO, rc["m2m_#rc.linkAlias#"]);
 				//Check if it is already in the collection
 				if ( not evaluate("oLookup.contains#rc.linkAlias#(oRelation)") ){
 					//Add Relation to parent
@@ -275,7 +276,7 @@
 				//Remove Relations
 				for (i=1; i lte listlen(deleteRelationList); i=i+1){
 					//Get Relation Object
-					oRelation = getLookupService().getListingObject(rc.linkTO,listGetAt(deleteRElationList,i));
+					oRelation = getLookupService().getLookupObject(rc.linkTO,listGetAt(deleteRElationList,i));
 					//Remove Relation to parent
 					evaluate("oLookup.remove#rc.linkAlias#(oRelation)");
 				}
@@ -285,9 +286,8 @@
 			getLookupService().save(oLookup);
 
 			//Relocate to edit
-			setnextEvent("lookups.dspEdit","lookup=#rc.lookup#&id=#rc.id#");
-		
-
+			setnextEvent("lookups.dspEdit","lookup=#rc.lookup#&id=#rc.id#");		
+			
 		</cfscript>
 	</cffunction>
 
