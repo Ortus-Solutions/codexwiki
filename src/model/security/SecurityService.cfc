@@ -7,7 +7,7 @@
 			instance = StructNew();
 			
 			/* User session Key */
-			setUserSessionKey('oUserTO');
+			setUserSessionKey('auth_user_id');
 			
 			return this;
 		</cfscript>
@@ -32,10 +32,8 @@
 	
 			//Is User in system.
 			if ( oUserTO.getIsPersisted() ){
-				//Set User to Authorized
-				oUserTO.setisAuthorized(true);
 				//Save User State
-				getSessionStorage().setVar(getuserSessionKey(), oUserTO);
+				getSessionStorage().setVar(getuserSessionKey(), oUserTO.getuserID());
 				//Set Return Flags
 				results.authenticated = true;
 			}
@@ -64,18 +62,24 @@
 	<cffunction name="getUserSession" output="false" access="public" returntype="codex.model.security.User"
 				hint="This method checks if a user is in an authorized session, else it returns the default user object.">
 		<cfscript>
-			var oUserTO = "";
+			var oUser = "";
+			var getByDefault = true;
 			
 			//Is user in session
 			if ( getSessionStorage().exists( getuserSessionKey() ) ){
-				oUserTO = getSessionStorage().getVar( getuserSessionKey() );
+				oUser = getUserService().getUser(user_id=getSessionStorage().getVar( getuserSessionKey() ));
+				/* Validate its a good User */
+				if( oUser.getIsPersisted() and oUser.getIsActive() and oUser.getISConfirmed() ){
+					getByDefault = false;
+				}
 			}
-			else{
+			/* Get by Default */
+			if( getByDefault ){
 				//Get Default User
-				oUserTO = getUserService().getDefaultUser();
+				oUser = getUserService().getDefaultUser();
 			}
-			
-			return oUserTO;
+			/* Return User Object */
+			return oUser;
 		</cfscript>
 	</cffunction>
 

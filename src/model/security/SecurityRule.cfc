@@ -37,6 +37,7 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "roles";
+			tableConfig.securityruleID.display = false;
 			tableConfig.securelist.maxlength = 255;
 			tableConfig.roles.maxlength = 255;
 			tableConfig.redirect.maxlength = 255;

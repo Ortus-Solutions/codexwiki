@@ -86,7 +86,7 @@
 						 name="#rc.mdDictionary.FieldsArray[i].alias#" 
 						 id="#rc.mdDictionary.FieldsArray[i].alias#" 
 						 value="" 
-						 size="10"
+						 size="20"
 						 validate="date"
 						 validateat="onBlur"
 						 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
@@ -96,6 +96,14 @@
 			<cfelse>
 				<cfif rc.mdDictionary.FieldsArray[i].html eq "text">
 					<cfinput type="text" 
+							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
+							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
+							 value="" 
+							 size="40"
+							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
+							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
+				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "password">
+					<cfinput type="password" 
 							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
 							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
 							 value="" 
@@ -139,7 +147,7 @@
 
 <!--- Create / Cancel --->
 <div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#" id="buttonLinks">
+	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
 		<span>
 			<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
 			Cancel

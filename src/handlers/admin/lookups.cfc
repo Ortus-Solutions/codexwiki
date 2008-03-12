@@ -17,6 +17,7 @@
 		rc.xehLookupCreate = "admin.lookups/dspCreate.cfm";
 		rc.xehLookupDelete = "admin.lookups/doDelete.cfm";
 		rc.xehLookupEdit = "admin.lookups/dspEdit.cfm";
+		rc.xehLookupClean = "admin.lookups/cleanDictionary.cfm";
 		
 		//Get System Lookups
 		rc.systemLookups = getSetting("SystemLookups");
@@ -49,6 +50,22 @@
 
 		//Set view to render
 		event.setView("admin/lookups/Listing");
+		</cfscript>
+	</cffunction>
+
+	<!--- ************************************************************* --->
+	
+	<cffunction name="cleanDictionary" output="false" access="public" returntype="void" hint="Clean the MD Dictionary">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfscript>
+			var rc = event.getCollection();
+			
+			getLookupService().cleanDictionary();
+			/* Messagebox. */
+			getPlugin("messagebox").setMessage("info", "Metadata Dictionary Cleaned.");
+					
+			/* Relocate back to listing */
+			setNextRoute(route="admin.lookups/display");
 		</cfscript>
 	</cffunction>
 
@@ -165,6 +182,7 @@
 		
 		/* exit handlers */
 		rc.xehLookupCreate = "admin.lookups/doUpdate.cfm";
+		rc.xehLookupUpdateRelation = "admin.lookups/doUpdateRelation.cfm";
 		
 		//Get the passed id's TO Object
 		rc.oLookup = getLookupService().getLookupObject(rc.lookupClass,rc.id);
@@ -186,8 +204,8 @@
 				tmpAlias = rc.mdDictionary.manyToManyArray[i].alias;
 				//Get m2m relation query
 				structInsert(rc,"q#tmpAlias#",getLookupService().getListing(rc.mdDictionary.manyToManyArray[i].linkToTO));
-				//Get m2m array memento
-				structInsert(rc,"#tmpAlias#Array", evaluate("rc.oLookup.get#tmpAlias#Memento()"));
+				//Get m2m relation Array
+				structInsert(rc,"#tmpAlias#Array", evaluate("rc.oLookup.get#tmpAlias#Array()"));
 			}
 		}
 		//view to display
@@ -260,7 +278,7 @@
 			mdDictionary = getLookupService().getDictionary(rc.lookupClass);
 
 			//Adding or Deleting
-			if ( rc.addrelation ){
+			if ( event.getValue("addRelation",false) ){
 				//Get the relation object
 				oRelation = getLookupService().getLookupObject(rc.linkTO, rc["m2m_#rc.linkAlias#"]);
 				//Check if it is already in the collection
@@ -285,9 +303,8 @@
 			//Save Records
 			getLookupService().save(oLookup);
 
-			//Relocate to edit
-			setnextEvent("lookups.dspEdit","lookup=#rc.lookup#&id=#rc.id#");		
-			
+			/* Relocate back to edit */
+			setNextRoute(route="admin.lookups/dspEdit",qs="lookupclass=#rc.lookupclass#&id=#rc.id###m2m_#rc.linkAlias#");		
 		</cfscript>
 	</cffunction>
 

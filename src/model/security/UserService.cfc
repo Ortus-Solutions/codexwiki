@@ -113,6 +113,27 @@
 
 	<!--- ************************************************************* --->
 	
+	<!--- Get User with or without id --->
+	<cffunction name="getUser" output="false" access="public" returntype="codex.model.security.User" hint="Returns a user by ID or a new user object.">
+		<!--- ************************************************************* --->
+		<cfargument name="user_id" type="string" required="false" default=""/>
+		<!--- ************************************************************* --->
+		<cfscript>
+			var oUser = "";
+			var sqlProps = structnew();
+	
+			/* prepare sqlProps */
+			sqlProps.user_id = arguments.user_id;
+			
+			/* Get user now. */
+			oUser = getTransfer().readByPropertyMap('security.User', sqlProps);
+						
+			return oUser;
+		</cfscript>
+	</cffunction>
+
+	<!--- ************************************************************* --->
+	
 	<!--- Get a User Object --->
 	<cffunction name="getDefaultUser" hint="Get a default user from the db." access="public" output="false" returntype="codex.model.security.User">
 		<!--- ************************************************************* --->

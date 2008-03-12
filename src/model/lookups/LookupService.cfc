@@ -286,6 +286,11 @@
 		return mdStruct;
 		</cfscript>
 	</cffunction>
+	
+	<!--- Clean Dictionary --->
+	<cffunction name="cleanDictionary" access="public" returntype="void" output="false">
+		<cfset setmdDictionary(structnew())>
+	</cffunction>
 
 <!----------------------------------- UTILITY GETTER/SETTERS ------------------------------>
 

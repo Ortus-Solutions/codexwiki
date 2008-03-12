@@ -11,6 +11,14 @@
 				$('##addform').submit();
 			}
 		}
+		function submitM2M(relation,addRelation){
+			//Add Relation Check
+			var txtAddRelation = $("##add"+relation+"Form > input[@name='addRelation']");
+			txtAddRelation.val(addRelation);
+			$('##_buttonbar_'+relation).slideUp("fast");
+			$('##_loader_'+relation).fadeIn("slow");
+			$('##add'+relation+'Form').submit();
+		}
 	</script>
 </cfoutput>
 </cfsavecontent>
@@ -54,6 +62,7 @@
 	<cfloop from="1" to="#ArrayLen(rc.mdDictionary.FieldsArray)#" index="i">
 		<!--- Set value --->
 		<cfset tmpValue = evaluate("rc.oLookup.get#rc.mdDictionary.FieldsArray[i].alias#()")>
+		
 		<!--- Do not show the ignore Updates and PK--->
 		<cfif not rc.mdDictionary.FieldsArray[i].primaryKey and not rc.mdDictionary.FieldsArray[i].ignoreUpdate>
 			<label style="width: 180px">#rc.mdDictionary.FieldsArray[i].alias#:</label>
@@ -93,7 +102,7 @@
 						 name="#rc.mdDictionary.FieldsArray[i].alias#" 
 						 id="#rc.mdDictionary.FieldsArray[i].alias#" 
 						 value="#dateFormat(tmpValue, "MM/DD/YYYY")#" 
-						 size="10"
+						 size="20"
 						 validate="date"
 						 validateat="onBlur"
 						 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
@@ -105,6 +114,14 @@
 							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
 							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
 							 value="#tmpValue#" 
+							 size="40"
+							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
+							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
+				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "password">
+					<cfinput type="password" 
+							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
+							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
+							 value="#tmpValue#"
 							 size="40"
 							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
@@ -147,7 +164,7 @@
 
 <!--- Create / Cancel --->
 <div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#" id="buttonLinks">
+	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
 		<span>
 			<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
 			Cancel
@@ -172,58 +189,79 @@
 	<h3>Many to Many Manager(s)</h3>
 
 	<cfloop from="1" to="#arrayLen(rc.mdDictionary.manytomanyarray)#" index="relIndex">
-	<!--- Working MD M2M Array --->
-	<cfset thisArray = rc.mdDictionary.manytomanyarray[relIndex]>
-	<!--- Current M2M Listing Query --->
-	<cfset qListing = rc["q#thisArray.alias#"]>
-	<!--- Relation Array --->
-	<cfset relationArray = rc["#thisArray.alias#Array"]>
-
-	<!--- Display Relation Form --->
-	<!--- action="?event=lookups.doUpdateRelation" method="post" --->
-	<cfform name="add#thisArray.alias#Form" id="add#thisArray.alias#Form">
-		<!--- Lookup Class Choosen to Add --->
-		<input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
-		<!--- Primary Key Value --->
-		<input type="hidden" name="ID" value="#rc.pkValue#">
-		<!--- Alias Name --->
-		<input type="hidden" name="linkAlias" value="#thisArray.alias#">
-		<input type="hidden" name="linkTO"    value="#thisArray.linkToTO#">
-		<input type="hidden" name="addRelation" id="addRelation" value="0">
-		
-		<fieldset>
-			<legend><strong>#thisArray.alias# Relation</strong></legend>
+		<!--- Working MD M2M Array --->
+		<cfset thisArray = rc.mdDictionary.manytomanyarray[relIndex]>
+		<!--- Current M2M Listing Query --->
+		<cfset qListing = rc["q#thisArray.alias#"]>
+		<!--- Relation Array --->
+		<cfset relationArray = rc["#thisArray.alias#Array"]>
+	
+		<!--- Display Relation Form --->
+		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#getSetting('sesBaseURL')#/#rc.xehLookupUpdateRelation#">
+			<!--- Lookup Class Choosen to Add --->
+			<input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
+			<!--- Primary Key Value --->
+			<input type="hidden" name="ID" value="#rc.pkValue#">
+			<!--- Alias Name --->
+			<input type="hidden" name="linkAlias" value="#thisArray.alias#">
+			<input type="hidden" name="linkTO"    value="#thisArray.linkToTO#">
+			<input type="hidden" id="addRelation" name="addRelation" value="1">
+			
+			<fieldset>
+				<legend><a name="m2m_#thisArray.alias#"></a><strong>#thisArray.alias# Relation</strong></legend>
 				
+				<!--- Loader --->
+				<div id="_loader_#thisArray.alias#" class="bold red align-center hidden" style="margin:5px 5px 0px 0px;">
+					Submitting...<br />
+					<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+					<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				</div>
+				
+				<div id="_buttonbar_#thisArray.alias#">
+					<!--- M2M Drop Down Listing --->
+					<select name="m2m_#thisArray.alias#" id="m2m_#thisArray.alias#">
+						<cfloop query="qListing">
+						<option value="#qListing[thisArray.linkToPK][currentrow]#">#qListing[thisArray.linkToSortBy][currentrow]#</option>
+						</cfloop>
+					</select>
+					<!--- Add Button --->
+					<cfif qListing.recordcount>
+					<a href="javascript:submitM2M('#thisArray.alias#',1)" id="buttonLinks">
+						<span>
+							<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
+							Add Relation
+						</span>
+					</a>
+					</cfif>
+					<!--- Remove Button --->
+					&nbsp;
+					<a href="javascript:submitM2M('#thisArray.alias#',0)" id="buttonLinks">
+						<span>
+							<img src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle">
+							Remove Relation(s)
+						</span>
+					</a>
+				</div>
+				
+				<br />
+				<!--- Actual m2m for this lookup --->
 				<cfif arraylen(relationArray)>
+					<p><em> #arrayLen(relationArray)# records found.</em></p>
+					<!--- Create Entry --->
 					<cfloop from="1" to="#arrayLen(relationArray)#" index="i">
-						<input type="checkbox" name="m2m_#thisArray.alias#_id" id="m2m_#thisArray.alias#_id" value="#relationArray[i][thisArray.linkToPK]#" />
-						<label class="onRight" for="m2m_#thisArray.alias#_id">#relationArray[i][thisArray.linkToSortBy]#</label><br/>
+						<cfset thisRelationTO = relationArray[i]>
+						<cfset thisRelationPKID = evaluate('thisRelationTO.get#thisArray.linkToPK#()')>
+						<cfset thisRelationSortBy = evaluate('thisRelationTO.get#thisArray.linkToSortBy#()')>
+						
+						<input type="checkbox" name="m2m_#thisArray.alias#_id" id="m2m_#thisArray.alias#_id" value="#thisRelationPKID#" />
+						<label class="inline" for="m2m_#thisArray.alias#_id">#thisRelationSortBy#</label><br/>
 					</cfloop>
 				<cfelse>
 					<p><em>No #thisArray.alias# relation records found.</em></p>
 				</cfif>			
-		
-			<!--- M2M Listing --->
-			<select name="m2m_#thisArray.alias#" id="m2m_#thisArray.alias#" class="required">
-				<cfloop query="qListing">
-				<option value="#qListing[thisArray.linkToPK][currentrow]#">#qListing[thisArray.linkToSortBy][currentrow]#</option>
-				</cfloop>
-			</select>
 			
-			<input type="button" 
-				class="button" 
-				value="add selected relation" 
-				onclick="validate.lookupUpdateRelation(add#thisArray.alias#Form, 1)"
-				<cfif not qListing.recordcount>disabled="disabled"</cfif>
-			/>
-
-			<input type="button" 
-				class="button" 
-				onclick="validate.lookupUpdateRelation(add#thisArray.alias#Form, 0)" 
-				value="remove checked relation(s)" 
-			/>
-		</fieldset>
-	</cfform>
+			</fieldset>
+		</form>
 	</cfloop>
 </cfif>
 

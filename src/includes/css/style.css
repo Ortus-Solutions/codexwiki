@@ -23,7 +23,7 @@ body {
 
 /* links */
 a {
-	color: #003366;
+	color: #0058AF;
 	background-color: inherit;
 	text-decoration: none;
 	border-bottom: 1px dotted #003366;
@@ -31,6 +31,7 @@ a {
 a:hover {
 	color: #CC0001; 
 	background-color: inherit;
+	border-bottom: 1px dotted #CC0001;
 }
 #buttonLinks{
 	margin: 0px; 
@@ -78,10 +79,13 @@ h4{
 	color: #45729F;
 }
 
-ul, ol {
+ol {
 	padding: 0 20px;
 }
-
+ul{
+	list-style-type:square;
+	padding: 0 20px;	
+}
 code {
 	background-color: #f9f9f9;
 }
@@ -103,36 +107,37 @@ acronym {
 blockquote{
 	margin: 10px;
  	padding: 0 0 0 32px;  	
-  	background: #FAFAFA url(../images/quote.gif) no-repeat 5px 10px !important; 
-	background-position: 8px 10px;
-	border: 1px solid #f2f2f2; 
+  	border: 1px solid #f2f2f2; 
 	border-left: 4px solid #CC0000; 
-	font-weight: bold; 
-	min-height: 50px; 
 }
 #toc {
-	margin:1em 0pt;
+	margin: 1em 0pt;
 }
 #toc, .toc, .mw-warning {
 	background-color:#F9F9F9;
 	border:1px solid #AAAAAA;
-	font-size:95%;
+	font-size: 12px;
 	padding:5px;
 }
 #toc #toctitle, .toc #toctitle, #toc .toctitle, .toc .toctitle {
-	text-align:center;
+	text-align: left;
+	border-bottom: 1px solid #aaaaaa;
 }
 #toc h2, .toc h2 {
 	border:medium none;
 	display:inline;
-	font-size:100%;
+	font-size: 16px;
 	font-weight:bold;
 	padding:0pt;
 }
 #toc ul, .toc ul {
+	list-style-type:square;
 	margin-left:0pt;
 	padding-left: 10pt;
 	text-align:left;
+}
+#toc li, .toc li{
+	margin: 3px 0px 3px 0px;
 }
 /* form elements */
 form {

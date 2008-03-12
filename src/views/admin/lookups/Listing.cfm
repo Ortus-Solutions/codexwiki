@@ -56,7 +56,14 @@
 	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
 		<span>
 			<img src="#getSetting('sesBaseURL')#/includes/images/arrow_refresh.png" border="0" align="absmiddle">
-			Reload
+			Reload Listing
+		</span>
+	</a>
+	&nbsp;
+	<a href="#getSetting('sesBaseURL')#/#rc.xehLookupClean#" id="buttonLinks">
+		<span>
+			<img src="#getSetting('sesBaseURL')#/includes/images/arrow_refresh.png" border="0" align="absmiddle">
+			Reload Dictionary
 		</span>
 	</a>
 	</p>

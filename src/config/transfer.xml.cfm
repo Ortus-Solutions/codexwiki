@@ -73,11 +73,11 @@
 			<property name="createDate" type="date" column="user_create_date" ignore-insert="true" ignore-update="true" refresh-insert="true"/>
 			<property name="modifyDate" type="date" column="user_modify_date" ignore-insert="true" refresh-update="true"/>
 			<property name="isDefault" type="boolean" column="user_isDefault" ignore-insert="true" refresh-insert="true"/>
-			<manytoone name="Role" lazy="true">
+			<manytoone name="Role">
 				<link column="FKrole_id" to="security.Role"/>
 			</manytoone>
 			<manytomany name="Permission" table="wiki_users_permissions" lazy="true">
-				<link column="FKusers_id" 		to="security.User"/>
+				<link column="FKuser_id" 		to="security.User"/>
 				<link column="FKpermission_id" 	to="security.Permission"/>
 				<collection type="array" />
 			</manytomany>

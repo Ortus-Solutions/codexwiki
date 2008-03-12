@@ -35,8 +35,9 @@
 	<br />
 	
 	<div align="center">
-	<a href="">Forgot Password?</a>
-	<input type="submit" class="submitButton" value="Log In"></input>
+		<a href="">Forgot Password?</a> | <a href="">Register</a>
+		<br /><br />
+		<input type="submit" class="submitButton" value="Log In"></input>
 	</div>
 	<br />
 	</p>
