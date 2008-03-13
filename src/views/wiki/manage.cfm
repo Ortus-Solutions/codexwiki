@@ -13,6 +13,8 @@
 
 		function preview()
 		{
+			var content = $("##content");
+
 			var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
 				close:false,
 				onOpen: function(dialog)
