@@ -24,7 +24,7 @@
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Prepare results */
-			var results = false;
+			var authenticated = false;
 			var oUserTO = "";
 			
 			/* Try to get user by credentials */
@@ -35,11 +35,11 @@
 				//Save User State
 				getSessionStorage().setVar(getuserSessionKey(), oUserTO.getuserID());
 				//Set Return Flags
-				results.authenticated = true;
+				authenticated = true;
 			}
 			
 			/* Return Results */
-			return results;
+			return authenticated;
 		</cfscript>
 	</cffunction>
 	
@@ -70,7 +70,10 @@
 				oUser = getUserService().getUser(user_id=getSessionStorage().getVar( getuserSessionKey() ));
 				/* Validate its a good User */
 				if( oUser.getIsPersisted() and oUser.getIsActive() and oUser.getISConfirmed() ){
+					/* We got it!! */
 					getByDefault = false;
+					/* Authenticate User */
+					oUser.setisAuthorized(true);
 				}
 			}
 			/* Get by Default */

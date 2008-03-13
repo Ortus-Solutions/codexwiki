@@ -77,7 +77,7 @@
 	
 			/* prepare sqlProps */
 			sqlProps.username = arguments.username;
-			sqlProps.password = arguments.password;
+			sqlProps.password = hash(arguments.password);
 			sqlProps.isConfirmed = 1;
 			sqlProps.isActive = 1;
 			
@@ -123,7 +123,7 @@
 			var sqlProps = structnew();
 	
 			/* prepare sqlProps */
-			sqlProps.user_id = arguments.user_id;
+			sqlProps.userid = arguments.user_id;
 			
 			/* Get user now. */
 			oUser = getTransfer().readByPropertyMap('security.User', sqlProps);

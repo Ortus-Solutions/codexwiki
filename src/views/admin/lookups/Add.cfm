@@ -16,8 +16,14 @@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
+<!--- BACK --->
+<div class="float-right" style="margin: 5px 10px 0px 0px;">
+	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
+	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#">Back</a>
+</div>
+
 <!--- Title --->
-<h2>System Lookup Manager - Add Record</h2>
+<h2>System Lookup Manager > Add Record</h2>
 
 <!--- Add Form --->
 <p>Add a new <strong>#rc.lookupClass#</strong> record. Please fill out all the fields.</p>

@@ -8,7 +8,7 @@
 	<cffunction name="home" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
-			/* Exit Handlers */
+			
 			event.setView('admin/home');
 		</cfscript>
 	</cffunction>
