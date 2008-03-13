@@ -4,11 +4,13 @@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="Feed" output="false">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
-	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
+	<cfargument name="coldBoxController" hint="The coldbox controller" type="coldbox.system.controller" required="true">
+	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
 	<cfscript>
 		setBaseURL(arguments.coldBoxController.getSetting("sesBaseURL"));
 
 		setCacheManager(arguments.coldboxOCM);
+		setRSSManager(arguments.rssManager);
 
 		return this;
 	</cfscript>
@@ -37,7 +39,7 @@
 			matcher.reset();
 
 			//going to pass off parsing and validation to the FeedRenderable object
-			feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(feedTag, getBaseURL(), getCacheManager());
+			feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(feedTag, getBaseURL(), getCacheManager(), getRSSManager());
 
 			ArrayAppend(results, static);
 			ArrayAppend(results, feed);
@@ -72,6 +74,16 @@
 	<cfargument name="cacheManager" type="coldbox.system.cache.cacheManager" required="true">
 	<cfset instance.cacheManager = arguments.cacheManager />
 </cffunction>
+
+<cffunction name="setRssManager" access="private" returntype="void" output="false">
+	<cfargument name="rssManager" type="codex.model.rss.RSSManager" required="true">
+	<cfset instance.rssManager = arguments.rssManager />
+</cffunction>
+
+<cffunction name="getRssManager" access="private" returntype="codex.model.rss.RSSManager" output="false">
+	<cfreturn instance.rssManager />
+</cffunction>
+
 
 <cffunction name="getBaseURL" access="private" returntype="string" output="false">
 	<cfreturn instance.baseURL />

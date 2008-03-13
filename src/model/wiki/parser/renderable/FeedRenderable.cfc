@@ -6,6 +6,7 @@
 	<cfargument name="feedTag" hint="" type="string" required="Yes">
 	<cfargument name="baseURL" hint="the base url to draw links from" type="string" required="Yes">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
+	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="Yes">
 	<cfscript>
 		var xFeed = 0;
 
@@ -16,6 +17,7 @@
 
 		setFeedTag(arguments.feedTag);
 		setCacheManager(arguments.coldboxOCM);
+		setRssManager(arguments.rssManager);
 
 		if(NOT arguments.feedTag.endsWith("/>"))
 		{
@@ -39,18 +41,18 @@
 			return this;
 		}
 
+		if(NOT (lCase(xFeed.url).startsWith("http://") OR lCase(xFeed.url).startsWith("/feed/")))
+		{
+			setIsValidFeedTag(false);
+			return this;
+		}
+
 		//default display is 'ul'
 		xFeed.listType = "ul";
 
 		if(StructKeyExists(xFeed, "display") AND xFeed.display eq "numbered")
 		{
 			xFeed.listType = "ol";
-		}
-
-		//allow for relative links, and security - TODO: if internal link, go through internal means, and not use URL to get to RSS feed.
-		if(NOT xFeed.url.startsWith("http://"))
-		{
-			xFeed.url = arguments.baseURL & xFeed.url;
 		}
 
 		setFeedData(xFeed);
@@ -62,11 +64,22 @@
 </cffunction>
 
 <cffunction name="render" hint="renders the output" access="public" returntype="string" output="false">
-	<!--- setup the cache key --->
-	<cfset var feedData = getFeedData() />
-	<cfset var key = instance.static.CACHE_PREFIX & feedData.url & ":" & feedData.listType />
+	<cfset var feedData = 0 />
+	<cfset var key = 0 />
 	<cfset var renderedFeed = 0 />
 	<cfset var args = 0 />
+
+	<cfscript>
+		if(NOT getIsValidFeedTag())
+		{
+			return XMLFormat(getFeedTag());
+		}
+
+		//setup the cache key
+		feedData = getFeedData();
+		key = instance.static.CACHE_PREFIX & feedData.url & ":" & feedData.listType;
+	</cfscript>
+
 	<cfif StructKeyExists(feedData, "cache")>
 		<cfset key &= ":" & feedData.cache />
 	</cfif>
@@ -111,17 +124,21 @@
 
 <cffunction name="getRenderedFeed" hint="returns the rendered feed" access="private" returntype="string" output="false">
 	<cfset var feedData = getFeedData() />
-
-	<cfscript>
-		if(NOT getIsValidFeedTag())
-		{
-			return getFeedTag();
-		}
-	</cfscript>
+	<cfset var data = 0 />
+	<cfset var path = 0 />
 
 	<!--- if anything goes wrong, display error --->
 	<cftry>
-		<cffeed action="read" source="#feedData.url#" name="data" timeout="30">
+		<cfif feedData.url.startsWith("http://")>
+			<cffeed action="read" source="#feedData.url#" name="data" timeout="30">
+		<cfelse>
+			<!--- I have to push it to a temporary file. sucks. --->
+			<cfset path = "/" & createObject("java", "java.util.UUID").randomUUID() />
+			<cfset path = expandPath(path) />
+			<cffile action="write" file="#path#" output="#getRelativeFeed()#">
+			<cffeed action="read" source="#path#"  name="data">
+			<cffile action="delete" file="#path#">
+		</cfif>
 		<cfcatch type="Application">
 			<cfsavecontent variable="html">
 			<cfoutput>
@@ -146,6 +163,44 @@
 	<cfelse>
 		<cfreturn "Not atom, not rss... what is it? - #data.verson# -"/>
 	</cfif>
+</cffunction>
+
+<cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager" access="public" returntype="xml" output="false">
+	<!---
+	/feed/page/listByCategory.cfm
+	 --->
+	<cfscript>
+		var feedData = getFeedData();
+		var url = replace(feedData.url, "/feed/", "");
+		var root = ListGetAt(url, 1, "?");
+		var queryString = "";
+		var source = listGetAt(root, "1", "/");
+		var feed = replaceNoCase(listGetAt(root, "2", "/"), ".cfm", "");
+
+		if(ListLen(url, "?") eq 2)
+		{
+			queryString = ListGetAt(url, 2, "?");
+		}
+
+		return getRssManager().getRss(source, feed, queryStringToStruct(queryString));
+	</cfscript>
+</cffunction>
+
+<cffunction name="queryStringToStruct" hint="returns a struct from a query string" access="public" returntype="struct" output="false">
+	<cfargument name="queryString" hint="the query string" type="string" required="Yes">
+	<cfscript>
+		var key = 0;
+		var item = 0;
+		var result = StructNew();
+	</cfscript>
+	<cfloop list="#arguments.queryString#" index="item" delimiters="&">
+		<cfscript>
+			key = URLDecode(ListGetAt(item, 1, "="));
+			result[key] = URLDecode(ListGetAt(item, 2, "="));
+		</cfscript>
+	</cfloop>
+
+	<cfreturn result />
 </cffunction>
 
 <cffunction name="buildRSSFeed" hint="taks an rss feed, and builds the display for htat" access="private" returntype="string" output="false">
@@ -321,6 +376,15 @@
 <cffunction name="setIsValidFeedTag" access="private" returntype="void" output="false">
 	<cfargument name="isValidFeedTag" type="boolean" required="true">
 	<cfset instance.isValidFeedTag = arguments.isValidFeedTag />
+</cffunction>
+
+<cffunction name="setRssManager" access="private" returntype="void" output="false">
+	<cfargument name="rssManager" type="codex.model.rss.RSSManager" required="true">
+	<cfset instance.rssManager = arguments.rssManager />
+</cffunction>
+
+<cffunction name="getRssManager" access="private" returntype="codex.model.rss.RSSManager" output="false">
+	<cfreturn instance.rssManager />
 </cffunction>
 
 <cffunction name="getCacheManager" access="private" returntype="coldbox.system.cache.cacheManager" output="false">

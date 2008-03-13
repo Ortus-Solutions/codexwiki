@@ -19,6 +19,7 @@ All pages under the Category '#getName()#':
 		</cfsavecontent>
 		<cfscript>
 			content.setContent(wikiText);
+			content.setIsActive(true);
 			getWikiService().saveContent(content);
 		</cfscript>
 	</cfif>
