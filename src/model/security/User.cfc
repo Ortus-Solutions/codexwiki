@@ -31,6 +31,8 @@
 		<!--- ************************************************************* --->
 		<cfscript>
 			var results = false;
+			/* Lazy Load Check */
+			loadPermissions();
 			/* Check */
 			if ( structKeyExists(instance.permissions,arguments.Permission) ){
 				results = instance.permissions[arguments.permission];
@@ -40,51 +42,6 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
-	<!--- OVerride set Memento --->
-	<cffunction name="setMemento" access="public" returntype="void" default="void" hint="Decorated setMemento" output="false">
-		<!--- ************************************************************* --->
-		<cfargument name="memento" type="struct" required="true">
-		<!--- ************************************************************* --->
-		<cfscript>
-			var userPermsTQL = "";
-			var tql = "";
-			var oQuery = "";
-			var qPerms = "";
-						
-			/* Call Memento */
-			getTransferObject().setMemento(argumentCollection=arguments);	
-		</cfscript>
-		
-		<!--- Create TQL --->
-		<cfsavecontent variable="tql">
-		<cfoutput>
-			select UserPermissions.Permission as UserPermission, RolePermissions.Permission as RolePermission
-			from
-				security.User as Users 
-			outer join security.Permission as UserPermissions on Users.Permission
-			join security.Role as Roles on Users.Role
-			outer join security.Permission as RolePermissions on Roles.Permission
-			where
-				Users.userID = :user_id
-		</cfoutput>
-		</cfsavecontent>		
-		<cfscript>
-			oQuery = getTransfer().createQuery(tql);
-			oQuery.setCacheEvaluation(true);
-			oQuery.setParam("user_id", getTransferObject().getUserID(), "string");
-			/* Get Perms */
-			qPerms = getTransfer().listByQuery(oQuery);
-		</cfscript>
-		<cfloop query="qPerms">
-			<cfif UserPermission neq "" and not structKeyExists(getPermissions(), UserPermission)>
-				<cfset StructInsert(getPermissions(),UserPermission,true)>
-			</cfif>
-			<cfif RolePermission neq "" and not structKeyExists(getPermissions(), RolePermission)>
-				<cfset StructInsert(getPermissions(),RolePermission,true)>
-			</cfif>
-		</cfloop>
-	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
@@ -102,6 +59,55 @@
 			getTransferObject().setisConfirmed(false);
 
 		</cfscript>
+	</cffunction>
+	
+	<!--- Load Permissions --->
+	<cffunction name="loadPermissions" access="private" returntype="void" hint="Load permissions lazy loaded." output="false">
+		<cfscript>
+			var tql = "";
+			var oQuery = "";
+			var qPerms = "";
+		</cfscript>
+			
+		<cfif structIsEmpty(getPermissions())>
+			<cflock name="user_#getTransferObject().getuserID()#.permissionsLoad" type="exclusive" timeout="30" throwontimeout="true">
+				<cfif structIsEmpty(getPermissions())>
+					<!--- Create TQL --->
+					<cfsavecontent variable="tql">
+					<cfoutput>
+						SELECT UserPermissions.Permission as UserPermission, 
+							   RolePermissions.Permission as RolePermission
+						FROM
+							   security.User as Users 
+						OUTER JOIN security.Permission as UserPermissions on Users.Permission
+						JOIN  security.Role as Roles on Users.Role
+						OUTER JOIN security.Permission as RolePermissions on Roles.Permission
+						WHERE
+							Users.userID = :user_id
+					</cfoutput>
+					</cfsavecontent>
+						
+					<!--- Execute TQL --->	
+					<cfscript>
+						oQuery = getTransfer().createQuery(tql);
+						oQuery.setCacheEvaluation(true);
+						oQuery.setParam("user_id", getTransferObject().getUserID(), "string");
+						/* Get Perms */
+						qPerms = getTransfer().listByQuery(oQuery);
+					</cfscript>
+					
+					<!--- Set Permissions --->
+					<cfloop query="qPerms">
+						<cfif UserPermission neq "" and not structKeyExists(getPermissions(), UserPermission)>
+							<cfset StructInsert(getPermissions(),UserPermission,true)>
+						</cfif>
+						<cfif RolePermission neq "" and not structKeyExists(getPermissions(), RolePermission)>
+							<cfset StructInsert(getPermissions(),RolePermission,true)>
+						</cfif>
+					</cfloop>
+				</cfif>
+			</cflock>
+		</cfif>
 	</cffunction>
 
 </cfcomponent>
