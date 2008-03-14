@@ -5,6 +5,13 @@
 		<xsd:annotation><xsd:documentation>Top level element for the xml file</xsd:documentation></xsd:annotation>
 		<xsd:complexType>
 			<xsd:sequence maxOccurs="1" minOccurs="1">
+				<xsd:element name="includes" maxOccurs="1" minOccurs="0" type="includes">
+					<xsd:annotation>
+					<xsd:documentation>
+					Configure any include files that are used in the configuration of Transfer
+					</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
 				<xsd:element name="objectCache" type="objectCache" maxOccurs="1" minOccurs="0">
 					<xsd:annotation><xsd:documentation>
 					Configure the settings for all object caching parameters. 
@@ -188,206 +195,150 @@
 	
 	<xsd:complexType name="objectDefinitions">
 		<xsd:sequence>
-			<xsd:element name="package" type="package" minOccurs="0" maxOccurs="unbounded">
-			<xsd:annotation><xsd:documentation>
-				Organisational element to store various objects of similar aspect together
-			</xsd:documentation></xsd:annotation>
-			</xsd:element>
-			<xsd:element name="object" type="object" minOccurs="0" maxOccurs="unbounded">
-			<xsd:annotation><xsd:documentation>
-				A class definition for a transfer.com.TransferObject  to be manufactured into a bean that represents a record in the set database table.
-			</xsd:documentation></xsd:annotation>
-			</xsd:element>
+			<xsd:choice maxOccurs="unbounded" minOccurs="1">
+				<xsd:element name="package" type="package" minOccurs="0" maxOccurs="1">
+				<xsd:annotation><xsd:documentation>
+					Organisational element to store various objects of similar aspect together
+				</xsd:documentation></xsd:annotation>
+				</xsd:element>
+				<xsd:element name="object" type="object" minOccurs="0" maxOccurs="1">
+				<xsd:annotation><xsd:documentation>
+					A class definition for a transfer.com.TransferObject  to be manufactured into a bean that represents a record in the set database table.
+				</xsd:documentation></xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="object">
 		<xsd:sequence>
-			<xsd:element type="id" name="id" maxOccurs="1" minOccurs="1">
-			<xsd:annotation><xsd:documentation>
-				This is the definition of the primary key as set in the database.
-				This results in getter and setter functions on the TransferObject. Details on all these methods can be found at generated methods.
-				There can only be one ID declaration.
-			</xsd:documentation></xsd:annotation>
-			</xsd:element>
-			<xsd:element type="property" name="property" maxOccurs="unbounded" minOccurs="0">
-			<xsd:annotation><xsd:documentation>
-				A single property on the TransferObject.
-				This results in getter and setter functions on the TransferObject. Details on these methods can be found at generated methods.
-				TransferObjects can have multiple property declarations.
-			</xsd:documentation></xsd:annotation>
-			</xsd:element>
-			<xsd:element name="manytoone" minOccurs="0" maxOccurs="unbounded">
+			<xsd:choice maxOccurs="1" minOccurs="1">
+				<xsd:element type="id" name="id" maxOccurs="1" minOccurs="1">
 				<xsd:annotation><xsd:documentation>
-					This defines a relationship when many of a this object's table records link directly to one of another tables. e.g. 'tbl_User.lnkIDPermission = tbl_Permission.IDPermission'.
-					It creates getter and setter functions on the TransferObject that get and set the composite TransferObject. Details on these methods can be found at generated methods.
-					TransferObjects can have multiple manytoone declarations. 			
+					This is the definition of the primary key as set in the database.
+					This results in getter and setter functions on the TransferObject. Details on all these methods can be found at generated methods.
+					There can only be one ID declaration.
 				</xsd:documentation></xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
-						<xsd:element type="link" name="link" maxOccurs="1" minOccurs="1">
-							<xsd:annotation><xsd:documentation>
-								Defines what other TransferObject the composition is made up of.
-							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-					</xsd:sequence>
-					<xsd:attribute ref="name" use="required">
-						<xsd:annotation><xsd:documentation>The name of this relationship, e.g. 'Permission'.</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute ref="lazy">
-						<xsd:annotation><xsd:documentation>
-							If this is set to 'true', the manytoone composition will only be loaded when requested. This defaults to 'false'.
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="onetomany" minOccurs="0" maxOccurs="unbounded">
+				</xsd:element>
+				<xsd:element type="compositeid" name="compositeid" maxOccurs="1" minOccurs="1">
+				</xsd:element>
+			</xsd:choice>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element type="property" name="property" maxOccurs="1" minOccurs="0">
 				<xsd:annotation><xsd:documentation>
-					This defines a relationship where one of this object's table records corresponds to many of another tables records. e.g. 'tbl_User.IDUser = tbl_Post.lnkIDUser'.
-					This creates several methods on the parent and child TransferObjects, dependent on the set collection type. Details on all these methods can be found at generated methods.
-					TransferObjects can have multiple one to many declarations.
-					name The name of this collection, e.g. 'Permission'.
+					A single property on the TransferObject.
+					This results in getter and setter functions on the TransferObject. Details on these methods can be found at generated methods.
+					TransferObjects can have multiple property declarations.
 				</xsd:documentation></xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
-						<xsd:element type="link" name="link" maxOccurs="1" minOccurs="1">
+				</xsd:element>
+				<xsd:element name="manytoone" minOccurs="0" maxOccurs="1">
+					<xsd:annotation><xsd:documentation>
+						This defines a relationship when many of a this object's table records link directly to one of another tables. e.g. 'tbl_User.lnkIDPermission = tbl_Permission.IDPermission'.
+						It creates getter and setter functions on the TransferObject that get and set the composite TransferObject. Details on these methods can be found at generated methods.
+						TransferObjects can have multiple manytoone declarations. 			
+					</xsd:documentation></xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence maxOccurs="1" minOccurs="1">
+							<xsd:element type="link" name="link" maxOccurs="1" minOccurs="1">
+								<xsd:annotation><xsd:documentation>
+									Defines what other TransferObject the composition is made up of.
+								</xsd:documentation></xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute ref="name" use="required">
+							<xsd:annotation><xsd:documentation>The name of this relationship, e.g. 'Permission'.</xsd:documentation></xsd:annotation>
+						</xsd:attribute>
+						<xsd:attribute ref="lazy">
 							<xsd:annotation><xsd:documentation>
-								Defines the TransferObject the composition is made up of. 
+								If this is set to 'true', the manytoone composition will only be loaded when requested. This defaults to 'false'.
 							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-						<xsd:element type="collection" name="collection" maxOccurs="1" minOccurs="1">
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>				
+				<xsd:element name="onetomany" minOccurs="0" maxOccurs="1">
+					<xsd:annotation><xsd:documentation>
+						This defines a relationship where one of this object's table records corresponds to many of another tables records. e.g. 'tbl_User.IDUser = tbl_Post.lnkIDUser'.
+						This creates several methods on the parent and child TransferObjects, dependent on the set collection type. Details on all these methods can be found at generated methods.
+						TransferObjects can have multiple one to many declarations.
+						name The name of this collection, e.g. 'Permission'.
+					</xsd:documentation></xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence maxOccurs="1" minOccurs="1">
+							<xsd:element type="link" name="link" maxOccurs="1" minOccurs="1">
+								<xsd:annotation><xsd:documentation>
+									Defines the TransferObject the composition is made up of. 
+								</xsd:documentation></xsd:annotation>
+							</xsd:element>
+							<xsd:element type="collection" name="collection" maxOccurs="1" minOccurs="1">
+								<xsd:annotation><xsd:documentation>
+									This element sets the details of the type of collection of TransferObject that is added to the parent.
+								</xsd:documentation></xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute ref="name" use="required">
 							<xsd:annotation><xsd:documentation>
-								This element sets the details of the type of collection of TransferObject that is added to the parent.
+								The name of this collection, e.g. 'Permission'. 
 							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-					</xsd:sequence>
-					<xsd:attribute ref="name" use="required">
-						<xsd:annotation><xsd:documentation>
-							The name of this collection, e.g. 'Permission'. 
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute ref="lazy">
-						<xsd:annotation><xsd:documentation>
-							If this is set to 'true', the onetomany composition will only be loaded when requested. This defaults to 'false'.
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-				</xsd:complexType>
-			</xsd:element>				
-			<xsd:element name="manytomany" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation><xsd:documentation>
-					This defines a relationship where many of this object's table records corresponds to many of another tables. This is normally accomplished at a database level by use of an intermediary linking table. e.g. 'tbl_User.IDUser = lnk_UserPermssion.lnkIDUser AND lnk_UserPermission.lnkIDPermission = tbl_Permission.IDPermission'.
-					This creates several methods on the parent TransferObject, dependent on the set collection type. Details on all these methods can be found at generated methods.
-					TransferObjects can have multiple manytomany declarations.
-				</xsd:documentation></xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
-						<xsd:element type="link" name="link" maxOccurs="2" minOccurs="1">
+						</xsd:attribute>
+						<xsd:attribute ref="lazy">
 							<xsd:annotation><xsd:documentation>
-								The first link specifies the connection information for the intermediary table to the parent table. 
-								The second link defines the TransferObject the composition is made up of.
+								If this is set to 'true', the onetomany composition will only be loaded when requested. This defaults to 'false'.
 							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-						<xsd:element type="collection" name="collection" maxOccurs="1" minOccurs="1">
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="manytomany" minOccurs="0" maxOccurs="1">
+					<xsd:annotation><xsd:documentation>
+						This defines a relationship where many of this object's table records corresponds to many of another tables. This is normally accomplished at a database level by use of an intermediary linking table. e.g. 'tbl_User.IDUser = lnk_UserPermssion.lnkIDUser AND lnk_UserPermission.lnkIDPermission = tbl_Permission.IDPermission'.
+						This creates several methods on the parent TransferObject, dependent on the set collection type. Details on all these methods can be found at generated methods.
+						TransferObjects can have multiple manytomany declarations.
+					</xsd:documentation></xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence maxOccurs="1" minOccurs="1">
+							<xsd:element type="link" name="link" maxOccurs="2" minOccurs="2">
+								<xsd:annotation><xsd:documentation>
+									The first link specifies the connection information for the intermediary table to the parent table. 
+									The second link defines the TransferObject the composition is made up of.
+								</xsd:documentation></xsd:annotation>
+							</xsd:element>
+							<xsd:element type="collection" name="collection" maxOccurs="1" minOccurs="1">
+								<xsd:annotation><xsd:documentation>
+									This element sets the details of the type of collection of TransferObject that is added to the parent. 
+								</xsd:documentation></xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute ref="name" use="required">
 							<xsd:annotation><xsd:documentation>
-								This element sets the details of the type of collection of TransferObject that is added to the parent. 
+								The name of this collection, e.g. 'Permission'.
 							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-					</xsd:sequence>
-					<xsd:attribute ref="name" use="required">
-						<xsd:annotation><xsd:documentation>
-							The name of this collection, e.g. 'Permission'.
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute ref="table" use="required">
-						<xsd:annotation><xsd:documentation>
-							The name of the intermediary table that creates the many to many relationship. e.g. 'lnk_UserPermission' 
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute ref="lazy">
-						<xsd:annotation><xsd:documentation>
-							If this is set to 'true', the manytomany composition will only be loaded when requested. This defaults to 'false'.
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-				</xsd:complexType>
-			</xsd:element>
- 		
- 			<xsd:element name="function" minOccurs="0" maxOccurs="unbounded">
- 				<xsd:annotation><xsd:documentation>
- 					A cfml function that you want added to this TransferObject.
-					TransferObjects can have multiple function declarations.
-					Details on custom methods can be found at custom methods.
- 				</xsd:documentation></xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence minOccurs="1" maxOccurs="1">
-						<xsd:element name="argument" minOccurs="0" maxOccurs="unbounded">
+						</xsd:attribute>
+						<xsd:attribute ref="table" use="required">
 							<xsd:annotation><xsd:documentation>
-								A defined argument for the function
-								A Function can have multiple function declarations. 
+								The name of the intermediary table that creates the many to many relationship. e.g. 'lnk_UserPermission' 
 							</xsd:documentation></xsd:annotation>
-							<xsd:complexType>
-								<xsd:attribute ref="name" use="required">
-									<xsd:annotation><xsd:documentation>The name of the argument</xsd:documentation></xsd:annotation>
-								</xsd:attribute>
-								<xsd:attribute name="type" use="required">
-									<xsd:annotation><xsd:documentation>
-									The type of the argument
-									</xsd:documentation></xsd:annotation>
-									<xsd:simpleType>
-										<xsd:restriction base="xsd:string">
-											<xsd:pattern value="[\.a-zA-Z0-9_]+"></xsd:pattern>
-										</xsd:restriction>
-									</xsd:simpleType>								
-								</xsd:attribute>
-								<xsd:attribute name="required" type="xsd:boolean" default="false">
-									<xsd:annotation><xsd:documentation>
-										If the argument is required, defaults to 'false'.
-									</xsd:documentation></xsd:annotation>
-								</xsd:attribute>
-								<xsd:attribute name="default" type="xsd:string">
-									<xsd:annotation><xsd:documentation>
-										The default value for this argument if it is not set.
-									</xsd:documentation></xsd:annotation>
-								</xsd:attribute>
-							</xsd:complexType>
-						</xsd:element>
-						<xsd:element name="body" type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:attribute>
+						<xsd:attribute ref="tablealias" use="optional">
 							<xsd:annotation><xsd:documentation>
-								The cfml body of the function. It may be neccessary to utilise a CDATA declaration in this area.
-								There can only be one body declaration per function.
+								This is an table alias that will be used for get() operations in Transfer.
+								This is usually most useful for Oracle when the generated alias is over 30 characters.
 							</xsd:documentation></xsd:annotation>
-						</xsd:element>
-					</xsd:sequence>
-					<xsd:attribute ref="name" use="required">	
-						<xsd:annotation><xsd:documentation>
-							The name of the argument
-						</xsd:documentation></xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="access" use="required">
-						<xsd:annotation><xsd:documentation>
-							Access of the function, public, private or package.
-						</xsd:documentation></xsd:annotation>
-						<xsd:simpleType>
-							<xsd:restriction base="xsd:string">
-								<xsd:enumeration value="public"/>
-								<xsd:enumeration value="private"/>
-								<xsd:enumeration value="package"/>
-							</xsd:restriction>
-						</xsd:simpleType>
-					</xsd:attribute>
-					<xsd:attribute name="returntype" use="required">
-						<xsd:annotation><xsd:documentation>
-							Type of what is returned by this function.
-						</xsd:documentation></xsd:annotation>
-						<xsd:simpleType>
-							<xsd:restriction base="xsd:string">
-								<xsd:pattern value="[\.a-zA-Z0-9_]+"></xsd:pattern>
-							</xsd:restriction>
-						</xsd:simpleType>
-					</xsd:attribute>					
-				</xsd:complexType>
-			</xsd:element>
+						</xsd:attribute>
+						<xsd:attribute ref="lazy">
+							<xsd:annotation><xsd:documentation>
+								If this is set to 'true', the manytomany composition will only be loaded when requested. This defaults to 'false'.
+							</xsd:documentation></xsd:annotation>
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+	 			<xsd:element type="function" name="function" minOccurs="0" maxOccurs="1">
+	 				<xsd:annotation><xsd:documentation>
+	 					A cfml function that you want added to this TransferObject.
+						TransferObjects can have multiple function declarations.
+						Details on custom methods can be found at custom methods.
+	 				</xsd:documentation></xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
-		
 		<xsd:attribute ref="name" use="required">
 			<xsd:annotation><xsd:documentation>
 				The name of the TransferObject, e.g. 'User'.
@@ -404,7 +355,7 @@
 			</xsd:documentation></xsd:annotation>
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:string">
-					<xsd:pattern value="[a-zA-Z0-9_]+"></xsd:pattern>
+					<xsd:pattern value="[a-zA-Z0-9_\.]+"></xsd:pattern>
 				</xsd:restriction>
 			</xsd:simpleType>
 		</xsd:attribute>	
@@ -416,10 +367,16 @@
 			</xsd:documentation></xsd:annotation>
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:string">
-					<xsd:pattern value="[a-zA-Z0-9_\.]+"></xsd:pattern>
+					<xsd:pattern value="[a-zA-Z0-9_\.\-]+"></xsd:pattern>
 				</xsd:restriction>
 			</xsd:simpleType>
-		</xsd:attribute>				
+		</xsd:attribute>		
+		<xsd:attribute ref="tablealias" use="optional">
+			<xsd:annotation><xsd:documentation>
+				This is an table alias that will be used for get() operations in Transfer.
+				This is usually most useful for Oracle when the generated alias is over 30 characters.
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	
 	<xsd:complexType name="id">
@@ -446,6 +403,32 @@
 			</xsd:documentation></xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>		
+	
+	<xsd:complexType name="compositeid">
+		<xsd:choice maxOccurs="unbounded" minOccurs="1">
+			<xsd:element name="property" maxOccurs="1" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute ref="name" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="manytoone" maxOccurs="1" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute ref="name" use="required"></xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="parentonetomany">
+				<xsd:complexType>
+					<xsd:attribute name="class" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="[\.a-zA-Z0-9_]+"></xsd:pattern>
+							</xsd:restriction>
+						</xsd:simpleType>		
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
 	
 	<xsd:complexType name="property">
 		<xsd:attribute ref="name" use="required">
@@ -502,16 +485,18 @@
 	
 	<xsd:complexType name="package">
 		<xsd:sequence>
-			<xsd:element name="package" type="package" minOccurs="0" maxOccurs="unbounded">
+			<xsd:choice maxOccurs="unbounded" minOccurs="1">
+				<xsd:element name="package" type="package" minOccurs="0" maxOccurs="1">
 				<xsd:annotation><xsd:documentation>
 					Organisational element to store various objects of similar aspect together
 				</xsd:documentation></xsd:annotation>
-			</xsd:element>
-			<xsd:element name="object" type="object" minOccurs="0" maxOccurs="unbounded">
+				</xsd:element>
+				<xsd:element name="object" type="object" minOccurs="0" maxOccurs="1">
 				<xsd:annotation><xsd:documentation>
-					A class definition for a transfer.com.TransferObject  to be manufactured into a bean that represents a record in the set database table.
+					A class definition for a transfer.com.TransferObject to be manufactured into a bean that represents a record in the set database table.
 				</xsd:documentation></xsd:annotation>
-			</xsd:element>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute ref="name" use="required">
 			<xsd:annotation><xsd:documentation>
@@ -563,6 +548,7 @@
 					</xsd:attribute>
 				</xsd:complexType>
 			</xsd:element>
+			<xsd:choice maxOccurs="1" minOccurs="0">
 			<xsd:element name="key" maxOccurs="1" minOccurs="0">
 				<xsd:annotation><xsd:documentation>
 					(if collection[@type] = 'struct')
@@ -601,6 +587,7 @@
 					</xsd:attribute>
 				</xsd:complexType>
 			</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 		<xsd:attribute name="type" use="required">
 			<xsd:annotation><xsd:documentation>
@@ -615,6 +602,104 @@
 				</xsd:restriction>
 			</xsd:simpleType>
 		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="function">
+		<xsd:sequence minOccurs="1" maxOccurs="1">
+			<xsd:element name="argument" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation><xsd:documentation>
+					A defined argument for the function
+					A Function can have multiple function declarations. 
+				</xsd:documentation></xsd:annotation>
+				<xsd:complexType>
+					<xsd:attribute ref="name" use="required">
+						<xsd:annotation><xsd:documentation>The name of the argument</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="type" use="required">
+						<xsd:annotation><xsd:documentation>
+						The type of the argument
+						</xsd:documentation></xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:pattern value="[\.a-zA-Z0-9_]+"></xsd:pattern>
+							</xsd:restriction>
+						</xsd:simpleType>								
+					</xsd:attribute>
+					<xsd:attribute name="required" type="xsd:boolean" default="false">
+						<xsd:annotation><xsd:documentation>
+							If the argument is required, defaults to 'false'.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="default" type="xsd:string">
+						<xsd:annotation><xsd:documentation>
+							The default value for this argument if it is not set.
+						</xsd:documentation></xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="body" type="xsd:string" maxOccurs="1" minOccurs="1">
+				<xsd:annotation><xsd:documentation>
+					The cfml body of the function. It may be neccessary to utilise a CDATA declaration in this area.
+					There can only be one body declaration per function.
+				</xsd:documentation></xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute ref="name" use="required">	
+			<xsd:annotation><xsd:documentation>
+				The name of the argument
+			</xsd:documentation></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="access" use="required">
+			<xsd:annotation><xsd:documentation>
+				Access of the function, public, private or package.
+			</xsd:documentation></xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="public"/>
+					<xsd:enumeration value="private"/>
+					<xsd:enumeration value="package"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="returntype" use="required">
+			<xsd:annotation><xsd:documentation>
+				Type of what is returned by this function.
+			</xsd:documentation></xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[\.a-zA-Z0-9_]+"></xsd:pattern>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>					
+	</xsd:complexType>
+	
+	<!-- includes -->
+	<xsd:complexType name="includes">
+		<xsd:sequence maxOccurs="1" minOccurs="1">
+			<xsd:element name="include" maxOccurs="unbounded" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+					This is an include of a Transfer configuration file.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:attribute name="path" type="xsd:string" use="required">
+						<xsd:annotation>
+						<xsd:documentation>
+						The relative path from your application root to the include file.
+						</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="overwrite" type="xsd:boolean" use="optional" default="false">
+						<xsd:annotation>
+						<xsd:documentation>
+						Whether or not to overwrite the previous configurations.  Defaults to 'false'.
+						</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 	
 	
@@ -644,10 +729,22 @@
 	<xsd:attribute name="table">
 		<xsd:simpleType>
 			<xsd:restriction base="xsd:string">
-				<xsd:pattern value="[a-zA-Z0-9_]+"></xsd:pattern>
+				<xsd:pattern value="[a-zA-Z0-9_\.\[\]\-]+"></xsd:pattern>
 			</xsd:restriction>
 		</xsd:simpleType>
 	</xsd:attribute>	
+	
+	<xsd:attribute name="tablealias">
+		<xsd:annotation><xsd:documentation>
+			This is an table alias that will be used for get() operations in Transfer.
+			This is usually most useful for Oracle when the generated alias is over 30 characters.
+		</xsd:documentation></xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="[a-zA-Z0-9_]+"></xsd:pattern>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:attribute>
 	
 	<xsd:attribute name="lazy" type="xsd:boolean" />
 	

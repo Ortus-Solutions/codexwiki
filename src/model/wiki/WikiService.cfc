@@ -6,11 +6,14 @@
 	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
 	<cfargument name="datasource" hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
 	<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+	<cfargument name="securityService" hint="the security service" type="codex.model.security.SecurityService" required="Yes">
 	<cfscript>
 		instance = StructNew();
 
 		setTransfer(arguments.transfer);
 		setDatasource(arguments.datasource);
+
+		setSecurityService(arguments.securityService);
 
 		arguments.transaction.advise(this, "^save");
 		arguments.transaction.advise(this, "^delete");
@@ -175,6 +178,7 @@
 			}
 
 			arguments.content.setIsActive(true);
+			arguments.content.setUser(getSecurityService().getUserSession());
 
 			saveContent(arguments.content);
 		</cfscript>
@@ -236,11 +240,14 @@
 			content.comment,
 			content.version,
 			content.createdDate,
-			content.isActive
+			content.isActive,
+			user.username
 		from
 			wiki.Page as page
 			join
 			wiki.Content as content
+			join
+			security.User as user
 		where
 			page.name = :name
 		order by
@@ -366,6 +373,15 @@
 <cffunction name="setDatasource" access="private" returntype="void" output="false">
 	<cfargument name="datasource" type="transfer.com.sql.Datasource" required="true">
 	<cfset instance.datasource = arguments.datasource />
+</cffunction>
+
+<cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">
+	<cfreturn instance.securityService />
+</cffunction>
+
+<cffunction name="setSecurityService" access="private" returntype="void" output="false">
+	<cfargument name="securityService" type="codex.model.security.SecurityService" required="true">
+	<cfset instance.securityService = arguments.securityService />
 </cffunction>
 
 </cfcomponent>

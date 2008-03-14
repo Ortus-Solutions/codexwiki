@@ -40,6 +40,7 @@ CREATE TABLE wiki_pagecontent
 (
 	pagecontent_id VARCHAR(36) NOT NULL,
 	FKpage_id VARCHAR(36) NOT NULL,
+	FKuser_id VARCHAR(36) NOT NULL,
 	pagecontent_content TEXT,
 	pagecontent_comment TEXT,
 	pagecontent_version BIGINT NOT NULL DEFAULT 1,
@@ -47,6 +48,7 @@ CREATE TABLE wiki_pagecontent
 	pagecontent_isActive TINYINT NOT NULL DEFAULT 1,
 	PRIMARY KEY (pagecontent_id),
 	KEY (FKpage_id),
+	KEY (FKuser_id),
 	INDEX idx_wiki_pagecontent_isActive (pagecontent_isActive ASC)
 ) ENGINE=InnoDB
 ;
@@ -184,6 +186,10 @@ ALTER TABLE wiki_pagecontent_category ADD CONSTRAINT FKpagecontent_id
 
 ALTER TABLE wiki_pagecontent ADD CONSTRAINT FK_wiki_pagecontent_wiki_page 
 	FOREIGN KEY (FKpage_id) REFERENCES wiki_page (page_id)
+;
+
+ALTER TABLE wiki_pagecontent ADD CONSTRAINT FK_wiki_pagecontent_wiki_users 
+	FOREIGN KEY (FKuser_id) REFERENCES wiki_users (user_id)
 ;
 
 ALTER TABLE wiki_users_permissions ADD CONSTRAINT FKpermission_id 

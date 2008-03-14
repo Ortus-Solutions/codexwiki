@@ -5,10 +5,10 @@
 	<cffunction name="init" hint="Constructor" access="public" returntype="SecurityService" output="false">
 		<cfscript>
 			instance = StructNew();
-			
+
 			/* User session Key */
 			setUserSessionKey('auth_user_id');
-			
+
 			return this;
 		</cfscript>
 	</cffunction>
@@ -26,10 +26,10 @@
 			/* Prepare results */
 			var authenticated = false;
 			var oUserTO = "";
-			
+
 			/* Try to get user by credentials */
 			oUserTO = getUserService().getUserByCredentials(argumentCollection=arguments);
-	
+
 			//Is User in system.
 			if ( oUserTO.getIsPersisted() ){
 				//Save User State
@@ -37,14 +37,14 @@
 				//Set Return Flags
 				authenticated = true;
 			}
-			
+
 			/* Return Results */
 			return authenticated;
 		</cfscript>
 	</cffunction>
-	
+
 	<!--- ************************************************************* --->
-	
+
 	<!--- Send a Password Reminder --->
 	<cffunction name="passwordReminder" output="false" access="public" returntype="void"
 				hint="This will generate a new password, set it and send it to the user.">
@@ -52,19 +52,19 @@
 		<cfargument name="user" type="codex.model.security.User" required="true"/>
 		<!--- ************************************************************* --->
 		<cfscript>
-			
+
 		</cfscript>
 	</cffunction>
-	
+
 	<!--- ************************************************************* --->
-	
+
 	<!--- Get A User Session --->
 	<cffunction name="getUserSession" output="false" access="public" returntype="codex.model.security.User"
 				hint="This method checks if a user is in an authorized session, else it returns the default user object.">
 		<cfscript>
 			var oUser = "";
 			var getByDefault = true;
-			
+
 			//Is user in session
 			if ( getSessionStorage().exists( getuserSessionKey() ) ){
 				oUser = getUserService().getUser(user_id=getSessionStorage().getVar( getuserSessionKey() ));
@@ -87,11 +87,11 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<!--- Clean a user's session. --->
 	<cffunction name="cleanUserSession" output="false" access="public" returntype="void" hint="This method will clean the user session.">
 		<cfscript>
-			return getSessionStorage().deleteVar( getuserSessionKey() );
+			getSessionStorage().deleteVar( getuserSessionKey() );
 		</cfscript>
 	</cffunction>
 
@@ -114,7 +114,7 @@
 		<cfargument name="UserService" type="codex.model.security.UserService" required="true">
 		<cfset instance.UserService = arguments.UserService>
 	</cffunction>
-	
+
 	<!--- getter and setter for userSessionKey --->
 	<cffunction name="getuserSessionKey" access="public" returntype="string" output="false">
 		<cfreturn instance.userSessionKey>

@@ -34,6 +34,9 @@
 					<order property="name"/>
 				</collection>
 			</manytomany>
+			<manytoone name="User" lazy="true">
+				<link column="FKuser_id" to="security.User"/>
+			</manytoone>
 		</object>
 
 		<object name="Category" table="wiki_category" decorator="codex.model.wiki.Category">
@@ -95,4 +98,3 @@
 
   </objectDefinitions>
 </transfer>
-

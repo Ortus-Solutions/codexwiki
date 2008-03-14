@@ -51,12 +51,16 @@
 <ol>
 	<cfloop query="rc.history">
 	<li>
-		<a href="javascript: doDisplay('#contentid#')">Version #version#, created on #DateFormat(createddate, "dd-mmmm-yyyy")# #TimeFormat(createddate, "hh:mm:ss tt")#</a>
+		<a href="javascript: doDisplay('#contentid#')">Version #version#, created on #printDate(createddate)# #printTime(createddate)# by #username#</a>
 		<cfif isActive>
 		| <img src="#getSetting('htmlBaseURL')#/includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
 		<cfelse>
-		| <img src="#getSetting('htmlBaseURL')#/includes/images/arrow_merge.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
-		| <img src="#getSetting('htmlBaseURL')#/includes/images/bin_closed.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
+			<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
+			| <img src="#getSetting('htmlBaseURL')#/includes/images/arrow_merge.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
+			</cfif>
+			<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
+			| <img src="#getSetting('htmlBaseURL')#/includes/images/bin_closed.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
+			</cfif>
 		</cfif>
 		<div>
 			#XMLFormat(comment)#
