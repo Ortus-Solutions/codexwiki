@@ -69,7 +69,7 @@
 	<cffunction name="getUserByCredentials" output="false" access="public" returntype="codex.model.security.User" hint="Returns an active/confirmed user by its credentials">
 		<!--- ************************************************************* --->
 		<cfargument name="username" type="string" required="true"/>
-		<cfargument name="password" type="string" required="true"/>
+		<cfargument name="password" type="string" required="true" hint="This argument is hashed internally."/>
 		<!--- ************************************************************* --->
 		<cfscript>
 			var oUser = "";
@@ -77,7 +77,7 @@
 	
 			/* prepare sqlProps */
 			sqlProps.username = arguments.username;
-			sqlProps.password = hash(arguments.password);
+			sqlProps.password = hash(arguments.password, getHashType());
 			sqlProps.isConfirmed = 1;
 			sqlProps.isActive = 1;
 			
@@ -186,6 +186,15 @@
 	<cffunction name="setTransfer" access="private" returntype="void" output="false">
 		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
 		<cfset instance.transfer = arguments.transfer />
+	</cffunction>
+	
+	<!--- Get/set HashType --->
+	<cffunction name="gethashType" access="public" output="false" returntype="string" hint="Get hashType">
+		<cfreturn instance.hashType/>
+	</cffunction>	
+	<cffunction name="sethashType" access="public" output="false" returntype="void" hint="Set hashType">
+		<cfargument name="hashType" type="string" required="true"/>
+		<cfset instance.hashType = arguments.hashType/>
 	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

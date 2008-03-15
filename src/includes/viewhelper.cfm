@@ -7,6 +7,9 @@
 <cffunction name="printTime" output="false" access="private" returntype="string" hint="Print time in good format">
 	<cfargument name="time" 	type="string" required="true" hint=""/>
 	<cfargument name="timeType" type="string" required="false" default="NORMAL" hint="SHORT (hh:mm tt), 24 (HH:mm:ss tt), NORMAL (hh:mm:ss tt)"/>
+	<cfif not isDate(arguments.time)>
+		<cfreturn arguments.time>
+	</cfif>
 	<cfif arguments.timeType eq "SHORT">
 		<cfreturn timeFormat(arguments.time, "hh:mm tt")>
 	<cfelseif arguments.timeType eq "NORMAL">
@@ -19,9 +22,12 @@
 <!--- printDate --->
 <cffunction name="printDate" output="false" access="private" returntype="string" hint="Print date in good format">
 	<cfargument name="datetime" type="string" required="true"/>
-	<cfargument name="dateType" type="string" required="false" default="SHORT" hint="SHORT (mmm/dd/yyyy), FULL (dddd, mmmm dd, yyyy)"/>
+	<cfargument name="dateType" type="string" required="false" default="SHORT" hint="SHORT (dd-mmm-yyyy), FULL (dddd, mmmm dd, yyyy)"/>
+	<cfif not isDate(arguments.datetime)>
+		<cfreturn arguments.datetime>
+	</cfif>
 	<cfif arguments.dateType eq "SHORT">
-		<cfreturn dateFormat(arguments.datetime, "mmm/dd/yyyy")>
+		<cfreturn dateFormat(arguments.datetime, "dd-mmm-yyyy")>
 	<cfelse>
 		<cfreturn dateFormat(arguments.datetime, "dddd, mmmm dd, yyyy")>
 	</cfif>

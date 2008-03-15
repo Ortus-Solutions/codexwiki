@@ -5,10 +5,19 @@
 	<!-- tabs -->
 	<cfif not event.valueExists("print")>
 	<ul>
-		<li <cfif not refindnocase("^admin",event.getCurrentEvent())>id="current"</cfif>>
+		<!--- Wiki Tab --->
+		<li <cfif refindnocase("^page",event.getCurrentEvent())>id="current"</cfif>>
 			<a href="#getSetting('sesBaseURL')#"><span>Wiki</span></a>
 		</li>
-
+		
+		<cfif rc.oUser.getisAuthorized()>
+		<!--- User Profile Tab --->
+		<li <cfif refindnocase("^profile",event.getCurrentEvent())>id="current"</cfif>>
+			<a href="#getSetting('sesBaseURL')#/#rc.xehUserProfile#"><span>My Profile</span></a>
+		</li>
+		</cfif>
+		
+		<!--- Admin Tab --->
 		<cfif rc.oUser.checkPermission("WIKI_ADMIN")>
 		<li <cfif refindnocase("^admin",event.getCurrentEvent())>id="current"</cfif> >
 			<a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#"><span>Admin</span></a>

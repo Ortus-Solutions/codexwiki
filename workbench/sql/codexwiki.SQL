@@ -93,7 +93,7 @@ CREATE TABLE wiki_users
 	user_modify_date DATETIME,
 	user_isDefault TINYINT NOT NULL DEFAULT 0,
 	user_username VARCHAR(50) NOT NULL,
-	user_password VARCHAR(50) NOT NULL,
+	user_password VARCHAR(255) NOT NULL,
 	FKrole_id VARCHAR(36) NOT NULL,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_username),
@@ -145,7 +145,7 @@ CREATE TABLE wiki_securityrules
 	securityrule_id VARCHAR(36) NOT NULL,
 	whitelist VARCHAR(255),
 	securelist VARCHAR(255),
-	roles VARCHAR(255),
+	permissions VARCHAR(255),
 	redirect VARCHAR(255),
 	PRIMARY KEY (securityrule_id),
 	UNIQUE (securityrule_id)

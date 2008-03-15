@@ -105,7 +105,7 @@
 		<cfargument name="sessionstorage" type="any" required="true">
 		<cfset instance.sessionstorage = arguments.sessionstorage>
 	</cffunction>
-
+	
 	<!--- getter and setter for UserService --->
 	<cffunction name="getUserService" access="public" returntype="codex.model.security.UserService" output="false">
 		<cfreturn instance.UserService>

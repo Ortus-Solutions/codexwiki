@@ -179,7 +179,7 @@
 	&nbsp;
 	<a href="javascript:submitForm()" id="buttonLinks">
 		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
+			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" border="0" align="absmiddle">
 			Update Record
 		</span>
 	</a>	

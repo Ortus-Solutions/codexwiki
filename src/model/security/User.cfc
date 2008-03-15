@@ -1,7 +1,29 @@
 <cfcomponent hint="User Decorator" extends="transfer.com.TransferDecorator" output="false">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
-
+	
+	<!--- Get set create Date --->
+	<cffunction name="getcreateDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
+		<cfreturn getTransferObject().getcreateDate()>
+	</cffunction>
+	<cffunction name="setcreateDate" output="false" access="public" returntype="void" hint="Set the date if found">
+		<cfargument name="myDate" type="string" required="false" default=""/>
+		<cfif isDate(arguments.mydate)>
+			<cfset getTransferObject().setcreateDate(arguments.mydate)>
+		</cfif>
+	</cffunction>
+	
+	<!--- Get set modify Date --->
+	<cffunction name="getmodifyDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
+		<cfreturn getTransferObject().getmodifyDate()>
+	</cffunction>
+	<cffunction name="setmodifyDate" output="false" access="public" returntype="void" hint="Set the date if found">
+		<cfargument name="myDate" type="string" required="false" default=""/>
+		<cfif isDate(arguments.mydate)>
+			<cfset getTransferObject().setmodifyDate(arguments.mydate)>
+		</cfif>
+	</cffunction>
+	
 	<!--- getter and setter for Permissions structure --->
 	<cffunction name="setPermissions" output="false" access="public" returntype="void" hint="Set a user's permissions struct">
 		<cfargument name="permissions" required="true" type="struct">
@@ -86,48 +108,40 @@
 	<!--- Load Permissions --->
 	<cffunction name="loadPermissions" access="private" returntype="void" hint="Load permissions lazy loaded." output="false">
 		<cfscript>
-			var tql = "";
-			var oQuery = "";
-			var qPerms = "";
+			var userPermIterator = "";
+			var rolePermIterator = "";
+			var item = "";
 		</cfscript>
-
+		
+		<!--- Double Locking for race conditions --->
 		<cfif structIsEmpty(getPermissions())>
 			<cflock name="user_#getTransferObject().getuserID()#.permissionsLoad" type="exclusive" timeout="30" throwontimeout="true">
-				<cfif structIsEmpty(getPermissions())>
-					<!--- Create TQL --->
-					<cfsavecontent variable="tql">
-					<cfoutput>
-						SELECT UserPermissions.Permission as UserPermission,
-							   RolePermissions.Permission as RolePermission
-						FROM
-							   security.User as Users
-						OUTER JOIN security.Permission as UserPermissions on Users.Permission
-						JOIN  security.Role as Roles on Users.Role
-						OUTER JOIN security.Permission as RolePermissions on Roles.Permission
-						WHERE
-							Users.userID = :user_id
-					</cfoutput>
-					</cfsavecontent>
-
-					<!--- Execute TQL --->
-					<cfscript>
-						oQuery = getTransfer().createQuery(tql);
-						oQuery.setCacheEvaluation(true);
-						oQuery.setParam("user_id", getTransferObject().getUserID(), "string");
-						/* Get Perms */
-						qPerms = getTransfer().listByQuery(oQuery);
-					</cfscript>
-
-					<!--- Set Permissions --->
-					<cfloop query="qPerms">
-						<cfif UserPermission neq "" and not structKeyExists(getPermissions(), UserPermission)>
-							<cfset StructInsert(getPermissions(),UserPermission,true)>
-						</cfif>
-						<cfif RolePermission neq "" and not structKeyExists(getPermissions(), RolePermission)>
-							<cfset StructInsert(getPermissions(),RolePermission,true)>
-						</cfif>
-					</cfloop>
-				</cfif>
+			<cfscript>
+				if( structIsEmpty(getPermissions()) ){
+					/* Get Perms Iterators */
+					userPermIterator = getTransferObject().getPermissionIterator();
+					rolePermIterator = getTransferObject().getRole().getPermissionIterator();
+					
+					/* Get Role Perms */
+					while( rolePermIterator.hasNext() ){
+						item = rolePermIterator.next();
+						/* Check & Insertion */
+						if( not structKeyExists(getPermissions(),item.getPermission()) ){
+							StructInsert(getPermissions(),item.getPermission(),true);
+						}
+					}
+					
+					/* Get User a la carte perms */
+					while( userPermIterator.hasNext() ){
+						item = userPermIterator.next();
+						/* Check & Insertion */
+						if( not structKeyExists(getPermissions(),item.getPermission()) ){
+							StructInsert(getPermissions(),item.getPermission(),true);
+						}
+					}
+					
+				}//end double lock
+			</cfscript>
 			</cflock>
 		</cfif>
 	</cffunction>

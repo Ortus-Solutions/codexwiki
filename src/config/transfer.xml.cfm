@@ -90,7 +90,7 @@
 			<id name="securityruleID" type="UUID" column="securityrule_id" generate="true"/>
 			<property name="whitelist" type="string" column="whitelist" nullable="true"/>
 			<property name="securelist" type="string" column="securelist"/>
-			<property name="roles" type="string" column="roles"/>
+			<property name="permissions" type="string" column="permissions"/>
 			<property name="redirect" type="string" column="redirect"/>
 		</object>
 

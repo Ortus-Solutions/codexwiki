@@ -19,8 +19,8 @@
 			if( len(getSecureList()) eq 0 ){
 				ArrayAppend(errors,"Please set a valid securelist");
 			}
-			if( len(getRoles()) eq 0 ){
-				ArrayAppend(errors,"Please set a valid roles list");
+			if( len(getPermissions()) eq 0 ){
+				ArrayAppend(errors,"Please set a valid permissions list");
 			}
 			if( len(getRedirect()) eq 0 ){
 				ArrayAppend(errors,"Please set a valid redirect event");
@@ -36,10 +36,10 @@
 			/* Table Config for scaffolding*/
 			var tableConfig = structnew();
 			
-			tableConfig.SortBy = "roles";
+			tableConfig.SortBy = "permissions";
 			tableConfig.securityruleID.display = false;
 			tableConfig.securelist.maxlength = 255;
-			tableConfig.roles.maxlength = 255;
+			tableConfig.permissions.maxlength = 255;
 			tableConfig.redirect.maxlength = 255;
 			
 			/* Set the config */

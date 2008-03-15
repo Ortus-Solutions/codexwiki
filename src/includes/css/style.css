@@ -189,6 +189,11 @@ fieldset{
 	border: 1px solid #ddd;
 	margin: 10px;
 }
+legend{
+	color: #003366;
+	font-weight: bold;
+	font-size: 12px;
+}
 textarea{
 	font: normal 12px Verdana, sans-serif;
 	border: 1px solid #d7d7d7;
@@ -465,4 +470,9 @@ form.search input.textbox:focus {
 }
 #wikiToolbarRight select{
 	font-size: 10px;
+}
+
+/* Message box */
+.cbox_messagebox{
+	margin: 10px;
 }

@@ -12,18 +12,28 @@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<!--- Security will go here --->
+<!--- ***************************************************************************************************** --->
+<!--- WIKI SIDEBAR --->
+<!--- ***************************************************************************************************** --->
+<cfif refindnocase("^admin",event.getCurrentEvent())>
 <!--- Admin Main Menu --->
-<cfif findnocase("admin",event.getCurrentEvent())>
 <h1> <img src="#getSetting('htmlBaseURL')#/includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#getSetting('htmlBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
-		<li><a href="#getSetting('htmlBaseURL')#/#rc.xehadminlookups#">System Lookups</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehadminlookups#">System Lookups</a></li>
 	</ul>
-</div>	
-</cfif>
-
+</div>
+<cfelseif refindnocase("^profile",event.getCurrentEvent())>
+<!--- User Main Menu --->
+<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/shield.png" align="absmiddle"> User Menu</h1>
+<div class="left-box">
+	<ul class="sidemenu">
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehUserProfile#">My Profile</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehUserChangePass#">Change Password</a></li>
+	</ul>
+</div>
+<cfelse>
 <!--- Wiki Main Menu --->
 <h1> <img src="#getSetting('htmlBaseURL')#/includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
@@ -33,9 +43,19 @@
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialFeeds#">Rss Feeds</a></li>
 	</ul>
 </div>
+</cfif>
 
+
+<!--- ***************************************************************************************************** --->
 <!--- User Login Box --->
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login</h1>
+<!--- ***************************************************************************************************** --->
+
+<cfif not rc.oUser.getisAuthorized()>
+<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login </h1>
+<cfelse>
+<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Info </h1>
+</cfif>
+
 <div class="left-box">
 	
 	<cfif not rc.oUser.getisAuthorized()>
@@ -44,10 +64,10 @@
 		<input type="hidden" name="refRoute" value="#cgi.script_name#">
 		<p>
 		<label for="username">Username</label>
-		<cfinput type="text" name="username" id="username" size="20" required="true" message="Please enter your username"  />
+		<cfinput type="text" name="username" id="username" size="20" required="true" message="Please enter your username" maxlength="50" />
 		
 		<label for="username">Password</label>
-		<cfinput type="password" name="password" id="password" size="20" required="true" message="Please enter your password"  />
+		<cfinput type="password" name="password" id="password" size="20" required="true" message="Please enter your password" maxlength="50" />
 		
 		<br />
 		
@@ -75,11 +95,11 @@
 	
 	<cfelse>
 		<p>
-			Welcome back <strong>#rc.oUser.getfname()#</strong>!
+			Welcome back <strong>#rc.oUser.getfname()# #rc.oUser.getlname()#</strong>!
 			<br />
-			Role: #rc.oUser.getRole().getRole()#
+			<strong>Your Role:</strong> #rc.oUser.getRole().getRole()#
 		</p>
-		<br /><br />
+		<br />
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
 			<a href="#getSetting('sesBaseURL')#/#rc.xehUserLogout#" id="buttonLinks">

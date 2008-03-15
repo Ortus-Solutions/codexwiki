@@ -30,10 +30,10 @@ If you do not have an account, <a href="#getSetting('sesBaseURL')#/#rc.xehUserRe
 	
 	<div align="center" style="margin-top:10px">
 	<label for="username" class="inline">Username</label>
-	<cfinput type="text" name="username" id="username" size="30" required="true" message="Please enter your username" />
+	<cfinput type="text" name="username" id="username" size="30" required="true" message="Please enter your username" maxlength="50"/>
 	<br /><br />
 	<label for="username" class="inline">Password</label>
-	<cfinput type="password" name="password" id="password" size="30" required="true" message="Please enter your password"/>
+	<cfinput type="password" name="password" id="password" size="30" required="true" message="Please enter your password" maxlength="50"/>
 	</div>
 	
 	<br />
