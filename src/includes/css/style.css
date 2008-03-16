@@ -449,7 +449,20 @@ form.search input.textbox:focus {
 	overflow:auto;
 }
 
-#modalContainer #basicModalContent {padding:8px;}
+/*confirm container */
+#modalConfirmContainer {
+	height:auto; 
+	width:20%;
+	left: 40%;
+	top: 30%; 
+	background-color:#fff; 
+	border:3px solid #ccc;
+}
+
+
+#modalContainer #basicModalContent #modalConfirmContainer {
+	padding:8px;
+}
 #modalData { 
 	padding: 0px; 
 	margin: 0px;

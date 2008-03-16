@@ -2,6 +2,28 @@
 <cfset urlPage = URLEncodedFormat(rc.page) />
 
 <cfoutput>
+
+<!--- js --->
+<cfif not event.valueExists("print")>
+	<cfsavecontent variable="js">
+	<cfoutput>
+		<script type="text/javascript">
+			$(window).ready(function()
+				{
+					$(".delete").click(function()
+						{
+							var _this = this;
+							return confirm("Are you sure you wish to delete the page '#rc.content.getPage().getName()#'?<br/>This cannot be undone!", function(){gotoLink(_this)});
+						}
+					)
+				}
+			);
+		</script>
+	</cfoutput>
+	</cfsavecontent>
+	<cfhtmlhead text="#js#">
+</cfif>
+
 <!--- Print & Floating Top Bar --->
 <cfif not event.valueExists("print")>
 <div align="right" style="margin-bottom:15px;">
@@ -51,7 +73,7 @@
 	</cfif>
 	&nbsp;
 	<cfif rc.oUser.checkPermission("WIKI_DELETE")>
-	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/id/#rc.content.getPage().getPageID()#.cfm" id="buttonLinks">
+	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/id/#rc.content.getPage().getPageID()#.cfm" class="delete" id="buttonLinks">
 		<span>Delete Page</span>
 	</a>
 	</cfif>

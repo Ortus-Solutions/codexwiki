@@ -25,6 +25,7 @@
 		arguments.event.paramValue("page", getSetting('DefaultPage') );
 
 		arguments.event.setValue("cssAppendList", "uni-form,wiki.show");
+		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
 
 		content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
 		arguments.event.setValue("content", content);
@@ -82,6 +83,7 @@
 		var qHistory = getWikiService().getPageHistory(pageName);
 
 		arguments.event.setValue("cssAppendList", "page.showHistory");
+		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
 
 		arguments.event.setValue("onReplaceActive", "page/replaceActive");
 		arguments.event.setValue("onDelete", "page/deleteContent");

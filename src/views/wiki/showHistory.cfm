@@ -26,7 +26,7 @@
 								var class = "history";
 								if(length > 10)
 								{
-									class = class += " overflow";
+									class += " overflow";
 								}
 								show.html('<div class="'+ class +'">' + string + '</div>');
 								show.slideDown("normal");
@@ -36,6 +36,26 @@
 				);
 			}
 		}
+
+		$(window).ready(function()
+			{
+				$(".rollback").click(function()
+					{
+						var _this = this;
+						var link = $(this);
+						return confirm("Are you sure you want to rollback to version "+ link.attr("version") +"?", function(){gotoLink(_this)});
+					}
+				)
+
+				$(".delete").click(function()
+					{
+						var _this = this;
+						var link = $(this);
+						return confirm("Are you sure you want to delete "+ link.attr("version") +"?<br/>This cannot be undone!", function(){gotoLink(_this)});
+					}
+				)
+			}
+		);
 	</script>
 </cfoutput>
 </cfsavecontent>
@@ -56,10 +76,12 @@
 		| <img src="#getSetting('htmlBaseURL')#/includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
 		<cfelse>
 			<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
-			| <img src="#getSetting('htmlBaseURL')#/includes/images/arrow_merge.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm">rollback</a>
+			| <img src="#getSetting('htmlBaseURL')#/includes/images/arrow_merge.png" align="absmiddle">
+			  <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
 			</cfif>
 			<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
-			| <img src="#getSetting('htmlBaseURL')#/includes/images/bin_closed.png" align="absmiddle"> <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm">delete</a>
+			| <img src="#getSetting('htmlBaseURL')#/includes/images/bin_closed.png" align="absmiddle">
+			  <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
 			</cfif>
 		</cfif>
 		<div>

@@ -21,26 +21,24 @@
 					{
 					 	dialog.overlay.fadeIn("normal", function()
 						 	{
-						 		dialog.container.fadeIn("fast", function()
-						 			{
-										var data = {method: "getPreviewHTML", content: content.val()};
-
-										$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
-											function(string, status)
-											{
-												dialog.container.html('<div><p class="align-right"><img src="#getSetting('htmlBaseURL')#/includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
-											}
-										);
-						 			}
-						 		)
-
+						 		dialog.container.fadeIn("fast");
+						 		dialog.data.fadeIn("fast");
 						 	}
 						 )
+					},
+				onShow: function(dialog)
+					{
+						var data = {method: "getPreviewHTML", content: content.val()};
+
+						$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
+							function(string, status)
+							{
+								dialog.container.html('<div><p class="align-right"><img src="#getSetting('htmlBaseURL')#/includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
+							}
+						);
 					}
-				});
-
-
-
+				}
+				);
 		}
 	</script>
 </cfoutput>
