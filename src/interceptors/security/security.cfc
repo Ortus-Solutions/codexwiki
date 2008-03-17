@@ -74,11 +74,11 @@ permission based systems and local to our application.
 				}
 				/* is currentEvent in the secure list and is user in role */
 				if( isEventInPattern(currentEvent,rules[x].securelist) ){
-					/* Verify if user is logged in and in permission */	
-					if( _isUserInPermission(rules[x].permissions) eq false ){
+					/* Verify if user is logged in and in a valid authorized state */	
+					if( _isUserInValidState(rules[x].permissions,rules[x].authorize_check) eq false ){
 						/* Log if Necessary */
 						if( getProperty('debugMode') ){
-							getPlugin("logger").logEntry("warning","User not in appropriate permissions #rules[x].permissions# for event=#currentEvent#");
+							getPlugin("logger").logEntry("warning","User not in appropriate permissions #rules[x].permissions# or not authorized for event=#currentEvent#");
 						}
 						/* Redirect */
 						if( getProperty('useRoutes') ) 
@@ -90,7 +90,7 @@ permission based systems and local to our application.
 					else{
 						if( getProperty('debugMode') ){
 							//User is in role. continue.
-							getPlugin("logger").logEntry("information","Secure event=#currentEvent# matched and user is in permissions=#rules[x].permissions#. Proceeding");
+							getPlugin("logger").logEntry("information","Secure event=#currentEvent# matched and user is in permissions=#rules[x].permissions# and authorized state. Proceeding");
 						}
 						break;
 					}
@@ -115,13 +115,19 @@ permission based systems and local to our application.
 	
 <!------------------------------------------- PRIVATE METHDOS ------------------------------------------->
 	
-	<!--- isEventInPattern --->
-	<cffunction name="_isUserInPermission" access="private" returntype="boolean" output="false" hint="Verifies that the user is in any permission">
+	<!--- isUserInPermission --->
+	<cffunction name="_isUserInValidState" access="private" returntype="boolean" output="false" hint="Verifies that the user is in any permission">
 		<!--- ************************************************************* --->
-		<cfargument name="permissionsList" 	required="true" type="string" hint="The permissionsList list needed to match.">
+		<cfargument name="permissionsList" 	required="true" type="string"   hint="The permissionsList list needed to match.">
+		<cfargument name="auhorizeCheck" 	required="true" type="boolean"  hint="Authorized or not Check"/>
 		<!--- ************************************************************* --->
 		<cfset var thisPermission = "">
 		<cfset var oUser = getSecurityService().getUserSession().getPermissions()>
+		
+		<!--- Authorized Check, if true, then see if user is valid. --->
+		<cfif arguments.authorizeCheck and not oUser.getisAuthorized()>
+			<cfreturn false>
+		</cfif>
 		
 		<!--- Loop Over Permissions --->
 		<cfloop list="#arguments.permissionsList#" index="thisPermission">
@@ -162,14 +168,14 @@ permission based systems and local to our application.
 		<!--- Get rules from IOC Container --->
 		<cfset bean = getPlugin("ioc").getBean(getproperty('rulesBean'))>
 		
+		<!--- Check for ARGS --->
 		<cfif propertyExists('rulesBeanArgs') and len(getProperty('rulesBeanArgs'))>
 			<cfset qRules = evaluate("bean.#getproperty('rulesBeanMethod')#( #getProperty('rulesBeanArgs')# )")>
 		<cfelse>
-			<!--- Now call method on it --->
 			<cfinvoke component="#bean#" method="#getProperty('rulesBeanMethod')#" returnvariable="qRules" />
 		</cfif>
 		
-		<!--- validate query --->
+		<!--- validate rules Query --->
 		<cfset validateRulesQuery(qRules)>
 		
 		<!--- let's setup the array of struct Rules now --->
@@ -182,7 +188,7 @@ permission based systems and local to our application.
 		<!--- ************************************************************* --->
 		<cfargument name="qRules" type="query" required="true" hint="The query to check">
 		<!--- ************************************************************* --->
-		<cfset var validColumns = "whitelist,securelist,permissions,redirect">
+		<cfset var validColumns = "whitelist,securelist,permissions,authorize_check,redirect">
 		<cfset var col = "">
 		<!--- Validate Query --->
 		<cfloop list="#validColumns#" index="col">
@@ -208,6 +214,7 @@ permission based systems and local to our application.
 				node.whitelist = qRules.whitelist[x];
 				node.securelist = qRules.securelist[x];
 				node.permissions = qRules.permissions[x];
+				node.authorize_check = qRules.authorize_check[x];
 				node.redirect = qRules.redirect[x];
 				ArrayAppend(rtnArray,node);
 			}

@@ -146,6 +146,7 @@ CREATE TABLE wiki_securityrules
 	whitelist VARCHAR(255),
 	securelist VARCHAR(255),
 	permissions VARCHAR(255),
+	authorize_check TINYINT NOT NULL DEFAULT 0,
 	redirect VARCHAR(255),
 	PRIMARY KEY (securityrule_id),
 	UNIQUE (securityrule_id)

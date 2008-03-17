@@ -267,6 +267,7 @@ CREATE TABLE  "codex"."wiki_securityrules" (
   "whitelist" varchar(255) default NULL,
   "securelist" varchar(255) default NULL,
   "permissions" varchar(255) default NULL,
+  "authorize_check" tinyint(4) NOT NULL DEFAULT '0',
   "redirect" varchar(255) default NULL,
   PRIMARY KEY  ("securityrule_id"),
   UNIQUE KEY "securityrule_id" ("securityrule_id")
@@ -278,7 +279,7 @@ CREATE TABLE  "codex"."wiki_securityrules" (
 
 /*!40000 ALTER TABLE "wiki_securityrules" DISABLE KEYS */;
 INSERT INTO "codex"."wiki_securityrules" ("securityrule_id","whitelist","securelist","permissions","redirect") VALUES 
- ('88572359-B40D-B373-DE9E3DA49F37ABE5','^user','^admin','ADMIN','user.login');
+ ('88572359-B40D-B373-DE9E3DA49F37ABE5','^user','^admin','ADMIN',1,'user.login');
 /*!40000 ALTER TABLE "wiki_securityrules" ENABLE KEYS */;
 
 
