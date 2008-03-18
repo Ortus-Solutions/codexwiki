@@ -80,6 +80,8 @@ permission based systems and local to our application.
 						if( getProperty('debugMode') ){
 							getPlugin("logger").logEntry("warning","User not in appropriate permissions #rules[x].permissions# or not authorized for event=#currentEvent#");
 						}
+						/* Messagebox */
+						getPlugin("messagebox").setMessage("warning", "You are not authorized to view this page.");
 						/* Redirect */
 						if( getProperty('useRoutes') ) 
 							setNextRoute(rules[x].redirect);
@@ -122,21 +124,23 @@ permission based systems and local to our application.
 		<cfargument name="auhorizeCheck" 	required="true" type="boolean"  hint="Authorized or not Check"/>
 		<!--- ************************************************************* --->
 		<cfset var thisPermission = "">
-		<cfset var oUser = getSecurityService().getUserSession().getPermissions()>
+		<cfset var oUser = getSecurityService().getUserSession()>
+		<cfset var results = false>
 		
 		<!--- Authorized Check, if true, then see if user is valid. --->
-		<cfif arguments.authorizeCheck and not oUser.getisAuthorized()>
-			<cfreturn false>
+		<cfif arguments.auhorizeCheck and oUser.getisAuthorized()>
+			<cfset results = true>
 		</cfif>
 		
 		<!--- Loop Over Permissions --->
 		<cfloop list="#arguments.permissionsList#" index="thisPermission">
-			<cfif oUser.getPermission( thisPermission ) >
-				<cfreturn true>
+			<cfif oUser.checkPermission( thisPermission ) >
+				<cfset results = true>
+				<cfbreak>
 			</cfif>
 		</cfloop>
 			
-		<cfreturn false>	
+		<cfreturn results>	
 	</cffunction>
 	
 	<!--- isEventInPattern --->

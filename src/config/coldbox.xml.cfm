@@ -90,7 +90,15 @@
 		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>
-
+		
+		<Interceptor class="codex.interceptors.security.security">
+			<Property name="useRegex">true</Property>
+			<Property name="useRoutes">true</Property>
+			<Property name="debugMode">false</Property>
+			<Property name="rulesBean">SecurityService</Property>
+			<Property name="rulesBeanMethod">getSecurityRules</Property>
+		</Interceptor>		
+		
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed</Property>
 		</Interceptor>

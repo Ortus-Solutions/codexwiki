@@ -43,6 +43,9 @@
 </div>
 </cfif>
 
+<!--- Messsagebox --->
+#getPlugin("messagebox").renderit()#
+
 <!--- Content --->
 <p>
 	#rc.content.render()#
@@ -72,7 +75,7 @@
 	</a>
 	</cfif>
 	&nbsp;
-	<cfif rc.oUser.checkPermission("WIKI_DELETE")>
+	<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
 	<a href="#getSetting('sesBaseURL')#/#rc.onDeleteWiki#/id/#rc.content.getPage().getPageID()#.cfm" class="delete" id="buttonLinks">
 		<span>Delete Page</span>
 	</a>

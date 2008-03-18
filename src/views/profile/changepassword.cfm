@@ -37,18 +37,21 @@ Please enter the information below, to change your password
 		<cfinput name="c_password" id="c_password" type="password"
 				 required="true"
 				 message="Please enter your current password."
+				 size="30"
 				 maxlength="50"> 
 		<br />
 		<label >New Password: </label>
 		<cfinput name="n_password" id="n_password" type="password"
 				 required="true"
 				 message="Please enter the new password."
+				 size="30"
 				 maxlength="50">
 		<br />
 		<label >New Password Confirmation: </label>
 		<cfinput name="n2_password" id="n2_password" type="password"
 				 required="true"
 				 message="Please enter your new password confirmation."
+				 size="30"
 				 maxlength="50">
 		</p>
 	</div>

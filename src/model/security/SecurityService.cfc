@@ -3,12 +3,21 @@
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="SecurityService" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="configBean" 	hint="the ColdBox config Bean" type="coldbox.system.beans.configBean" required="Yes">
+		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+		<!--- ************************************************************* --->
 		<cfscript>
 			instance = StructNew();
 
 			/* User session Key */
 			setUserSessionKey('auth_user_id');
-
+			setConfigBean(arguments.configBean);
+			
+			setTransfer(arguments.transfer);
+			arguments.transaction.advise(this, "^sendPasswordReminder");
+			
 			return this;
 		</cfscript>
 	</cffunction>
@@ -46,14 +55,39 @@
 	<!--- ************************************************************* --->
 
 	<!--- Send a Password Reminder --->
-	<cffunction name="passwordReminder" output="false" access="public" returntype="void"
+	<cffunction name="sendPasswordReminder" output="false" access="public" returntype="void"
 				hint="This will generate a new password, set it and send it to the user.">
 		<!--- ************************************************************* --->
 		<cfargument name="user" type="codex.model.security.User" required="true"/>
 		<!--- ************************************************************* --->
 		<cfscript>
-
+			var genPassword = "";
+			var clearPassword = "";
+			var email = "";
+			
+			/* Generate a password */
+			clearPassword = arguments.user.getEmail() & createUUID() & now();
+			genPassword = hash(clearPassword, getUserService().getHashType());	
+			
+			/* Save it on User and save. */
+			arguments.user.setPassword(genPassword);
+			getUserService().saveUser(arguments.user);
 		</cfscript>
+		
+		<!--- Email --->
+		<cfsavecontent variable="email">
+		<cfoutput>
+		A new CodeX password has been generated for you: <strong>#clearPassword#</strong><br />
+		Please use this password with your current username and login to your account.
+		</cfoutput>
+		</cfsavecontent>
+		<!--- Mail It --->
+		<cfmail to="#arguments.user.getEmail()#"
+			    from="#getConfigBean().getKey('OwnerEmail')#"
+			    subject="CodeX Password Reminder"
+			    type="HTML">
+		<cfoutput>#email#</cfoutput>
+		</cfmail>		
 	</cffunction>
 
 	<!--- ************************************************************* --->
@@ -94,6 +128,19 @@
 			getSessionStorage().deleteVar( getuserSessionKey() );
 		</cfscript>
 	</cffunction>
+	
+	<!--- ************************************************************* --->
+
+	<!--- Get Security Rules --->
+	<cffunction name="getSecurityRules" output="false" access="public" returntype="query" hint="Get the security Rules">
+		<cfscript>
+			var query = "";
+			
+			query = getTransfer().list('security.SecurityRules');
+			
+			return query;
+		</cfscript>
+	</cffunction>
 
 <!------------------------------------------- ACCESSOR/MUTATORS ------------------------------------------->
 
@@ -104,6 +151,15 @@
 	<cffunction name="setsessionstorage" access="public" returntype="void" output="false">
 		<cfargument name="sessionstorage" type="any" required="true">
 		<cfset instance.sessionstorage = arguments.sessionstorage>
+	</cffunction>
+	
+	<!--- Get/Set config bean. --->
+	<cffunction name="getconfigBean" access="public" returntype="coldbox.system.beans.configBean" output="false">
+		<cfreturn instance.configBean>
+	</cffunction>
+	<cffunction name="setconfigBean" access="public" returntype="void" output="false">
+		<cfargument name="configBean" type="coldbox.system.beans.configBean" required="true">
+		<cfset instance.configBean = arguments.configBean>
 	</cffunction>
 	
 	<!--- getter and setter for UserService --->
@@ -122,6 +178,15 @@
 	<cffunction name="setuserSessionKey" access="public" returntype="void" output="false">
 		<cfargument name="userSessionKey" type="string" required="true">
 		<cfset instance.userSessionKey = arguments.userSessionKey>
+	</cffunction>
+	
+	<!--- Get Set Transfer --->
+	<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
+		<cfreturn instance.transfer />
+	</cffunction>	
+	<cffunction name="setTransfer" access="private" returntype="void" output="false">
+		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
+		<cfset instance.transfer = arguments.transfer />
 	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

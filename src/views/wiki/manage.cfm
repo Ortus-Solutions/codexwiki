@@ -84,9 +84,9 @@
 
 		<!--- Comment Editing --->
 		<div class="ctrlHolder">
-	      <label for="comment"><em>*</em> Edit Comment</label>
-	      <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
-	    </div>
+		     <label for="comment"><em>*</em> Edit Comment</label>
+		     <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+		</div>
 	</div>
 
 	<!--- Management Toolbar --->

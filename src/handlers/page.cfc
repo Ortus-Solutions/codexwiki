@@ -49,7 +49,15 @@
 <cffunction name="manage" hint="manage a wiki page" access="public" returntype="void" output="false">
 	<cfargument name="event" type="coldbox.system.beans.requestContext">
 	<cfscript>
+		var rc = arguments.event.getCollection();
 		var content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
+		
+		/* HACKED Edit Check  For Now */
+		if( content.getIsPersisted() and NOT rc.oUser.checkPermission('WIKI_EDIT') ){
+			getPlugin("messagebox").setMessage("warning", "You are not authorized to edit.");
+			setNextRoute('wiki/#rc.page#');
+		}
+		
 		arguments.event.setValue("content", content);
 		arguments.event.setValue("cssAppendList", "uni-form");
 		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack");
