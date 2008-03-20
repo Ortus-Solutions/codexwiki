@@ -4,25 +4,20 @@
 <head>
 	<cfoutput>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	
+
 	<!--- Main CSS --->
 	<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/style.css" />
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
 	</cfloop>
-	
-	<!--- Page Title --->
-	<title>
-		CodeX Wiki
-		<cfif event.valueExists("content") > - #rc.content.getPage().getName()#</cfif>
-		<cfif event.valueExists("pageTitle")> - #rc.pageTitle#</cfif>
-	</title>
+
+	#renderView('tags/title')#
 	</cfoutput>
 </head>
 <body style="background: none;">
-	<div>				
-		<cfoutput>#renderView()#</cfoutput>					
+	<div>
+		<cfoutput>#renderView()#</cfoutput>
 	</div>
 </body>
 </html>

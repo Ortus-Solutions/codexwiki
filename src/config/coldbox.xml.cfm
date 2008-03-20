@@ -21,7 +21,7 @@
 		<Setting name="UDFLibraryFile" 				value="includes/viewhelper.cfm" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="" />
-		<Setting name="CustomErrorTemplate"			value="" />
+		<Setting name="CustomErrorTemplate"			value="includes/error.cfm" />
 		<Setting name="MessageboxStyleOverride"		value="false" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
 		<Setting name="ConfigAutoReload"          	value="false" />
@@ -34,6 +34,8 @@
 	</Settings>
 
 	<YourSettings>
+		<!--Wiki config settings -->
+		<Setting name="WikiName" 					value="Codex Base Install"/>
 		<!--Transfer Settings -->
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
@@ -90,15 +92,15 @@
 		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>
-		
+
 		<Interceptor class="codex.interceptors.security.security">
 			<Property name="useRegex">true</Property>
 			<Property name="useRoutes">true</Property>
 			<Property name="debugMode">false</Property>
 			<Property name="rulesBean">SecurityService</Property>
 			<Property name="rulesBeanMethod">getSecurityRules</Property>
-		</Interceptor>		
-		
+		</Interceptor>
+
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed</Property>
 		</Interceptor>

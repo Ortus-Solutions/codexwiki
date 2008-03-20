@@ -49,7 +49,7 @@
 <!--- Title --->
 <h1>
 	<img src="#getSetting('htmlBaseURL')#/includes/images/page_edit.png" align="absmiddle"> Editing:
-	"<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getName()#</a>"
+	"<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 
 <!--- Form --->
@@ -95,6 +95,5 @@
    		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
-
 </form>
 </cfoutput>

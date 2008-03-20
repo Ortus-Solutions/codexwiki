@@ -22,6 +22,10 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getCleanName" hint="name without the '_' in it" access="public" returntype="string" output="false">
+	<cfreturn replaceNoCase(getName(), "_", " ") />
+</cffunction>
+
 <cffunction name="addContentVersion" hint="adds a content version" access="public" returntype="codex.model.wiki.Content" output="false">
 	<cfargument name="memento" hint="the memento to populate the new content object" type="struct" required="Yes">
 	<cfscript>
