@@ -12,18 +12,19 @@
 			$('##_loader').fadeIn();
 			$('##lookupForm').submit();
 		}
+		function deleteRecord(recordID){
+			if( recordID != null ){
+				$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
+				$("input[@name='lookupid']").each(function(){
+					if( this.value == recordID ){ this.checked = true;}
+					else{ this.checked = false; }
+				});
+			}	
+			//Submit Form
+			submitForm();
+		}
 		function confirmDelete(recordID){
-			if( confirm("Do you wish to remove the selected record(s)?") ){
-				if( recordID != null ){
-					$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
-					$("input[@name='lookupid']").each(function(){
-						if( this.value == recordID ){ this.checked = true;}
-						else{ this.checked = false; }
-					});
-				}	
-				//Submit Form
-				submitForm();
-			}
+			confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!", function(){deleteRecord(recordID)});			
 		}
 	</script>
 </cfoutput>

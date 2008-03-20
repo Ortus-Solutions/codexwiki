@@ -19,6 +19,10 @@
 		rc.xehLookupEdit = "admin.lookups/dspEdit.cfm";
 		rc.xehLookupClean = "admin.lookups/cleanDictionary.cfm";
 		
+		/* JS Lookups */
+		event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
+		
+		
 		//Get System Lookups
 		rc.systemLookups = getSetting("SystemLookups");
 		rc.systemLookupsKeys = structKeyArray(rc.systemLookups);
