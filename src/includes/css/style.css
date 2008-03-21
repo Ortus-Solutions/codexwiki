@@ -290,10 +290,14 @@ form.search input.textbox:focus {
 #header-logo #logo {
 	position: absolute;
 	top: 3px; left: 5px;
+	margin: 0; padding: 0;
+}
+
+#header-logo #logo h1 {
 	font: bold 30px "trebuchet MS", Arial, Tahoma, Sans-Serif;
 	margin: 0; padding: 0;
 	letter-spacing: -1px;
-	color: #000;
+	color: #000;	
 }
 
 /* navigation tabs */

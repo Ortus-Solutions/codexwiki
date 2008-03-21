@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Main Header And Tabs --->
 <div id="header">
-	<span id="slogan">Knowledge is Power...</span>
+	<span id="slogan">CodexWiki</span>
 	<!-- tabs -->
 	<cfif not event.valueExists("print")>
 	<ul>
@@ -29,7 +29,7 @@
 
 <!--- Sub Header --->
 <div id="header-logo">
-	<div id="logo">Code<span class="red">X</span></div>
+	<div id="logo"><h1>#getSetting("WikiName")#</h1></div>
 	<cfif not event.valueExists("print")>
 	<form method="post" class="search" action="" onsubmit="window.alert('Not implemented'); return false">
 		<p><input name="search_query" class="textbox" type="text" />
