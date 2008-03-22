@@ -22,7 +22,7 @@
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="" />
 		<Setting name="CustomErrorTemplate"			value="includes/error.cfm" />
-		<Setting name="MessageboxStyleOverride"		value="false" />
+		<Setting name="MessageboxStyleOverride"		value="true" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
 		<Setting name="ConfigAutoReload"          	value="false" />
 		<Setting name="MyPluginsLocation"   		value="" />
