@@ -1,8 +1,8 @@
 <!--- create a non found wiki page --->
 <cfoutput>
-<h1>#rc.content.getPage().getName()#</h1>
+<h1>#rc.content.getPage().getCleanName()#</h1>
 <p>
-	There is no page to be found under the title <strong>'#rc.content.getPage().getName()#'</strong>
+	There is no page to be found under the title <strong>'#rc.content.getPage().getCleanName()#'</strong>
 </p>
 <cfif rc.oUser.checkPermission("WIKI_CREATE")>
 	<p>
