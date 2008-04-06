@@ -24,10 +24,10 @@ Please enter the information below, to change your password
 </p>
 
 #getPlugin("messagebox").renderit()#
-	
+
 <!--- Profile Details --->
-<cfform name="passwordForm" id="passwordForm" 
-		action="#getSetting('sesBaseURL')#/#rc.xehdoChangePass#" 
+<cfform name="passwordForm" id="passwordForm"
+		action="#getSetting('sesBaseURL')#/#rc.xehdoChangePass#"
 		method="post">
 <fieldset >
 	<legend>Password Change Request</legend>
@@ -38,7 +38,7 @@ Please enter the information below, to change your password
 				 required="true"
 				 message="Please enter your current password."
 				 size="30"
-				 maxlength="50"> 
+				 maxlength="50">
 		<br />
 		<label >New Password: </label>
 		<cfinput name="n_password" id="n_password" type="password"
@@ -58,13 +58,12 @@ Please enter the information below, to change your password
 </fieldset>
 
 <!--- Loader --->
-<div id="_loader" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-	<p class="bold red">
+<div id="_loader" class="align-center formloader" style="margin:5px 5px 0px 0px;">
+	<p>
 		Submitting...<br />
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
-	<br />
 </div>
 
 <!--- Button Bar --->
@@ -75,7 +74,7 @@ Please enter the information below, to change your password
 			Update Password
 		</span>
 	</a>
-	
+
 </div>
 <br />
 </cfform>

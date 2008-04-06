@@ -40,6 +40,11 @@
 				}
 				);
 		}
+
+		function submitForm(){
+			$('##_buttonbar').slideUp("fast");
+			$('##_loader').fadeIn("slow");
+		}
 	</script>
 </cfoutput>
 </cfsavecontent>
@@ -53,7 +58,7 @@
 </h1>
 
 <!--- Form --->
-<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm">
+<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 
@@ -89,8 +94,17 @@
 		</div>
 	</div>
 
+	<!--- Loader --->
+	<div id="_loader" class="align-center formloader">
+		<p>
+			Submitting...<br />
+			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		</p>
+	</div>
+
 	<!--- Management Toolbar --->
-	<div class="buttonHolder">
+	<div id="_buttonbar" class="buttonHolder">
 		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
    		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>

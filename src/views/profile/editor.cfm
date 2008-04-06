@@ -24,10 +24,10 @@ Please enter all the required information to update your profile details
 </p>
 
 #getPlugin("messagebox").renderit()#
-	
+
 <!--- Profile Details --->
-<cfform name="detailsForm" id="detailsForm" 
-		action="#getSetting('sesBaseURL')#/#rc.xehDoEdit#" 
+<cfform name="detailsForm" id="detailsForm"
+		action="#getSetting('sesBaseURL')#/#rc.xehDoEdit#"
 		method="post">
 
 <fieldset >
@@ -63,13 +63,12 @@ Please enter all the required information to update your profile details
 </fieldset>
 
 <!--- Loader --->
-<div id="_loader" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-	<p class="bold red">
+<div id="_loader" class="align-center formloader">
+	<p>
 		Submitting...<br />
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
-	<br />
 </div>
 
 <!--- Button Bar --->

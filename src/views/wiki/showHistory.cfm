@@ -51,7 +51,7 @@
 					{
 						var _this = this;
 						var link = $(this);
-						return confirm("Are you sure you want to delete "+ link.attr("version") +"?<br/>This cannot be undone!", function(){gotoLink(_this)});
+						return confirm("Are you sure you want to delete version "+ link.attr("version") +"?<br/>This cannot be undone!", function(){gotoLink(_this)});
 					}
 				)
 			}

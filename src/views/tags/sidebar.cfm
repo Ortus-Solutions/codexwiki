@@ -57,7 +57,7 @@
 </cfif>
 
 <div class="left-box">
-	
+
 	<cfif not rc.oUser.getisAuthorized()>
 		<cfform name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="onLoginForm()">
 		<!--- ref Route --->
@@ -65,23 +65,22 @@
 		<p>
 		<label for="username">Username</label>
 		<cfinput type="text" name="username" id="username" size="20" required="true" message="Please enter your username" maxlength="50" />
-		
+
 		<label for="username">Password</label>
 		<cfinput type="password" name="password" id="password" size="20" required="true" message="Please enter your password" maxlength="50" />
-		
+
 		<br />
-		
+
 		<!--- Loader --->
-		<div id="_loader_login" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-			<p class="bold red">
+		<div id="_loader_login" class="align-center formloader">
+			<p>
 				Submitting...<br />
-				
+
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
-			<br />
 		</div>
-		
+
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
 			<a href="#getSetting('sesBaseURL')#/#rc.xehUserReminder#">Forgot Password?</a>
@@ -92,7 +91,7 @@
 		<br />
 		</p>
 	</cfform>
-	
+
 	<cfelse>
 		<p>
 			Welcome back <strong>#rc.oUser.getfname()# #rc.oUser.getlname()#</strong>!
@@ -108,7 +107,7 @@
 					Logout
 				</span>
 			</a>
-		</div>	
+		</div>
 		<br />
 	</cfif>
 </div>

@@ -44,7 +44,7 @@
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
 		<!-- Lookup Tables To Manage -->
-		<Setting name="SystemLookups" value="{Permissions:security.Permission, Roles:security.Role, SecurityRules:security.SecurityRules}"></Setting>
+		<Setting name="SystemLookups" value="{Permissions:'security.Permission', Roles:'security.Role', SecurityRules:'security.SecurityRules'}"></Setting>
 		<!-- Hash Type -->
 		<Setting name="HashType" 					value="SHA-512"/>
 	</YourSettings>

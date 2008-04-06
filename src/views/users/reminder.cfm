@@ -24,27 +24,26 @@ Please enter your email address below and click the Send Password button. This w
 #getPlugin("messagebox").renderit()#
 
 <cfform name="reminderform" id="reminderform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehDoReminder#" onsubmit="submitForm()">
-	
+
 	<div align="center" style="margin-top:10px">
 	<label for="email" class="inline">Email</label>
-	<cfinput type="text" name="email" id="email" 
-			 size="50" 
-			 required="true" 
+	<cfinput type="text" name="email" id="email"
+			 size="50"
+			 required="true"
 			 message="Please enter your email" maxlength="255"/>
 	</div>
-	
+
 	<br />
-	
+
 	<!--- Loader --->
-	<div id="_loader" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-		<p class="bold red">
-			Submitting...<br />			
+	<div id="_loader" class="align-center formloader">
+		<p>
+			Submitting...<br />
 			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
-		<br />
 	</div>
-	
+
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">
 		<input type="submit" class="submitButton" value="Send Password"></input>

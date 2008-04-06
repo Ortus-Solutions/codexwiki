@@ -27,7 +27,7 @@ If you do not have an account, <a href="#getSetting('sesBaseURL')#/#rc.xehUserRe
 #getPlugin("messagebox").renderit()#
 
 <cfform name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="submitForm()">
-	
+
 	<div align="center" style="margin-top:10px">
 	<label for="username" class="inline">Username</label>
 	<cfinput type="text" name="username" id="username" size="30" required="true" message="Please enter your username" maxlength="50"/>
@@ -35,20 +35,19 @@ If you do not have an account, <a href="#getSetting('sesBaseURL')#/#rc.xehUserRe
 	<label for="username" class="inline">Password</label>
 	<cfinput type="password" name="password" id="password" size="30" required="true" message="Please enter your password" maxlength="50"/>
 	</div>
-	
+
 	<br />
-	
+
 	<!--- Loader --->
-	<div id="_loader" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-		<p class="bold red">
+	<div id="_loader" class="align-center formloader">
+		<p>
 			Submitting...<br />
-			
+
 			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
-		<br />
 	</div>
-	
+
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">
 		<a href="#getSetting('sesBaseURL')#/#rc.xehUserReminder#">Forgot Password?</a>

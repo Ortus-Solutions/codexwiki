@@ -259,6 +259,18 @@ form.search input.textbox:focus {
 	background: #fff;
 }
 
+/* loader */
+div.formloader {
+	margin:5px 5px 0px 0px;
+	display: none;
+}
+
+div.formloader p {
+	color: #CC0000;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
 /**********************************
   LAYOUT 
 ***********************************/

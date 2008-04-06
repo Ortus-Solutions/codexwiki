@@ -46,15 +46,15 @@
 <fieldset>
 	<legend><strong>Create Form</strong></legend>
 <div id="lookupFields">
-	
+
 	<!--- Loop Through Foreign Keys, to create Drop Downs --->
 	<cfloop from="1" to="#arrayLen(rc.mdDictionary.ManyToOneArray)#" index="i">
 		<cfset qListing = rc["q#rc.mdDictionary.ManyToOneArray[i].alias#"]>
 		<cfset tmpValue = evaluate("rc.oLookup.get#rc.mdDictionary.ManyToOneArray[i].alias#().get#rc.mdDictionary.ManyToOneArray[i].PK#()")>
 		<label style="width: 180px">#rc.mdDictionary.ManyToOneArray[i].alias#</label>
 
-		<cfselect name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#" 
-				  id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#" 
+		<cfselect name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
+				  id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
 				  required="true"
 				  message="#rc.mdDictionary.ManyToOneArray[i].alias# is required">
 			<cfloop query="qListing">
@@ -68,7 +68,7 @@
 	<cfloop from="1" to="#ArrayLen(rc.mdDictionary.FieldsArray)#" index="i">
 		<!--- Set value --->
 		<cfset tmpValue = evaluate("rc.oLookup.get#rc.mdDictionary.FieldsArray[i].alias#()")>
-		
+
 		<!--- Do not show the ignore Updates and PK--->
 		<cfif not rc.mdDictionary.FieldsArray[i].primaryKey and not rc.mdDictionary.FieldsArray[i].ignoreUpdate>
 			<label style="width: 180px">#rc.mdDictionary.FieldsArray[i].alias#:</label>
@@ -76,25 +76,25 @@
 			<!--- BOOLEAN TYPES --->
 			<cfif rc.mdDictionary.FieldsArray[i].datatype eq "boolean">
 				<cfif rc.mdDictionary.FieldsArray[i].html eq "radio">
-					<cfinput type="radio" 
-							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
-							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
+					<cfinput type="radio"
+							 name="#rc.mdDictionary.FieldsArray[i].alias#"
+							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value="1"
 							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 checked="#tmpValue#"
 							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
 					<label class="inline" for="#rc.mdDictionary.FieldsArray[i].alias#">Yes</label>
-					
-					<cfinput type="radio" 
-							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
-							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
+
+					<cfinput type="radio"
+							 name="#rc.mdDictionary.FieldsArray[i].alias#"
+							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value="0"
 							 checked="#not tmpValue#"
 							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
 					<label class="inline" for="#rc.mdDictionary.FieldsArray[i].alias#">No</label>
 				<cfelse>
-					<cfselect name="#rc.mdDictionary.FieldsArray[i].alias#" 
+					<cfselect name="#rc.mdDictionary.FieldsArray[i].alias#"
 							  id="#rc.mdDictionary.FieldsArray[i].alias#"
 							  required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							  message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
@@ -104,10 +104,10 @@
 				</cfif>
 			<!--- DATE TYPE --->
 			<cfelseif rc.mdDictionary.FieldsArray[i].datatype eq "date">
-				<cfinput type="datefield" 
-						 name="#rc.mdDictionary.FieldsArray[i].alias#" 
-						 id="#rc.mdDictionary.FieldsArray[i].alias#" 
-						 value="#dateFormat(tmpValue, "MM/DD/YYYY")#" 
+				<cfinput type="datefield"
+						 name="#rc.mdDictionary.FieldsArray[i].alias#"
+						 id="#rc.mdDictionary.FieldsArray[i].alias#"
+						 value="#dateFormat(tmpValue, "MM/DD/YYYY")#"
 						 size="20"
 						 validate="date"
 						 validateat="onBlur"
@@ -116,32 +116,32 @@
 				  <br />
 			<cfelse>
 				<cfif rc.mdDictionary.FieldsArray[i].html eq "text">
-					<cfinput type="text" 
-							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
-							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
-							 value="#tmpValue#" 
+					<cfinput type="text"
+							 name="#rc.mdDictionary.FieldsArray[i].alias#"
+							 id="#rc.mdDictionary.FieldsArray[i].alias#"
+							 value="#tmpValue#"
 							 size="40"
 							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "password">
-					<cfinput type="password" 
-							 name="#rc.mdDictionary.FieldsArray[i].alias#" 
-							 id="#rc.mdDictionary.FieldsArray[i].alias#" 
+					<cfinput type="password"
+							 name="#rc.mdDictionary.FieldsArray[i].alias#"
+							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value="#tmpValue#"
 							 size="40"
 							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "textarea">
-					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#" 
-								id="#rc.mdDictionary.FieldsArray[i].alias#" 
+					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#"
+								id="#rc.mdDictionary.FieldsArray[i].alias#"
 								rows="10"
 								message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
 								required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 	>#tmpValue#</cftextarea>
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "richtext">
-					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#" 
-								id="#rc.mdDictionary.FieldsArray[i].alias#" 
-								richtext="true" 
+					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#"
+								id="#rc.mdDictionary.FieldsArray[i].alias#"
+								richtext="true"
 								toolbar="Basic"
 								message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
 								required="#not rc.mdDictionary.FieldsArray[i].nullable#"
@@ -158,14 +158,13 @@
 </fieldset>
 <br />
 <!--- Loader --->
-<div id="_loader" class="align-center hidden" style="margin:5px 5px 0px 0px;">
-	<p class="bold red">
+<div id="_loader" class="align-center formloader">
+	<p>
 		Submitting...<br />
-		
+
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
-	<br />
 </div>
 
 <!--- Create / Cancel --->
@@ -182,7 +181,7 @@
 			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" border="0" align="absmiddle">
 			Update Record
 		</span>
-	</a>	
+	</a>
 </div>
 <br />
 </cfform>
@@ -201,7 +200,7 @@
 		<cfset qListing = rc["q#thisArray.alias#"]>
 		<!--- Relation Array --->
 		<cfset relationArray = rc["#thisArray.alias#Array"]>
-	
+
 		<!--- Display Relation Form --->
 		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#getSetting('sesBaseURL')#/#rc.xehLookupUpdateRelation#">
 			<!--- Lookup Class Choosen to Add --->
@@ -212,17 +211,17 @@
 			<input type="hidden" name="linkAlias" value="#thisArray.alias#">
 			<input type="hidden" name="linkTO"    value="#thisArray.linkToTO#">
 			<input type="hidden" id="addRelation" name="addRelation" value="1">
-			
+
 			<fieldset>
 				<legend><a name="m2m_#thisArray.alias#"></a><strong>#thisArray.alias# Relation</strong></legend>
-				
+
 				<!--- Loader --->
 				<div id="_loader_#thisArray.alias#" class="bold red align-center hidden" style="margin:5px 5px 0px 0px;">
 					Submitting...<br />
 					<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 					<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 				</div>
-				
+
 				<div id="_buttonbar_#thisArray.alias#">
 					<!--- M2M Drop Down Listing --->
 					<select name="m2m_#thisArray.alias#" id="m2m_#thisArray.alias#">
@@ -248,7 +247,7 @@
 						</span>
 					</a>
 				</div>
-				
+
 				<br />
 				<!--- Actual m2m for this lookup --->
 				<cfif arraylen(relationArray)>
@@ -258,14 +257,14 @@
 						<cfset thisRelationTO = relationArray[i]>
 						<cfset thisRelationPKID = evaluate('thisRelationTO.get#thisArray.linkToPK#()')>
 						<cfset thisRelationSortBy = evaluate('thisRelationTO.get#thisArray.linkToSortBy#()')>
-						
+
 						<input type="checkbox" name="m2m_#thisArray.alias#_id" id="m2m_#thisArray.alias#_id" value="#thisRelationPKID#" />
 						<label class="inline" for="m2m_#thisArray.alias#_id">#thisRelationSortBy#</label><br/>
 					</cfloop>
 				<cfelse>
 					<p><em>No #thisArray.alias# relation records found.</em></p>
-				</cfif>			
-			
+				</cfif>
+
 			</fieldset>
 		</form>
 	</cfloop>
