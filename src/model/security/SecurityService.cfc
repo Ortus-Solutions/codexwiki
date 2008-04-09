@@ -24,6 +24,35 @@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
+	<!--- User Validator for security --->
+	<cffunction name="userValidator" access="public" returntype="boolean" output="false" hint="Verifies that the user is in any permission">
+		<!--- ************************************************************* --->
+		<cfargument name="rule" 	required="true" type="struct"   hint="The rule to verify">
+		<cfargument name="messagebox" type="coldbox.system.plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
+		<!--- ************************************************************* --->
+		<cfset var oUser = getUserSession()>
+		<cfset var results = false>
+		<cfset var thisPermission = "">
+				
+		<!--- Authorized Check, if true, then see if user is valid. --->
+		<cfif arguments.rule['authorize_check'] and oUser.getisAuthorized()>
+			<cfset results = true>
+		</cfif>
+		
+		<!--- Loop Over Permissions --->
+		<cfloop list="#arguments.rule['permissions']#" index="thisPermission">
+			<cfif oUser.checkPermission( thisPermission ) >
+				<cfset results = true>
+				<cfbreak>
+			</cfif>
+		</cfloop>
+			
+		<!--- INvalid Attempt --->
+		<cfset arguments.messagebox.setMessage("warning","You are not authorized to view this page.")>
+		
+		<cfreturn results>
+	</cffunction>
+					
 	<!--- Authenticate a user in the system --->
 	<cffunction name="authenticateUser" output="false" access="public" returntype="boolean"
 				hint="Authenticate a User. If valid it places them in session. Returns true if user is valid and authenticated and ready for usage.">

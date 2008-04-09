@@ -34,13 +34,15 @@
 	</Settings>
 
 	<YourSettings>
+		<!-- Codex System Information -->
+		<Setting name="Codex"						value="{'Version':'1.0', 'Suffix':'Alpha'}" />
 		<!--Wiki config settings -->
 		<Setting name="WikiName" 					value="Codex Base Install"/>
 		<!--Transfer Settings -->
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>
-		<!-- Show Key -->
+		<!-- Wiki Keys -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
 		<!-- Lookup Tables To Manage -->
@@ -93,12 +95,13 @@
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>
 
-		<Interceptor class="codex.interceptors.security.security">
-			<Property name="useRegex">true</Property>
+		<Interceptor class="coldbox.system.interceptors.security">
 			<Property name="useRoutes">true</Property>
-			<Property name="debugMode">false</Property>
+			<Property name="queryChecks">false</Property>
+			<Property name="rulesSource">ioc</Property>
 			<Property name="rulesBean">SecurityService</Property>
 			<Property name="rulesBeanMethod">getSecurityRules</Property>
+			<Property name="validatorIOC">SecurityService</Property>
 		</Interceptor>
 
 		<Interceptor class="codex.interceptors.wiki.WikiText">

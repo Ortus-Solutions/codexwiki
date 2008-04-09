@@ -10,15 +10,13 @@ DROP TABLE IF EXISTS wiki_users
 ;
 DROP TABLE IF EXISTS wiki_role_permissions
 ;
+DROP TABLE IF EXISTS wiki_options
+;
 DROP TABLE IF EXISTS wiki_namespace
 ;
+DROP TABLE IF EXISTS wiki_customHTML
+;
 DROP TABLE IF EXISTS wiki_category
-;
-DROP TABLE IF EXISTS wiki_securityrules
-;
-DROP TABLE IF EXISTS wiki_roles
-;
-DROP TABLE IF EXISTS wiki_permissions
 ;
 
 
@@ -97,7 +95,10 @@ CREATE TABLE wiki_users
 	FKrole_id VARCHAR(36) NOT NULL,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_username),
-	KEY (FKrole_id)
+	KEY (FKrole_id),
+	INDEX idx_credentials (user_isActive ASC, user_isConfirmed ASC, user_username ASC, user_password ASC),
+	INDEX idx_byEmail (user_isActive ASC, user_isConfirmed ASC, user_email ASC),
+	INDEX idx_default (user_isDefault ASC)
 ) ENGINE=InnoDB
 ;
 
@@ -115,6 +116,16 @@ CREATE TABLE wiki_role_permissions
 ;
 
 
+CREATE TABLE wiki_options
+(
+	options_id VARCHAR(36) NOT NULL,
+	option_name VARCHAR(255),
+	option_value TEXT,
+	PRIMARY KEY (options_id)
+) ENGINE=InnoDB
+;
+
+
 CREATE TABLE wiki_namespace
 (
 	namespace_id VARCHAR(36) NOT NULL,
@@ -128,6 +139,18 @@ CREATE TABLE wiki_namespace
 ;
 
 
+CREATE TABLE wiki_customHTML
+(
+	customHTML_id VARCHAR(36) NOT NULL,
+	customHTML_beforeHeadEnd TEXT,
+	customHTML_afterBodyStart TEXT,
+	customHTML_beforeBodyEnd TEXT,
+	customHTML_modify_date DATETIME NOT NULL,
+	PRIMARY KEY (customHTML_id)
+) ENGINE=InnoDB
+;
+
+
 CREATE TABLE wiki_category
 (
 	category_id VARCHAR(36) NOT NULL,
@@ -136,39 +159,6 @@ CREATE TABLE wiki_category
 	PRIMARY KEY (category_id),
 	UNIQUE (category_name),
 	INDEX idx_wiki_category_name (category_name ASC)
-) ENGINE=InnoDB
-;
-
-
-CREATE TABLE wiki_securityrules
-(
-	securityrule_id VARCHAR(36) NOT NULL,
-	whitelist VARCHAR(255),
-	securelist VARCHAR(255),
-	permissions VARCHAR(255),
-	authorize_check TINYINT NOT NULL DEFAULT 0,
-	redirect VARCHAR(255),
-	PRIMARY KEY (securityrule_id),
-	UNIQUE (securityrule_id)
-) ENGINE=InnoDB
-;
-
-
-CREATE TABLE wiki_roles
-(
-	role_id VARCHAR(36) NOT NULL,
-	role VARCHAR(100) NOT NULL,
-	PRIMARY KEY (role_id)
-) ENGINE=InnoDB
-;
-
-
-CREATE TABLE wiki_permissions
-(
-	permission_id VARCHAR(36) NOT NULL,
-	permission VARCHAR(100) NOT NULL,
-	PRIMARY KEY (permission_id),
-	UNIQUE (permission)
 ) ENGINE=InnoDB
 ;
 
