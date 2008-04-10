@@ -21,6 +21,7 @@
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminAPI#">API Docs</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehadminlookups#">System Lookups</a></li>
 	</ul>
 </div>
