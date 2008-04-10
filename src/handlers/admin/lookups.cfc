@@ -318,10 +318,10 @@
 <!----------------------------------- IOC DEPENDENCIES ------------------------------>
 
 	<!--- Get/Set lookup Service --->
-	<cffunction name="getLookupService" access="public" output="false" returntype="codex.model.lookups.LookupService" hint="Get LookupService">
+	<cffunction name="getLookupService" access="private" output="false" returntype="codex.model.lookups.LookupService" hint="Get LookupService">
 		<cfreturn instance.LookupService/>
 	</cffunction>	
-	<cffunction name="setLookupService" access="public" output="false" returntype="void" hint="Set LookupService">
+	<cffunction name="setLookupService" access="private" output="false" returntype="void" hint="Set LookupService">
 		<cfargument name="LookupService" type="codex.model.lookups.LookupService" required="true"/>
 		<cfset instance.LookupService = arguments.LookupService/>
 	</cffunction>
