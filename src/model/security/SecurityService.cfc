@@ -46,9 +46,11 @@
 				<cfbreak>
 			</cfif>
 		</cfloop>
-			
-		<!--- INvalid Attempt --->
-		<cfset arguments.messagebox.setMessage("warning","You are not authorized to view this page.")>
+		
+		<!--- Messagebox --->
+		<cfif not results>
+			<cfset arguments.messagebox.setMessage("warning","You are not authorized to view this page.")>
+		</cfif>	
 		
 		<cfreturn results>
 	</cffunction>
