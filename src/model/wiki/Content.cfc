@@ -24,6 +24,24 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="validate" hint="returns an array of error messages. If the array is empty, validation has passed" access="public" returntype="array" output="false">
+	<cfscript>
+		var messages = ArrayNew(1);
+
+		if(NOT Len(Trim(getContent())))
+		{
+			ArrayAppend(messages, "Content cannot be empty.");
+		}
+
+		if(NOT Len(Trim(getComment())))
+		{
+			ArrayAppend(messages, "Comment cannot be empty.");
+		}
+
+		return messages;
+	</cfscript>
+</cffunction>
+
 <cffunction name="render" hint="renders the page content" access="public" returntype="string" output="false">
 	<cfscript>
 		var args = StructNew();

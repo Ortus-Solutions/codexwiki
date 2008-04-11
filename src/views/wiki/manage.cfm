@@ -57,6 +57,8 @@
 	"<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 
+#getPlugin("messagebox").renderit()#
+
 <!--- Form --->
 <form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
 	<div class="blockLabels">

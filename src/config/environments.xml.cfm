@@ -12,7 +12,7 @@
 		<Setting name="onInvalidEvent"			value="" />
 	</environment>
 
-	<environment name="development" urls="scorpiorc1,scorpiorc1:82">
+	<environment name="development" urls="cf:82">
 		<Setting name="HandlerCaching"			value="false" />
 		<Setting name="HandlersIndexAutoReload" value="true" />
 		<Setting name="DebugMode"	 			value="false" />

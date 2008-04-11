@@ -26,7 +26,7 @@
 	<cfreturn replaceNoCase(getName(), "_", " ", "all") />
 </cffunction>
 
-<cffunction name="addContentVersion" hint="adds a content version" access="public" returntype="codex.model.wiki.Content" output="false">
+<cffunction name="getNewContentVersion" hint="validates a content version" access="public" returntype="codex.model.wiki.Content" output="false">
 	<cfargument name="memento" hint="the memento to populate the new content object" type="struct" required="Yes">
 	<cfscript>
 		var content = getWikiService().getContent();
@@ -34,9 +34,14 @@
 		content.populate(arguments.memento);
 		content.setPage(this);
 
-		getWikiService().saveContentVersion(content);
-
 		return content;
+	</cfscript>
+</cffunction>
+
+<cffunction name="addContentVersion" hint="adds a content version" access="public" returntype="void" output="false">
+	<cfargument name="content" hint="the content to add as a new version" type="codex.model.wiki.Content" required="Yes">
+	<cfscript>
+		getWikiService().saveContentVersion(arguments.content);
 	</cfscript>
 </cffunction>
 

@@ -51,7 +51,7 @@
     <cfscript>
 		/* Dispatch manage */
 		manage(arguments.event);
-	</cfscript>     
+	</cfscript>
 </cffunction>
 
 <cffunction name="doCreate" access="public" returntype="void" output="false" hint="Create a new page">
@@ -59,7 +59,7 @@
     <cfscript>
 		/* Dispatch manage */
 		process(arguments.event);
-	</cfscript>     
+	</cfscript>
 </cffunction>
 
 <cffunction name="edit" access="public" returntype="void" output="false" hint="Show the edit page">
@@ -67,7 +67,7 @@
     <cfscript>
 		/* Dispatch manage */
 		manage(arguments.event);
-	</cfscript>     
+	</cfscript>
 </cffunction>
 
 <cffunction name="doEdit" access="public" returntype="void" output="false" hint="Update a page">
@@ -75,7 +75,7 @@
     <cfscript>
 		/* Dispatch manage */
 		process(arguments.event);
-	</cfscript>     
+	</cfscript>
 </cffunction>
 
 <cffunction name="showHistory" hint="shows a page's history" access="public" returntype="void" output="false">
@@ -149,12 +149,24 @@
 	<cfscript>
 		var pageName = arguments.event.getValue("pageName");
 		var page = getWikiService().getPage(pageName=pageName);
+		var content = page.getNewContentVersion(arguments.event.getCollection());
+		var messages = 0;
 
-		page.addContentVersion(arguments.event.getCollection());
+		messages = content.validate();
 
-		//TODO: may want to validate here later, once a decision has been made on validation
+		if(ArrayLen(messages))
+		{
+			getPlugin("messagebox").setMessage(type="error", messageArray=messages);
 
-		setNextRoute(route="wiki/" & pageName, persist="page");
+			arguments.event.setValue("content", content);
+
+			setNextRoute(route="page/edit/" & pageName, persist="content");
+		}
+		else
+		{
+			page.addContentVersion(content);
+			setNextRoute(route="wiki/" & pageName, persist="page");
+		}
 	</cfscript>
 </cffunction>
 
@@ -162,19 +174,28 @@
 	<cfargument name="event" type="coldbox.system.beans.requestContext">
 	<cfscript>
 		var rc = arguments.event.getCollection();
-		var content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
-		
-		arguments.event.setValue("content", content);
+		var content = 0;
+
+		if(arguments.event.valueExists("content"))
+		{
+			content = arguments.event.getValue("content");
+		}
+		else
+		{
+			content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
+			arguments.event.setValue("content", content);
+		}
+
 		arguments.event.setValue("cssAppendList", "uni-form");
 		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack");
 
-		if( content.getIsPersisted() ){
+		if( content.getPage().getIsPersisted() ) {
 			arguments.event.setValue("onSubmit","page/doEdit");
 		}
 		else{
 			arguments.event.setValue("onSubmit","page/doCreate");
 		}
-		
+
 		arguments.event.setValue("onCancel","wiki");
 
 		arguments.event.setView("wiki/manage");
