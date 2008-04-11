@@ -186,8 +186,8 @@
 			arguments.event.setValue("content", content);
 		}
 
-		arguments.event.setValue("cssAppendList", "uni-form");
-		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack");
+		arguments.event.setValue("cssAppendList", "");
+		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,jquery.textarearesizer.compressed");
 
 		if( content.getPage().getIsPersisted() ) {
 			arguments.event.setValue("onSubmit","page/doEdit");

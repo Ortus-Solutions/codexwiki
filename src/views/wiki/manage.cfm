@@ -6,11 +6,6 @@
 <cfsavecontent variable="js">
 <cfoutput>
 	<script type="text/javascript">
-		function resizeTextArea(id, rows) {
-		  var textarea = $('##' + id);
-		  textarea.attr('rows',rows);
-		}
-
 		function preview()
 		{
 			var content = $("##content");
@@ -45,6 +40,11 @@
 			$('##_buttonbar').slideUp("fast");
 			$('##_loader').fadeIn("slow");
 		}
+
+		$(document).ready(function() {
+			$('.resizable').TextAreaResizer();
+		});
+
 	</script>
 </cfoutput>
 </cfsavecontent>
@@ -64,29 +64,10 @@
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 
-		<!--- Right Floating Toolbar --->
-		<div id="wikiToolbarRight">
-			<label for="winheight">Adjust edit area height: </label>
-			<select onchange="resizeTextArea('content', this.options[selectedIndex].value)"
-					id="winheight"
-					name="winheight"
-					size="1">
-			  <option value="8">8</option>
-			  <option value="12">12</option>
-			  <option value="16">16</option>
-			  <option selected="selected" value="20">20</option>
-			  <option value="24">24</option>
-			  <option value="28">28</option>
-			  <option value="32">32</option>
-			  <option value="36">36</option>
-			  <option value="40">40</option>
-			</select>
-	     </div>
-
 		<!--- Control Holder & Text Area --->
 		<div class="ctrlHolder">
 	      <label for="content"><em>*</em> Wiki Content</label>
-	      <textarea name="content" id="content" rows="20" cols="50">#rc.content.getContent()#</textarea>
+	      <textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	    </div>
 
 		<!--- Comment Editing --->
@@ -106,7 +87,7 @@
 	</div>
 
 	<!--- Management Toolbar --->
-	<div id="_buttonbar" class="buttonHolder">
+	<div id="_buttonbar" class="buttons">
 		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
    		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>

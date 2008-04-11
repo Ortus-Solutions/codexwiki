@@ -85,7 +85,7 @@
 			</cfif>
 		</cfif>
 		<div>
-			#XMLFormat(comment)#
+			#Replace(XMLFormat(comment), chr(10), "<br/>", "all")#
 		</div>
 		<div class="historyload" id="contentshow_#contentid#" loaded="0">
 		 <span class="loading">Loading...</span>
