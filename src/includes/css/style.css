@@ -33,6 +33,10 @@ a:hover {
 	background-color: inherit;
 	border-bottom: 1px dotted #CC0001;
 }
+a.externallink{
+	background:transparent url(../images/external.png) no-repeat scroll left center;
+	padding-left: 13px;
+}
 #buttonLinks{
 	margin: 0px; 
 	font-size: 100%; 
