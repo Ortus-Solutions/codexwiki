@@ -11,13 +11,21 @@
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
 	</cfloop>
-
+	<!--- Render Title --->
 	#renderView('tags/title')#
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getbeforeHeadEnd()#
 	</cfoutput>
 </head>
+<cfoutput>
 <body style="background: none;">
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getafterBodyStart()#
 	<div>
-		<cfoutput>#renderView()#</cfoutput>
+		#renderView()#
 	</div>
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getbeforeBodyEnd()#
 </body>
+</cfoutput>
 </html>

@@ -30,18 +30,23 @@ Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
 
 	<!--- Main CSS --->
 	<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/style.css" />
+	
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
 	</cfloop>
 
 	#renderView('tags/title')#
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getbeforeHeadEnd()#
 	</cfoutput>
 </head>
+<cfoutput>
 <body>
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getafterBodyStart()#
 	<!-- wrap starts here -->
 	<div id="wrap">
-	<cfoutput>
 		<!-- header -->
 		<!--- #renderView('tags/header')#
 
@@ -53,9 +58,11 @@ Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
 		<div id="main">
 			#renderView()#
 		</div>
-	</cfoutput>
 	</div>
 	<!-- wrap ends here -->
+	<!--- Render Custom HTML --->
+	#rc.oCustomHTML.getbeforeBodyEnd()#
 </body>
+</cfoutput>
 </html>
 </cfdocument>

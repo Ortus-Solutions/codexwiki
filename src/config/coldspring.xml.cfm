@@ -40,6 +40,8 @@
 	<!-- wiki -->
 
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
+	
+	<bean id="ConfigService" class="codex.model.wiki.ConfigService" />
 
 	<!-- Parsers -->
 	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />

@@ -2,7 +2,7 @@
 <!-- Declare as many tiers as you like with a unique name -->
 <environmentcontrol>
 
-	<environment name="development" urls="jfetmac,localhost,codex.jfetmac">
+	<environment name="development" urls="localhost,codex.lmajano,codex.jfetmac">
 		<Setting name="HandlerCaching"			value="false" />
 		<Setting name="HandlersIndexAutoReload" value="true" />
 		<Setting name="DebugMode"	 			value="false" />
@@ -10,6 +10,8 @@
 		<Setting name="DebugPassword" 			value="" />
 		<Setting name="ReinitPassword" 			value="" />
 		<Setting name="onInvalidEvent"			value="" />
+		<Setting name="CustomErrorTemplate"		value="" />
+		<Setting name="ExceptionHandler"		value="main.onException" />
 	</environment>
 
 	<environment name="development" urls="cf:82">
