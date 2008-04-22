@@ -21,6 +21,7 @@
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminUsers#">User Management</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminCustomHTML#">Custom HTML</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminAPI#">API Docs</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehadminlookups#">System Lookups</a></li>
@@ -59,7 +60,7 @@
 </cfif>
 
 <div class="left-box">
-
+	
 	<cfif not rc.oUser.getisAuthorized()>
 		<cfform name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="onLoginForm()">
 		<!--- ref Route --->
@@ -67,22 +68,22 @@
 		<p>
 		<label for="username">Username</label>
 		<cfinput type="text" name="username" id="username" size="20" required="true" message="Please enter your username" maxlength="50" />
-
+		
 		<label for="username">Password</label>
 		<cfinput type="password" name="password" id="password" size="20" required="true" message="Please enter your password" maxlength="50" />
-
+		
 		<br />
-
+		
 		<!--- Loader --->
 		<div id="_loader_login" class="align-center formloader">
 			<p>
 				Submitting...<br />
-
+				
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
 		</div>
-
+		
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
 			<a href="#getSetting('sesBaseURL')#/#rc.xehUserReminder#">Forgot Password?</a>
@@ -93,7 +94,7 @@
 		<br />
 		</p>
 	</cfform>
-
+	
 	<cfelse>
 		<p>
 			Welcome back <strong>#rc.oUser.getfname()# #rc.oUser.getlname()#</strong>!
@@ -105,11 +106,11 @@
 		<div align="center" id="_buttonbar_login">
 			<a href="#getSetting('sesBaseURL')#/#rc.xehUserLogout#" id="buttonLinks">
 				<span>
-					<img src="#getSetting('sesBaseURL')#/includes/images/stop.png" border="0" align="absmiddle">
+					<img src="#getSetting('sesBaseURL')#/includes/images/door_out.png" border="0" align="absmiddle">
 					Logout
 				</span>
 			</a>
-		</div>
+		</div>	
 		<br />
 	</cfif>
 </div>
