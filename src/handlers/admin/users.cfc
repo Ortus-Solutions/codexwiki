@@ -1,36 +1,36 @@
 <cfcomponent name="users" output="false" hint="Users Controller" extends="basehandler" cache="true" cachetimeout="10">
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="list" output="false" access="public" returntype="void" hint="User listing">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var startRow = 1;
 			var rowlimit = 1;
-			
+
 			try{
 				/* Search Criteria */
 				event.paramValue("search_criteria","");
 				event.paramValue("active",true);
 				event.paramValue("page","1");
 				event.paramValue("role_id","0");
-				
+
 				//Calculate the start row
 				startRow = ((rc.page * rc.qSystemOptions.ShowHowManyRecords) - rc.qSystemOptions.ShowHowManyRecords)+1;
 				//Setup the max rows
 				rowLimit = startRow + rc.qSystemOptions.ShowHowManyRecords;
-				
+
 				/* Get all the roles */
 				rc.qRoles = getPlugin("ioc").getBean("lookupService").getListing("lookups.roles");
-				
+
 				/* Get Users */
 				rc.qUsers = getplugin("ioc").getBean("userService").fullUserSearch(criteria=rc.search_criteria,
 																				   active=rc.active,
 																				   role_id=rc.role_id,
 																				   startrow = startRow,
 																				   limit = rowLimit);
-				
+
 				//Param sort Order
 				if ( event.getValue("sortOrder","") eq "")
 					event.setValue("sortOrder","ASC");
@@ -45,7 +45,7 @@
 					rc.qUsers = getPlugin("queryHelper").sortQuery(rc.qUsers,"[#rc.sortby#]",rc.sortOrder);
 				else
 					rc.sortby = "";
-					
+
 				/* Set View */
 				event.setView('users/list');
 			}
@@ -56,16 +56,16 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="new" output="false" access="public" returntype="void" hint="new user editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-				
+
 			try{
 				/* Get all the roles */
 				rc.qRoles = getPlugin("ioc").getBean("lookupService").getListing("lookups.roles");
-				
+
 				/* Set View */
 				event.setView("users/add");
 			}
@@ -76,15 +76,15 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
-	
+
+
 	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="User Create">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var oUserService = getPlugin("ioc").getBean("userService");
 			var oUser = "";
-			
+
 			try{
 				//create new user object.
 				oUser = oUserService.getUser();
@@ -106,7 +106,7 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="edit" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -125,7 +125,7 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="doEdit" output="false" access="public" returntype="void" hint="User do edit">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -151,9 +151,9 @@
 			}
 		</cfscript>
 	</cffunction>
-	
+
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="permissions" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -162,12 +162,12 @@
 				/* Get all the roles */
 				rc.oUser =  getPlugin("ioc").getBean("userService").getUser(user_id=rc.user_id,useActiveBit=false);
 				rc.qPermissions = getplugin("ioc").getBean("lookupService").getListing("lookups.permissions");
-				
+
 				/* Get Role Perms */
 				rc.RolePermissions = rc.oUser.getRole().getPermissionsArray();
 				/* Get User Perms */
 				rc.UserPermissions = rc.oUser.getPermissionsArray();
-				
+
 				/* Set View */
 				event.setView("users/permissions");
 			}
@@ -178,21 +178,24 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="addPermission" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var oUserService = getPlugin("ioc").getBean("userService");
+			var oUser = 0;
+			var oPerm = 0;
+
 			try{
 				/* Get all the roles */
 				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
 				oPerm = getPlugin("ioc").getBean("lookupService").getListingObject('lookups.permissions',rc.permission_id);
-				
+
 				/* Add Perm */
 				oUser.addPermissions(oPerm);
 				oUserService.save(oUser);
-				
+
 				/* relocate */
 				setNextEvent('users.permissions','user_id=#rc.user_id#');
 			}
@@ -203,21 +206,23 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="removePermission" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var oUserService = getPlugin("ioc").getBean("userService");
+			var oUser = 0;
+			var oPerm = 0;
 			try{
 				/* get Permission_id and user_id */
 				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
 				oPerm = getPlugin("ioc").getBean("lookupService").getListingObject('lookups.permissions',rc.permission_id);
-				
+
 				/* Remove Permission */
 				oUser.removePermissions(oPerm);
 				oUserService.save(oUser);
-				
+
 				/* relocate */
 				setNextEvent('users.permissions','user_id=#rc.user_id#');
 			}
@@ -228,7 +233,7 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
+
 	<cffunction name="doRemove" output="false" access="public" returntype="void" hint="User do Delete">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -252,9 +257,9 @@
 	</cffunction>
 
 	<!--- ************************************************************* --->
-	
-	
-	
-	
-	
+
+
+
+
+
 </cfcomponent>

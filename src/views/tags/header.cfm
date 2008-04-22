@@ -31,7 +31,7 @@
 <div id="header-logo">
 	<div id="logo"><h1>#getSetting("WikiName")#</h1></div>
 	<cfif not event.valueExists("print")>
-	<form method="post" class="search" action="" onsubmit="window.alert('Not implemented'); return false">
+	<form method="post" class="search" action="#getSetting('sesBaseURL')#/page/search.cfm">
 		<p><input name="search_query" class="textbox" type="text" />
 				<input name="search" class="searchbutton" value="Search" type="submit" /></p>
 	</form>

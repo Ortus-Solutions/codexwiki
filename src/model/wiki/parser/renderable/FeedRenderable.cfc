@@ -126,6 +126,7 @@
 	<cfset var feedData = getFeedData() />
 	<cfset var data = 0 />
 	<cfset var path = 0 />
+	<cfset var html = 0 />
 
 	<!--- if anything goes wrong, display error --->
 	<cftry>

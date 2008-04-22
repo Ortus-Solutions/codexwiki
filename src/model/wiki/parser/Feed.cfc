@@ -27,6 +27,7 @@
 		var results = ArrayNew(1);
 		var feed = 0;
 		var static = 0;
+		var feedTag = 0;
 
 		while(matcher.find())
 		{

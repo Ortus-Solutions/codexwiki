@@ -7,6 +7,7 @@
 	<cfargument name="datasource" hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
 	<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 	<cfargument name="securityService" hint="the security service" type="codex.model.security.SecurityService" required="Yes">
+	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfscript>
 		instance = StructNew();
 
@@ -14,6 +15,8 @@
 		setDatasource(arguments.datasource);
 
 		setSecurityService(arguments.securityService);
+
+		setAppName(arguments.configBean.getKey("appName"));
 
 		arguments.transaction.advise(this, "^save");
 		arguments.transaction.advise(this, "^delete");
@@ -44,6 +47,8 @@
 	<cfargument name="pageID" hint="the specific page id" type="string" required="no">
 	<cfargument name="pageName" hint="the page name" type="string" required="no">
 	<cfscript>
+		var page = 0;
+
 		// retrieve by id
 		if(StructKeyExists(arguments, "pageID") AND len(arguments.pageID))
 		{
@@ -314,6 +319,49 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="searchWiki" hint="do a search" access="public" returntype="struct" output="false">
+	<cfargument name="search" hint="the search string" type="string" required="Yes">
+	<cfset var qResults = 0 />
+	<cfset var status = 0 />
+
+	<cftry>
+	<cfsearch collection="#getAppName()#"
+				suggestions="2"
+				name="qResults"
+				status="status"
+				criteria="#arguments.search#"
+				>
+		<cfcatch>
+			<cfset status = {error="Search currently not available"} />
+			<cfreturn status />
+		</cfcatch>
+	</cftry>
+
+	<cfset status.results = qResults />
+	<cfreturn status />
+</cffunction>
+
+<cffunction name="refreshSearch" hint="refreshes the search index" access="public" returntype="void" output="false">
+	<cfscript>
+		var tql = "select page.name as pageName, content.content, content.createdDate from wiki.Page as page join wiki.Content as content where content.isActive = :true";
+		var query = getTransfer().createQuery(tql);
+		var qContents = 0;
+
+		query.setParam("true", true, "boolean");
+
+		qContents = getTransfer().listByQuery(query);
+	</cfscript>
+
+	<cfindex action="refresh"
+			collection = "#getAppName()#"
+			body = "content"
+			title="pageName"
+			key="pageName"
+			query="qContents"
+			custom1="createdDate"
+			>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
@@ -382,6 +430,15 @@
 <cffunction name="setSecurityService" access="private" returntype="void" output="false">
 	<cfargument name="securityService" type="codex.model.security.SecurityService" required="true">
 	<cfset instance.securityService = arguments.securityService />
+</cffunction>
+
+<cffunction name="getAppName" access="private" returntype="string" output="false">
+	<cfreturn instance.appName />
+</cffunction>
+
+<cffunction name="setAppName" access="private" returntype="void" output="false">
+	<cfargument name="appName" type="string" required="true">
+	<cfset instance.appName = arguments.appName />
 </cffunction>
 
 </cfcomponent>

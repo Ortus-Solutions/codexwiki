@@ -135,6 +135,28 @@
 	</cfscript>
 </cffunction>
 
+<cffunction name="search" hint="searchs active pages" access="public" returntype="void" output="false">
+	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfscript>
+		var search_query = arguments.event.getValue("search_query");
+		var result = getWikiService().searchWiki(search_query);
+
+		arguments.event.setValue("result", result);
+
+		arguments.event.setView("wiki/search");
+	</cfscript>
+</cffunction>
+
+<cffunction name="_dump">
+	<cfargument name="s">
+	<cfargument name="abort" default="true">
+	<cfset var g = "">
+		<cfdump var="#arguments.s#">
+		<cfif arguments.abort>
+		<cfabort>
+		</cfif>
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
