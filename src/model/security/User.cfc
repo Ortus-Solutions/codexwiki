@@ -2,6 +2,17 @@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
+	<!--- Validate this bean --->
+	<cffunction name="validate" access="public" returntype="Array" hint="Validate this user data">
+		<cfscript>
+			var errors = Arraynew(1);
+			
+			
+			
+			return errors;
+		</cfscript>
+	</cffunction>
+	
 	<!--- Get set create Date --->
 	<cffunction name="getcreateDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
 		<cfreturn getTransferObject().getcreateDate()>

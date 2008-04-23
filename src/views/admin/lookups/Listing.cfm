@@ -32,7 +32,7 @@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2>System Lookup Manager</h2>
+<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> System Lookup Manager</h2>
 <p>From here you can manage all the lookup tables in the system.</p>
 
 <!--- Render Messagebox. --->

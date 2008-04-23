@@ -31,7 +31,7 @@
 </div>
 
 <!--- Title --->
-<h2>System Lookup Manager > Edit Record</h2>
+<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> System Lookup Manager > Edit Record</h2>
 
 <p>Editing <strong>#rc.lookupClass#</strong> Record. Please fill out all the fields.</p>
 

@@ -23,7 +23,7 @@
 </div>
 
 <!--- Title --->
-<h2>System Lookup Manager > Add Record</h2>
+<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> System Lookup Manager > Add Record</h2>
 
 <!--- Add Form --->
 <p>Add a new <strong>#rc.lookupClass#</strong> record. Please fill out all the fields.</p>

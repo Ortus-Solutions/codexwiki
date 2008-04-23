@@ -11,27 +11,31 @@
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
 			var rc = event.getCollection();
-			var startRow = 1;
 			var maxRows = 1;
 			
 			/* Exit Handlers */
 			rc.xehUserListing = "admin.users/list.cfm";
 			rc.xehUserCreate = "admin.users/new.cfm";
 			rc.xehUserEdit = "admin.users/edit.cfm";
-			rc.xehUserDelete = "admin.users/doRemove.cfm";
+			rc.xehUserDelete = "admin.users/doDelete.cfm";
 			
 			/* Search Criteria */
 			event.paramValue("search_criteria","");
 			event.paramValue("active",true);
 			event.paramValue("page","1");
 			event.paramValue("role_id","0");
+			event.paramValue("startrow","1");
 			
-			//setSetting("PagingMaxRows",1);
+			/* JS Lookups */
+			event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
+			
+			/* For Testing */
+			setSetting("PagingMaxRows",10);
 			
 			//Calculate the start row
-			startRow = ((rc.page * getSetting("PagingMaxRows")) - getSetting("PagingMaxRows"))+1;
+			rc.startRow = ((rc.page * getSetting("PagingMaxRows")) - getSetting("PagingMaxRows"))+1;
 			//Setup the max rows
-			maxRows = startRow + getSetting("PagingMaxRows") - 1;
+			maxRows = rc.startRow + getSetting("PagingMaxRows") - 1;
 			
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
@@ -40,8 +44,16 @@
 			rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,
 												   active=rc.active,
 												   role_id=rc.role_id,
-												   startrow=startRow,
+												   startrow=rc.startRow,
 												   maxRows=maxRows);
+			
+			/* Found Rows */
+			if( rc.qUsers.recordcount ){
+				rc.FoundRows = rc.qUsers.foundRows;
+			}
+			else{
+				rc.FoundRows = 0;
+			}
 			
 			//Param sort Order
 			if ( event.getValue("sortOrder","") eq "")
@@ -69,17 +81,16 @@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-				
-			try{
-				/* Get all the roles */
-				rc.qRoles = getPlugin("ioc").getBean("lookupService").getListing("lookups.roles");
-				
-				/* Set View */
-				event.setView("users/add");
-			}
-			catch(Any e){
-				handleException("New User : #e.message#","users.new",e,1);
-			}
+			
+			/* Exit Handlers */
+			rc.xehUserListing = "admin.users/list.cfm";
+			rc.xehUserCreate = "admin.users/doCreate.cfm";
+						
+			/* Get all the roles */
+			rc.qRoles = getUserService().getAllRoles();
+		
+			/* Set View */
+			event.setView("admin/users/add");			
 		</cfscript>
 	</cffunction>
 
@@ -90,26 +101,22 @@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUserService = getPlugin("ioc").getBean("userService");
 			var oUser = "";
+			var oUserService = getUserService();
 			
-			try{
-				//create new user object.
-				oUser = oUserService.getUser();
-				//Populate it
-				getPlugin("beanFactory").populateBean(oUser);
-				//set relation
-				oUser.setRole(getPlugin("ioc").getBean("lookupService").getListingObject("security.roles", rc.role_id));
-				//Save it
-				oUserService.save(oUser);
-				//set message box
-				getMyPlugin("com.esri.messagebox.messagebox").setMessage("info","User added successfully");
-				//relocate
-				setNextEvent('users.list');
-			}
-			catch(Any e){
-				handleException("User Create : #e.message#","users.doCreate",e,1);
-			}
+			//create new user object.
+			oUser = oUserService.getUser();
+			//Populate it
+			getPlugin("beanFactory").populateBean(oUser);
+			//set role
+			oUser.setRole(oUserService.getRole(rc.role_id));
+			//Save it
+			oUserService.save(oUser);
+			//set message box
+			getPlugin("messagebox").setMessage("info","User added successfully");
+			
+			/* Relocate back to listing */
+			setNextRoute(route="admin.users/list");	
 		</cfscript>
 	</cffunction>
 
@@ -119,16 +126,17 @@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			try{
-				/* Get all the roles */
-				rc.qRoles = getPlugin("ioc").getBean("lookupService").getListing("lookups.roles");
-				rc.oUser =  getPlugin("ioc").getBean("userService").getUser(user_id=rc.user_id,useActiveBit=false);
-				/* Set View */
-				event.setView("users/edit");
-			}
-			catch(Any e){
-				handleException("User editor : #e.message#","users.edit",e,1);
-			}
+			
+			/* Exit Handlers */
+			rc.xehUserListing = "admin.users/list.cfm";
+			rc.xehUserCreate = "admin.users/doEdit.cfm";
+			
+			/* Get all the roles */
+			rc.qRoles = getUserService().getAllRoles();
+			rc.oUser =  getUserService().getUser(rc.user_id);
+			
+			/* Set View */
+			event.setView("admin/users/edit");
 		</cfscript>
 	</cffunction>
 
@@ -138,25 +146,36 @@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUserService = getPlugin("ioc").getBean("userService");
+			var oUserService = getUserService();
 			var oUser = "";
-			try{
-				//get user object.
-				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
-				//Populate it
-				getPlugin("beanFactory").populateBean(oUser);
-				//set relation
-				oUser.setRole(getPlugin("ioc").getBean("lookupService").getListingObject("security.roles", rc.role_id));
-				//Save it
-				oUserService.save(oUser);
+			var oClonedUser = "";
+			var errors = ArrayNew(1);
+			
+			/* get user object. */
+			oUser = oUserService.getUser(rc.user_id);
+			/* Clone it */
+			oClonedUser = oUser.clone();
+			//Populate it
+			getPlugin("beanFactory").populateBean(oClonedUser);
+			//set relation
+			oClonedUser.setRole(oUserService.getRole(rc.role_id));
+			
+			/* Validate it */
+			errors = oClonedUser.validate();
+			if( ArrayLen(errors) ){
 				//set message box
-				getMyPlugin("com.esri.messagebox.messagebox").setMessage("info","User updated!");
-				//relocate
-				setNextEvent('users.list');
+				getMyPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				/* Relocate back to edit */
+				setNextRoute(route="admin.users/edit",qs="user_id=#rc.user_id#");
 			}
-			catch(Any e){
-				handleException("User do edit : #e.message#","users.doEdit",e,1);
-			}
+			else{
+				//Save it
+				oUserService.save(oClonedUser);
+				//set message box
+				getMyPlugin("messagebox").setMessage("info","User updated!");
+				/* Relocate back to listing */
+				setNextRoute(route="admin.users/list");
+			}					
 		</cfscript>
 	</cffunction>
 	
@@ -237,25 +256,37 @@
 
 	<!--- ************************************************************* --->
 	
-	<cffunction name="doRemove" output="false" access="public" returntype="void" hint="User do Delete">
+	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete a user.">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUserService = getPlugin("ioc").getBean("userService");
 			var oUser = "";
+			var i = 1;
+			
 			try{
-				//Get new user obj
-				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
-				//Remove it.
-				oUserService.delete(oUser);
-				//set message box
-				getMyPlugin("com.esri.messagebox.messagebox").setMessage("info","User removed");
-				//relocate
-				setNextEvent('users.list');
+				/* listing or record sent in? */
+				if( event.getValue("user_id","") neq "" ){
+					/* Loop and delete */
+					for(i=1; i lte listlen(rc.user_id); i=i+1){
+						//Get new user obj
+						oUser = getUserService().getUser(user_id=listGetAt(rc.user_id,i));
+						//Remove it.
+						getUserService().deleteUser(oUser);
+						//set message box
+						getPlugin("messagebox").setMessage("info","User(s) removed");				
+					}
+				}
+				else{
+					/* Messagebox. */
+					getPlugin("messagebox").setMessage("warning", "No Records Selected");
+				}				
 			}
 			catch(Any e){
-				handleException("User delete : #e.message#","users.doRemove",e,1);
+				getPlugin("messagebox").setMessage("error", "Error removing user. You can only remove users that do not have any internal links in the system. #e.message# #e.detail#");
 			}
+			
+			/* Relocate back to listing */
+			setNextRoute(route="admin.users/list");
 		</cfscript>
 	</cffunction>
 

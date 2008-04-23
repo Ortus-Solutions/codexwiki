@@ -16,7 +16,7 @@
 	</cfscript>
 </cffunction>
 
-<cffunction name="show" access="public" returntype="void" output="false">
+<cffunction name="show" access="public" returntype="void" output="false" cache="true" cacheTimeout="45">
 	<cfargument name="event" type="coldbox.system.beans.requestContext">
 	<cfscript>
 		var content = 0;
@@ -142,6 +142,11 @@
 		var result = getWikiService().searchWiki(search_query);
 
 		arguments.event.setValue("result", result);
+		
+		/* Messagebox when search is not available */
+		if ( StructKeyExists(arguments.event.getValue("result"), "error") ){
+			getPlugin("messagebox").setMessage("warning", arguments.event.getValue("result").error );
+		}
 
 		arguments.event.setView("wiki/search");
 	</cfscript>
@@ -151,7 +156,7 @@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="process" hint="processes the wiki details" access="public" returntype="void" output="false">
+<cffunction name="process" hint="processes the wiki details" access="private" returntype="void" output="false">
 	<cfargument name="event" type="coldbox.system.beans.requestContext">
 	<cfscript>
 		var pageName = arguments.event.getValue("pageName");

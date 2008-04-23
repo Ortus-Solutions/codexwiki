@@ -9,10 +9,14 @@
 			$('##_loader').fadeIn();
 			$('##searchFilterForm').submit();
 		}
+		function submitForm(){
+			$('##_loader').fadeIn();
+			$('##userForm').submit();
+		}
 		function deleteRecord(recordID){
 			if( recordID != null ){
 				$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
-				$("input[@name='lookupid']").each(function(){
+				$("input[@name='user_id']").each(function(){
 					if( this.value == recordID ){ this.checked = true;}
 					else{ this.checked = false; }
 				});
@@ -88,14 +92,14 @@
 		<a href="#getSetting('sesBaseURL')#/" id="buttonLinks">
 			<span>
 				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
-				Add Record
+				Add User
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" id="buttonLinks">
 			<span>
 				<img src="#getSetting('sesBaseURL')#/includes/images/stop.png" border="0" align="absmiddle">
-				Delete Record(s)
+				Delete User(s)
 			</span>
 		</a>
 	</div>
@@ -103,7 +107,11 @@
 	<!--- Records Found --->
 	<div style="margin-top: 12px">
 		<p>
-		<em>Records Found: #rc.qUsers.recordcount#</em>
+		<cfif rc.qusers.recordcount>
+		<em>Records: #rc.startrow# - #rc.qUsers.recordcount# of #rc.FoundRows#</em>
+		<cfelse>
+		<em>No Records Found</em>
+		</cfif>
 		</p>
 	</div>
 	
@@ -114,9 +122,40 @@
 		<!--- Display Fields Found in Query --->
 		<tr>
 			<th style="width: 20px"></th>
-			<th >Name</th>
-			<th >Email</th>
-			<th align="center" width="60">Confirmed</th>
+			<th >
+				<!--- Sort Indicator --->
+				<cfif event.getValue("sortBy","") eq "user_lname">&##8226;</cfif>
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_lname&sortOrder=#rc.sortOrder#">
+				Name
+				</a>
+				<!--- Sort Orders --->
+			   <cfif event.getValue("sortBy","") eq "user_lname">
+			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
+			   </cfif>
+			</th>
+			<th >
+				<!--- Sort Indicator --->
+				<cfif event.getValue("sortBy","") eq "user_email">&##8226;</cfif>
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_email&sortOrder=#rc.sortOrder#">
+				Email
+				</a>
+				<!--- Sort Orders --->
+			   <cfif event.getValue("sortBy","") eq "user_email">
+			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
+			   </cfif>
+			</th>
+			<th align="center" width="95">
+				
+				<!--- Sort Indicator --->
+				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_isconfirmed&sortOrder=#rc.sortOrder#">
+				Confirmed
+				</a>
+				<!--- Sort Orders --->
+			   <cfif event.getValue("sortBy","") eq "user_isconfirmed">
+			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
+			   </cfif>
+			</th>
 			<th align="center" width="60">ACTIONS</th>
 		</tr>
 	
@@ -128,18 +167,14 @@
 				<input type="checkbox" name="user_id" id="user_id" value="#user_id#" />
 			</td>
 			<td>#user_fname# #user_lname#</td>
-			<td>#user_email#</td>
+			<td><a href="mailto:#user_email#">#user_email#<a/></td>
 			<td align="center">#yesnoformat(user_isconfirmed)#</td>
 			
 			<!--- Display Commands --->
 			<td align="center">
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#?" title="Edit User">
-				<img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User">
-				</a>
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#?" title="Edit User"><img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
 				
-				<a href="javascript:confirmDelete('#user_id#')" title="Delete Record">
-				<img id="delete_#user_id#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record">
-				</a>
+				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
 			</td>
 	
 		</tr>
