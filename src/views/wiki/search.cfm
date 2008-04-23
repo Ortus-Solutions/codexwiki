@@ -4,7 +4,7 @@
 <!--- Title --->
 
 <h1>
-	Search: #rc.search_query#
+	Search: #event.getValue("search_query", "")#
 </h1>
 
 <cfif StructKeyExists(rc.result, "error")>

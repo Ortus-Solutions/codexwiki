@@ -324,6 +324,11 @@
 	<cfset var qResults = 0 />
 	<cfset var status = 0 />
 
+	<cfif NOT Len(arguments.search)>
+		<cfset status = {error="No search query provided"} />
+		<cfreturn status />
+	</cfif>
+
 	<cftry>
 	<cfsearch collection="#getAppName()#"
 				suggestions="2"
