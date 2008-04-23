@@ -154,6 +154,11 @@
 			getTransfer().save(category);
 		}
 
+		if(NOT arguments.content.getIsPersisted())
+		{
+			arguments.content.setUser(getSecurityService().getUserSession());
+		}
+
 		getTransfer().save(arguments.content);
 	</cfscript>
 </cffunction>
@@ -183,7 +188,6 @@
 			}
 
 			arguments.content.setIsActive(true);
-			arguments.content.setUser(getSecurityService().getUserSession());
 
 			saveContent(arguments.content);
 		</cfscript>

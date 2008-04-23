@@ -35,7 +35,7 @@
 	<cfloop query="qPages">
 		<cfscript>
 			item = StructNew();
-			item.title = name;
+			item.title = replace(name, "_", " ", "all");
 			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & name & ".cfm";
 			item.pubDate = ParseDateTime(createdDate);
 
