@@ -266,6 +266,14 @@
 		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
 		<!--- ************************************************************* --->
 		<cfscript>
+			/* Hash Password? */
+			if( not arguments.User.getIsPersisted() ){
+				arguments.User.setPassword( hash(arguments.User.getPassword(),getHashType()) );
+			}
+			else if( arguments.User.getPassword().length() neq 0 ){
+				arguments.User.setPassword( hash(arguments.User.getPassword(),getHashType()) );
+			}
+			/* Save User */
 			getTransfer().save(arguments.User);
 		</cfscript>
 	</cffunction>

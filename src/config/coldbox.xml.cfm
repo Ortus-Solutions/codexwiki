@@ -51,7 +51,7 @@
 		<Setting name="HashType" 					value="SHA-512"/>
 		<!-- Paging Max Rows -->
 		<Setting name="PagingMaxRows" 				value="3"/>
-		<Setting name="PagingMaxLinks" 				value="5"/>
+		<Setting name="PagingBandGap" 				value="5"/>
 		
 	</YourSettings>
 

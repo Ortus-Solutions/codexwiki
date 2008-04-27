@@ -4,10 +4,26 @@
 	
 	<!--- Validate this bean --->
 	<cffunction name="validate" access="public" returntype="Array" hint="Validate this user data">
+		<cfargument name="edit" required="false" type="boolean" hint="Edit Mode or not" default="false">
 		<cfscript>
 			var errors = Arraynew(1);
 			
-			
+			/* Check default values */
+			if( getfname().length() eq 0){
+				ArrayAppend(errors,"Please enter the user's first name");
+			}
+			if( getlname().length() eq 0){
+				ArrayAppend(errors,"Please enter the user's last name");
+			}
+			if( getEmail().length() eq 0){
+				ArrayAppend(errors,"Please enter the user's email");
+			}
+			if( getusername().length() eq 0){
+				ArrayAppend(errors,"Please enter the user's username");
+			}
+			if( not arguments.edit and getpassword().length() eq 0){
+				ArrayAppend(errors,"Please enter the user's password");
+			}
 			
 			return errors;
 		</cfscript>
@@ -44,8 +60,6 @@
 		<cfreturn instance.permissions>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
 	<!--- getter and setter for Authorized --->
 	<cffunction name="getisAuthorized" access="public" returntype="boolean" output="false">
 		<cfreturn instance.isAuthorized>
@@ -54,8 +68,6 @@
 		<cfargument name="isAuthorized" type="boolean" required="true">
 		<cfset instance.isAuthorized = arguments.isAuthorized>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 
 	<!--- cHECK FOR A permission --->
 	<cffunction name="checkPermission" output="false" access="public" returntype="boolean" hint="Returns wether a user has permission to the passed in argument or not.">

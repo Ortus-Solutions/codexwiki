@@ -118,6 +118,12 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <!--- feed urls --->
 <cfset addCourse(pattern="feed/:source/:feed",handler="feed",action="show")>
 
+<!--- User management --->
+<cfset addCourse(":handler/:action/sort/:sortby/:sortOrder/:page")>
+<cfset addCourse(":handler/:action/user_id/:user_id")>
+<cfset addCourse(":handler/:action/page/:page")>
+
+
 <!--- Page Actions with Page Name and ID --->
 <cfset addCourse(":handler/:action/id/:contentid")>
 <cfset addCourse(":handler/:action/:page")>

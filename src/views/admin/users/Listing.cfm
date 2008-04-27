@@ -1,6 +1,4 @@
 <cfoutput>
-<cfsetting showdebugoutput="false">
-<div id="content">
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
@@ -40,7 +38,7 @@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#getSetting('sesBaseURL')#/#rc.xehUserListing#">
+<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#getSetting('sesBaseURL')#/#rc.xehUserListing#.cfm">
 	
 	<div style="margin:10px;">
 		<!--- Loader --->
@@ -89,7 +87,7 @@
 	
 	<!--- Add / Delete --->
 	<div class="buttons float-right" style="margin-top:12px;">
-		<a href="#getSetting('sesBaseURL')#/" id="buttonLinks">
+		<a href="#getSetting('sesBaseURL')#/#rc.xehUserCreate#" id="buttonLinks">
 			<span>
 				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
 				Add User
@@ -108,12 +106,15 @@
 	<div style="margin-top: 12px">
 		<p>
 		<cfif rc.qusers.recordcount>
-		<em>Records: #rc.startrow# - #rc.qUsers.recordcount# of #rc.FoundRows#</em>
+		<em>Records: #rc.boundaries.startrow# - #rc.qUsers.recordcount#</em>
 		<cfelse>
 		<em>No Records Found</em>
 		</cfif>
 		</p>
 	</div>
+	
+	<!--- Paging --->
+	#getMyPlugin("paging").renderit(FoundRows=rc.FoundRows,link=rc.pagingLink)#
 	
 	<br />
 	<!--- Render Results --->
@@ -125,7 +126,7 @@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_lname">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_lname&sortOrder=#rc.sortOrder#">
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_lname/#rc.sortOrder#/#rc.page#.cfm">
 				Name
 				</a>
 				<!--- Sort Orders --->
@@ -136,7 +137,7 @@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_email">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_email&sortOrder=#rc.sortOrder#">
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_email/#rc.sortOrder#/#rc.page#.cfm">
 				Email
 				</a>
 				<!--- Sort Orders --->
@@ -145,10 +146,9 @@
 			   </cfif>
 			</th>
 			<th align="center" width="95">
-				
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#?&sortby=user_isconfirmed&sortOrder=#rc.sortOrder#">
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_isconfirmed/#rc.sortOrder#/#rc.page#.cfm">
 				Confirmed
 				</a>
 				<!--- Sort Orders --->
@@ -156,7 +156,7 @@
 			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
 			   </cfif>
 			</th>
-			<th align="center" width="60">ACTIONS</th>
+			<th align="center" width="65">ACTIONS</th>
 		</tr>
 	
 		<!--- Loop Through Query Results --->
@@ -172,8 +172,11 @@
 			
 			<!--- Display Commands --->
 			<td align="center">
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#?" title="Edit User"><img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
-				
+				<!--- Permissions Command --->
+				<a href="javascript:alert('not yet')" title="Edit User Permissions"><img src="#getSetting('sesBaseURL')#/includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
+				<!--- Edit Command --->
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#/user_id/#user_id#.cfm" title="Edit User"><img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
+				<!--- Delete Command --->
 				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
 			</td>
 	

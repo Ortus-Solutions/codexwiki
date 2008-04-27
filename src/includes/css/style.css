@@ -357,8 +357,9 @@ div.grippie {
 #header ul {
 	position: absolute;
    	margin:0;
-   	list-style:none;
-	right:-15px ; bottom: 3px;
+   	list-style: none;
+	right: 0px ; 
+	bottom: 1px;
 	font: bold 13px 'Trebuchet MS', Arial, Sans-serif;
 }
 #header li {
@@ -371,6 +372,7 @@ div.grippie {
    margin:0;
    padding:0 0 0 4px;
    text-decoration:none;
+   border-bottom: 0px;
 }
 #header a span {
    float:left;
@@ -524,6 +526,25 @@ div.grippie {
 	padding: 0px; 
 	margin: 0px;
 	text-align: left;
+}
+
+/* Paging */
+.pagingTabs{
+	font-size: .8em;
+	text-align: left;
+	margin: 20px 10px 15px 10px;
+}
+.pagingTabs a{
+	color: #000;
+	padding: 2px 4px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	margin-left: 2px;
+}
+.pagingTabs a.selected{
+	color: #000;
+	background-color: #FCF9C3;
+	border: 1px solid #AF3D15;
 }
 
 

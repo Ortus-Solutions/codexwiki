@@ -11,12 +11,13 @@
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
 			var rc = event.getCollection();
-			var maxRows = 1;
+			var boundaries = structnew();
 			
 			/* Exit Handlers */
-			rc.xehUserListing = "admin.users/list.cfm";
+			rc.xehUserListing = "admin.users/list";
+			rc.pagingLink = "#getSetting('sesBaseURL')#/#rc.xehUserListing#/page/@page@.cfm";
 			rc.xehUserCreate = "admin.users/new.cfm";
-			rc.xehUserEdit = "admin.users/edit.cfm";
+			rc.xehUserEdit = "admin.users/edit";
 			rc.xehUserDelete = "admin.users/doDelete.cfm";
 			
 			/* Search Criteria */
@@ -24,7 +25,6 @@
 			event.paramValue("active",true);
 			event.paramValue("page","1");
 			event.paramValue("role_id","0");
-			event.paramValue("startrow","1");
 			
 			/* JS Lookups */
 			event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
@@ -32,10 +32,8 @@
 			/* For Testing */
 			setSetting("PagingMaxRows",10);
 			
-			//Calculate the start row
-			rc.startRow = ((rc.page * getSetting("PagingMaxRows")) - getSetting("PagingMaxRows"))+1;
-			//Setup the max rows
-			maxRows = rc.startRow + getSetting("PagingMaxRows") - 1;
+			//Calculate the start row according to page
+			rc.boundaries = getMyPlugin("paging").getboundaries(rc.page);
 			
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
@@ -44,8 +42,8 @@
 			rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,
 												   active=rc.active,
 												   role_id=rc.role_id,
-												   startrow=rc.startRow,
-												   maxRows=maxRows);
+												   startrow=rc.boundaries.startRow,
+												   maxRows=getSetting("PagingMaxRows"));
 			
 			/* Found Rows */
 			if( rc.qUsers.recordcount ){
@@ -64,6 +62,7 @@
 				else
 					rc.sortOrder = "ASC";
 			}
+			
 			//Test for Sorting
 			if ( event.getValue("sortby","") neq "" )
 				rc.qUsers = getPlugin("queryHelper").sortQuery(rc.qUsers,"[#rc.sortby#]",rc.sortOrder);
@@ -75,8 +74,7 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- New user panel --->	
 	<cffunction name="new" output="false" access="public" returntype="void" hint="new user editor">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -93,35 +91,40 @@
 			event.setView("admin/users/add");			
 		</cfscript>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 	
-	
+	<!--- Create a new user --->	
 	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="User Create">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var oUser = "";
 			var oUserService = getUserService();
+			var errors = ArrayNew(1);
 			
 			//create new user object.
 			oUser = oUserService.getUser();
 			//Populate it
 			getPlugin("beanFactory").populateBean(oUser);
-			//set role
-			oUser.setRole(oUserService.getRole(rc.role_id));
-			//Save it
-			oUserService.save(oUser);
-			//set message box
-			getPlugin("messagebox").setMessage("info","User added successfully");
-			
-			/* Relocate back to listing */
-			setNextRoute(route="admin.users/list");	
+			/* Validate it */
+			errors = oUser.validate();
+			/* Error Checks */
+			if( arraylen(errors) ){
+				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				setNextRoute(route="admin.users/new");		
+			}
+			else{
+				/* Set Role */
+				oUser.setRole(oUserService.getRole(rc.role_id));
+				/* Save User */
+				oUserService.saveUser(oUser);
+				
+				getPlugin("messagebox").setMessage("info","User added successfully");
+				setNextRoute(route="admin.users/list");	
+			}
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- Edit Panel --->
 	<cffunction name="edit" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -129,19 +132,24 @@
 			
 			/* Exit Handlers */
 			rc.xehUserListing = "admin.users/list.cfm";
-			rc.xehUserCreate = "admin.users/doEdit.cfm";
+			rc.xehUserUpdate = "admin.users/doEdit";
+			
+			/* Verify incoming user id */
+			if( not event.valueExists("user_id") ){
+				getPlugin("messagebox").setMessage("warning", "user id not detected");
+				setNextRoute("admin.users/list");
+			}
 			
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
-			rc.oUser =  getUserService().getUser(rc.user_id);
+			rc.thisUser =  getUserService().getUser(rc.user_id);
 			
 			/* Set View */
 			event.setView("admin/users/edit");
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- Do Edit --->	
 	<cffunction name="doEdit" output="false" access="public" returntype="void" hint="User do edit">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -151,29 +159,31 @@
 			var oClonedUser = "";
 			var errors = ArrayNew(1);
 			
-			/* get user object. */
 			oUser = oUserService.getUser(rc.user_id);
-			/* Clone it */
 			oClonedUser = oUser.clone();
-			//Populate it
+			
 			getPlugin("beanFactory").populateBean(oClonedUser);
-			//set relation
-			oClonedUser.setRole(oUserService.getRole(rc.role_id));
 			
 			/* Validate it */
-			errors = oClonedUser.validate();
+			errors = oClonedUser.validate(edit=true);
 			if( ArrayLen(errors) ){
-				//set message box
-				getMyPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				/* Relocate back to edit */
+				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
 				setNextRoute(route="admin.users/edit",qs="user_id=#rc.user_id#");
 			}
 			else{
+				/* Set/update role */
+				oClonedUser.setRole(oUserService.getRole(rc.role_id));
+				oClonedUser.setmodifyDate(now());
+				/* Set password if sent */
+				if( rc.newpassword.length() neq 0 ){
+					oClonedUser.setPassword(rc.newpassword);
+				}
+				
+				
 				//Save it
-				oUserService.save(oClonedUser);
-				//set message box
-				getMyPlugin("messagebox").setMessage("info","User updated!");
-				/* Relocate back to listing */
+				oUserService.saveUser(oClonedUser);
+				
+				getPlugin("messagebox").setMessage("info","User updated!");
 				setNextRoute(route="admin.users/list");
 			}					
 		</cfscript>
