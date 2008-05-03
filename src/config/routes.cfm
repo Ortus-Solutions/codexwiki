@@ -120,6 +120,7 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 
 <!--- User management --->
 <cfset addCourse(":handler/:action/sort/:sortby/:sortOrder/:page")>
+<cfset addCourse(":handler/:action/user_id/:user_id/permissionID/:permissionID")>
 <cfset addCourse(":handler/:action/user_id/:user_id")>
 <cfset addCourse(":handler/:action/page/:page")>
 

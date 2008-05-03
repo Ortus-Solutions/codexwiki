@@ -173,7 +173,7 @@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Permissions Command --->
-				<a href="javascript:alert('not yet')" title="Edit User Permissions"><img src="#getSetting('sesBaseURL')#/includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
+				<a href="#getSetting('sesBaseURL')#/#rc.xehUserPerms#/user_id/#user_id#.cfm" title="Edit User Permissions"><img src="#getSetting('sesBaseURL')#/includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
 				<!--- Edit Command --->
 				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#/user_id/#user_id#.cfm" title="Edit User"><img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
 				<!--- Delete Command --->

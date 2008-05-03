@@ -15,6 +15,13 @@
 <cfhtmlhead text="#js#">
 
 <cfoutput>
+	
+<!--- BACK --->
+<div class="backbutton">
+	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
+	<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#">Back</a>
+</div>
+
 <!--- Title --->
 <h2><img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Management : Edit User</h2>
 <p>Please fill out all the information below to create a new user. Please note that all passwords are encrypted.</p>

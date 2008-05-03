@@ -25,7 +25,7 @@
 <cfhtmlhead text="#js#">
 
 <!--- BACK --->
-<div class="float-right" style="margin: 5px 10px 0px 0px;">
+<div class="backbutton">
 	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
 	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#">Back</a>
 </div>

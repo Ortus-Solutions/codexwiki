@@ -37,6 +37,9 @@ a.externallink{
 	background:transparent url(../images/external.png) no-repeat scroll left center;
 	padding-left: 13px;
 }
+a.noborder{
+	border-bottom: 0px;
+}
 #buttonLinks{
 	margin: 0px; 
 	font-size: 100%; 
@@ -284,7 +287,7 @@ form.search input.textbox:focus {
 
 /* loader */
 div.formloader {
-	margin:5px 5px 0px 0px;
+	margin:3px 5px 0px 0px;
 	display: none;
 }
 
@@ -586,4 +589,10 @@ div.grippie {
 	border: 1px solid #2580B2;
 	margin: 0.3em;
 	padding: 0pt 1em 0pt 3.5em;
+}
+
+/* Back Button Admin  */
+.backbutton{
+	margin: 5px 10px 0px 0px;
+	float: right;
 }

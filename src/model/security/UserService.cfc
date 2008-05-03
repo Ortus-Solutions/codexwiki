@@ -37,8 +37,6 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
 	<!--- Get Role with or without id --->
 	<cffunction name="getRole" output="false" access="public" returntype="codex.model.security.Role" hint="Returns a role by ID or a new user object.">
 		<!--- ************************************************************* --->
@@ -58,7 +56,32 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
+	<!--- Get Role Permissions --->
+	<cffunction name="getRolePermissions" access="public" returntype="query" hint="Get all the permissions of a specific role_id" output="false" >
+		<!--- ************************************************************* --->
+		<cfargument name="role_id" required="true" type="string" hint="">
+		<!--- ************************************************************* --->
+		<cfset var tql = "">
+		<cfset var query = "">
+
+		<!--- Build TQL --->
+		<cfsavecontent variable="tql">
+		<cfoutput>
+			SELECT security.Permission.permissionID, security.Permission.permission
+			  FROM security.Role
+			  JOIN security.Permission
+			 WHERE security.Role.roleID = :role_id
+		</cfoutput>
+		</cfsavecontent>
+
+		<!--- Create Query Object --->
+		<cfset query = getTransfer().createQuery(tql)>
+		<cfset query.setParam("role_id",arguments.role_id)>
+		<cfset query.setCacheEvaluation(true)>
+
+		<!--- create and return query --->
+		<cfreturn getTransfer().listByQuery(query)>
+	</cffunction>
 	
 	<!--- Get All users query --->
 	<cffunction name="getAllUsers" output="false" access="public" returntype="query" hint="Returns all users in the database, active and inactive.">
@@ -74,8 +97,6 @@
 			return query;
 		</cfscript>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 	
 	<!--- find Users --->
 	<cffunction name="findUsers" output="false" access="public" returntype="query" hint="Find Users in the database.">
@@ -130,8 +151,6 @@
 		<cfreturn qUsers>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
 	<!--- Get Basic user Info Query --->
 	<cffunction name="getBasicUserInfo" hint="Get basic user info by user_id" access="public" output="false" returntype="query">
 		<!--- ************************************************************* --->
@@ -157,9 +176,34 @@
 		<!--- create and return query --->
 		<cfreturn getTransfer().listByQuery(query)>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 	
+	<!--- Get User Permissions --->
+	<cffunction name="getuserPermissions" hint="Get a user's a-la-carte permissions query" access="public" output="false" returntype="query">
+		<!--- ************************************************************* --->
+		<cfargument name="user_id"  type="string" required="true"/>
+		<!--- ************************************************************* --->
+		<cfset var tql = "">
+		<cfset var query = "">
+
+		<!--- Build TQL --->
+		<cfsavecontent variable="tql">
+		<cfoutput>
+			SELECT security.Permission.permissionID, security.Permission.permission
+			  FROM security.User
+			  JOIN security.Permission
+			 WHERE security.User.userID = :user_id
+		</cfoutput>
+		</cfsavecontent>
+
+		<!--- Create Query Object --->
+		<cfset query = getTransfer().createQuery(tql)>
+		<cfset query.setParam("user_id",arguments.user_id)>
+		<cfset query.setCacheEvaluation(true)>
+
+		<!--- create and return query --->
+		<cfreturn getTransfer().listByQuery(query)>
+	</cffunction>
+
 	<!--- Get User By Credentials --->
 	<cffunction name="getUserByCredentials" output="false" access="public" returntype="codex.model.security.User" hint="Returns an active/confirmed user by its credentials">
 		<!--- ************************************************************* --->
@@ -183,8 +227,6 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
 	<!--- Get User By Email Address --->
 	<cffunction name="getUserByEmail" output="false" access="public" returntype="codex.model.security.User" hint="Returns an active/confirmed user by email address. This is for the password reminder feature.">
 		<!--- ************************************************************* --->
@@ -206,8 +248,6 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
 	<!--- Get User with or without id --->
 	<cffunction name="getUser" output="false" access="public" returntype="codex.model.security.User" hint="Returns a user by ID or a new user object.">
 		<!--- ************************************************************* --->
@@ -227,8 +267,6 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
 	<!--- Get a User Object --->
 	<cffunction name="getDefaultUser" hint="Get a default user from the db." access="public" output="false" returntype="codex.model.security.User">
 		<!--- ************************************************************* --->
@@ -246,9 +284,7 @@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
-	<!--- Get User By Credentials --->
+	<!--- Delete a user --->
 	<cffunction name="deleteUser" hint="Deletes a user" access="public" returntype="void" output="false">
 		<!--- ************************************************************* --->
 		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
@@ -257,9 +293,19 @@
 			getTransfer().delete(arguments.User);
 		</cfscript>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 	
+	<!--- Delete a user --->
+	<cffunction name="deleteUserPerm" hint="Deletes a user" access="public" returntype="void" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
+		<cfargument name="Permission" required="true" type="codex.model.security.Permission" hint="The permission to add.">
+		<!--- ************************************************************* --->
+		<cfscript>
+			arguments.User.removePermission(arguments.Permission);
+			getTransfer().save(arguments.User);
+		</cfscript>
+	</cffunction>
+
 	<!--- Save the User --->
 	<cffunction name="saveUser" hint="Saves a user" access="public" returntype="void" output="false">
 		<!--- ************************************************************* --->
@@ -277,8 +323,19 @@
 			getTransfer().save(arguments.User);
 		</cfscript>
 	</cffunction>
-
-	<!--- ************************************************************* --->
+	
+	<!--- Save User Perm --->
+	<cffunction name="saveUserPerm" hint="Saves a user's Permission" access="public" returntype="void" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
+		<cfargument name="Permission" required="true" type="codex.model.security.Permission" hint="The permission to add.">
+		<!--- ************************************************************* --->
+		<cfscript>
+			arguments.User.addPermission(arguments.Permission);
+			/* Save User */
+			getTransfer().save(arguments.User);
+		</cfscript>
+	</cffunction>
 	
 <!------------------------------------------- ACCESSORS/MUTATORS ------------------------------------------->
 

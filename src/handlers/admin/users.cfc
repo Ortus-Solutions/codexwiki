@@ -8,7 +8,7 @@
 
 	<!--- List Users --->
 	<cffunction name="list" output="false" access="public" returntype="void" hint="User listing">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var boundaries = structnew();
@@ -19,6 +19,7 @@
 			rc.xehUserCreate = "admin.users/new.cfm";
 			rc.xehUserEdit = "admin.users/edit";
 			rc.xehUserDelete = "admin.users/doDelete.cfm";
+			rc.xehUserPerms = "admin.users/permissions";
 			
 			/* Search Criteria */
 			event.paramValue("search_criteria","");
@@ -31,6 +32,7 @@
 			
 			/* For Testing */
 			setSetting("PagingMaxRows",10);
+			setSetting("PagingBandGap", 1);
 			
 			//Calculate the start row according to page
 			rc.boundaries = getMyPlugin("paging").getboundaries(rc.page);
@@ -189,83 +191,97 @@
 		</cfscript>
 	</cffunction>
 	
-	<!--- ************************************************************* --->
-	
-	<cffunction name="permissions" output="false" access="public" returntype="void" hint="User editor">
+	<!--- Permissions --->
+	<cffunction name="permissions" output="false" access="public" returntype="void" hint="Permissions editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			try{
-				/* Get all the roles */
-				rc.oUser =  getPlugin("ioc").getBean("userService").getUser(user_id=rc.user_id,useActiveBit=false);
-				rc.qPermissions = getplugin("ioc").getBean("lookupService").getListing("lookups.permissions");
-				
-				/* Get Role Perms */
-				rc.RolePermissions = rc.oUser.getRole().getPermissionsArray();
-				/* Get User Perms */
-				rc.UserPermissions = rc.oUser.getPermissionsArray();
-				
-				/* Set View */
-				event.setView("users/permissions");
+			
+			/* Exit Handlers */
+			rc.xehAddPerm = "admin.users/addPermission.cfm";
+			rc.xehRemovePerm = "admin.users/removePermission";
+			rc.xehUserListing = "admin.users/list.cfm";
+			
+			/* Verify incoming user id */
+			if( not event.valueExists("user_id") ){
+				getPlugin("messagebox").setMessage("warning", "user id not detected");
+				setNextRoute("admin.users/list");
 			}
-			catch(Any e){
-				handleException("User permissions : #e.message#","users.permissions",e,1);
-			}
+			
+			/* Get the current User */
+			rc.thisUser =  getUserService().getUser(rc.user_id);
+			
+			/* Get The User's Perms */
+			rc.qUserPerms = getUserService().getuserPermissions(rc.thisUser.getuserID());
+			/* Get the Role's Perms */
+			rc.qRolePerms = getUserService().getRolePermissions(rc.thisUser.getRole().getroleId());
+			/* Get All the perms */
+			rc.qAllperms = getLookupService().getListing('Security.Permission');
+			
+			/* Set View */
+			event.setView("admin/users/permissions");			
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- Add Permission --->
 	<cffunction name="addPermission" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUserService = getPlugin("ioc").getBean("userService");
-			try{
-				/* Get all the roles */
-				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
-				oPerm = getPlugin("ioc").getBean("lookupService").getListingObject('lookups.permissions',rc.permission_id);
-				
-				/* Add Perm */
-				oUser.addPermissions(oPerm);
-				oUserService.save(oUser);
-				
-				/* relocate */
-				setNextEvent('users.permissions','user_id=#rc.user_id#');
+			var oUser = "";
+			var oPerm = "";
+			
+			/* Check Permission and user */
+			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
+				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
+				setNextRoute("admin.users/permissions/user_id/#rc.user_id#");
 			}
-			catch(Any e){
-				handleException("User permissions : #e.message#","users.permissions",e,1);
+			
+			/* Get user and perm */
+			oUser = getUserService().getUser(rc.user_id);
+			oPerm = getLookupService().getLookupObject('Security.Permission',rc.permissionID);
+			
+			/* Check if perm already in user */
+			if( not oUser.containsPermission(oPerm) ){
+				/* Add Perm and save */
+				getUserService().saveUserPerm(oUser,oPerm);
+				getPlugin("messagebox").setMessage("info", "permission added");
 			}
+			else{
+				getPlugin("messagebox").setMessage("warning", "permission already in user");
+			}
+			
+			/* relocate */
+			setNextRoute('admin.users/permissions/user_id/#rc.user_id#');			
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- Remove Permission --->
 	<cffunction name="removePermission" output="false" access="public" returntype="void" hint="User editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUserService = getPlugin("ioc").getBean("userService");
-			try{
-				/* get Permission_id and user_id */
-				oUser = oUserService.getUser(user_id=rc.user_id,useActiveBit=false);
-				oPerm = getPlugin("ioc").getBean("lookupService").getListingObject('lookups.permissions',rc.permission_id);
-				
-				/* Remove Permission */
-				oUser.removePermissions(oPerm);
-				oUserService.save(oUser);
-				
-				/* relocate */
-				setNextEvent('users.permissions','user_id=#rc.user_id#');
+			
+			/* Check Permission and user */
+			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
+				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
+				setNextRoute("admin.users/permissions/user_id/#rc.user_id#");
 			}
-			catch(Any e){
-				handleException("User permissions : #e.message#","users.permissions",e,1);
-			}
+			
+			/* get Permission_id and user_id */
+			oUser = getUserService().getUser(rc.user_id);
+			oPerm = getLookupService().getLookupObject('Security.Permission',rc.permissionID);
+			
+			/* Remove Permission */
+			getUserService().deleteUserPerm(oUser,oPerm);
+			getPlugin("messagebox").setMessage("info", "permission removed");
+			
+			/* relocate */
+			setNextRoute('admin.users/permissions/user_id/#rc.user_id#');					
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-	
+	<!--- Delete User --->
 	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete a user.">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -299,8 +315,6 @@
 			setNextRoute(route="admin.users/list");
 		</cfscript>
 	</cffunction>
-
-	<!--- ************************************************************* --->
 	
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->
