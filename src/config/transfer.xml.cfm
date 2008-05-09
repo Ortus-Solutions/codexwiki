@@ -61,11 +61,13 @@
 		<object name="Permission" table="wiki_permissions" decorator="codex.model.security.Permission">
 			<id name="permissionID" column="permission_id" type="UUID" generate="true"/>
 			<property name="permission" type="string" column="permission"/>
+			<property name="description" type="string" column="description"/>
 		</object>
 
 		<object name="Role" table="wiki_roles" decorator="codex.model.security.Role">
 			<id name="roleID" column="role_id" type="UUID" generate="true"/>
 			<property name="role" type="string" column="role"/>
+			<property name="description" type="string" column="description"/>
 			<manytomany name="Permission" table="wiki_role_permissions" lazy="true">
 				<link column="FKrole_id" 		to="security.Role"/>
 				<link column="FKpermission_id" 	to="security.Permission"/>

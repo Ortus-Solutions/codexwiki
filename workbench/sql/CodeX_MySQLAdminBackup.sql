@@ -27,13 +27,12 @@ USE codex;
 
 DROP TABLE IF EXISTS "wiki_category";
 CREATE TABLE "wiki_category" (
-  "category_id" varchar(36) NOT NULL,
-  "category_name" varchar(255) NOT NULL,
+  "category_id" varchar(36) character set latin1 NOT NULL,
+  "category_name" varchar(255) character set latin1 NOT NULL,
   "category_createddate" datetime default NULL,
   PRIMARY KEY  ("category_id"),
-  UNIQUE KEY "category_name" ("category_name"),
   KEY "idx_wiki_category_name" ("category_name")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_category"
@@ -44,19 +43,42 @@ CREATE TABLE "wiki_category" (
 
 
 --
+-- Definition of table "wiki_customhtml"
+--
+
+DROP TABLE IF EXISTS "wiki_customhtml";
+CREATE TABLE "wiki_customhtml" (
+  "customHTML_id" varchar(36) character set latin1 NOT NULL,
+  "customHTML_beforeHeadEnd" text character set latin1,
+  "customHTML_afterBodyStart" text character set latin1,
+  "customHTML_beforeBodyEnd" text character set latin1,
+  "customHTML_modify_date" datetime NOT NULL,
+  PRIMARY KEY  ("customHTML_id")
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table "wiki_customhtml"
+--
+
+/*!40000 ALTER TABLE "wiki_customhtml" DISABLE KEYS */;
+INSERT INTO "wiki_customhtml" ("customHTML_id","customHTML_beforeHeadEnd","customHTML_afterBodyStart","customHTML_beforeBodyEnd","customHTML_modify_date") VALUES 
+ ('64597197-CF1E-5C1B-91F2B0710FA5B5B3','','','','2008-05-09 13:40:34');
+/*!40000 ALTER TABLE "wiki_customhtml" ENABLE KEYS */;
+
+
+--
 -- Definition of table "wiki_namespace"
 --
 
 DROP TABLE IF EXISTS "wiki_namespace";
 CREATE TABLE "wiki_namespace" (
-  "namespace_id" varchar(36) NOT NULL,
-  "namespace_name" varchar(255) NOT NULL,
-  "namespace_description" varchar(255) NOT NULL,
+  "namespace_id" varchar(36) character set latin1 NOT NULL,
+  "namespace_name" varchar(255) character set latin1 NOT NULL,
+  "namespace_description" varchar(255) character set latin1 NOT NULL,
   "namespace_isdefault" tinyint(4) NOT NULL default '0',
   PRIMARY KEY  ("namespace_id"),
-  UNIQUE KEY "namespace_name" ("namespace_name"),
   KEY "idx_wiki_namespace_name" ("namespace_name")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_namespace"
@@ -76,16 +98,15 @@ INSERT INTO "wiki_namespace" ("namespace_id","namespace_name","namespace_descrip
 
 DROP TABLE IF EXISTS "wiki_page";
 CREATE TABLE "wiki_page" (
-  "page_id" varchar(36) NOT NULL,
-  "page_name" varchar(255) NOT NULL,
-  "FKnamespace_id" varchar(36) default NULL,
+  "page_id" varchar(36) character set latin1 NOT NULL,
+  "page_name" varchar(255) character set latin1 NOT NULL,
+  "FKnamespace_id" varchar(36) character set latin1 default NULL,
   PRIMARY KEY  ("page_id"),
-  UNIQUE KEY "page_name" ("page_name"),
   KEY "FKnamespace_id" ("FKnamespace_id"),
   KEY "FKnamespace_id_2" ("FKnamespace_id"),
   KEY "idx_wiki_page_name" ("page_name"),
   CONSTRAINT "FKnamespace_id" FOREIGN KEY ("FKnamespace_id") REFERENCES "wiki_namespace" ("namespace_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_page"
@@ -107,11 +128,11 @@ INSERT INTO "wiki_page" ("page_id","page_name","FKnamespace_id") VALUES
 
 DROP TABLE IF EXISTS "wiki_pagecontent";
 CREATE TABLE "wiki_pagecontent" (
-  "pagecontent_id" varchar(36) NOT NULL,
-  "FKpage_id" varchar(36) NOT NULL,
-  "FKuser_id" varchar(36) NOT NULL,
-  "pagecontent_content" text,
-  "pagecontent_comment" text,
+  "pagecontent_id" varchar(36) character set latin1 NOT NULL,
+  "FKpage_id" varchar(36) character set latin1 NOT NULL,
+  "FKuser_id" varchar(36) character set latin1 NOT NULL,
+  "pagecontent_content" text character set latin1,
+  "pagecontent_comment" text character set latin1,
   "pagecontent_version" bigint(20) NOT NULL default '1',
   "pagecontent_createdate" datetime NOT NULL,
   "pagecontent_isActive" tinyint(4) NOT NULL default '1',
@@ -121,7 +142,7 @@ CREATE TABLE "wiki_pagecontent" (
   KEY "idx_wiki_pagecontent_isActive" ("pagecontent_isActive"),
   CONSTRAINT "FK_wiki_pagecontent_wiki_page" FOREIGN KEY ("FKpage_id") REFERENCES "wiki_page" ("page_id"),
   CONSTRAINT "FK_wiki_pagecontent_wiki_users" FOREIGN KEY ("FKuser_id") REFERENCES "wiki_users" ("user_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_pagecontent"
@@ -144,16 +165,16 @@ INSERT INTO "wiki_pagecontent" ("pagecontent_id","FKpage_id","FKuser_id","pageco
 
 DROP TABLE IF EXISTS "wiki_pagecontent_category";
 CREATE TABLE "wiki_pagecontent_category" (
-  "FKpagecontent_id" varchar(36) NOT NULL,
-  "FKcategory_id" varchar(36) NOT NULL,
+  "FKpagecontent_id" varchar(36) character set latin1 NOT NULL,
+  "FKcategory_id" varchar(36) character set latin1 NOT NULL,
   PRIMARY KEY  ("FKpagecontent_id","FKcategory_id"),
   KEY "FKcategory_id" ("FKcategory_id"),
   KEY "FKpagecontent_id" ("FKpagecontent_id"),
   KEY "FKcategory_id_2" ("FKcategory_id"),
   KEY "FKpagecontent_id_2" ("FKpagecontent_id"),
-  CONSTRAINT "FKpagecontent_id" FOREIGN KEY ("FKpagecontent_id") REFERENCES "wiki_pagecontent" ("pagecontent_id"),
-  CONSTRAINT "FKcategory_id" FOREIGN KEY ("FKcategory_id") REFERENCES "wiki_category" ("category_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT "FKcategory_id" FOREIGN KEY ("FKcategory_id") REFERENCES "wiki_category" ("category_id"),
+  CONSTRAINT "FKpagecontent_id" FOREIGN KEY ("FKpagecontent_id") REFERENCES "wiki_pagecontent" ("pagecontent_id")
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_pagecontent_category"
@@ -169,27 +190,28 @@ CREATE TABLE "wiki_pagecontent_category" (
 
 DROP TABLE IF EXISTS "wiki_permissions";
 CREATE TABLE "wiki_permissions" (
-  "permission_id" varchar(36) NOT NULL,
-  "permission" varchar(100) NOT NULL,
+  "permission_id" varchar(36) character set latin1 NOT NULL,
+  "permission" varchar(100) character set latin1 NOT NULL,
+  "description" varchar(255) NOT NULL,
   PRIMARY KEY  ("permission_id"),
   UNIQUE KEY "permission" ("permission")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_permissions"
 --
 
 /*!40000 ALTER TABLE "wiki_permissions" DISABLE KEYS */;
-INSERT INTO "wiki_permissions" ("permission_id","permission") VALUES 
- ('A9D04702-CF1E-5C1B-94C2965619E301C8','WIKI_ADMIN'),
- ('8840B7C9-E693-D54B-6A69F07AA5265839','WIKI_CREATE'),
- ('8840FF13-0A96-AAA9-63322F27E6713489','WIKI_DELETE_PAGE'),
- ('884120D4-F9D7-22CB-46341F8BCF1B68A5','WIKI_DELETE_VERSION'),
- ('8840D553-F9D9-59F9-90B05EF765403F90','WIKI_EDIT'),
- ('A9D3BA34-CF1E-5C1B-961D24FF9A32538B','WIKI_REGISTRATION'),
- ('88415476-D0F8-32A5-7E7D3340828C0E6B','WIKI_ROLLBACK_VERSION'),
- ('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','WIKI_VIEW'),
- ('88417F6E-CA8B-53C9-59DEF4C4888CDE82','WIKI_VIEW_HISTORY');
+INSERT INTO "wiki_permissions" ("permission_id","permission","description") VALUES 
+ ('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','WIKI_VIEW','Ability to view any wiki page'),
+ ('8840B7C9-E693-D54B-6A69F07AA5265839','WIKI_CREATE','Ability to create wiki pages'),
+ ('8840D553-F9D9-59F9-90B05EF765403F90','WIKI_EDIT','Ability to edit wiki pages'),
+ ('8840FF13-0A96-AAA9-63322F27E6713489','WIKI_DELETE_PAGE','Ability to remove pages'),
+ ('884120D4-F9D7-22CB-46341F8BCF1B68A5','WIKI_DELETE_VERSION','Ability to remove page versions'),
+ ('88415476-D0F8-32A5-7E7D3340828C0E6B','WIKI_ROLLBACK_VERSION','Ability to rollback to previous versions'),
+ ('88417F6E-CA8B-53C9-59DEF4C4888CDE82','WIKI_VIEW_HISTORY','Ability to view a page\'s history'),
+ ('A9D04702-CF1E-5C1B-94C2965619E301C8','WIKI_ADMIN','Access to all the administrator panels'),
+ ('A9D3BA34-CF1E-5C1B-961D24FF9A32538B','WIKI_REGISTRATION','Ability for anonymous users to register');
 /*!40000 ALTER TABLE "wiki_permissions" ENABLE KEYS */;
 
 
@@ -199,8 +221,8 @@ INSERT INTO "wiki_permissions" ("permission_id","permission") VALUES
 
 DROP TABLE IF EXISTS "wiki_role_permissions";
 CREATE TABLE "wiki_role_permissions" (
-  "FKpermission_id" varchar(36) NOT NULL,
-  "FKrole_id" varchar(36) NOT NULL,
+  "FKpermission_id" varchar(36) character set latin1 NOT NULL,
+  "FKrole_id" varchar(36) character set latin1 NOT NULL,
   PRIMARY KEY  ("FKpermission_id","FKrole_id"),
   KEY "FKpermission_id" ("FKpermission_id"),
   KEY "FKrole_id" ("FKrole_id"),
@@ -208,7 +230,7 @@ CREATE TABLE "wiki_role_permissions" (
   KEY "FKrole_id_2" ("FKrole_id"),
   CONSTRAINT "FKrole_id" FOREIGN KEY ("FKrole_id") REFERENCES "wiki_roles" ("role_id"),
   CONSTRAINT "FK_permissionid" FOREIGN KEY ("FKpermission_id") REFERENCES "wiki_permissions" ("permission_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_role_permissions"
@@ -243,21 +265,22 @@ INSERT INTO "wiki_role_permissions" ("FKpermission_id","FKrole_id") VALUES
 
 DROP TABLE IF EXISTS "wiki_roles";
 CREATE TABLE "wiki_roles" (
-  "role_id" varchar(36) NOT NULL,
-  "role" varchar(100) NOT NULL,
+  "role_id" varchar(36) character set latin1 NOT NULL,
+  "role" varchar(100) character set latin1 NOT NULL,
+  "description" varchar(255) NOT NULL,
   PRIMARY KEY  ("role_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_roles"
 --
 
 /*!40000 ALTER TABLE "wiki_roles" DISABLE KEYS */;
-INSERT INTO "wiki_roles" ("role_id","role") VALUES 
- ('883C4730-ACC9-1AF4-93737DB4E2E368EF','ADMIN'),
- ('883C6A58-05CA-D886-22F7940C19F792BD','USER'),
- ('883C8533-DC73-C1F0-521E41EC19FD6E78','MODERATOR'),
- ('A9D370CD-CF1E-5C1B-9B9B75680AB49DE4','ANONYMOUS');
+INSERT INTO "wiki_roles" ("role_id","role","description") VALUES 
+ ('883C4730-ACC9-1AF4-93737DB4E2E368EF','ADMIN','The wiki administrator'),
+ ('883C6A58-05CA-D886-22F7940C19F792BD','USER','A basic wiki user'),
+ ('883C8533-DC73-C1F0-521E41EC19FD6E78','MODERATOR','A wiki moderator or editor'),
+ ('A9D370CD-CF1E-5C1B-9B9B75680AB49DE4','ANONYMOUS','Anonymous access role');
 /*!40000 ALTER TABLE "wiki_roles" ENABLE KEYS */;
 
 
@@ -267,15 +290,15 @@ INSERT INTO "wiki_roles" ("role_id","role") VALUES
 
 DROP TABLE IF EXISTS "wiki_securityrules";
 CREATE TABLE "wiki_securityrules" (
-  "securityrule_id" varchar(36) NOT NULL,
-  "whitelist" varchar(255) default NULL,
-  "securelist" varchar(255) default NULL,
-  "permissions" varchar(255) default NULL,
+  "securityrule_id" varchar(36) character set latin1 NOT NULL,
+  "whitelist" varchar(255) character set latin1 default NULL,
+  "securelist" varchar(255) character set latin1 default NULL,
+  "permissions" varchar(255) character set latin1 default NULL,
   "authorize_check" tinyint(4) NOT NULL default '0',
-  "redirect" varchar(255) default NULL,
+  "redirect" varchar(255) character set latin1 default NULL,
   PRIMARY KEY  ("securityrule_id"),
   UNIQUE KEY "securityrule_id" ("securityrule_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_securityrules"
@@ -301,23 +324,25 @@ INSERT INTO "wiki_securityrules" ("securityrule_id","whitelist","securelist","pe
 
 DROP TABLE IF EXISTS "wiki_users";
 CREATE TABLE "wiki_users" (
-  "user_id" varchar(36) NOT NULL,
-  "user_fname" varchar(100) NOT NULL,
-  "user_lname" varchar(100) NOT NULL,
-  "user_email" varchar(255) NOT NULL,
+  "user_id" varchar(36) character set latin1 NOT NULL,
+  "user_fname" varchar(100) character set latin1 NOT NULL,
+  "user_lname" varchar(100) character set latin1 NOT NULL,
+  "user_email" varchar(255) character set latin1 NOT NULL,
   "user_isActive" tinyint(4) NOT NULL default '1',
   "user_isConfirmed" tinyint(4) NOT NULL default '0',
   "user_create_date" timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   "user_modify_date" datetime default NULL,
   "user_isDefault" tinyint(4) NOT NULL default '0',
-  "user_username" varchar(50) NOT NULL,
-  "user_password" varchar(255) NOT NULL,
-  "FKrole_id" varchar(36) NOT NULL,
+  "user_username" varchar(50) character set latin1 NOT NULL,
+  "user_password" varchar(255) character set latin1 NOT NULL,
+  "FKrole_id" varchar(36) character set latin1 NOT NULL,
   PRIMARY KEY  ("user_id"),
-  UNIQUE KEY "user_username" ("user_username"),
   KEY "FKrole_id" ("FKrole_id"),
+  KEY "idx_credentials" ("user_isActive","user_isConfirmed","user_username","user_password"),
+  KEY "idx_byEmail" ("user_isActive","user_isConfirmed","user_email"),
+  KEY "idx_default" ("user_isDefault"),
   CONSTRAINT "FK_wiki_users_wiki_roles" FOREIGN KEY ("FKrole_id") REFERENCES "wiki_roles" ("role_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_users"
@@ -326,7 +351,7 @@ CREATE TABLE "wiki_users" (
 /*!40000 ALTER TABLE "wiki_users" DISABLE KEYS */;
 INSERT INTO "wiki_users" ("user_id","user_fname","user_lname","user_email","user_isActive","user_isConfirmed","user_create_date","user_modify_date","user_isDefault","user_username","user_password","FKrole_id") VALUES 
  ('A9CF56CA-CF1E-5C1B-91F2AEF8FBD03AA4','ANONYMOUS','ANONYMOUS','ANONYMOUS@CODEXWIKI.COM',1,1,'2008-03-18 15:12:22','0100-01-01 00:00:00',1,'ANONYMOUS','A2AD7D448321F4D974D468E0B251030E5BED9F128BC760FA3DBA299756E9B31A4D6F8504EA4F10DC2665834E5FFA93CB978FD2FD075C53322C58CD6FE7A7A878','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
- ('A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','admin','admin','admin@codexwiki.com',1,1,'2008-03-14 18:31:10','2008-03-14 18:31:10',0,'admin','0CD487D652F3139D5E01E3263B3B37995602EB8692D11BB37E4DBE33F40581852C63A9964EBC233E10BEB192B2851AA613E640E5137132CA8C061D3327388E5F','883C4730-ACC9-1AF4-93737DB4E2E368EF');
+ ('A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','admin','admin','admin@codexwiki.com',1,1,'2008-04-09 13:33:09','2008-04-09 13:33:09',0,'admin','0CD487D652F3139D5E01E3263B3B37995602EB8692D11BB37E4DBE33F40581852C63A9964EBC233E10BEB192B2851AA613E640E5137132CA8C061D3327388E5F','883C4730-ACC9-1AF4-93737DB4E2E368EF');
 /*!40000 ALTER TABLE "wiki_users" ENABLE KEYS */;
 
 
@@ -336,16 +361,16 @@ INSERT INTO "wiki_users" ("user_id","user_fname","user_lname","user_email","user
 
 DROP TABLE IF EXISTS "wiki_users_permissions";
 CREATE TABLE "wiki_users_permissions" (
-  "FKuser_id" varchar(36) NOT NULL,
-  "FKpermission_id" varchar(36) NOT NULL,
+  "FKuser_id" varchar(36) character set latin1 NOT NULL,
+  "FKpermission_id" varchar(36) character set latin1 NOT NULL,
   PRIMARY KEY  ("FKuser_id","FKpermission_id"),
   KEY "FKpermission_id" ("FKpermission_id"),
   KEY "FKuser_id" ("FKuser_id"),
   KEY "FKpermission_id_2" ("FKpermission_id"),
   KEY "FKuser_id_2" ("FKuser_id"),
-  CONSTRAINT "FKusers_id" FOREIGN KEY ("FKuser_id") REFERENCES "wiki_users" ("user_id"),
-  CONSTRAINT "FKpermission_id" FOREIGN KEY ("FKpermission_id") REFERENCES "wiki_permissions" ("permission_id")
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT "FKpermission_id" FOREIGN KEY ("FKpermission_id") REFERENCES "wiki_permissions" ("permission_id"),
+  CONSTRAINT "FKusers_id" FOREIGN KEY ("FKuser_id") REFERENCES "wiki_users" ("user_id")
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table "wiki_users_permissions"

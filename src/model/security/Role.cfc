@@ -32,7 +32,9 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "role";
+			tableConfig.roleID.display = false;
 			tableConfig.role.maxlength = 100;
+			tableConfig.description.maxlength = 255;
 			
 			/* Set the config */
 			setTableConfig(tableConfig);

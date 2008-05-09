@@ -18,6 +18,12 @@ DROP TABLE IF EXISTS wiki_customHTML
 ;
 DROP TABLE IF EXISTS wiki_category
 ;
+DROP TABLE IF EXISTS wiki_securityrules
+;
+DROP TABLE IF EXISTS wiki_roles
+;
+DROP TABLE IF EXISTS wiki_permissions
+;
 
 
 
@@ -30,7 +36,7 @@ CREATE TABLE wiki_pagecontent_category
 	KEY (FKpagecontent_id),
 	KEY (FKcategory_id),
 	KEY (FKpagecontent_id)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -48,7 +54,7 @@ CREATE TABLE wiki_pagecontent
 	KEY (FKpage_id),
 	KEY (FKuser_id),
 	INDEX idx_wiki_pagecontent_isActive (pagecontent_isActive ASC)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -61,7 +67,7 @@ CREATE TABLE wiki_users_permissions
 	KEY (FKuser_id),
 	KEY (FKpermission_id),
 	KEY (FKuser_id)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -75,7 +81,7 @@ CREATE TABLE wiki_page
 	KEY (FKnamespace_id),
 	KEY (FKnamespace_id),
 	INDEX idx_wiki_page_name (page_name ASC)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -99,7 +105,7 @@ CREATE TABLE wiki_users
 	INDEX idx_credentials (user_isActive ASC, user_isConfirmed ASC, user_username ASC, user_password ASC),
 	INDEX idx_byEmail (user_isActive ASC, user_isConfirmed ASC, user_email ASC),
 	INDEX idx_default (user_isDefault ASC)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -112,7 +118,7 @@ CREATE TABLE wiki_role_permissions
 	KEY (FKrole_id),
 	KEY (FKpermission_id),
 	KEY (FKrole_id)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -122,7 +128,7 @@ CREATE TABLE wiki_options
 	option_name VARCHAR(255),
 	option_value TEXT,
 	PRIMARY KEY (options_id)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -135,7 +141,7 @@ CREATE TABLE wiki_namespace
 	PRIMARY KEY (namespace_id),
 	UNIQUE (namespace_name),
 	INDEX idx_wiki_namespace_name (namespace_name ASC)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -147,7 +153,7 @@ CREATE TABLE wiki_customHTML
 	customHTML_beforeBodyEnd TEXT,
 	customHTML_modify_date DATETIME NOT NULL,
 	PRIMARY KEY (customHTML_id)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 
@@ -159,7 +165,42 @@ CREATE TABLE wiki_category
 	PRIMARY KEY (category_id),
 	UNIQUE (category_name),
 	INDEX idx_wiki_category_name (category_name ASC)
-) ENGINE=InnoDB
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
+;
+
+
+CREATE TABLE wiki_securityrules
+(
+	securityrule_id VARCHAR(36) NOT NULL,
+	whitelist VARCHAR(255),
+	securelist VARCHAR(255),
+	permissions VARCHAR(255),
+	authorize_check TINYINT NOT NULL DEFAULT 0,
+	redirect VARCHAR(255),
+	PRIMARY KEY (securityrule_id),
+	UNIQUE (securityrule_id)
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
+;
+
+
+CREATE TABLE wiki_roles
+(
+	role_id VARCHAR(36) NOT NULL,
+	role VARCHAR(100) NOT NULL,
+	description VARCHAR(255),
+	PRIMARY KEY (role_id)
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
+;
+
+
+CREATE TABLE wiki_permissions
+(
+	permission_id VARCHAR(36) NOT NULL,
+	permission VARCHAR(100) NOT NULL,
+	description VARCHAR(255),
+	PRIMARY KEY (permission_id),
+	UNIQUE (permission)
+) DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 ;
 
 

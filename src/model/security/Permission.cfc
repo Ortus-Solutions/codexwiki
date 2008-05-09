@@ -32,7 +32,9 @@
 			var tableConfig = structnew();
 			
 			tableConfig.SortBy = "permission";
+			tableConfig.permissionID.display = false;
 			tableConfig.permission.maxlength = 100;
+			tableConfig.description.maxlength = 255;
 			
 			/* Set the config */
 			setTableConfig(tableConfig);
