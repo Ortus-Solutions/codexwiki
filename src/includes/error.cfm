@@ -27,7 +27,7 @@
 		-
 		An Error has occured
 		-
-		CodeX Wiki
+		CodexWiki
 	</title>
 </head>
 <body>

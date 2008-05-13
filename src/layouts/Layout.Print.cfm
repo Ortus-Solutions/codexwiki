@@ -8,7 +8,7 @@
 <cfdocumentitem type="header">
 <cfoutput>
 <div style="font-size: 9px; text-align: left;">
-CodeX Wiki - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
+CodexWiki - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
 </div>
 </cfoutput>
 </cfdocumentitem>
@@ -30,7 +30,7 @@ Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
 
 	<!--- Main CSS --->
 	<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/style.css" />
-	
+
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
