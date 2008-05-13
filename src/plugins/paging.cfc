@@ -20,15 +20,6 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<!-----------------------------------------------------------------------
-Author 	 :	Luis Majano
-Date     :	4/26/2008
-Description : 			
- Paging plugin
-		
-Modification History:
-
------------------------------------------------------------------------>
 <cfcomponent name="paging" 
 			 hint="A paging plugin" 
 			 extends="coldbox.system.plugin" 
