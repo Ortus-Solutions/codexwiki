@@ -65,7 +65,7 @@
 <!--- Title --->
 <h1>
 	<img src="#getSetting('htmlBaseURL')#/includes/images/history.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page..getName()#</a>: History
+	<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page.getCleanName()#</a>: History
 </h1>
 
 <ol>
