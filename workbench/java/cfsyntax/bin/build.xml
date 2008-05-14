@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="codex-cfsyntax" default="dist" basedir=".">
+	<property name="src" location="."/>
+	<property name="build" location="./bin"/>
+	<property name="dist" location="../../../src/model/wiki/parser/lib/bliki"/>	
+    
+  <target name="compile" depends="cleanALL" description="compile">
+  	<javac srcdir="${src}" destdir="${build}" debug="true" debuglevel="lines,vars,source" target="1.5" source="1.5"/>
+  	<antcall target="jarBuild"></antcall>
+  </target>
+    
+  <target name="dist" depends="compile" description="generate the distribution" >
+  	<delete file="${dist}/cfsyntax-src.zip"/>
+    <zip destfile="${dist}/cfsyntax-src.zip">
+      <fileset dir="${src}">
+      	<exclude name="**/*.class"/>
+      	<exclude name="**/*._java"/>
+      	<exclude name=".settings/**"/>
+      	<exclude name=".classpath"/>
+      	<exclude name=".project"/>
+	  </fileset>
+    </zip>
+  </target>
+  
+	
+  <target name="jarBuild">
+  	<tstamp>
+  		<format property="DSTAMP" pattern="yyyyMMddHHmmss"/>
+    </tstamp>
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/cfsyntax-${DSTAMP}.jar" basedir="${build}"/>  	
+  </target>	
+	
+  <target name="clean" description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+  <delete>
+    <fileset dir="${build}" includes="**/*.class"/>
+  </delete>
+  </target>
+	
+  <target name="cleanALL" depends="clean">
+  	<delete>
+		<fileset dir="${dist}" includes="cfsyntax-*.jar"/>
+	</delete>
+  </target>
+	
+</project>

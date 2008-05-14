@@ -26,8 +26,10 @@ $Build ID:	@@build_id@@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="RssManager" output="false">
 	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
+	<cfargument name="beanInjector" hint="the bean injector" type="codex.model.util.BeanInjector" required="Yes">
 	<cfscript>
 		setFeedCollection(StructNew());
+		setBeanInjector(arguments.beanInjector);
 
 		setBaseURL(arguments.coldBoxController.getSetting("sesBaseURL") & "/feed/");
 
@@ -53,49 +55,9 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<!--- Dependency injection methods for Bean Factory. --->
-
-<cffunction name="setBeanFactory" access="public" returntype="void" output="false" hint="I set the BeanFactory.">
-	<cfargument name="beanFactory" type="coldspring.beans.BeanFactory" required="true" />
-	<cfset instance.beanFactory = arguments.beanFactory />
-</cffunction>
-
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
-
-<cffunction name="autowire" hint="autowires the source from CS" access="public" returntype="void" output="false">
-	<cfargument name="source" hint="the source to autowire" type="any" required="Yes">
-	<cfscript>
-		var keys = StructKeyArray(arguments.source);
-		var key = 0;
-		var meta = 0;
-		var args = 0;
-		var beanName = 0;
-	</cfscript>
-	<cfloop array="#keys#" index="key">
-		<cfif LCase(key).startsWith("set") AND isCustomFunction(arguments.source[key])>
-			<cfset meta = getMetaData(arguments.source[key]) />
-			<cfif NOT StructKeyExists(meta, "access") OR meta.access eq "public" AND arrayLen(meta.parameters) eq 1>
-				<cfset beanName = Right(key, Len(Key) - 3) />
-				<cfif getBeanFactory().containsBean(beanName)>
-					<cfset args = StructNew() />
-					<cfset args[meta.parameters[1].name] = getBeanFactory().getBean(beanName) />
-					<cftry>
-						<cfinvoke component="#arguments.source#" method="#key#" argumentcollection="#args#">
-						<cfcatch>
-							<!--- do nothing --->
-						</cfcatch>
-					</cftry>
-				</cfif>
-			</cfif>
-		</cfif>
-	</cfloop>
-</cffunction>
-
-<cffunction name="getBeanFactory" access="private" returntype="any" output="false" hint="I return the BeanFactory.">
-	<cfreturn instance.beanFactory />
-</cffunction>
 
 <cffunction name="getSource" hint="Returns the source CFC" access="private" returntype="any" output="false">
 	<cfargument name="sourceName" hint="the name of the souce" type="string" required="Yes">
@@ -113,7 +75,7 @@ $Build ID:	@@build_id@@
 				}
 
 				source = createObject("component", "codex.model.rss.source.#arguments.sourceName#").init(getBaseURL());
-				autowire(source);
+				getBeanInjector().autowire(source);
 
 				StructInsert(getFeedCollection(), arguments.sourceName, source);
 			}
@@ -139,6 +101,15 @@ $Build ID:	@@build_id@@
 <cffunction name="setBaseURL" access="private" returntype="void" output="false">
 	<cfargument name="baseURL" type="string" required="true">
 	<cfset instance.baseURL = arguments.baseURL />
+</cffunction>
+
+<cffunction name="getBeanInjector" access="private" returntype="codex.model.util.BeanInjector" output="false">
+	<cfreturn instance.beanInjector />
+</cffunction>
+
+<cffunction name="setBeanInjector" access="private" returntype="void" output="false">
+	<cfargument name="beanInjector" type="codex.model.util.BeanInjector" required="true">
+	<cfset instance.beanInjector = arguments.beanInjector />
 </cffunction>
 
 </cfcomponent>

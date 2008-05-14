@@ -1,19 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by 
+Copyright 2008 by
 Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
 www.transfer-orm.org |  www.coldboxframework.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-    		
-	http://www.apache.org/licenses/LICENSE-2.0 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 $Build Date: @@build_date@@
@@ -153,7 +153,7 @@ $Build ID:	@@build_id@@
 	<!--- if anything goes wrong, display error --->
 	<cftry>
 		<cfif feedData.url.startsWith("http://")>
-			<cffeed action="read" source="#feedData.url#" name="data" timeout="30">
+			<cffeed action="read" source="#feedData.url#" name="data" timeout="30" userAgent="CodexWiki - http://www.codexwiki.org">
 		<cfelse>
 			<!--- I have to push it to a temporary file. sucks. --->
 			<cfset path = "/" & createObject("java", "java.util.UUID").randomUUID() />
@@ -173,6 +173,7 @@ $Build ID:	@@build_id@@
 						#cfcatch.message#
 					</p>
 				</div>
+				<cfdump var="#cfcatch#" output="console">
 			</cfoutput>
 			</cfsavecontent>
 			<cfreturn html />
@@ -279,7 +280,11 @@ $Build ID:	@@build_id@@
 					<p> Categories:
 					<cfset list = ""/>
 					<cfloop array="#item.category#" index="category">
-						<cfset list = listAppend(list, ' <a href="#category.domain#">#category.value#</a>') />
+						<cfif StructKeyExists(category, "domain")>
+							<cfset list = listAppend(list, ' <a href="#category.domain#">#category.value#</a>') />
+						<cfelse>
+							<cfset list = listAppend(list, ' #category.value#') />
+						</cfif>
 					</cfloop>
 					#list#
 					</p>
@@ -303,6 +308,7 @@ $Build ID:	@@build_id@@
 <cffunction name="buildAtomFeed" hint="taks an atom feed, and builds the display for htat" access="private" returntype="string" output="false">
 	<cfargument name="data" hint="the rss feed arguments.data" type="struct" required="Yes">
 	<cfargument name="url" hint="the url the rss feed has" type="string" required="Yes">
+	<cfargument name="listType" hint="the list type to display, ul, or ol" type="string" required="Yes">
 	<cfscript>
 		var html = 0;
 		var entry = 0;

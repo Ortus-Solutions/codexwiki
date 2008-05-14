@@ -47,3 +47,10 @@ ALTER TABLE `codex`.`wiki_pagecontent` ADD INDEX idx_wiki_pagecontent_isActive(`
 ALTER TABLE `codex`.`wiki_roles` ADD COLUMN `description` VARCHAR(255) NOT NULL AFTER `role`;
 ALTER TABLE `codex`.`wiki_permissions` ADD COLUMN `description` VARCHAR(255) NOT NULL AFTER `permission`;
 
+/* Mark Mandel: added Special:Category Page */
+
+INSERT INTO `codex`.`wiki_page` (`page_id`,`page_name`,`FKnamespace_id`) VALUES 
+ ('E5CC1A90-D36E-9214-33EB0021D817DE59','Special:Categories','06AF3D1C-0B00-EAA3-09A138DFA27F7E28');
+
+INSERT INTO `codex`.`wiki_pagecontent` (`pagecontent_id`,`FKpage_id`,`FKuser_id`,`pagecontent_content`,`pagecontent_comment`,`pagecontent_version`,`pagecontent_createdate`,`pagecontent_isActive`) VALUES 
+ ('E5CC1AC5-C484-565C-19E5F34B3712AD02','E5CC1A90-D36E-9214-33EB0021D817DE59','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Category Listing ==\r\n\r\n<feed url=\"/feed/category/list.cfm\" display=\"numbered\" />','Initial Creation',1,'2008-05-14 14:59:28',1);

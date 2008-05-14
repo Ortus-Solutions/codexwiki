@@ -21,6 +21,7 @@
 	<!-- Transfer related beans -->
 
 	<bean id="TDOBeanInjectorObserver" class="codex.model.transfer.TDOBeanInjectorObserver" lazy-init="false" />
+	<bean id="BeanInjector" class="codex.model.util.BeanInjector" />
 	<bean id="BeanPopulator" class="codex.model.transfer.BeanPopulator"/>
 
 	<!-- ColdBox Related Beans -->
@@ -40,7 +41,7 @@
 	<!-- wiki -->
 
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
-	
+
 	<bean id="ConfigService" class="codex.model.wiki.ConfigService" />
 
 	<!-- Parsers -->

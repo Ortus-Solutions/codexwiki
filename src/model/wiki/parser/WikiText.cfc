@@ -1,19 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by 
+Copyright 2008 by
 Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
 www.transfer-orm.org |  www.coldboxframework.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-    		
-	http://www.apache.org/licenses/LICENSE-2.0 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 $Build Date: @@build_date@@
@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		variables.instance = StructNew();
 		variables.static = StructNew();
-		variables.static.SERVER_SCOPE_KEY = "6351BB9B-D46D-51D0-D7D22F30A344B7B4";
+		variables.static.SERVER_SCOPE_KEY = "6201BF9B-D46E-52D0-D7023F30A340B7B4";
 
 		initJavaLoader();
 
@@ -44,17 +44,28 @@ $Build ID:	@@build_id@@
 
 <cffunction name="configure" hint="configuration method for configuraiton by the listener" access="public" returntype="void" output="false">
 	<cfargument name="ignoreXMLTagList" hint="the list of xml tags to ignore" type="string" required="No" default="">
+	<cfargument name="allowedAttributes" hint="the list of extra attributes that are allowed in html tags" type="string" required="No" default="">
 	<cfscript>
 		var config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
+		var TagNode = getJavaLoader().create("org.htmlcleaner.TagNode");
 		var xmlTag = 0;
+		var attrib = 0;
 	</cfscript>
+
+	<cfloop list="#arguments.allowedAttributes#" index="attrib">
+		<cfscript>
+			TagNode.addAllowedAttribute(attrib);
+		</cfscript>
+	</cfloop>
 	<cfloop list="#arguments.ignoreXMLTagList#" index="xmlTag">
 		<cfscript>
-			//this tells the parser to ignore these XML tags
-			config.addTokenTag(xmlTag, getJavaLoader().create("info.bliki.wiki.tags.HTMLTag").init(xmlTag));
+			config.addTokenTag(xmlTag, getJavaLoader().create("org.htmlcleaner.TagNode").init(xmlTag));
 		</cfscript>
 	</cfloop>
 	<cfscript>
+		//this tells the parser to ignore these XML tags
+		config.addCodeFormatter("coldfusion", getJavaLoader().create("com.codexwiki.bliki.ColdFusionCodeFilter").init());
+
 		setConfiguration(config);
 	</cfscript>
 </cffunction>

@@ -1,19 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by 
+Copyright 2008 by
 Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
 www.transfer-orm.org |  www.coldboxframework.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-    		
-	http://www.apache.org/licenses/LICENSE-2.0 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 $Build Date: @@build_date@@
@@ -198,7 +198,7 @@ $Build ID:	@@build_id@@
 
 <cffunction name="eachRenderable" hint="runs a command against each visitor" access="private" returntype="void" output="false">
 	<cfargument name="command" hint="a method command" type="any" required="Yes">
-	<cfargument name="commandArgs" hint="the comand arguments" type="struct" required="false" default="#StrctNew()#">
+	<cfargument name="commandArgs" hint="the comand arguments" type="struct" required="false" default="#StructNew()#">
 	<cfargument name="renderedContent" hint="the rendered content collection" type="array" required="no" default="#getRenderedContent()#">
 	<cfscript>
 		var len = ArrayLen(arguments.renderedContent);
@@ -226,7 +226,7 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="visitContentCommand" hint="a command to enable visitors to visit each renderable item" access="public" returntype="string" output="false">
+<cffunction name="visitContentCommand" hint="a command to enable visitors to visit each renderable item" access="public" returntype="void" output="false">
 	<cfargument name="renderable" hint="a renderable object" type="any" required="Yes">
 	<cfargument name="content" hint="the array of renderable content" type="array" required="Yes">
 	<cfargument name="index" hint="the index of the current item we are at" type="numeric" required="Yes">
@@ -238,7 +238,7 @@ $Build ID:	@@build_id@@
 		var local = StructNew();
 
 		//if you can visit dynamic content, then visit it, otherwise, ignore it
-		if(NOT arguments.renderable.getIsDynamic() OR visitDynamicContent == true)
+		if(NOT arguments.renderable.getIsDynamic() OR arguments.visitDynamicContent == true)
 		{
 			local.returnVar = arguments.visitor.visitRenderable(arguments.renderable, arguments.visitData);
 

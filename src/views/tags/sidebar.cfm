@@ -66,6 +66,7 @@ $Build ID:	@@build_id@@
 		<li><a href="#getSetting('sesBaseURL')#">Dashboard</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialHelp#">Help</a></li>
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialFeeds#">Rss Feeds</a></li>
+		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialCategory#">Category List</a></li>
 	</ul>
 </div>
 </cfif>

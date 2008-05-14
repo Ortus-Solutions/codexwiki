@@ -52,7 +52,7 @@
 		<!-- Paging Max Rows -->
 		<Setting name="PagingMaxRows" 				value="3"/>
 		<Setting name="PagingBandGap" 				value="5"/>
-		
+
 	</YourSettings>
 
 	<MailServerSettings />
@@ -110,6 +110,7 @@
 
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed</Property>
+			<Property name="allowedAttributes">style,url,cache,display</Property>
 		</Interceptor>
 
 		<Interceptor class="codex.interceptors.wiki.Feed">
