@@ -45,7 +45,7 @@ $Build ID:	@@build_id@@
 		var item = 0;
 
 		rss.title = "List of all categories";
-		rss.link = getBaseURL() & "page/listByCategory.cfm";
+		rss.link = getBaseURL() & "category/list.cfm";
 		rss.description = "A list of all the categories in this wiki";
 		rss.version = "rss_2.0";
 
