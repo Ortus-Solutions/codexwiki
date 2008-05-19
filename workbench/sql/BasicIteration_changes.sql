@@ -22,7 +22,7 @@ CREATE TABLE wiki_options
 
 /* Luis Majano: Added utf8 encoding */
 ALTER TABLE `codex`.`wiki_category` CHARACTER SET utf8 COLLATE utf8_general_ci;
-ALTER TABLE `codex`.`wiki_customhtml` CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `codex`.`wiki_customHTML` CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE `codex`.`wiki_namespace` CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE `codex`.`wiki_page` CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE `codex`.`wiki_pagecontent` CHARACTER SET utf8 COLLATE utf8_general_ci;
