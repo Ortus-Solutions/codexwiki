@@ -47,12 +47,9 @@
 		<Setting name="DefaultPage" 				value="Dashboard"/>
 		<!-- Lookup Tables To Manage -->
 		<Setting name="SystemLookups" value="{Permissions:'security.Permission', Roles:'security.Role', SecurityRules:'security.SecurityRules'}"></Setting>
-		<!-- Hash Type -->
-		<Setting name="HashType" 					value="SHA-512"/>
 		<!-- Paging Max Rows -->
 		<Setting name="PagingMaxRows" 				value="10"/>
 		<Setting name="PagingBandGap" 				value="5"/>
-
 	</YourSettings>
 
 	<MailServerSettings />
