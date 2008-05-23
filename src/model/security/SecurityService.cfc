@@ -120,7 +120,7 @@ $Build ID:	@@build_id@@
 			
 			/* Generate a password */
 			clearPassword = arguments.user.getEmail() & createUUID() & now();
-			genPassword = hash(clearPassword, getUserService().getHashType());	
+			genPassword = hash(clearPassword,'SHA-512');	
 			
 			/* Save it on User and save. */
 			arguments.user.setPassword(genPassword);

@@ -58,12 +58,9 @@
 		</property>
 		<!--User service autowired-->
 	</bean>
-	<bean id="UserService" class="codex.model.security.UserService">
-		<property name="HashType"><value>${HashType}</value></property>
-	</bean>
-
+	<bean id="UserService" class="codex.model.security.UserService" />
+	
 	<!-- Lookups -->
 	<bean id="LookupService" class="codex.model.lookups.LookupService" />
-
 
 </beans>

@@ -199,10 +199,10 @@ $Build ID:	@@build_id@@
 					oClonedUser.setPassword(rc.newpassword);
 				}
 
-
 				//Save it
 				oUserService.saveUser(oClonedUser);
-
+				
+				/* Message of success */
 				getPlugin("messagebox").setMessage("info","User updated!");
 				setNextRoute(route="admin.users/list");
 			}

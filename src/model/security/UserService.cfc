@@ -238,7 +238,7 @@ $Build ID:	@@build_id@@
 	
 			/* prepare sqlProps */
 			sqlProps.username = arguments.username;
-			sqlProps.password = hash(arguments.password, getHashType());
+			sqlProps.password = hash(arguments.password,'SHA-512');
 			sqlProps.isConfirmed = 1;
 			sqlProps.isActive = 1;
 			
@@ -335,12 +335,10 @@ $Build ID:	@@build_id@@
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Hash Password? */
-			if( not arguments.User.getIsPersisted() ){
-				arguments.User.setPassword( hash(arguments.User.getPassword(),getHashType()) );
+			if( not arguments.User.getIsPersisted() or arguments.User.getPassword().length() neq 0){
+				arguments.User.setPassword( hash(arguments.User.getPassword(),'SHA-512') );
 			}
-			else if( arguments.User.getPassword().length() neq 0 ){
-				arguments.User.setPassword( hash(arguments.User.getPassword(),getHashType()) );
-			}
+						
 			/* Save User */
 			getTransfer().save(arguments.User);
 		</cfscript>
@@ -361,15 +359,6 @@ $Build ID:	@@build_id@@
 	
 <!------------------------------------------- ACCESSORS/MUTATORS ------------------------------------------->
 
-		<!--- Get/set HashType --->
-	<cffunction name="gethashType" access="public" output="false" returntype="string" hint="Get hashType">
-		<cfreturn instance.hashType/>
-	</cffunction>	
-	<cffunction name="sethashType" access="public" output="false" returntype="void" hint="Set hashType">
-		<cfargument name="hashType" type="string" required="true"/>
-		<cfset instance.hashType = arguments.hashType/>
-	</cffunction>
-	
 	<!--- Get Set Datasource --->
 	<cffunction name="getDatasource" access="private" output="false" returntype="transfer.com.sql.Datasource" hint="Get Datasource">
 		<cfreturn instance.Datasource/>
