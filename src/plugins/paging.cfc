@@ -24,10 +24,10 @@ $Build ID:	@@build_id@@
 			 hint="A paging plugin" 
 			 extends="coldbox.system.plugin" 
 			 output="false" 
-			 cache="false">
-
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
-
+			 cache="true">
+  
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
+   
     <cffunction name="init" access="public" returntype="paging" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
@@ -35,78 +35,103 @@ $Build ID:	@@build_id@@
   		setpluginName("paging");
   		setpluginVersion("1.0");
   		setpluginDescription("Paging plugin");
-  		//My own Constructor code here
-
+  		
+  		/* Paging properties */
+  		setPagingMaxRows( getSetting("PagingMaxRows") );
+  		setPagingBandGap( getSetting('PagingBandGap') );
+  		
   		//Return instance
   		return this;
 		</cfscript>
 	</cffunction>
 
-<!------------------------------------------- PUBLIC ------------------------------------------->
-
+<!------------------------------------------- PUBLIC ------------------------------------------->	
+	
+	<!--- Get/Set paging max rows --->
+	<cffunction name="getPagingMaxRows" access="public" returntype="numeric" hint="Get the paging max rows setting" output="false">
+		<cfreturn instance.pagingMaxRows>
+	</cffunction>
+	<cffunction name="setPagingMaxRows" access="public" returntype="void" hint="Set the paging max rows setting" output="false">
+		<cfargument name="pagingMaxRows" required="true" type="numeric">
+		<cfset instance.pagingMaxRows = arguments.pagingMaxRows>
+	</cffunction>
+	
+	<!--- Get/Set paging band gap --->
+	<cffunction name="getPagingBandGap" access="public" returntype="numeric" hint="Get the paging carrousel band gap" output="false">
+		<cfreturn instance.PagingBandGap>
+	</cffunction>
+	<cffunction name="setPagingMaxRows" access="public" returntype="void" hint="Set the paging max rows setting" output="false">
+		<cfargument name="pagingMaxRows" required="true" type="numeric">
+		<cfset instance.pagingMaxRows = arguments.pagingMaxRows>
+	</cffunction>
+	
 	<!--- Get boundaries --->
 	<cffunction name="getboundaries" access="public" returntype="struct" hint="Calculate the startrow and maxrow" output="false" >
-		<cfargument name="page" required="true" type="numeric" hint="The page you are on.">
+		<cfargument name="PagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
 		<cfscript>
 			var boundaries = structnew();
-
-			boundaries.startrow = ((arguments.page * getSetting("PagingMaxRows")) - getSetting("PagingMaxRows"))+1;
-			boundaries.maxrow = boundaries.startrow + getSetting("PagingMaxRows") - 1;
-
+			var event = getController().getRequestService().getContext();
+			var maxRows = getPagingMaxRows();
+			
+			/* Check for Override */
+			if( structKeyExists(arguments,"PagingMaxRows") ){
+				maxRows = arguments.pagingMaxRows;
+			}
+						
+			boundaries.startrow = ((event.getValue("page",1) * maxrows - maxRows)+1;
+			boundaries.maxrow = boundaries.startrow + maxRows - 1;
+		
 			return boundaries;
 		</cfscript>
 	</cffunction>
-
+	
 	<!--- render paging --->
 	<cffunction name="renderit" access="public" returntype="any" hint="render plugin tabs" output="false" >
 		<!--- ***************************************************************** --->
 		<cfargument name="FoundRows"    required="true"  type="numeric" hint="The found rows to page">
-		<cfargument name="link"   		required="false" type="string" hint="The normal link to use, you must place the @page@ place holder so the link ca be created correctly">
-		<cfargument name="jsLink" 		required="false" type="string" hint="The js link to use, you must place the @page@ place holder so the link can be created correctly.">
+		<cfargument name="link"   		required="true"  type="string"  hint="The link to use, you must place the @page@ place holder so the link ca be created correctly">
+		<cfargument name="PagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
 		<!--- ***************************************************************** --->
 		<cfset var event = getController().getRequestService().getContext()>
 		<cfset var pagingTabs = "">
-		<cfset var maxRows = getSetting('PagingMaxRows')>
-		<cfset var bandGap = getSetting('PagingBandGap')>
+		<cfset var maxRows = getPagingMaxRows()>
+		<cfset var bandGap = getPagingBandGap()>
 		<cfset var totalPages = 0>
-		<cfset var theLink = "">
+		<cfset var theLink = arguments.link>
 		<!--- Paging vars --->
-		<cfset var currentPage = event.getValue("page")>
+		<cfset var currentPage = event.getValue("page",1)>
 		<cfset var pageFrom = 0>
 		<cfset var pageTo = 0>
-		<cfset var pageIndex = 0 />
-
+		
+		<!--- Override --->
+		<cfif structKeyExists(arguments, "pagingMaxRows")>
+			<cfset maxRows = arguments.pagingMaxRows>
+		</cfif>
+		
 		<!--- Only page if records found --->
 		<cfif arguments.FoundRows neq 0>
 			<!--- Calculate Total Pages --->
 			<cfset totalPages = Ceiling( arguments.FoundRows / maxRows )>
-
-			<!--- Calculate JS link or Normal Link --->
-			<cfif not structKeyExists(arguments,"jsLink")>
-				<cfset theLink = arguments.link>
-			<cfelse>
-				<cfset theLink = arguments.jsLink>
-			</cfif>
-
+			
 			<!--- ***************************************************************** --->
 			<!--- Paging Tabs 														--->
 			<!--- ***************************************************************** --->
 			<cfsavecontent variable="pagingtabs">
 			<cfoutput>
 			<div class="pagingTabs">
-
-				<div class="float-left">
+				
+				<div class="pagingTabsTotals">
 				<strong>Total Records: </strong> #arguments.FoundRows# &nbsp;
 				<strong>Total Pages:</strong> #totalPages#
 				</div>
-
-				<div class="float-right">
-
+				
+				<div class="pagingTabsCarrousel">
+					
 					<!--- PREVIOUS PAGE --->
 					<cfif currentPage-1 gt 0>
 						<a href="#replace(theLink,"@page@",currentPage-1)#">&lt;&lt;</a>
 					</cfif>
-
+					
 					<!--- Calcualte PageFrom Carrousel --->
 					<cfset pageFrom=1>
 					<cfif (currentPage-bandGap) gt 1>
@@ -114,7 +139,7 @@ $Build ID:	@@build_id@@
 						<a href="#replace(theLink,"@page@",1)#">1</a>
 						...
 					</cfif>
-
+					
 					<!--- Page TO of Carrousel --->
 					<cfset pageTo=currentPage+bandgap>
 					<cfif (currentPage+bandgap) gt totalPages>
@@ -124,29 +149,29 @@ $Build ID:	@@build_id@@
 						<a href="#replace(theLink,"@page@",pageIndex)#"
 						   <cfif currentPage eq pageIndex>class="selected"</cfif>>#pageIndex#</a>
 					</cfloop>
-
+					
 					<!--- End Token --->
 					<cfif (currentPage+bandgap) lt totalPages>
 						...
 						<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 					</cfif>
-
+					
 					<!--- NEXT PAGE --->
 					<cfif (currentPage+bandgap) lt totalPages >
 						<a href="#replace(theLink,"@page@",currentPage+1)#">&gt;&gt;</a>
 					</cfif>
-
+					
 				</div>
-
+									
 			</div>
 			</cfoutput>
 			</cfsavecontent>
 		</cfif>
-
+	
 		<cfreturn pagingTabs>
 	</cffunction>
+    
+<!------------------------------------------- PRIVATE ------------------------------------------->	
 
-<!------------------------------------------- PRIVATE ------------------------------------------->
-
-
+	
 </cfcomponent>

@@ -52,12 +52,8 @@ $Build ID:	@@build_id@@
 			/* JS Lookups */
 			event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
 
-			/* For Testing */
-			setSetting("PagingMaxRows",10);
-			setSetting("PagingBandGap", 1);
-
 			//Calculate the start row according to page
-			rc.boundaries = getMyPlugin("paging").getboundaries(rc.page);
+			rc.boundaries = getMyPlugin("paging").getboundaries();
 
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
