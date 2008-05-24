@@ -31,6 +31,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="Yes">
 	<cfscript>
 		var xFeed = 0;
+		var cleanFeed = 0;
 
 		super.init(true);
 
@@ -48,9 +49,17 @@ $Build ID:	@@build_id@@
 
 		if(NOT isXML(arguments.feedTag))
 		{
-			//if not valid xml, just return it as is.
-			setIsValidFeedTag(false);
-			return this;
+			cleanFeed = escapeAttributes(arguments.feedTag);
+
+			if(NOT isXML(cleanFeed))
+			{
+				//if not valid xml, just return it as is.
+				setIsValidFeedTag(false);
+				return this;
+			}
+
+			arguments.feedTag = cleanFeed;
+
 		}
 
 		xFeed = xmlParse(arguments.feedTag);
@@ -378,6 +387,32 @@ $Build ID:	@@build_id@@
 	</cfsavecontent>
 
 	<cfreturn html />
+</cffunction>
+
+<cffunction name="escapeAttributes" hint="returns the string with clean attributes" access="private" returntype="string" output="false">
+	<cfargument name="feedTag" hint="the feed tag" type="string" required="Yes">
+	<cfscript>
+		var builder = createObject("java", "java.lang.StringBuilder").init(arguments.feedTag);
+		var pattern = createObject("java", "java.util.regex.Pattern").compile('"([^"]+)"');
+		var matcher = pattern.matcher(builder);
+
+		while(matcher.find())
+		{
+			builder.replace(matcher.start(1), matcher.end(1), xmlFormat(matcher.group(1)));
+		}
+
+		return builder.toString();
+	</cfscript>
+</cffunction>
+
+<cffunction name="_dump">
+	<cfargument name="s">
+	<cfargument name="abort" default="true">
+	<cfset var g = "">
+		<cfdump var="#arguments.s#">
+		<cfif arguments.abort>
+		<cfabort>
+		</cfif>
 </cffunction>
 
 <cffunction name="getFeedData" access="private" returntype="struct" output="false">

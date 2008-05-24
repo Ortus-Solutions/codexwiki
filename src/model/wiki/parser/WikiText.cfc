@@ -47,7 +47,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="allowedAttributes" hint="the list of extra attributes that are allowed in html tags" type="string" required="No" default="">
 	<cfscript>
 		var config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
-		var TagNode = getJavaLoader().create("org.htmlcleaner.TagNode");
+		var TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
 		var xmlTag = 0;
 		var attrib = 0;
 	</cfscript>
