@@ -20,10 +20,10 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent hint="Remote access to wiki services" extends="model.remote.AbstractRemoteFacade" output="false">
+<cfcomponent hint="Remote access to wiki services" extends="codex.model.remote.AbstractRemoteFacade" output="false">
 <cfsetting showdebugoutput="false">
 <cfscript>
-	setWikiService(getIOC().getBean("WikiService"));
+	setWikiService(getBean("WikiService"));
 </cfscript>
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
