@@ -38,7 +38,12 @@ $Build ID:	@@build_id@@
 			/* Validate Credentials */
 			if ( getSecurityService().authenticateUser(rc.username,rc.password) ){
 				/* Service logged user in, now just relocate. */
-				relocate(refRoute);
+				if( findnocase("login",refRoute) or refRoute.length() eq 0 ){
+					setNextRoute(getSetting('ShowKey'));
+				}
+				else{
+					relocate(refRoute);
+				}
 			}
 			else{
 				getPlugin("messagebox").setMessage("error", "The credentials you provided are not valid or your user is not active. Please try again.");
