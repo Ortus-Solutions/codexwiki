@@ -234,7 +234,7 @@ $Build ID:	@@build_id@@
 			/* Get the Role's Perms */
 			rc.qRolePerms = getUserService().getRolePermissions(rc.thisUser.getRole().getroleId());
 			/* Get All the perms */
-			rc.qAllperms = getLookupService().getListing('Security.Permission');
+			rc.qAllperms = getLookupService().getListing('security.Permission');
 
 			/* Set View */
 			event.setView("admin/users/permissions");
@@ -257,7 +257,7 @@ $Build ID:	@@build_id@@
 
 			/* Get user and perm */
 			oUser = getUserService().getUser(rc.user_id);
-			oPerm = getLookupService().getLookupObject('Security.Permission',rc.permissionID);
+			oPerm = getLookupService().getLookupObject('security.Permission',rc.permissionID);
 
 			/* Check if perm already in user */
 			if( not oUser.containsPermission(oPerm) ){
@@ -290,7 +290,7 @@ $Build ID:	@@build_id@@
 
 			/* get Permission_id and user_id */
 			oUser = getUserService().getUser(rc.user_id);
-			oPerm = getLookupService().getLookupObject('Security.Permission',rc.permissionID);
+			oPerm = getLookupService().getLookupObject('security.Permission',rc.permissionID);
 
 			/* Remove Permission */
 			getUserService().deleteUserPerm(oUser,oPerm);
