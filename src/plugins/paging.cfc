@@ -102,6 +102,7 @@ $Build ID:	@@build_id@@
 		<cfset var currentPage = event.getValue("page",1)>
 		<cfset var pageFrom = 0>
 		<cfset var pageTo = 0>
+		<cfset var pageIndex = 0>
 		
 		<!--- Override --->
 		<cfif structKeyExists(arguments, "pagingMaxRows")>
