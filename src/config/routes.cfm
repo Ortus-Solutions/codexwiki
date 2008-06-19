@@ -133,9 +133,7 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <!--- CUSTOM COURSES GO HERE (they will be checked in order) --->
 
 <!--- show Key matchings --->
-<cfset addCourse(pattern="#getSetting('ShowKey')#/:page/:print",handler="page",action="show")>
-<cfset addCourse(pattern="#getSetting('ShowKey')#/:page",handler="page",action="show")>
-<cfset addCourse(pattern="#getSetting('ShowKey')#",handler="page",action="show")>
+<cfset addCourse(pattern="#getSetting('ShowKey')#/:page?/:print?",handler="page",action="show")>
 
 <!--- feed urls --->
 <cfset addCourse(pattern="feed/:source/:feed",handler="feed",action="show")>
@@ -152,6 +150,4 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <cfset addCourse(":handler/:action/:page")>
 
 <!--- STANDARD COLDBOX COURSES, DO NOT MODIFY UNLESS YOU DON'T LIKE THEM --->
-<cfset addCourse(":handler/:action")>
-<cfset addCourse(":handler")>
-
+<cfset addCourse(":handler/:action?")>
