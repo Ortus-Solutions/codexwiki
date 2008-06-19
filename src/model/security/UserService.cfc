@@ -134,7 +134,7 @@ $Build ID:	@@build_id@@
 		
 		<!--- Search Users with Paging --->
 		<cftransaction>
-			<cfquery name="qUsers" datasource="#getDatasource().getName()#">
+			<cfquery name="qUsers" datasource="#getDatasource().getName()#"  username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
 				SELECT SQL_CALC_FOUND_ROWS
 					   Users.user_id, Users.user_fname, Users.user_lname, Users.user_email, Users.user_isActive,
 					   Users.user_isConfirmed, Users.user_create_date, Users.user_modify_date, Roles.role
