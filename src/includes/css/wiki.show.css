@@ -24,21 +24,25 @@ $Build ID:	@@build_id@@
 */
 
 div#categories {
-	border-top: 1px solid #EBEBEB;
+	border: 1px solid #cccccc;
 	text-align: right;
 	margin-top: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	font-weight: bold;
+	background: #CFE4FF;
 }
 
 div#categories ul {
 	display: inline;
 	margin: 0;
 	padding: 0 0 0 10px;
+	font-weight: normal;
 }
 
 div#categories ul li {
 	display: inline;
 	margin: 0px;
 	padding: 0 10px 0 0;
+	font-weight: normal;
 }
