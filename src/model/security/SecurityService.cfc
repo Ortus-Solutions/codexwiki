@@ -115,12 +115,10 @@ $Build ID:	@@build_id@@
 		<!--- ************************************************************* --->
 		<cfscript>
 			var genPassword = "";
-			var clearPassword = "";
 			var email = "";
 			
 			/* Generate a password */
-			clearPassword = arguments.user.getEmail() & createUUID() & now();
-			genPassword = hash(clearPassword,'SHA-512');	
+			genPassword = hash(arguments.user.getEmail() & createUUID() & now(), "SHA-512");
 			
 			/* Save it on User and save. */
 			arguments.user.setPassword(genPassword);
@@ -130,7 +128,7 @@ $Build ID:	@@build_id@@
 		<!--- Email --->
 		<cfsavecontent variable="email">
 		<cfoutput>
-		A new CodeX password has been generated for you: <strong>#clearPassword#</strong><br />
+		A new CodeX password has been generated for you: <strong>#genPassword#</strong><br />
 		Please use this password with your current username and login to your account.
 		</cfoutput>
 		</cfsavecontent>
