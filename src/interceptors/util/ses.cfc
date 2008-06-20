@@ -89,6 +89,8 @@ Description :
 
 			/* Execute Cache Test now that routing has been done */
 			getController().getRequestService().EventCachingTest(event);
+			/* SES */
+			event.setisSES(true);
 		</cfscript>
 	</cffunction>
 
