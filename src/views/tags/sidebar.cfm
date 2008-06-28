@@ -77,23 +77,23 @@ $Build ID:	@@build_id@@
 <!--- ***************************************************************************************************** --->
 
 <cfif not rc.oUser.getisAuthorized()>
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login </h1>
+	<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login </h1>
 <cfelse>
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Info </h1>
+	<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Info </h1>
 </cfif>
 
 <div class="left-box">
 	
 	<cfif not rc.oUser.getisAuthorized()>
-		<cfform name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="onLoginForm()">
+		<form name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="onLoginForm()">
 		<!--- ref Route --->
-		<input type="hidden" name="refRoute" value="#cgi.script_name#">
+		<input type="hidden" name="refRoute" value="#cgi.script_name#" />
 		<p>
 		<label for="username">Username</label>
-		<cfinput type="text" name="username" id="username" size="20" required="true" message="Please enter your username" maxlength="50" />
+		<input type="text" name="username" id="username" size="20" maxlength="50" />
 		
 		<label for="username">Password</label>
-		<cfinput type="password" name="password" id="password" size="20" required="true" message="Please enter your password" maxlength="50" />
+		<input type="password" name="password" id="password" size="20" maxlength="50" />
 		
 		<br />
 		
@@ -101,7 +101,6 @@ $Build ID:	@@build_id@@
 		<div id="_loader_login" class="align-center formloader">
 			<p>
 				Submitting...<br />
-				
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
@@ -110,13 +109,14 @@ $Build ID:	@@build_id@@
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
 			<a href="#getSetting('sesBaseURL')#/#rc.xehUserReminder#">Forgot Password?</a>
-			<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="">Register</a> </cfif>
+			<!--- Registration Permission Link --->
+			<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="">Register</a></cfif>
 			<br /><br />
-			<input type="submit" class="submitButton" value="Log In"></input>
+			<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
 		</div>
 		<br />
 		</p>
-	</cfform>
+	</form>
 	
 	<cfelse>
 		<p>
