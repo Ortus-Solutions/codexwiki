@@ -37,27 +37,21 @@ $Build ID:	@@build_id@@
 				var data = new Object();
 				data.method = "getContentHTML";
 				data.contentid = id;
-
-				$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
-					function(string, status)
-					{
-						var length = string.split("\n").length;
-						show.slideUp("normal",
-							function()
-							{
-								var class = "history";
+				//post the retrieval
+				$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data, function(data, status){
+						var length = data.split("\n").length;
+						show.slideUp("normal",function(){
+								var className = "history";
 								if(length > 10)
 								{
-									class += " overflow";
+									className += " overflow";
 								}
-								show.html('<div class="'+ class +'">' + string + '</div>');
+								show.html('<div class="'+ className +'">' + data + '</div>');
 								show.slideDown("normal");
-							}
-							);
-					}
-				);
-			}
-		}
+							});
+				});//end post
+			}//if attr loaded
+		}//end doDisplay function.
 
 		$(window).ready(function()
 			{
@@ -93,7 +87,7 @@ $Build ID:	@@build_id@@
 <ol>
 	<cfloop query="rc.history">
 	<li>
-		<a href="javascript: doDisplay('#contentid#')">Version #version#, created on #printDate(createddate)# #printTime(createddate)# by #username#</a>
+		<a href="javascript:doDisplay('#contentid#')">Version #version#, created on #printDate(createddate)# #printTime(createddate)# by #username#</a>
 		<cfif isActive>
 		| <img src="#getSetting('htmlBaseURL')#/includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
 		<cfelse>
