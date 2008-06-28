@@ -61,7 +61,8 @@ Description :
 			var key = "";
 			var cleanedPathInfo = getSESElement('path_info');
 			var cleanedScriptName = trim(replacenocase(getSESElement('script_name'),"/index.cfm",""));
-
+			var routedStruct = structnew();
+			
 			/* Clean again */
 			cleanedScriptName = trim(replacenocase(getSESElement('script_name'),"\index.cfm",""));
 
@@ -82,8 +83,11 @@ Description :
 			/* Now course should have all the key/pairs from the URL we need to pass to our event object */
 			for( key in acourse ){
 				event.setValue( key, acourse[key] );
+				routedStruct[key] = acourse[key];
 			}
-
+			/* Save the Routed Variables */
+			arguments.event.setRoutedStruct(routedStruct);
+			
 			/* Route to destination */
 			routeToDestination(acourse,event);
 
