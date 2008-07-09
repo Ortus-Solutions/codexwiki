@@ -58,7 +58,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & item.title & ".cfm";
+			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & name & ".cfm";
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);
@@ -93,7 +93,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(page_name, "_", " ", "all");
-			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & item.title & ".cfm";
+			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & page_name & ".cfm";
 			item.pubDate = ParseDateTime(pagecontent_createdate);
 			item.description.value = "Page ";
 
