@@ -160,7 +160,7 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="translate" hint="translates the wiki page content" access="public" returntype="string" output="false">
+<cffunction name="translate" hint="translates the wiki page content" access="private" returntype="string" output="false">
 	<cfscript>
 		var data = 0;
 		var category = 0;

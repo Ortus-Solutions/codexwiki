@@ -256,6 +256,31 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getPageUpdates" hint="get a list of page updates" access="public" returntype="query" output="false">
+	<cfargument name="limit" hint="the limit of upates" type="numeric" required="Yes">
+	<cfset var qUpdates = 0 />
+	<cfquery name="qUpdates" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		SELECT
+			wiki_page.page_name,
+			wiki_pagecontent.pagecontent_comment,
+			wiki_pagecontent.pagecontent_createdate,
+			wiki_pagecontent.pagecontent_version,
+			wiki_users.user_username
+			FROM
+			wiki_pagecontent
+			JOIN
+			wiki_page
+				ON wiki_page.page_id = wiki_pagecontent.FKpage_id
+			JOIN
+			wiki_users
+				ON wiki_users.user_id = wiki_pagecontent.FKuser_id
+		ORDER BY
+			wiki_pagecontent.pagecontent_createdate desc
+		LIMIT 0,<cfqueryparam value="#arguments.limit#" cfsqltype="cf_sql_numeric">
+	</cfquery>
+	<cfreturn qUpdates />
+</cffunction>
+
 <cffunction name="listCategories" hint="list all categories" access="public" returntype="query" output="false">
 	<cfreturn getTransfer().list("wiki.Category", "name") />
 </cffunction>

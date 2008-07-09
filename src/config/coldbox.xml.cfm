@@ -4,7 +4,7 @@
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
 		<Setting name="AppMapping"					value="/"/>
-		<Setting name="DebugMode" 					value="false" />
+		<Setting name="DebugMode" 					value="true" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -106,12 +106,15 @@
 		</Interceptor>
 
 		<Interceptor class="codex.interceptors.wiki.WikiText">
-			<Property name="ignoreXMLTagList">feed</Property>
+			<Property name="ignoreXMLTagList">feed,messagebox</Property>
 			<Property name="allowedAttributes">style,url,cache,display</Property>
 		</Interceptor>
 
 		<Interceptor class="codex.interceptors.wiki.Feed">
 		</Interceptor>
+		
+		<Interceptor class="codex.interceptors.wiki.MessageBox">
+		</Interceptor>		
 
 	</Interceptors>
 

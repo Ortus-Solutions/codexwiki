@@ -283,6 +283,7 @@ form.search input.textbox:focus {
 .buttons {
 	text-align: right;
 	margin-top: 10px;
+	clear: both;
 }
 
 /* loader */

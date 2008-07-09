@@ -1,19 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by 
+Copyright 2008 by
 Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
 www.transfer-orm.org |  www.coldboxframework.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-    		
-	http://www.apache.org/licenses/LICENSE-2.0 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 $Build Date: @@build_date@@
@@ -58,8 +58,56 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & name & ".cfm";
+			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & item.title & ".cfm";
 			item.pubDate = ParseDateTime(createdDate);
+
+			ArrayAppend(rss.item, item);
+		</cfscript>
+	</cfloop>
+	<cffeed action="create" name="#rss#" xmlVar="rss">
+	<cfreturn rss />
+</cffunction>
+
+<cffunction displayname="Wiki Updates"
+			name="listUpdates"
+			hint="A list of all the latest wiki updates"
+			access="public"
+			returntype="xml"
+			rss = "true"
+			output="false">
+	<cfargument name="numberOfUpdates" hint="number of updates to retrieve, defaults to 10" type="numeric" required="No" default="10">
+	<cfscript>
+		var qUpdates = getWikiService().getPageUpdates(arguments.numberOfUpdates);
+		var rss = StructNew();
+		var item = 0;
+
+		rss.title = "Wiki Updates";
+		rss.link = getBaseURL() & "page/listUpdates.cfm";
+		rss.description = "A list of all the latest wiki updates";
+		rss.version = "rss_2.0";
+
+		rss.item = ArrayNew(1);
+	</cfscript>
+
+	<cfloop query="qUpdates">
+		<cfscript>
+			item = StructNew();
+			item.title = replace(page_name, "_", " ", "all");
+			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & item.title & ".cfm";
+			item.pubDate = ParseDateTime(pagecontent_createdate);
+			item.description.value = "Page ";
+
+			if(pagecontent_version eq 1)
+			{
+				item.description.value &= "created ";
+			}
+			else
+			{
+				item.description.value &= "edited ";
+			}
+			item.description.value &= " by " & user_username & ".<br/>";
+
+			item.description.value &= pagecontent_comment;
 
 			ArrayAppend(rss.item, item);
 		</cfscript>
