@@ -42,9 +42,6 @@ $Build ID:	@@build_id@@
 		var tag = 0;
 		var replace = 0;
 
-		println("looking for messagebox!");
-		println("in: " & arguments.renderable.getContent());
-
 		while(matcher.find())
 		{
 			tag = matcher.group();
@@ -78,16 +75,8 @@ $Build ID:	@@build_id@@
 
 
 		arguments.renderable.setContent(builder.toString());
-		println("out: " & arguments.renderable.getContent());
 
 		return;
-	</cfscript>
-</cffunction>
-
-<cffunction name="println" hint="" access="private" returntype="void" output="false">
-	<cfargument name="str" hint="" type="string" required="Yes">
-	<cfscript>
-		createObject("Java", "java.lang.System").out.println(arguments.str);
 	</cfscript>
 </cffunction>
 
