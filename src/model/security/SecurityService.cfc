@@ -118,7 +118,7 @@ $Build ID:	@@build_id@@
 			var email = "";
 			
 			/* Generate a password */
-			genPassword = hash(arguments.user.getEmail() & createUUID() & now(), "SHA-512");
+			genPassword = hash(arguments.user.getEmail() & createUUID() & now());
 			
 			/* Save it on User and save. */
 			arguments.user.setPassword(genPassword);
