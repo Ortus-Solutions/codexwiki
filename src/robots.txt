@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /*/pdf.cfm$
+Disallow: /*/flashpaper.cfm$
+Disallow: /*/HTML.cfm$
