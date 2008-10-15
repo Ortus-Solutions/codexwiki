@@ -2,3 +2,12 @@ User-agent: *
 Disallow: /*/pdf.cfm$
 Disallow: /*/flashpaper.cfm$
 Disallow: /*/HTML.cfm$
+Disallow: /config/
+Disallow: /handlers/
+Disallow: /includes/
+Disallow: /interceptors/
+Disallow: /layouts/
+Disallow: /logs/
+Disallow: /model/
+Disallow: /plugins/
+Disallow: /views/
