@@ -35,7 +35,7 @@
 
 	<YourSettings>
 		<!-- Codex System Information -->
-		<Setting name="Codex"						value="{'Version':'1.0', 'Suffix':'Alpha'}" />
+		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Alpha'}" />
 		<!--Wiki config settings -->
 		<Setting name="WikiName" 					value="Codex Base Install"/>
 		<!--Transfer Settings -->
@@ -46,10 +46,10 @@
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
 		<!-- Lookup Tables To Manage -->
-		<Setting name="SystemLookups" value="{Permissions:'security.Permission', Roles:'security.Role', SecurityRules:'security.SecurityRules'}"></Setting>
+		<Setting name="SystemLookups" 				value="{Permissions:'security.Permission', Roles:'security.Role', SecurityRules:'security.SecurityRules'}"></Setting>
 		<!-- Paging Max Rows -->
 		<Setting name="PagingMaxRows" 				value="10"/>
-		<Setting name="PagingBandGap" 				value="5"/>
+		<Setting name="PagingBandGap" 				value="5"/>	
 	</YourSettings>
 
 	<MailServerSettings />

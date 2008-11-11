@@ -12,6 +12,7 @@
 		<Setting name="onInvalidEvent"			value="" />
 		<Setting name="CustomErrorTemplate"		value="" />
 		<Setting name="ExceptionHandler"		value="main.onException" />
+		<Setting name="EventCaching"			value="false" />
 	</environment>
 
 	<environment name="development" urls="cf:82">

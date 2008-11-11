@@ -73,10 +73,10 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
+	<!--- Get/Set --->
 	<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
 		<cfreturn instance.transfer />
 	</cffunction>
-
 	<cffunction name="setTransfer" access="private" returntype="void" output="false">
 		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
 		<cfset instance.transfer = arguments.transfer />

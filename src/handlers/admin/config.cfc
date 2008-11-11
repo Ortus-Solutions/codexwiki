@@ -66,6 +66,38 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
+	<!--- options --->
+	<cffunction name="options" access="public" returntype="void" output="false" hint="Wiki options">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	    <cfscript>
+			var rc = event.getCollection();	
+			
+			/* Exit Handlers */
+			rc.xehOnSubmit = "admin.config/saveoptions.cfm";
+			rc.xehReinitApp = "admin.config/doReinit.cfm";
+			
+			/* Set View */
+			event.setview('admin/config/options');	
+		</cfscript>    
+	</cffunction>
+	
+	<!--- doReinit --->
+	<cffunction name="doReinit" access="public" returntype="void" output="false" hint="Reinit the application">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	    <cfscript>
+		    var pass = getSetting('ReinitPassword');
+		    
+			/* Validate password. */
+			if( pass neq "" and CompareNoCase(pass,event.getvalue('fwreinit','')) neq 0){
+				getPlugin("messagebox").setMessage(type="error", message="The password you entered is incorrect.");
+				setNextRoute('admin.config/options');
+			}
+			
+			/* If I reach here, then the pass validated and the app reinited. */
+			getPlugin("messagebox").setMessage(type="info", message="Application reinitialized successfully");
+			setNextRoute('admin.config/options');
+		</cfscript>     
+	</cffunction>
 	
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE beans SYSTEM "spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE beans SYSTEM "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="byName">
 
 	<!--Transfer Factory: PERSISTANCE MANAGED BY COLDSPRING -->
@@ -63,5 +63,5 @@
 	
 	<!-- Lookups -->
 	<bean id="LookupService" class="codex.model.lookups.LookupService" />
-
+	
 </beans>
