@@ -26,59 +26,7 @@ $Build ID:	@@build_id@@
 			 hint="This is the lookup builder controller object"
 			 autowire="true">
 
-	<!--- Dependencies --->
-	<cfproperty name="LookupService" type="ioc" scope="instance">
-
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------>
-
-	<!--- This init is mandatory, including the super.init(). ---> 
-	<cffunction name="init" access="public" returntype="Lookups" output="false">
-		<cfargument name="controller" type="any">
-		<cfscript>
-			var qFiles = 0;
-			super.init(arguments.controller);
-			
-			/* Get CSS Files */
-			qFiles = getFiles(getSetting('ApplicationPath') & getSetting('lookups_cssPath'),"*.css");
-			instance.cssList = valueList(qFiles.name);
-			/* Get js Files */
-			qFiles = getFiles(getSetting('ApplicationPath') & getSetting('lookups_jsPath'),"*.js");
-			instance.jsList = valueList(qFiles.name);
-			
-			return this;
-		</cfscript>
-	</cffunction>
-
 <!------------------------------------------- PUBLIC ------------------------------------------->
-
-	<!--- preHandler --->
-	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			var rc = event.getCollection();
-			var x = 1;
-			var exceptList = "display,dspCreate,dspEdit";
-			var cssPath = getSetting('lookups_cssPath') & "/";
-			var jsPath = getSetting('lookups_jsPath') & "/";
-			
-			/* Images  */
-			rc.imgPath = getSetting('sesBaseURL') & "/" & getSetting('lookups_imgPath');
-			/* Validations */
-			if( listFindNoCase(exceptList,event.getCurrentAction()) ){
-				/* Global Exit Handler for this handler */
-				rc.xehLookupList 	= "admin.lookups.display.cfm";
-				
-				/* Custom CSS According to settings */
-				for(x=1;x lte listlen(instance.cssList);x=x+1){
-					htmlhead('<link rel="stylesheet" type="text/css" href="' & cssPath & listgetAt(instance.cssList,x) & '" />');
-				}
-				/* Custom JS According to settings */
-				for(x=1;x lte listlen(instance.jsList);x=x+1){
-					htmlhead('<script type="text/javascript" src="' & jsPath & listgetAt(instance.jsList,x) & '"></script>');	
-				}		
-			}
-		</cfscript> 
-	</cffunction>
 
 	<cffunction name="display" output="false" access="public" returntype="void" hint="Display System Lookups">
 		<cfargument name="Event" type="any">
@@ -93,8 +41,12 @@ $Build ID:	@@build_id@@
 		rc.xehLookupEdit = "admin.lookups/dspEdit.cfm";
 		rc.xehLookupClean = "admin.lookups/cleanDictionary.cfm";
 		
+		/* JS Lookups */
+		event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
+		
+		
 		//Get System Lookups
-		rc.systemLookups = getSetting("lookups_tables");
+		rc.systemLookups = getSetting("SystemLookups");
 		rc.systemLookupsKeys = structKeyArray(rc.systemLookups);
 		ArraySort(rc.systemLookupsKeys,"text");
 		
@@ -103,7 +55,7 @@ $Build ID:	@@build_id@@
 		
 		//Prepare Lookup's Meta Data Dictionary
 		rc.mdDictionary = getLookupService().prepareDictionary(rc.lookupClass);
-		
+
 		//Get Lookup Listing
 		rc.qListing = getLookupService().getListing(rc.lookupClass);
 
@@ -132,14 +84,14 @@ $Build ID:	@@build_id@@
 	<cffunction name="cleanDictionary" output="false" access="public" returntype="void" hint="Clean the MD Dictionary">
 		<cfargument name="Event" type="any">
 		<cfscript>
-			/* Clean's the dictionary */
-			getLookupService().cleanDictionary();
+			var rc = event.getCollection();
 			
+			getLookupService().cleanDictionary();
 			/* Messagebox. */
 			getPlugin("messagebox").setMessage("info", "Metadata Dictionary Cleaned.");
 					
 			/* Relocate back to listing */
-			setNextEvent(event="lookups.display");
+			setNextRoute(route="admin.lookups/display");
 		</cfscript>
 	</cffunction>
 
@@ -152,7 +104,7 @@ $Build ID:	@@build_id@@
 		var rc = event.getCollection();
 		
 		//Check that listing sent in
-		if ( event.getTrimValue("lookupid","") neq "" ){
+		if ( event.getValue("lookupid","") neq "" ){
 			//Loop throught listing and delete objects
 			for(i=1; i lte listlen(rc.lookupid); i=i+1){
 				//Delete Entry
@@ -167,7 +119,7 @@ $Build ID:	@@build_id@@
 		}
 				
 		/* Relocate back to listing */
-		setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+		setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -184,7 +136,7 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "lookups.doCreate";
+		rc.xehLookupCreate = "admin.lookups/doCreate.cfm";
 
 		//Get Lookup's md Dictionary
 		rc.mdDictionary = getlookupService().getDictionary(rc.lookupclass);
@@ -197,7 +149,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//Set view.
-		event.setView("lookups/Add");
+		event.setView("admin/lookups/Add");
 		</cfscript>
 	</cffunction>
 
@@ -212,7 +164,7 @@ $Build ID:	@@build_id@@
 		//Get the Transfer Object's Metadata Dictionary
 		var mdDictionary = "";
 		var i = 1;
-		var errors = 0;
+
 
 		//LookupCheck
 		fncLookupCheck(event);
@@ -225,19 +177,6 @@ $Build ID:	@@build_id@@
 
 		//Populate it with RC data
 		getPlugin("beanFactory").populateBean(oLookup);
-		
-		/* Validate First, if a validate method exists on the lookup */
-		if( structKeyExists(oLookup,"validate") ){
-			errors = oLookup.validate();
-			if( ArrayLen(errors) ){
-				/* MB for error */
-				getPlugin("messagebox").setMessage(type="error", messageArray=errors);
-				/* Show Creation Form again to fix errors */
-				dspCreate(event);
-				/* Finalize this event */
-				return;
-			}
-		}
 
 		//Check for FK Relations
 		if ( ArrayLen(mdDictionary.ManyToOneArray) ){
@@ -251,7 +190,7 @@ $Build ID:	@@build_id@@
 		//Tell service to save object
 		getLookupService().save(oLookup);		
 		/* Relocate back to listing */
-		setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+		setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -268,8 +207,8 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "lookups.doUpdate";
-		rc.xehLookupUpdateRelation = "lookups.doUpdateRelation";
+		rc.xehLookupCreate = "admin.lookups/doUpdate.cfm";
+		rc.xehLookupUpdateRelation = "admin.lookups/doUpdateRelation.cfm";
 		
 		//Get the passed id's TO Object
 		rc.oLookup = getLookupService().getLookupObject(rc.lookupClass,rc.id);
@@ -296,7 +235,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//view to display
-		event.setView("lookups/Edit");
+		event.setView("admin/lookups/Edit");
 		</cfscript>
 	</cffunction>
 
@@ -336,7 +275,7 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to listing */
-			setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+			setNextRoute(route="admin.lookups/display",qs="lookupclass=#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -391,38 +330,32 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to edit */
-			setNextEvent(event="lookups.dspEdit",queryString="lookupclass=#rc.lookupclass#&id=#rc.id###m2m_#rc.linkAlias#");		
+			setNextRoute(route="admin.lookups/dspEdit",qs="lookupclass=#rc.lookupclass#&id=#rc.id###m2m_#rc.linkAlias#");		
 		</cfscript>
 	</cffunction>
 
-
-<!----------------------------------- PRIVATE ------------------------------>
+	<!--- ************************************************************* --->
 	
+
+<!----------------------------------- IOC DEPENDENCIES ------------------------------>
+
 	<!--- Get/Set lookup Service --->
-	<cffunction name="getLookupService" access="private" output="false" returntype="any" hint="Get LookupService">
+	<cffunction name="getLookupService" access="private" output="false" returntype="codex.model.lookups.LookupService" hint="Get LookupService">
 		<cfreturn instance.LookupService/>
 	</cffunction>	
+	<cffunction name="setLookupService" access="private" output="false" returntype="void" hint="Set LookupService">
+		<cfargument name="LookupService" type="codex.model.lookups.LookupService" required="true"/>
+		<cfset instance.LookupService = arguments.LookupService/>
+	</cffunction>
+	
+<!----------------------------------- PRIVATE ------------------------------>
 
 	<cffunction name="fncLookupCheck" output="false" access="private" returntype="void" hint="Do a parameter check, else redirect">
 		<cfargument name="event" type="any" required="true"/>
 		<cfscript>
-		if ( event.getTrimValue("lookupclass","") eq "")
-			setNextEvent("lookups.display");
+		if ( event.getValue("lookupclass","") eq "")
+			setNextRoute("admin.lookups/display");
 		</cfscript>
-	</cffunction>
-	
-	<!--- getFiles --->
-	<cffunction name="getFiles" output="false" access="private" returntype="query" hint="Get a set of files">
-		<cfargument name="dirPath" type="string" required="true" default="" hint="The directory Path"/>
-		<cfargument name="filter" type="string" required="false" default="" hint="The default filter to apply"/>
-		<cfset var qFiles = 0>
-		
-		<cfdirectory action="list" 
-					 directory="#arguments.dirPath#"
-					 name="qFiles"
-					 filter="#arguments.filter#">
-	
-		<cfreturn qFiles>
 	</cffunction>
 
 

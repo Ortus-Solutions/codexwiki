@@ -26,7 +26,7 @@ $Build ID:	@@build_id@@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="RssManager" output="false">
 	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
-	<cfargument name="beanInjector" hint="the bean injector" type="codex.model.util.BeanInjector" required="Yes">
+	<cfargument name="beanInjector" hint="the bean injector" type="any" required="Yes">
 	<cfscript>
 		setFeedCollection(StructNew());
 		setBeanInjector(arguments.beanInjector);
@@ -103,12 +103,12 @@ $Build ID:	@@build_id@@
 	<cfset instance.baseURL = arguments.baseURL />
 </cffunction>
 
-<cffunction name="getBeanInjector" access="private" returntype="codex.model.util.BeanInjector" output="false">
+<cffunction name="getBeanInjector" access="private" returntype="any" output="false">
 	<cfreturn instance.beanInjector />
 </cffunction>
 
 <cffunction name="setBeanInjector" access="private" returntype="void" output="false">
-	<cfargument name="beanInjector" type="codex.model.util.BeanInjector" required="true">
+	<cfargument name="beanInjector" type="any" required="true">
 	<cfset instance.beanInjector = arguments.beanInjector />
 </cffunction>
 

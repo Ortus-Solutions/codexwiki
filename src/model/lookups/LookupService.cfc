@@ -184,14 +184,23 @@ $Build ID:	@@build_id@@
 			oTOMD = getLookupMetaData(arguments.lookupClass);
 			//Primary Key Object
 			oPK = oTOMD.getPrimaryKey();
-			//Table Config From Decorator
-			tableConfig = oTO.getTableConfig();
-
+			//Table Config From Decorator if it exists
+			if( structKeyExists(oTo,"getTableConfig") ){
+				tableConfig = oTO.getTableConfig();
+			}
+			else{
+				tableConfig = structnew();
+			}
 			//Get Lookup MD structure
-			mdStruct.sortBy = tableConfig.sortBy;
-			mdStruct.FieldsArray = ArrayNew(1);
 			mdStruct.PK = oPK.getName();
 			mdStruct.PKColumn = oPK.getColumn();
+			if( structKeyExists(tableConfig,"sortBy") ){
+				mdStruct.sortBy = tableConfig.sortBy;
+			}
+			else{
+				mdStruct.sortBy = mdStruct.PK;
+			}
+			mdStruct.FieldsArray = ArrayNew(1);
 			//Relations MD
 			mdStruct.hasManyToOne = oTOMD.hasManyToOne();
 			mdStruct.ManyToOneArray = ArrayNew(1);
@@ -231,16 +240,33 @@ $Build ID:	@@build_id@@
 				prop.primaryKey = false;
 
 				//List Display MD
-				if ( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"display") )
+				if ( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"display") ){
 					prop.display = tableConfig[prop.alias].display;
-				else
+				}
+				else{
 					prop.display = true;
+				}
 				//HTML Type MD
-				if ( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"html") )
+				if ( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"html") ){
 					prop.html = tableConfig[prop.alias].html;
-				else
+				}
+				else{
 					prop.html = "text";
-
+				}
+				//Help TEXT
+				if( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"helptext") ){
+					prop.helptext = tableConfig[prop.alias].helptext;
+				}
+				else{
+					prop.helptext = '';
+				}
+				if( structKeyExists(tableConfig,prop.alias) and structKeyExists(tableConfig[prop.alias],"validate") ){
+					prop.validate = tableConfig[prop.alias].validate;
+				}
+				else{
+					prop.validate = '';
+				}
+				
 				//Atach Property
 				ArrayAppend(mdStruct.FieldsArray,prop);
 			}
@@ -254,14 +280,14 @@ $Build ID:	@@build_id@@
 				rel.column = oRelation.getLink().getColumn();
 				rel.className = oRelation.getLink().getTO();
 				
-				/* The display column comes from the getFKColumn decorator method. Check for it first */
-				if( structkeyExists(oTO, "getFKColumn") ){
-					rel.DisplayColumn = oTO.getFKColumn(rel.alias);
+				/* Display column comes from the tableconfig */
+				if( structKeyExists(tableConfig,rel.alias) and structKeyExists(tableConfig[rel.alias],"displayColumn") ){
+					rel.DisplayColumn = tableConfig[rel.alias].DisplayColumn;
 				}
 				else{
-					getUtil().throw(message="The method 'getFKColumn' was not found in the TO.",
-									detail="This method is needed for many to one relations. Please check your code.",
-									type="LookupService.missingFKColumnMethod");
+					throw(message="The display column for the relation: #rel.alias# was not found in the table config.",
+						  detail="This method is needed for many to one relations. Please check your code.",
+						  type="LookupService.missingDisplayColumn");
 				}
 				
 				//Get Relation MD

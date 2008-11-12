@@ -25,51 +25,66 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			if( _CF_checkaddform(document.getElementById('addform')) ){
-				$('##_buttonbar').slideUp("fast");
-				$('##_loader').fadeIn("slow");
-				$('##addform').submit();
-			}
-		}
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Activate RTE */
+		$('.rte-zone').rte("#getSetting('lookups_cssPath')#/lookups.css","#rc.imgPath#/rte/");  
+		 
+		//Activate Date Pickers
+		$(".datepicker").datepicker({ 
+		    showOn: "both"
+		});
+		
+		/* Form Validation */
+		$('##addform').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			callback	: 'prepareSubmit'
+		});
+	});
+	function submitForm(){
+		$('##addform').submit();		
+	}
+	function prepareSubmit(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");		
+		return true;
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
+<!--- Title --->
+<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager > Add Record</h2>
 <!--- BACK --->
 <div class="backbutton">
-	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#">Back</a>
+	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
+	<a href="#event.buildLink(rc.xehLookupList)#&lookupclass=#rc.lookupclass#">Back</a>
 </div>
-
-<!--- Title --->
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> System Lookup Manager > Add Record</h2>
+<p>Add a new <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
 <!--- Add Form --->
-<p>Add a new <strong>#rc.lookupClass#</strong> record. Please fill out all the fields.</p>
-
-<cfform name="addform" id="addform" action="#getSetting('sesBaseURL')#/#rc.xehLookupCreate#">
+<form name="addform" id="addform" action="#event.buildLink(rc.xehLookupCreate)#" method="post">
 <!--- Lookup Class Choosen to Add --->
 <input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
 
 <fieldset>
-	<legend><strong>Create Form</strong></legend>
-<div id="lookupFields">
+<legend><strong>Create Form</strong></legend>
 
+<div id="lookupFields">
+	
 	<!--- Loop Through Foreign Keys, to create Drop Downs --->
 	<cfloop from="1" to="#arrayLen(rc.mdDictionary.ManyToOneArray)#" index="i">
 	<cfset qListing = rc["q#rc.mdDictionary.ManyToOneArray[i].alias#"]>
-		<label style="width: 180px">#rc.mdDictionary.ManyToOneArray[i].alias#</label>
-		<cfselect name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
-				  id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
-				  required="true"
-				  message="#rc.mdDictionary.ManyToOneArray[i].alias# is required">
+		<label class="labelNormal">#rc.mdDictionary.ManyToOneArray[i].alias#</label>
+		<select name="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
+				id="fk_#rc.mdDictionary.ManyToOneArray[i].alias#"
+				required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#">
 			<cfloop query="qListing">
 			<option value="#qListing[rc.mdDictionary.ManyToOneArray[i].PK][currentrow]#">#qListing[rc.mdDictionary.ManyToOneArray[i].DisplayColumn][currentRow]#</option>
 			</cfloop>
-		</cfselect>
+		</select>
 		<br/>
 	</cfloop>
 
@@ -78,116 +93,112 @@ $Build ID:	@@build_id@@
 		<!--- Do not show the ignore Inserts or PK --->
 		<cfif not rc.mdDictionary.FieldsArray[i].primaryKey and not rc.mdDictionary.FieldsArray[i].ignoreInsert>
 			<!--- PROPERTY LABEL --->
-			<label style="width: 180px">#rc.mdDictionary.FieldsArray[i].alias#</label>
-
+			<label class="labelNormal">
+				#rc.mdDictionary.FieldsArray[i].alias#
+				<cfif not rc.mdDictionary.FieldsArray[i].nullable>*</cfif>
+			</label>
+			<!--- Help Text --->
+			<label class="helptext">#rc.mdDictionary.FieldsArray[i].helptext#</label>
+			
 			<!--- BOOLEAN TYPES --->
 			<cfif rc.mdDictionary.FieldsArray[i].datatype eq "boolean">
 				<cfif rc.mdDictionary.FieldsArray[i].html eq "radio">
-					<cfinput type="radio"
+					<input type="radio"
 							 name="#rc.mdDictionary.FieldsArray[i].alias#"
 							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value="1"
-							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
 							 checked="true"
-							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
-					<label class="inline" for="#rc.mdDictionary.FieldsArray[i].alias#">Yes</label>
+							 required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#">
+					<label class="rbLabel" for="#rc.mdDictionary.FieldsArray[i].alias#">Yes</label>
 
-					<cfinput type="radio"
-							 name="#rc.mdDictionary.FieldsArray[i].alias#"
-							 id="#rc.mdDictionary.FieldsArray[i].alias#"
-							 value="0"
-							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
-					<label class="inline" for="#rc.mdDictionary.FieldsArray[i].alias#">No</label>
+					<input type="radio"
+						   name="#rc.mdDictionary.FieldsArray[i].alias#"
+						   id="#rc.mdDictionary.FieldsArray[i].alias#"
+						   value="0"
+						   required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#">
+					<label class="rbLabel" for="#rc.mdDictionary.FieldsArray[i].alias#">No</label>
 				<cfelse>
-					<cfselect name="#rc.mdDictionary.FieldsArray[i].alias#"
-							  id="#rc.mdDictionary.FieldsArray[i].alias#"
-							  required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							  message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
+					<select name="#rc.mdDictionary.FieldsArray[i].alias#"
+							id="#rc.mdDictionary.FieldsArray[i].alias#"
+							required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#"
+							class="booleanSelect">
 						<option value="1">True</option>
 						<option value="0">False</option>
-					</cfselect>
+					</select>
 				</cfif>
 			<!--- DATE TYPE --->
 			<cfelseif rc.mdDictionary.FieldsArray[i].datatype eq "date">
-				<cfinput type="datefield"
-						 name="#rc.mdDictionary.FieldsArray[i].alias#"
-						 id="#rc.mdDictionary.FieldsArray[i].alias#"
-						 value=""
-						 size="20"
-						 validate="date"
-						 validateat="onBlur"
-						 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
-						 required="#not rc.mdDictionary.FieldsArray[i].nullable#">
-				  <br />
+				<input type="text" size="20" value="" 
+					   name="#rc.mdDictionary.FieldsArray[i].alias#"
+					   id="#rc.mdDictionary.FieldsArray[i].alias#"
+					   required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#"
+					   class="datepicker"/> 
+				<br />
 			<!--- TEXTTYPES --->
 			<cfelse>
 				<cfif rc.mdDictionary.FieldsArray[i].html eq "text">
-					<cfinput type="text"
+					<input type="text"
 							 name="#rc.mdDictionary.FieldsArray[i].alias#"
 							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value=""
-							 size="40"
-							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
+							 size="50"
+							 required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#"
+							 <cfif len(rc.mdDictionary.FieldsArray[i].validate)>
+							 	mask="#rc.mdDictionary.FieldsArray[i].validate#"
+							 </cfif>>
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "password">
-					<cfinput type="password"
+					<input type="password"
 							 name="#rc.mdDictionary.FieldsArray[i].alias#"
 							 id="#rc.mdDictionary.FieldsArray[i].alias#"
 							 value=""
-							 size="40"
-							 required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							 message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory">
+							 size="50"
+							 required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#">
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "textarea">
-					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#"
+					<textarea name="#rc.mdDictionary.FieldsArray[i].alias#"
 								id="#rc.mdDictionary.FieldsArray[i].alias#"
 								rows="10"
-								message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
-								required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							 	></cftextarea>
+								required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#"
+							 	></textarea>
 				<cfelseif rc.mdDictionary.FieldsArray[i].html eq "richtext">
-					<cftextarea name="#rc.mdDictionary.FieldsArray[i].alias#"
-								id="#rc.mdDictionary.FieldsArray[i].alias#"
-								richtext="true"
-								toolbar="Basic"
-								message="#rc.mdDictionary.FieldsArray[i].alias# is mandatory"
-								required="#not rc.mdDictionary.FieldsArray[i].nullable#"
-							 	style="background-color: white"></cftextarea>
+					<textarea name="#rc.mdDictionary.FieldsArray[i].alias#"
+							  id="#rc.mdDictionary.FieldsArray[i].alias#"
+							  rows="10"
+							  class="rte-zone"
+							  required="#iif(rc.mdDictionary.FieldsArray[i].nullable,false,true)#"
+							  ></textarea>							 	
 				</cfif>
 			</cfif>
 			<br/>
 		</cfif>
 	</cfloop>
 </div>
-
 </fieldset>
+
+<!--- Mandatory Label --->
+<p>* Mandatory Fields</p>
 <br />
 
-<div id="_loader" class="align-center formloader">
+<!--- Hidden Loader --->
+<div id="_loader" class="formloader">
 	<p>
 		Submitting...<br />
-
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
 </div>
 
 <!--- Create / Cancel --->
-<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
-		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
-			Cancel
-		</span>
+<div id="_buttonbar">
+	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
+	<a href="#event.buildLink(rc.xehLookupList)#&lookupclass=#rc.lookupclass#" class="buttonLinks">
+		Cancel
 	</a>
 	&nbsp;
-	<a href="javascript:submitForm()" id="buttonLinks">
-		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
-			Create Record
-		</span>
+	<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
+	<a href="javascript:submitForm()" class="buttonLinks">
+		Create Record
 	</a>
 </div>
 <br />
-</cfform>
+</form>
 </cfoutput>

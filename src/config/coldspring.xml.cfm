@@ -13,35 +13,34 @@
 			<value>${Transfer.definitionPath}</value>
 		</constructor-arg>
 	</bean>
-
+	
+	<!-- Transfer related beans -->
 	<bean id="Transfer" factory-bean="TransferFactory" factory-method="getTransfer" />
 	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasource" />
 	<bean id="Transaction" factory-bean="TransferFactory" factory-method="getTransaction" />
-
-	<!-- Transfer related beans -->
-
-	<bean id="TDOBeanInjectorObserver" class="codex.model.transfer.TDOBeanInjectorObserver" lazy-init="false" />
-	<bean id="BeanInjector" class="codex.model.util.BeanInjector" />
 	<bean id="BeanPopulator" class="codex.model.transfer.BeanPopulator"/>
 
 	<!-- ColdBox Related Beans -->
-
 	<bean id="ColdboxFactory" class="coldbox.system.extras.ColdboxFactory" autowire="no" />
-
 	<bean id="ColdBoxController" factory-bean="ColdBoxFactory" factory-method="getColdBox" />
 	<bean id="InterceptorService" factory-bean="ColdBoxController" factory-method="getinterceptorService" />
 	<bean id="ConfigBean" factory-bean="ColdBoxFactory" factory-method="getConfigBean" />
 	<bean id="ColdboxOCM" factory-bean="ColdboxFactory" factory-method="getColdBoxOCM" />
-	<bean id="sessionstorage" factory-bean="ColdboxFactory" factory-method="getPlugin">
-		<constructor-arg name="plugin">
-	       <value>sessionstorage</value>
-	   </constructor-arg>
+	<bean id="BeanInjector" factory-bean="ColdBoxFactory" factory-method="getPlugin">
+   		<constructor-arg name="plugin"><value>beanFactory</value></constructor-arg>	
+   	</bean>
+   	<bean id="sessionstorage" factory-bean="ColdboxFactory" factory-method="getPlugin">
+		<constructor-arg name="plugin"><value>sessionstorage</value></constructor-arg>
 	</bean>
+	<!-- coldbox-transfer observer for decorator injections -->
+   	<bean id="TDOBeanInjectorObserver" class="coldbox.system.extras.transfer.TDOBeanInjectorObserver" lazy-init="false">
+   		<constructor-arg name="Transfer"><ref bean="Transfer"></ref></constructor-arg>
+   		<constructor-arg name="ColdBoxBeanFactory"><ref bean="BeanInjector"></ref></constructor-arg>
+   	</bean>	
 
 	<!-- wiki -->
-
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
-
+	<!-- Config -->
 	<bean id="ConfigService" class="codex.model.wiki.ConfigService" />
 
 	<!-- Parsers -->

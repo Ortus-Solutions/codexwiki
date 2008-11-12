@@ -4,7 +4,7 @@
 	<Settings>
 		<Setting name="AppName"						value="codexwiki"/>
 		<Setting name="AppMapping"					value="/"/>
-		<Setting name="DebugMode" 					value="true" />
+		<Setting name="DebugMode" 					value="false" />
 		<Setting name="DebugPassword" 				value=""/>
 		<Setting name="ReinitPassword" 				value=""/>
 		<Setting name="EventName"					value="event" />
@@ -16,18 +16,18 @@
 		<Setting name="RequestStartHandler" 		value="main.onRequestStart"/>
 		<Setting name="RequestEndHandler" 			value="main.onRequestEnd"/>
 		<Setting name="ApplicationStartHandler" 	value="main.onAppInit"/>
-		<Setting name="OwnerEmail" 					value="myemail@gmail.com" />
+		<Setting name="OwnerEmail" 					value="" />
 		<Setting name="EnableBugReports" 			value="false"/>
-		<Setting name="UDFLibraryFile" 				value="includes/viewhelper.cfm" />
+		<Setting name="UDFLibraryFile" 				value="includes/helpers/ApplicationHelper.cfm" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="" />
-		<Setting name="CustomErrorTemplate"			value="includes/error.cfm" />
+		<Setting name="CustomErrorTemplate"			value="includes/templates/error.cfm" />
 		<Setting name="MessageboxStyleOverride"		value="true" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
 		<Setting name="ConfigAutoReload"          	value="false" />
 		<Setting name="MyPluginsLocation"   		value="" />
-		<Setting name="HandlerCaching" 				value="false"/>
-		<Setting name="EventCaching" 				value="false"/>
+		<Setting name="HandlerCaching" 				value="true"/>
+		<Setting name="EventCaching" 				value="true"/>
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="/codex/config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
@@ -45,8 +45,13 @@
 		<!-- Wiki Keys -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="DefaultPage" 				value="Dashboard"/>
-		<!-- Lookup Tables To Manage -->
-		<Setting name="SystemLookups" 				value="{Permissions:'security.Permission', Roles:'security.Role', SecurityRules:'security.SecurityRules'}"></Setting>
+		<!-- Lookups Settings -->
+		<Setting name="lookups_tables"	value="{'Permissions':'security.Permission', 
+												'Roles':'security.Role', 
+												'Security Rules':'security.SecurityRules'}" />		
+		<Setting name="lookups_imgPath"	value="includes/lookups/images" />
+		<Setting name="lookups_cssPath"	value="includes/lookups/styles" />
+		<Setting name="lookups_jsPath"	value="includes/lookups/js" />
 		<!-- Paging Max Rows -->
 		<Setting name="PagingMaxRows" 				value="10"/>
 		<Setting name="PagingBandGap" 				value="5"/>	
@@ -81,21 +86,20 @@
 
 	<Interceptors>
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
-
+		<!-- Environment Control -->
 		<Interceptor class="coldbox.system.interceptors.environmentControl">
 			<Property name="configFile">config/environments.xml.cfm</Property>
-			<Property name="fireOnInit">true</Property>
 		</Interceptor>
-
+		<!-- autowire -->
 		<Interceptor class="coldbox.system.interceptors.autowire">
 			<Property name="debugMode">false</Property>
 			<Property name="completeDIMethodName">onDIComplete</Property>
 		</Interceptor>
-
+		<!-- Custom SES -->
 		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
 		</Interceptor>
-
+		<!-- Security -->
 		<Interceptor class="coldbox.system.interceptors.security">
 			<Property name="useRoutes">true</Property>
 			<Property name="queryChecks">false</Property>
@@ -104,15 +108,15 @@
 			<Property name="rulesBeanMethod">getSecurityRules</Property>
 			<Property name="validatorIOC">SecurityService</Property>
 		</Interceptor>
-
+		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed,messagebox</Property>
 			<Property name="allowedAttributes">style,url,cache,display</Property>
 		</Interceptor>
-
+		<!-- Feed Translations -->
 		<Interceptor class="codex.interceptors.wiki.Feed">
 		</Interceptor>
-		
+		<!-- MessageBox Translations -->
 		<Interceptor class="codex.interceptors.wiki.MessageBox">
 		</Interceptor>		
 

@@ -2,8 +2,9 @@
 <!-- Declare as many tiers as you like with a unique name -->
 <environmentcontrol>
 
-	<environment name="development" urls="localhost,codex.lmajano,codex.jfetmac">
+	<environment name="development" urls="localhost,codex.lmajano:8080,codex.jfetmac">
 		<Setting name="HandlerCaching"			value="false" />
+		<Setting name="EventCaching"			value="false" />
 		<Setting name="HandlersIndexAutoReload" value="true" />
 		<Setting name="DebugMode"	 			value="false" />
 		<Setting name="ConfigAutoReload"        value="false" />
@@ -12,7 +13,6 @@
 		<Setting name="onInvalidEvent"			value="" />
 		<Setting name="CustomErrorTemplate"		value="" />
 		<Setting name="ExceptionHandler"		value="main.onException" />
-		<Setting name="EventCaching"			value="false" />
 	</environment>
 
 	<environment name="development" urls="cf:82">

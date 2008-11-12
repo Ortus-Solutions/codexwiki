@@ -22,126 +22,121 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfoutput>
 <cfsetting showdebugoutput="false">
-<div id="content">
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function loadLookup(lookupClass){
-			window.location='#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=' + lookupClass;
+<script type="text/javascript">
+	function loadLookup(lookupClass){
+		window.location='#event.buildLink(rc.xehLookupList)#&lookupClass=' + lookupClass;
+	}
+	function submitForm(){
+		$('##_listloader').fadeIn();
+		$('##lookupForm').submit();
+	}
+	function deleteRecord(recordID){
+		if( recordID != null ){
+			$('##delete_'+recordID).attr('src','#rc.imgPath#/ajax-spinner.gif');
+			$("input[@name='lookupid']").each(function(){
+				if( this.value == recordID ){ this.checked = true;}
+				else{ this.checked = false; }
+			});
 		}
-		function submitForm(){
-			$('##_loader').fadeIn();
-			$('##lookupForm').submit();
-		}
-		function deleteRecord(recordID){
-			if( recordID != null ){
-				$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
-				$("input[@name='lookupid']").each(function(){
-					if( this.value == recordID ){ this.checked = true;}
-					else{ this.checked = false; }
-				});
-			}
-			//Submit Form
-			submitForm();
-		}
-		function confirmDelete(recordID){
-			confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!", function(){deleteRecord(recordID)});
-		}
-	</script>
+		//Submit Form
+		submitForm();
+	}
+	function confirmDelete(recordID){
+		if ( confirm("Do you wish to remove the selected record(s)? This cannot be undone!") ){
+			deleteRecord(recordID);
+		} 
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
+<div id="content">
 <!--- Title --->
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> System Lookup Manager</h2>
-<p>From here you can manage all the lookup tables in the system.</p>
+<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager</h2>
+<p>From here you can manage all the lookup tables in the system as defined in your coldbox.xml (lookups_tables)</p>
 
 <!--- Render Messagebox. --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form>
-
-	<div id="_loader" class="float-right formloader">
-		<p>
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+	<!--- Loader --->
+	<div id="_listloader" class="formloader">
+		<p> Submitting...<br />
+			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>
 
-	<p><strong>Choose a table to manage:</strong>
-	<select name="lookupClass" id="lookupClass" onChange="loadLookup(this.value)">
-		<cfloop from="1" to="#ArrayLen(rc.SystemLookupsKeys)#" index="i">
-			<option value="#rc.systemLookups[rc.SystemLookupsKeys[i]]#" <cfif rc.lookupClass eq rc.systemLookups[rc.SystemLookupsKeys[i]]>selected</cfif>>#rc.SystemLookupsKeys[i]#</option>
-		</cfloop>
-	</select>
-	<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupclass=#rc.lookupclass#" id="buttonLinks">
-		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/arrow_refresh.png" border="0" align="absmiddle">
-			Reload Listing
-		</span>
-	</a>
-	&nbsp;
-	<a href="#getSetting('sesBaseURL')#/#rc.xehLookupClean#" id="buttonLinks">
-		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/arrow_refresh.png" border="0" align="absmiddle">
-			Reload Dictionary
-		</span>
-	</a>
+	<!--- Table To Manage --->
+	<p>
+		<strong>Table to manage:</strong>
+		<select name="lookupClass" id="lookupClass" onChange="loadLookup(this.value)">
+			<cfloop from="1" to="#ArrayLen(rc.SystemLookupsKeys)#" index="i">
+				<option value="#rc.systemLookups[rc.SystemLookupsKeys[i]]#" <cfif rc.lookupClass eq rc.systemLookups[rc.SystemLookupsKeys[i]]>selected</cfif>>#rc.SystemLookupsKeys[i]#</option>
+			</cfloop>
+		</select>		
+		<!--- Utility Buttons --->
+		&nbsp;
+		<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle">
+		<a href="#event.buildLink(rc.xehLookupList)#&lookupclass=#rc.lookupclass#" class="buttonLinks">Reload Listing</a>
+		&nbsp;
+		<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle">
+		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">Reload Dictionary</span>
+		</a>
 	</p>
 </form>
 
 <!--- Results Form --->
 <div>
-	<form name="lookupForm" id="lookupForm" action="#getSetting('sesBaseURL')#/#rc.xehLookupDelete#" method="post">
+	<form name="lookupForm" id="lookupForm" action="#event.buildLink(rc.xehLookupDelete)#" method="post">
 	<!--- The lookup class selected for deletion purposes --->
 	<input type="hidden" name="lookupclass" id="lookupclass" value="#rc.lookupClass#">
 
-	<!--- Add / Delete --->
-	<div class="buttons float-right" style="margin-top:12px;">
-		<a href="#getSetting('sesBaseURL')#/#rc.xehLookupCreate#?lookupClass=#rc.lookupClass#" id="buttonLinks">
-			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
-				Add Record
-			</span>
+	<!--- Add / Delete Button Bar --->
+	<div id="listButtonBar">
+		<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
+		<a href="#event.buildLink(rc.xehLookupCreate)#&lookupClass=#rc.lookupClass#" class="buttonLinks">
+			Add Record
 		</a>
 		&nbsp;
-		<a href="javascript:confirmDelete()" id="buttonLinks">
-			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/stop.png" border="0" align="absmiddle">
-				Delete Record(s)
-			</span>
+		<img src="#rc.imgPath#/stop.png" border="0" align="absmiddle">
+		<a href="javascript:confirmDelete()" class="buttonLinks">
+			Delete Record(s)
 		</a>
 	</div>
+	
 	<!--- Records Found --->
-	<div style="margin-top: 12px">
+	<div id="recordsfound">
 		<p>
 		<em>Records Found: #rc.qListing.recordcount#</em>
 		</p>
 	</div>
 
+	<!--- Render Results --->
 	<cfif rc.qListing.recordcount>
 	<br />
-	<!--- Render Results --->
 	<table class="tablelisting" width="100%">
-
 		<!--- Display Fields Found in Query --->
 		<tr>
-			<th style="width: 20px"></th>
-
+			<th id="checkboxHolder"></th>
 			<!--- All Other Fields --->
 			<cfloop from="1" to="#ArrayLen(rc.mdDictionary.FieldsArray)#" index="i">
 				<!---Don't show display eq false --->
-				<cfif rc.mdDictionary.FieldsArray[i].display>
+				<cfif rc.mdDictionary.FieldsArray[i].display and not rc.mdDictionary.FieldsArray[i].primaryKey>
 					<th>
 					<!--- Sort Indicator --->
 					<cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>&##8226;</cfif>
 
 					<!--- Sort Column --->
-					<a href="#getSetting('sesBaseURL')#/#rc.xehAdminLookups#?lookupClass=#rc.lookupClass#&sortby=#rc.mdDictionary.FieldsArray[i].alias#&sortOrder=#rc.sortOrder#">
+					<a href="#event.buildLink(rc.xehLookupList)#&lookupClass=#rc.lookupClass#&sortby=#rc.mdDictionary.FieldsArray[i].alias#&sortOrder=#rc.sortOrder#">
 						#rc.mdDictionary.FieldsArray[i].alias#
 					</a>
+					
 				   <!--- Sort Orders --->
 				   <cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>
 				   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
@@ -149,7 +144,7 @@ $Build ID:	@@build_id@@
 					</th>
 				</cfif>
 			</cfloop>
-			<th align="center" width="60">ACTIONS</th>
+			<th id="actions">ACTIONS</th>
 		</tr>
 
 		<!--- Loop Through Query Results --->
@@ -163,7 +158,7 @@ $Build ID:	@@build_id@@
 			<!--- Loop Through Columns --->
 			<cfloop from="1" to="#ArrayLen(rc.mdDictionary.FieldsArray)#" index="i">
 				<!---Don't show display eq false --->
-				<cfif rc.mdDictionary.FieldsArray[i].display>
+				<cfif rc.mdDictionary.FieldsArray[i].display and not rc.mdDictionary.FieldsArray[i].primaryKey>
 				<td>
 					<cfif rc.mdDictionary.FieldsArray[i].datatype eq "boolean">
 						#yesnoFormat(rc.qListing[rc.mdDictionary.FieldsArray[i].Alias][currentrow])#
@@ -178,12 +173,13 @@ $Build ID:	@@build_id@@
 
 			<!--- Display Commands --->
 			<td align="center">
-				<a href="#getSetting('sesBaseURL')#/#rc.xehLookupEdit#?lookupClass=#rc.lookupClass#&id=#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
-				<img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Record">
+				<!--- Edit Record --->
+				<a href="#event.buildLink(rc.xehLookupEdit)#&lookupClass=#rc.lookupClass#&id=#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
+				<img src="#rc.imgPath#/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
-
+				<!--- Delete Record --->
 				<a href="javascript:confirmDelete('#rc.qListing[rc.mdDictionary.PK][currentrow]#')" title="Edit Record">
-				<img id="delete_#rc.qListing[rc.mdDictionary.PK][currentrow]#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Edit Record">
+				<img id="delete_#rc.qListing[rc.mdDictionary.PK][currentrow]#" src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 			</td>
 
@@ -192,8 +188,8 @@ $Build ID:	@@build_id@@
 	</table>
 	</cfif>
 
-	<div  style="margin-top:20px"></div>
+	<div id="formFinalizer"></div>
 	</form>
-</div>
-</div>
+</div><!--- End Form --->
+</div><!--- End Content --->
 </cfoutput>
