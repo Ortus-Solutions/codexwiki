@@ -45,11 +45,12 @@ $Build ID:	@@build_id@@
 Please enter the information below, to change your password
 </p>
 
+<!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Profile Details --->
 <cfform name="passwordForm" id="passwordForm"
-		action="#getSetting('sesBaseURL')#/#rc.xehdoChangePass#"
+		action="#event.buildLink(rc.xehdoChangePass,0)#.cfm"
 		method="post">
 <fieldset >
 	<legend>Password Change Request</legend>
@@ -80,11 +81,11 @@ Please enter the information below, to change your password
 </fieldset>
 
 <!--- Loader --->
-<div id="_loader" class="align-center formloader" style="margin:5px 5px 0px 0px;">
+<div id="_loader" class="align-center formloader">
 	<p>
 		Submitting...<br />
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
 </div>
 
@@ -92,7 +93,7 @@ Please enter the information below, to change your password
 <div align="center" id="_buttonbar">
 	<a href="javascript:submitForm()" id="buttonLinks">
 		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" border="0" align="absmiddle">
+			<img src="includes/images/accept.png" border="0" align="absmiddle">
 			Update Password
 		</span>
 	</a>

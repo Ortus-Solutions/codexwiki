@@ -42,11 +42,11 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminUsers#">User Management</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminCustomHTML#">Custom HTML</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdminAPI#">API Docs</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehadminlookups#">System Lookups</a></li>
+		<li><a href="#event.buildLink(rc.xehAdmin,0)#.cfm">Admin Dashboard</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminUsers,0)#.cfm">User Management</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminCustomHTML,0)#.cfm">Custom HTML</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminAPI,0)#.cfm">API Docs</a></li>
+		<li><a href="#event.buildLink(rc.xehadminlookups,0)#.cfm">System Lookups</a></li>
 	</ul>
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
@@ -54,8 +54,8 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> User Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehUserProfile#">My Profile</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehUserChangePass#">Change Password</a></li>
+		<li><a href="#event.buildLink(rc.xehUserProfile,0)#.cfm">My Profile</a></li>
+		<li><a href="#event.buildLink(rc.xehUserChangePass,0)#.cfm">Change Password</a></li>
 	</ul>
 </div>
 <cfelse>
@@ -63,10 +63,10 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#getSetting('sesBaseURL')#">Dashboard</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialHelp#">Help</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialFeeds#">Rss Feeds</a></li>
-		<li><a href="#getSetting('sesBaseURL')#/#rc.xehSpecialCategory#">Category List</a></li>
+		<li><a href="#pageShowRoot(getSetting('DefaultPage'))#.cfm">Dashboard</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialHelp)#.cfm">Help</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#.cfm">Rss Feeds</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category List</a></li>
 	</ul>
 </div>
 </cfif>
@@ -85,7 +85,7 @@ $Build ID:	@@build_id@@
 <div class="left-box">
 	
 	<cfif not rc.oUser.getisAuthorized()>
-		<form name="loginform" id="loginform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehUserDoLogin#" onsubmit="onLoginForm()">
+		<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm" onsubmit="onLoginForm()">
 		<!--- ref Route --->
 		<input type="hidden" name="refRoute" value="#cgi.script_name#" />
 		<p>
@@ -101,16 +101,16 @@ $Build ID:	@@build_id@@
 		<div id="_loader_login" class="align-center formloader">
 			<p>
 				Submitting...<br />
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
 		</div>
 		
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
-			<a href="#getSetting('sesBaseURL')#/#rc.xehUserReminder#">Forgot Password?</a>
+			<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
 			<!--- Registration Permission Link --->
-			<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="">Register</a></cfif>
+			<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
 			<br /><br />
 			<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
 		</div>
@@ -127,9 +127,9 @@ $Build ID:	@@build_id@@
 		<br />
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
-			<a href="#getSetting('sesBaseURL')#/#rc.xehUserLogout#" id="buttonLinks">
+			<a href="#event.buildLink(rc.xehUserLogout)#.cfm" id="buttonLinks">
 				<span>
-					<img src="#getSetting('sesBaseURL')#/includes/images/door_out.png" border="0" align="absmiddle">
+					<img src="includes/images/door_out.png" border="0" align="absmiddle">
 					Logout
 				</span>
 			</a>

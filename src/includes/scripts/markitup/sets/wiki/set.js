@@ -52,6 +52,7 @@ mySettings = {
 				return html;
 			}
 		},
+		{name:'Category', className:"categories", openWith:'[[Category:[![Category:]!]]]' },
 		{	name:'Calculator', 
 			className:'calculator',
 			replaceWith:function(h) { 
@@ -66,7 +67,7 @@ mySettings = {
 		{separator:'---------------' },
 		{name:'No Wiki',className: 'nowikiGen', openWith:'<nowiki>No Wiki', closeWith:'</nowiki>'},
 		{name:'Code',className: 'codeGen', openWith:'(!(<source lang="[![Language:!:coldfusion]!]">|!|<pre>)!)', closeWith:'(!(</source>|!|</pre>)!)'},
-		{name:'RSS', className: 'rssGen', openWith:'<rss url="[![URL:]!]" display="[![Display:!:bullet or numbered]!]" cache="[![Cache Tiemout:]!]"', closeWith:'/>'},
+		{name:'RSS', className: 'rssGen', openWith:'<feed url="[![URL:]!]" display="[![Display:!:bullet or numbered]!]" cache="[![Cache Tiemout:]!]"', closeWith:' />'},
 		{separator:'---------------' },
 		{name:'Preview', call:'CodexPreview', className:'preview'},
 		{name:'Help', className:'helpGen', call:'openHelp'}

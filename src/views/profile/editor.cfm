@@ -49,7 +49,7 @@ Please enter all the required information to update your profile details
 
 <!--- Profile Details --->
 <cfform name="detailsForm" id="detailsForm"
-		action="#getSetting('sesBaseURL')#/#rc.xehDoEdit#"
+		action="#event.buildLink(rc.xehDoEdit,0)#.cfm"
 		method="post">
 
 <fieldset >
@@ -88,23 +88,23 @@ Please enter all the required information to update your profile details
 <div id="_loader" class="align-center formloader">
 	<p>
 		Submitting...<br />
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
 </div>
 
 <!--- Button Bar --->
 <div align="center" id="_buttonbar">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehUserProfile#" id="buttonLinks">
+	<a href="#event.buildLink(rc.xehUserProfile,0)#.cfm" id="buttonLinks">
 		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
+			<img src="includes/images/cancel.png" border="0" align="absmiddle">
 			Cancel
 		</span>
 	</a>
 	&nbsp;
 	<a href="javascript:submitForm()" id="buttonLinks">
 		<span>
-			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" border="0" align="absmiddle">
+			<img src="includes/images/accept.png" border="0" align="absmiddle">
 			Update Profile
 		</span>
 	</a>

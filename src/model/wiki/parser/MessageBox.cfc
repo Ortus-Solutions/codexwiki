@@ -45,7 +45,6 @@ $Build ID:	@@build_id@@
 		while(matcher.find())
 		{
 			tag = matcher.group();
-
 			if(tag eq "<messagebox>" OR findNoCase("info", tag))
 			{
 				replace = '<div class="cbox_messagebox_info"><p class="cbox_messagebox">';
@@ -84,4 +83,11 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
+	<!--- Dump facade --->
+	<cffunction name="dump" access="private" hint="Facade for cfmx dump" returntype="void">
+		<cfargument name="var" required="yes" type="any">
+		<cfargument name="isAbort" type="boolean" default="false" required="false" hint="Abort also"/>
+		<cfdump var="#var#">
+		<cfif arguments.isAbort><cfabort></cfif>
+	</cffunction>
 </cfcomponent>

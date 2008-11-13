@@ -43,25 +43,27 @@ Please enter your email address below and click the Send Password button. This w
 <br /><br />
 </p>
 
+<!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
-<form name="reminderform" id="reminderform" method="post" action="#getSetting('sesBaseURL')#/#rc.xehDoReminder#" onsubmit="submitForm()">
+<form name="reminderform" id="reminderform" method="post" action="#event.buildLink(rc.xehDoReminder)#.cfm" onsubmit="submitForm()">
 
-	<div align="center" style="margin-top:10px">
+	<p class="align-center">
+	<br /><br />
 	<label for="email" class="inline">Email</label>
 	<input type="text" name="email" id="email"
 		   size="50"
 		   maxlength="255"/>
-	</div>
-
+	</p>
+	
 	<br />
 
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>
 

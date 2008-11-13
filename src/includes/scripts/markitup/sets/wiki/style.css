@@ -67,6 +67,9 @@
 .markItUp .nowikiGen a {
 	background-image:url(images/nowiki.png);
 }
+.markItUp .categories a {
+	background-image:url(images/categories.gif);
+}
 
 
 .markItUp .preview a {
