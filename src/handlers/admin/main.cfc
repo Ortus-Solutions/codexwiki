@@ -31,7 +31,6 @@ $Build ID:	@@build_id@@
 	<cffunction name="home" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
-
 			event.setView('admin/home');
 		</cfscript>
 	</cffunction>

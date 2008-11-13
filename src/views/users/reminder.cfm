@@ -35,7 +35,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> Password Reminder
+	<img src="includes/images/key.png" align="absmiddle"> Password Reminder
 </h1>
 
 <p>

@@ -62,11 +62,11 @@ $Build ID:	@@build_id@@
 			var jsPath = getSetting('lookups_jsPath') & "/";
 			
 			/* Images  */
-			rc.imgPath = getSetting('sesBaseURL') & "/" & getSetting('lookups_imgPath');
+			rc.imgPath = getSetting('lookups_imgPath');
 			/* Validations */
 			if( listFindNoCase(exceptList,event.getCurrentAction()) ){
 				/* Global Exit Handler for this handler */
-				rc.xehLookupList 	= "admin.lookups.display.cfm";
+				rc.xehLookupList 	= "admin.lookups/display";
 				
 				/* Custom CSS According to settings */
 				for(x=1;x lte listlen(instance.cssList);x=x+1){
@@ -88,10 +88,10 @@ $Build ID:	@@build_id@@
 		var key = "";
 		
 		/* SET XEH */
-		rc.xehLookupCreate = "admin.lookups/dspCreate.cfm";
-		rc.xehLookupDelete = "admin.lookups/doDelete.cfm";
-		rc.xehLookupEdit = "admin.lookups/dspEdit.cfm";
-		rc.xehLookupClean = "admin.lookups/cleanDictionary.cfm";
+		rc.xehLookupCreate = "admin.lookups/dspCreate";
+		rc.xehLookupDelete = "admin.lookups/doDelete";
+		rc.xehLookupEdit = "admin.lookups/dspEdit";
+		rc.xehLookupClean = "admin.lookups/cleanDictionary";
 		
 		//Get System Lookups
 		rc.systemLookups = getSetting("lookups_tables");
@@ -139,7 +139,7 @@ $Build ID:	@@build_id@@
 			getPlugin("messagebox").setMessage("info", "Metadata Dictionary Cleaned.");
 					
 			/* Relocate back to listing */
-			setNextEvent(event="lookups.display");
+			setNextRoute(route="admin.lookups/display");
 		</cfscript>
 	</cffunction>
 
@@ -167,7 +167,7 @@ $Build ID:	@@build_id@@
 		}
 				
 		/* Relocate back to listing */
-		setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+		setNextRoute(route="admin.lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -184,7 +184,7 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "lookups.doCreate";
+		rc.xehLookupCreate = "admin.lookups/doCreate";
 
 		//Get Lookup's md Dictionary
 		rc.mdDictionary = getlookupService().getDictionary(rc.lookupclass);
@@ -197,7 +197,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//Set view.
-		event.setView("lookups/Add");
+		event.setView("admin/lookups/Add");
 		</cfscript>
 	</cffunction>
 
@@ -251,7 +251,7 @@ $Build ID:	@@build_id@@
 		//Tell service to save object
 		getLookupService().save(oLookup);		
 		/* Relocate back to listing */
-		setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+		setNextRoute(route="admin.lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -268,8 +268,8 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "lookups.doUpdate";
-		rc.xehLookupUpdateRelation = "lookups.doUpdateRelation";
+		rc.xehLookupCreate = "admin.lookups/doUpdate";
+		rc.xehLookupUpdateRelation = "admin.lookups/doUpdateRelation";
 		
 		//Get the passed id's TO Object
 		rc.oLookup = getLookupService().getLookupObject(rc.lookupClass,rc.id);
@@ -296,7 +296,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//view to display
-		event.setView("lookups/Edit");
+		event.setView("admin/lookups/Edit");
 		</cfscript>
 	</cffunction>
 
@@ -336,7 +336,7 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to listing */
-			setNextEvent(event="lookups.display",queryString="lookupclass=#rc.lookupclass#");
+			setNextRoute(route="admin.lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -391,7 +391,7 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to edit */
-			setNextEvent(event="lookups.dspEdit",queryString="lookupclass=#rc.lookupclass#&id=#rc.id###m2m_#rc.linkAlias#");		
+			setNextRoute(route="admin.lookups/dspEdit/lookupclass/#rc.lookupclass#/id/#rc.id#",suffix="##m2m_#rc.linkAlias#");		
 		</cfscript>
 	</cffunction>
 
@@ -407,7 +407,7 @@ $Build ID:	@@build_id@@
 		<cfargument name="event" type="any" required="true"/>
 		<cfscript>
 		if ( event.getTrimValue("lookupclass","") eq "")
-			setNextEvent("lookups.display");
+			setNextRoute("admin.lookups/display");
 		</cfscript>
 	</cffunction>
 	

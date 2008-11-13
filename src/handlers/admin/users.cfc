@@ -26,6 +26,10 @@ $Build ID:	@@build_id@@
 			 extends="codex.handlers.baseHandler"
 			 autowire="true">
 
+	<!--- Dependencies --->
+	<cfproperty name="LookupService" type="ioc" scope="instance">
+	<cfproperty name="UserService" type="ioc" scope="instance">
+
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<!--- List Users --->
@@ -178,6 +182,7 @@ $Build ID:	@@build_id@@
 			var oUser = "";
 			var oClonedUser = "";
 			var errors = ArrayNew(1);
+			var passChange = false;
 
 			oUser = oUserService.getUser(rc.user_id);
 			oClonedUser = oUser.clone();
@@ -188,7 +193,7 @@ $Build ID:	@@build_id@@
 			errors = oClonedUser.validate(edit=true);
 			if( ArrayLen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin.users/edit",qs="user_id=#rc.user_id#");
+				setNextRoute(route="admin.users/edit/user_id/#rc.user_id#");
 			}
 			else{
 				/* Set/update role */
@@ -197,10 +202,11 @@ $Build ID:	@@build_id@@
 				/* Set password if sent */
 				if( rc.newpassword.length() neq 0 ){
 					oClonedUser.setPassword(rc.newpassword);
+					passChange = true;
 				}
 
 				//Save it
-				oUserService.saveUser(oClonedUser);
+				oUserService.saveUser(User=oClonedUser,isPasswordChange=passChange);
 				
 				/* Message of success */
 				getPlugin("messagebox").setMessage("info","User updated!");
@@ -343,19 +349,10 @@ $Build ID:	@@build_id@@
 	<cffunction name="getLookupService" access="private" output="false" returntype="codex.model.lookups.LookupService" hint="Get LookupService">
 		<cfreturn instance.LookupService/>
 	</cffunction>
-	<cffunction name="setLookupService" access="private" output="false" returntype="void" hint="Set LookupService">
-		<cfargument name="LookupService" type="codex.model.lookups.LookupService" required="true"/>
-		<cfset instance.LookupService = arguments.LookupService/>
-	</cffunction>
 
 	<!--- Get Set User Service --->
 	<cffunction name="getUserService" access="private" output="false" returntype="codex.model.security.UserService" hint="Get UserService">
 		<cfreturn instance.UserService/>
 	</cffunction>
-	<cffunction name="setUserService" access="private" output="false" returntype="void" hint="Set UserService">
-		<cfargument name="UserService" type="codex.model.security.UserService" required="true"/>
-		<cfset instance.UserService = arguments.UserService/>
-	</cffunction>
-
 
 </cfcomponent>

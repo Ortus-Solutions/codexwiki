@@ -122,7 +122,7 @@ $Build ID:	@@build_id@@
 			
 			/* Save it on User and save. */
 			arguments.user.setPassword(genPassword);
-			getUserService().saveUser(arguments.user);
+			getUserService().saveUser(User=arguments.user,isPasswordChange=true);
 		</cfscript>
 		
 		<!--- Email --->

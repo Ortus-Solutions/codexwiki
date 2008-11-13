@@ -142,12 +142,13 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <cfset addCourse(":handler/:action/sort/:sortby/:sortOrder/:page")>
 <cfset addCourse(":handler/:action/user_id/:user_id/permissionID/:permissionID")>
 <cfset addCourse(":handler/:action/user_id/:user_id")>
-<cfset addCourse(":handler/:action/page/:page")>
-
 
 <!--- Page Actions with Page Name and ID --->
-<cfset addCourse(":handler/:action/id/:contentid")>
-<cfset addCourse(":handler/:action/:page")>
+<cfset addCourse(pattern="page/:action/:page",handler="page")>
+<cfset addCourse(pattern="page/:action/id/:contentid",handler="page")>
+
+<!--- General Routes --->
+
 
 <!--- STANDARD COLDBOX COURSES, DO NOT MODIFY UNLESS YOU DON'T LIKE THEM --->
 <cfset addCourse(":handler/:action?")>

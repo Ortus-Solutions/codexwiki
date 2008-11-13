@@ -53,7 +53,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Management</h2>
+<h2><img src="includes/images/user.png" align="absmiddle"> User Management</h2>
 <p>From here you can manage and search for all the wiki users.</p>
 
 <!--- Render Messagebox. --->

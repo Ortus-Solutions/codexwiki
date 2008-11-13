@@ -26,7 +26,7 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/magnifier.png" align="absmiddle"> Search: #event.getValue("search_query", "")#
+	<img src="includes/images/magnifier.png" align="absmiddle"> Search: #event.getValue("search_query", "")#
 </h1>
 
 <cfif StructKeyExists(rc.result, "error")>

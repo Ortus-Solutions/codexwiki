@@ -80,7 +80,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <!--- Title --->
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/history.png" border="0" align="absmiddle">
+	<img src="includes/images/history.png" border="0" align="absmiddle">
 	<a href="#pageShowRoot()##URLEncodedFormat(rc.page.getName())#.cfm">#rc.page.getCleanName()#</a>: History
 </h1>
 
@@ -89,14 +89,14 @@ $Build ID:	@@build_id@@
 	<li>
 		<a href="javascript:doDisplay('#contentid#')">Version #version#, created on #printDate(createddate)# #printTime(createddate)# by #username#</a>
 		<cfif isActive>
-		| <img src="#getSetting('htmlBaseURL')#/includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
+		| <img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
 		<cfelse>
 			<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
-			| <img src="#getSetting('htmlBaseURL')#/includes/images/arrow_merge.png" align="absmiddle">
+			| <img src="includes/images/arrow_merge.png" align="absmiddle">
 			  <a href="#getSetting('sesBaseURL')#/#rc.onReplaceActive#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
 			</cfif>
 			<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
-			| <img src="#getSetting('htmlBaseURL')#/includes/images/bin_closed.png" align="absmiddle">
+			| <img src="includes/images/bin_closed.png" align="absmiddle">
 			  <a href="#getSetting('sesBaseURL')#/#rc.onDelete#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
 			</cfif>
 		</cfif>

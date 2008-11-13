@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 			$('##addPermForm').submit();
 		}
 		function deleteRecord(recordID){
-			$('##delete_'+recordID).attr('src','#getSetting('htmlBaseURL')#/includes/images/ajax-spinner.gif');
+			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
 			window.location='#getSetting('sesBaseURL')#/#rc.xehRemovePerm#/user_id/#rc.user_id#/permissionID/'+recordID+'.cfm';
 		}
 	</script>
@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 </div>
 
 <!--- Title --->
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/shield.png" align="absmiddle"> User Management : Edit User Permissions</h2>
+<h2><img src="includes/images/shield.png" align="absmiddle"> User Management : Edit User Permissions</h2>
 <p>From here you can manage the user's a-la-carte permissions and view its inherited role permissions</p>
 
 <!--- Render Messagebox. --->

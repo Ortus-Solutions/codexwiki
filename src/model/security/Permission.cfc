@@ -51,15 +51,19 @@ $Build ID:	@@build_id@@
 	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
 		<cfscript>
 			/* Table Config for scaffolding*/
-			var tableConfig = structnew();
+			var tc = structnew();
 			
-			tableConfig.SortBy = "permission";
-			tableConfig.permissionID.display = false;
-			tableConfig.permission.maxlength = 100;
-			tableConfig.description.maxlength = 255;
+			tc.SortBy = "permission";
+			
+			tc.permission.maxlength = 100;
+			tc.permission.helptext = "The permission key";
+			
+			tc.description.html = "richtext";
+			tc.description.helptext = "Basic description of permission";
+			tc.description.maxlength = 255;
 			
 			/* Set the config */
-			setTableConfig(tableConfig);
+			setTableConfig(tc);
 		</cfscript>
 	</cffunction>
 	

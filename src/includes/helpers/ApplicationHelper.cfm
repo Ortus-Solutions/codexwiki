@@ -21,8 +21,10 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <!--- Helper for showing page root --->
-<cffunction name="pageShowRoot" access="public" returntype="string" hint="The page root" output="false" >
-	<cfreturn getSetting('sesBaseURL') & "/" & getSetting('showKey') & "/">
+<cffunction name="pageShowRoot" access="public" returntype="string" hint="The page root to use when linking wiki pages." output="false" >
+	<cfargument name="page" type="string" required="false" default="" hint="The page to pre-pend the root"/>
+	
+	<cfreturn getSetting('sesBaseURL') & "/" & getSetting('showKey') & "/" & arguments.page>
 </cffunction>
 
 <!--- printTime --->

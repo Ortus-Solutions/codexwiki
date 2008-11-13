@@ -26,6 +26,9 @@ $Build ID:	@@build_id@@
 			 hint="Our configuration handler"
 			 autowire="true">
 
+	<!--- Dependencies --->
+	<cfproperty name="ConfigService" type="ioc" scope="instance">
+	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<!--- custom html --->
@@ -104,11 +107,6 @@ $Build ID:	@@build_id@@
 	
 	<cffunction name="getConfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">
 		<cfreturn instance.ConfigService />
-	</cffunction>
-
-	<cffunction name="setConfigService" access="private" returntype="void" output="false">
-		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" required="true">
-		<cfset instance.ConfigService = arguments.ConfigService />
 	</cffunction>
 
 </cfcomponent>

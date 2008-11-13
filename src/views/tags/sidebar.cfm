@@ -39,7 +39,7 @@ $Build ID:	@@build_id@@
 <!--- ***************************************************************************************************** --->
 <cfif refindnocase("^admin",event.getCurrentEvent())>
 <!--- Admin Main Menu --->
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
+<h1> <img src="includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehAdmin#">Admin Dashboard</a></li>
@@ -51,7 +51,7 @@ $Build ID:	@@build_id@@
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
 <!--- User Main Menu --->
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/shield.png" align="absmiddle"> User Menu</h1>
+<h1> <img src="includes/images/shield.png" align="absmiddle"> User Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('sesBaseURL')#/#rc.xehUserProfile#">My Profile</a></li>
@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 </div>
 <cfelse>
 <!--- Wiki Main Menu --->
-<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
+<h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#getSetting('sesBaseURL')#">Dashboard</a></li>
@@ -77,9 +77,9 @@ $Build ID:	@@build_id@@
 <!--- ***************************************************************************************************** --->
 
 <cfif not rc.oUser.getisAuthorized()>
-	<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/key.png" align="absmiddle"> User Login </h1>
+	<h1> <img src="includes/images/key.png" align="absmiddle"> User Login </h1>
 <cfelse>
-	<h1> <img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> User Info </h1>
+	<h1> <img src="includes/images/user.png" align="absmiddle"> User Info </h1>
 </cfif>
 
 <div class="left-box">

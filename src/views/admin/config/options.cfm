@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/cog.png" align="absmiddle"> Options</h2>
+<h2><img src="includes/images/cog.png" align="absmiddle"> Options</h2>
 <p>
 	Below you can see the CodexWiki main options and version information. Please be careful when editing the main options as it affects the entire wiki installation.
 </p>
@@ -71,7 +71,7 @@ $Build ID:	@@build_id@@
      
 		<label for="wikiname"><em>*</em> Wiki Default Page</label>
      	<input type="text" name="defaultpage" id="defaultpage" value="" size="30"> 
-		<img border="0" src="#getsetting('htmlBaseURL')#/includes/images/accept.png" align="absmiddle">
+		<img border="0" src="includes/images/accept.png" align="absmiddle">
 		<a href="" id="defaultpagehref">Validate</a>
      
 	</fieldset>

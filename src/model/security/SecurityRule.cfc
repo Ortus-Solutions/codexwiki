@@ -56,16 +56,25 @@ $Build ID:	@@build_id@@
 	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
 		<cfscript>
 			/* Table Config for scaffolding*/
-			var tableConfig = structnew();
+			var tc = structnew();
 			
-			tableConfig.SortBy = "permissions";
-			tableConfig.securityruleID.display = false;
-			tableConfig.securelist.maxlength = 255;
-			tableConfig.permissions.maxlength = 255;
-			tableConfig.redirect.maxlength = 255;
+			tc.SortBy = "permissions";
+			
+			tc.whitelist.helptext = "The event patterns to passthrough";
+			
+			tc.securelist.maxlength = 255;
+			tc.securelist.helptext = "The event patterns to secure";
+			
+			tc.permissions.maxlength = 255;
+			tc.permissions.helptext = "The list of permissions needed";
+			
+			tc.authorize_check.helptext = "User must be authorized";
+			
+			tc.redirect.maxlength = 255;
+			tc.redirect.helptext = "The route to redirect to if secured.";
 			
 			/* Set the config */
-			setTableConfig(tableConfig);
+			setTableConfig(tc);
 		</cfscript>
 	</cffunction>
 	

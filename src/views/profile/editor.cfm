@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> Update Your Profile
+	<img src="includes/images/user.png" align="absmiddle"> Update Your Profile
 </h1>
 
 <p>

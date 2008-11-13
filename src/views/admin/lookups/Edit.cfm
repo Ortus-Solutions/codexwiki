@@ -66,16 +66,16 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2><img src="includes/images/lookups/cog.png" align="absmiddle"> System Lookup Manager > Edit Record</h2>
+<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager > Edit Record</h2>
 <!--- BACK --->
 <div class="backbutton">
-	<img src="includes/images/lookups/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList)#&lookupclass=#rc.lookupclass#">Back</a>
+	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
+	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm">Back</a>
 </div>
 <p>Editing <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
 <!--- Add Form --->
-<form name="editform" id="editform" action="#event.buildLink(rc.xehLookupCreate)#" method="post">
+<form name="editform" id="editform" action="#event.buildLink(rc.xehLookupCreate,0)#.cfm" method="post">
 
 <!--- Lookup Class Choosen to Add --->
 <input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
@@ -201,19 +201,19 @@ $Build ID:	@@build_id@@
 <div id="_loader" class="formloader">
 	<p>
 		Submitting...<br />
-		<img src="includes/images/lookups/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="includes/images/lookups/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
 	</p>
 </div>
 
 <!--- Create / Cancel --->
 <div id="_buttonbar">
-	<img src="includes/images/lookups/cancel.png" border="0" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList)#&lookupclass=#rc.lookupclass#" class="buttonLinks">
+	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
+	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm" class="buttonLinks">
 		Cancel
 	</a>
 	&nbsp;
-	<img src="includes/images/lookups/accept.png" border="0" align="absmiddle">
+	<img src="#rc.imgPath#/accept.png" border="0" align="absmiddle">
 	<a href="javascript:submitForm()" class="buttonLinks">
 		Update Record
 	</a>
@@ -237,7 +237,7 @@ $Build ID:	@@build_id@@
 		<cfset relationArray = rc["#thisArray.alias#Array"]>
 
 		<!--- Display Relation Form --->
-		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#event.buildLink(rc.xehLookupUpdateRelation)#" method="post">
+		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#event.buildLink(rc.xehLookupUpdateRelation,0)#.cfm" method="post">
 			<!--- Lookup Class Choosen to Add --->
 			<input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
 			<!--- Primary Key Value --->
@@ -253,8 +253,8 @@ $Build ID:	@@build_id@@
 				<!--- Loader --->
 				<div id="_loader_#thisArray.alias#" class="formloader">
 					Submitting...<br />
-					<img src="includes/images/lookups/ajax-loader-horizontal.gif" align="absmiddle">
-					<img src="includes/images/lookups/ajax-loader-horizontal.gif" align="absmiddle">
+					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
 				</div>
 				<!--- Control Bar --->
 				<div id="_buttonbar_#thisArray.alias#">
@@ -266,7 +266,7 @@ $Build ID:	@@build_id@@
 					</select>
 					<!--- Add Button --->
 					<cfif qListing.recordcount>
-						<img src="includes/images/lookups/add.png" border="0" align="absmiddle">
+						<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
 						<a href="javascript:submitM2M('#thisArray.alias#',1)" class="buttonLinks">
 							Add Relation
 						</a>
@@ -274,7 +274,7 @@ $Build ID:	@@build_id@@
 					<cfif arraylen(relationArray)>
 					<!--- Remove Button --->
 					&nbsp;
-					<img src="includes/images/lookups/bin_closed.png" border="0" align="absmiddle">
+					<img src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle">
 					<a href="javascript:submitM2M('#thisArray.alias#',0)" class="buttonLinks">
 						Remove Relation(s)
 					</a>

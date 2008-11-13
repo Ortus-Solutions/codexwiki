@@ -25,19 +25,34 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
-
-	<cffunction name="setNextRoute" access="package" returntype="void" hint="Relocate to the next wiki page" output="false" >
+	
+	<!--- Set Next Route --->
+	<cffunction name="setNextRoute" access="Public" returntype="void" hint="I Set the next ses route to relocate to. This method pre-pends the baseURL"  output="false">
 		<!--- ************************************************************* --->
-		<cfargument name="route"  	hint="The route to relocate to, do not prepend the baseURL or /." type="string" required="yes" >
-		<cfargument name="persist" 	hint="What request collection keys to persist in the relocation" required="false" type="string" default="">
-		<cfargument name="qs"  		hint="The query string to append" type="string" required="false" default="" >
-		
+		<cfargument name="route"  		required="yes" 	 type="string" hint="The route to relocate to, do not prepend the baseURL or /.">
+		<cfargument name="persist" 		required="false" type="string" default="" hint="What request collection keys to persist in the relocation">
+		<cfargument name="varStruct" 	required="false" type="struct" hint="A structure key-value pairs to persist.">
+		<cfargument name="addToken"		required="false" type="boolean" default="false"	hint="Wether to add the tokens or not. Default is false">
+		<cfargument name="suffix" 		type="string" 	required="true" default="" hint="String to append after .cfm"/>
 		<!--- ************************************************************* --->
-		<cfset var newRoute = arguments.route & ".cfm">
-		<cfif len(qs)>
-			<cfset newRoute = newRoute & "?" & arguments.qs>
+		<cfset arguments.route = arguments.route & ".cfm" & arguments.suffix>
+		<cfset getController().setNextRoute(argumentCollection=arguments)>
+	</cffunction>
+	
+	<cffunction name="setNextEvent" access="Public" returntype="void" hint="I Set the next event to run and relocate the browser to that event. If you are in SES mode, this method will use routing instead"  output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="event"  			type="string"  required="false" default="#getSetting("DefaultEvent")#" hint="The name of the event to run.">
+		<cfargument name="queryString"  	type="string"  required="false" default="" hint="The query string to append, if needed.">
+		<cfargument name="addToken"		 	type="boolean" required="false" default="false"	hint="Whether to add the tokens or not. Default is false">
+		<cfargument name="persist" 			type="string"  required="false" default="" hint="What request collection keys to persist in the relocation">
+		<cfargument name="varStruct" 		type="struct"  required="false" default="#structNew()#" hint="A structure key-value pairs to persist.">
+		<!--- ************************************************************* --->
+		<cfif len(arguments.queryString)>
+			<cfset arguments.queryString = arguments.queryString & ".cfm">
+		<cfelse>
+			<cfset arguments.event = arguments.event & ".cfm">
 		</cfif>
-		<cfset getController().setNextRoute(route=newRoute,persist=arguments.persist)>
+		<cfset getController().setNextEvent(argumentCollection=arguments)>
 	</cffunction>
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->

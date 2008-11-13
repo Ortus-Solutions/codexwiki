@@ -25,12 +25,13 @@ $Build ID:	@@build_id@@
 <head>
 	<cfoutput>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-
+	<!--- Base HREF --->
+	<base href="#getSetting('htmlBaseURL')#">
 	<!--- Main CSS --->
-	<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="includes/css/style.css" />
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
-		<link rel="stylesheet" type="text/css" href="#getSetting('htmlBaseURL')#/includes/css/#css#.css" />
+		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />
 	</cfloop>
 	<!--- Render Title --->
 	#renderView('tags/title')#

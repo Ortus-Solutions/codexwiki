@@ -50,7 +50,7 @@ $Build ID:	@@build_id@@
 						$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
 							function(string, status)
 							{
-								dialog.container.html('<div><p class="align-right"><img src="#getSetting('htmlBaseURL')#/includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
+								dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
 							}
 						);
 					}
@@ -75,7 +75,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <!--- Title --->
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/page_edit.png" align="absmiddle"> Editing:
+	<img src="includes/images/page_edit.png" align="absmiddle"> Editing:
 	"<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 

@@ -51,15 +51,19 @@ $Build ID:	@@build_id@@
 	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
 		<cfscript>
 			/* Table Config for scaffolding*/
-			var tableConfig = structnew();
+			var tc = structnew();
 			
-			tableConfig.SortBy = "role";
-			tableConfig.roleID.display = false;
-			tableConfig.role.maxlength = 100;
-			tableConfig.description.maxlength = 255;
+			tc.SortBy = "role";
+			
+			tc.role.maxlength = 100;
+			tc.role.helptext = "The role name to use";
+			
+			tc.description.helptext = "A basic role description";
+			tc.description.html = "richtext";
+			tc.description.maxlength = 255;
 			
 			/* Set the config */
-			setTableConfig(tableConfig);
+			setTableConfig(tc);
 		</cfscript>
 	</cffunction>
 	

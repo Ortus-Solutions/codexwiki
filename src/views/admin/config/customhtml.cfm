@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="#getSetting('htmlBaseURL')#/includes/images/html_16x16.png" align="absmiddle"> Custom HTML</h2>
+<h2><img src="includes/images/html_16x16.png" align="absmiddle"> Custom HTML</h2>
 <p>
 	Please enter below the custom HTML that should be placed on the wiki pages.
 </p>

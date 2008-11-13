@@ -124,6 +124,11 @@ $Build ID:	@@build_id@@
 			}
 		</cfscript>
 	</cffunction>
+	
+	<!--- getHashType --->
+	<cffunction name="getHashType" output="false" access="public" returntype="string" hint="Get the hash type to use">
+		<cfreturn "SHA-512">
+	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 

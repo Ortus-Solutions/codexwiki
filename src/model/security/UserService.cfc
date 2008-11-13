@@ -332,11 +332,12 @@ $Build ID:	@@build_id@@
 	<cffunction name="saveUser" hint="Saves a user" access="public" returntype="void" output="false">
 		<!--- ************************************************************* --->
 		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
+		<cfargument name="isPasswordChange" type="boolean" required="false" default="false" hint="Flag if controller says a password change is needed"/>
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Hash Password? */
-			if( not arguments.User.getIsPersisted() or arguments.User.getPassword().length() neq 0){
-				arguments.User.setPassword( hash(arguments.User.getPassword(),'SHA-512') );
+			if( not arguments.User.getIsPersisted() OR arguments.isPasswordChange){
+				arguments.User.setPassword( hash(arguments.User.getPassword(),arguments.User.getHashType()) );
 			}
 						
 			/* Save User */

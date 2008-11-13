@@ -27,6 +27,9 @@ $Build ID:	@@build_id@@
 			 autowire="true"
 			 cache="true" cacheTimeout="0">
 
+	<!--- dependencies --->
+	<cfproperty name="WikiService" type="ioc" scope="instance" />
+
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" access="public" returntype="page" output="false">
@@ -39,25 +42,31 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="show" access="public" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
-		var content = 0;
-
-		//default page is the dashboard
+		var rc = arguments.event.getCollection();
+		
+		/* Exit Handlers */
+		rc.onEditWiki="page/edit";
+		rc.onCreateWiki="page/create";
+		rc.onDeleteWiki="page/delete";
+		rc.onShowHistory="page/showHistory";
+		
+		//default page comes from the settings
 		arguments.event.paramValue("page", getSetting('DefaultPage') );
-
-		arguments.event.setValue("cssAppendList", "uni-form,wiki.show");
-		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
-
-		content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
-		arguments.event.setValue("content", content);
-		arguments.event.setValue("onEditWiki","page/edit");
-		arguments.event.setValue("onCreateWiki","page/create");
-		arguments.event.setValue("onDeleteWiki","page/delete");
-		arguments.event.setValue("onShowHistory","page/showHistory");
-
+		
+		/* Appends CSS & JS */
+		rc.cssAppendList = "uni-form,wiki.show";
+		rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+		
+		/* Get Content For Page */
+		rc.content = getWikiService().getContent(pageName=rc.page);
+		
+		/* Page */
+		rc.urlPage = URLEncodedFormat(rc.page);
+		
 		/* Set views according to persistance */
-		if(content.getIsPersisted())
+		if(rc.content.getIsPersisted())
 		{
 			arguments.event.setView("wiki/show");
 		}
@@ -69,7 +78,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="create" access="public" returntype="void" output="false" hint="Show the Create a new page">
-	<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	<cfargument name="Event" type="any" required="yes">
     <cfscript>
 		/* Dispatch manage */
 		manage(arguments.event);
@@ -77,7 +86,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="doCreate" access="public" returntype="void" output="false" hint="Create a new page">
-	<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	<cfargument name="Event" type="any" required="yes">
     <cfscript>
 		/* Dispatch manage */
 		process(arguments.event);
@@ -85,7 +94,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="edit" access="public" returntype="void" output="false" hint="Show the edit page">
-	<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	<cfargument name="Event" type="any" required="yes">
     <cfscript>
 		/* Dispatch manage */
 		manage(arguments.event);
@@ -93,7 +102,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="doEdit" access="public" returntype="void" output="false" hint="Update a page">
-	<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	<cfargument name="Event" type="any" required="yes">
     <cfscript>
 		/* Dispatch manage */
 		process(arguments.event);
@@ -101,27 +110,31 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="showHistory" hint="shows a page's history" access="public" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
+		var rc = event.getCollection();
 		var pageName = arguments.event.getValue("page");
-		var page = getWikiService().getPage(pageName=pageName);
-		var qHistory = getWikiService().getPageHistory(pageName);
+		
+		/* Get the Page */
+		rc.page = getWikiService().getPage(pageName=pageName);
+		/* Get the History */
+		rc.History = getWikiService().getPageHistory(pageName);
 
-		arguments.event.setValue("cssAppendList", "page.showHistory");
-		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
-
-		arguments.event.setValue("onReplaceActive", "page/replaceActive");
-		arguments.event.setValue("onDelete", "page/deleteContent");
-		arguments.event.setValue("page", page);
-
-		arguments.event.setValue("history", qHistory);
-
+		/* CSS & JS */
+		rc.cssAppendList = "page.showHistory";
+		rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+		
+		/* Exit Handlers */
+		rc.onReplaceActive ="page/replaceActive";
+		rc.onDelete ="page/deleteContent";
+		
+		/* View */
 		arguments.event.setView("wiki/showHistory");
 	</cfscript>
 </cffunction>
 
 <cffunction name="deleteContent" hint="delete's a content object" access="public" returntype="string" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
 		var content = getWikiService().getContent(arguments.event.getValue("contentid"));
 		var page = content.getPage();
@@ -133,7 +146,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="replaceActive" hint="delete's a content object" access="public" returntype="string" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
 		var content = getWikiService().getContent(arguments.event.getValue("contentid"));
 		var page = content.getPage();
@@ -145,7 +158,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="delete" hint="delete a wiki page" access="public" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
 		//s'not really a content id, it's a page id
 		var pageid = arguments.event.getValue("contentid");
@@ -158,7 +171,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="search" hint="searchs active pages" access="public" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
 		var search_query = arguments.event.getValue("search_query", "");
 		var result = getWikiService().searchWiki(search_query);
@@ -178,52 +191,54 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="process" hint="processes the wiki details" access="private" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+<cffunction name="process" hint="processes the wiki details as a save or update" access="private" returntype="void" output="false">
+	<cfargument name="event" type="any">
 	<cfscript>
-		var pageName = arguments.event.getValue("pageName");
-		var page = getWikiService().getPage(pageName=pageName);
-		var content = page.getNewContentVersion(arguments.event.getCollection());
+		var rc = event.getCollection();
 		var messages = 0;
-
+		
+		/* Get Page */
+		rc.page = getWikiService().getPage(pageName=rc.pageName);
+		/* Get Content */
+		rc.content = rc.page.getNewContentVersion(rc);
+		
+		/* Validate Content */
 		messages = content.validate();
-
 		if(ArrayLen(messages))
 		{
 			getPlugin("messagebox").setMessage(type="error", messageArray=messages);
-
-			arguments.event.setValue("content", content);
-
-			setNextRoute(route="page/edit/" & pageName, persist="content");
+			/* ReRoute with persistence */
+			setNextRoute(route="page/edit/" & rc.pageName, persist="content");
 		}
 		else
 		{
-			page.addContentVersion(content);
-			setNextRoute(route="wiki/" & pageName, persist="page");
+			rc.page.addContentVersion(rc.content);
+			setNextRoute(route="wiki/" & rc.pageName, persist="page");
 		}
 	</cfscript>
 </cffunction>
 
 <cffunction name="manage" hint="manage a wiki page" access="private" returntype="void" output="false">
-	<cfargument name="event" type="coldbox.system.beans.requestContext">
+	<cfargument name="event" type="any">
 	<cfscript>
 		var rc = arguments.event.getCollection();
 		var content = 0;
-
+		
+		/* Custom JS */
+		rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,jquery.textarearesizer.compressed";
+		
+		/* Update or New */
 		if(arguments.event.valueExists("content"))
 		{
 			content = arguments.event.getValue("content");
 		}
 		else
 		{
-			content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
-			arguments.event.setValue("content", content);
+			rc.content = getWikiService().getContent(pageName=arguments.event.getValue("page"));
 		}
-
-		arguments.event.setValue("cssAppendList", "");
-		arguments.event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,jquery.textarearesizer.compressed");
-
-		if( content.getPage().getIsPersisted() ) {
+		
+		
+		if( rc.content.getPage().getIsPersisted() ) {
 			arguments.event.setValue("onSubmit","page/doEdit");
 		}
 		else{
@@ -238,9 +253,5 @@ $Build ID:	@@build_id@@
 
 <cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
 	<cfreturn instance.wikiService />
-</cffunction>
-<cffunction name="setWikiService" access="private" returntype="void" output="false">
-	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
-	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 </cfcomponent>

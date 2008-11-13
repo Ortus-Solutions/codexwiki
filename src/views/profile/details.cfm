@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfoutput>
 <h1>
-	<img src="#getSetting('htmlBaseURL')#/includes/images/user.png" align="absmiddle"> My Profile
+	<img src="includes/images/user.png" align="absmiddle"> My Profile
 </h1>
 
 <p>
