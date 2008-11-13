@@ -49,7 +49,7 @@ $Build ID:	@@build_id@@
 	<cfloop query="rc.result.results">
 		<li>
 			#(numberFormat((score * 100), 000) + 0)#% -
-			<a href="#pageShowRoot()##title#.cfm">#replaceNoCase(title, "_", " ", "all")# </a><br/>
+			<a href="#pageShowRoot(title)#.cfm">#replaceNoCase(title, "_", " ", "all")# </a><br/>
 			#printDate(custom1)# #printTime(custom1)#<br/>
 			#XMLFormat(summary)#
 		</li>

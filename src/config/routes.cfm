@@ -144,8 +144,8 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <cfset addCourse(":handler/:action/user_id/:user_id")>
 
 <!--- Page Actions with Page Name and ID --->
-<cfset addCourse(pattern="page/:action/:page",handler="page")>
 <cfset addCourse(pattern="page/:action/id/:contentid",handler="page")>
+<cfset addCourse(pattern="page/:action/:page",handler="page")>
 
 <!--- General Routes --->
 

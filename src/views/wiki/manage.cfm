@@ -21,53 +21,52 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <!--- create a non found wiki page --->
-
 <cfsetting showdebugoutput="false">
-
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function preview()
-		{
-			var content = $("##content");
+<script type="text/javascript">
+	function CodexPreview()
+	{
+		var content = $("##content");
 
-			var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
-				close:false,
-				onOpen: function(dialog)
-					{
-					 	dialog.overlay.fadeIn("normal", function()
-						 	{
-						 		dialog.container.fadeIn("fast");
-						 		dialog.data.fadeIn("fast");
-						 	}
-						 )
-					},
-				onShow: function(dialog)
-					{
-						var data = {method: "getPreviewHTML", content: content.val()};
-
-						$.post("#getSetting('sesBaseURL')#/model/wiki/remote/RemoteWikiService.cfc", data,
-							function(string, status)
-							{
-								dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
-							}
-						);
-					}
+		var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
+			close:false,
+			onOpen: function(dialog)
+				{
+				 	dialog.overlay.fadeIn("normal", function()
+					 	{
+					 		dialog.container.fadeIn("fast");
+					 		dialog.data.fadeIn("fast");
+					 	}
+					 )
+				},
+			onShow: function(dialog)
+				{
+					var data = {content: content.val()};
+					//Post Preview
+					$.post("#event.BuildLink(rc.onPreview)#.cfm", data,
+						function(string, status)
+						{
+							dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
+						}
+					);
 				}
-				);
-		}
+			}
+			);
+	}
 
-		function submitForm(){
-			$('##_buttonbar').slideUp("fast");
-			$('##_loader').fadeIn("slow");
-		}
+	function submitForm(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+	}
 
-		$(document).ready(function() {
-			$('.resizable').TextAreaResizer();
-		});
+	$(document).ready(function() {
+		//$('.resizable').TextAreaResizer();
+		$("##content").markItUp(mySettings);
+	});
 
-	</script>
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
@@ -76,13 +75,13 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 <h1>
 	<img src="includes/images/page_edit.png" align="absmiddle"> Editing:
-	"<a href="#pageShowRoot()##URLEncodedFormat(rc.content.getPage().getName())#.cfm">#rc.content.getPage().getCleanName()#</a>"
+	"<a href="#pageShowRoot(URLEncodedFormat(rc.content.getPage().getName()))#.cfm">#rc.content.getPage().getCleanName()#</a>"
 </h1>
-
+<!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
-<form action="#getSetting('sesBaseURL')#/#rc.onSubmit#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
+<form action="#event.buildLink(rc.onSubmit)#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
 	<div class="blockLabels">
 		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 
@@ -103,15 +102,15 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>
 
 	<!--- Management Toolbar --->
 	<div id="_buttonbar" class="buttons">
-		<input type="button" class="cancelButton" onclick="window.location='#getSetting('sesBaseURL')#/#getSetting('showKey')#/#rc.content.getPage().getName()#.cfm'" value="cancel"></input>
-   		<input type="button" class="previewButton" onclick="javascript:preview();" value="preview">
+		<input type="button" class="cancelButton" onclick="window.location='#pageShowRoot(rc.content.getPage().getName())#.cfm'" value="cancel"></input>
+   		<input type="button" class="previewButton" onclick="javascript:CodexPreview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
 </form>

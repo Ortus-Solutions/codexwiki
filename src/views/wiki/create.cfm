@@ -34,7 +34,7 @@ $Build ID:	@@build_id@@
 	<hr size="1"/>
 
 	<p class="buttons">
-		<a href="#getSetting('sesBaseURL')#/#rc.onCreateWiki#/#URLEncodedFormat(rc.page)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.onCreateWiki)#/#URLEncodedFormat(rc.page)#.cfm" id="buttonLinks">
 			<span>Create Page</span>
 		</a>
 	</p>
