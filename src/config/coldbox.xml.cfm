@@ -35,7 +35,7 @@
 
 	<YourSettings>
 		<!-- Codex System Information -->
-		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Alpha'}" />
+		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta'}" />
 		<!--Transfer Settings -->
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
