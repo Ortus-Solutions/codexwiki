@@ -70,7 +70,9 @@
 .markItUp .categories a {
 	background-image:url(images/categories.gif);
 }
-
+.markItUp .messageboxGen a {
+	background-image:url(images/messagebox.png);
+}
 
 .markItUp .preview a {
 	background-image:url(images/preview.png);
