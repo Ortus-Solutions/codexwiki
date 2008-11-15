@@ -44,7 +44,7 @@ $(window).ready(function(){
 <div align="right" style="margin-bottom:15px;">
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
 		<img src="includes/images/history.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">View History</a> |
+		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">History</a> |
 	</cfif>
 
 	<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle">
@@ -68,6 +68,7 @@ $(window).ready(function(){
 <cfset categories = rc.content.getCategoryArray() />
 <cfif NOT ArrayIsEmpty(categories)>
 	<div id="categories">
+		<img src="includes/images/tag_blue.png" align="absmiddle"> 
 		Categories:
 		<ul>
 		<cfloop array="#categories#" index="category">
@@ -81,19 +82,25 @@ $(window).ready(function(){
 
 <!--- Management Tool Bar --->
 <cfif not event.valueExists("print")>
-<br />
-<p class="buttons">
-	<cfif rc.oUser.checkPermission("WIKI_EDIT")>
-	<a href="#event.buildLink(rc.onEditWiki)#/#rc.urlPage#.cfm" id="buttonLinks">
-		<span>Edit Page</span>
-	</a>
+	
+	<!--- Only edit if not read only --->
+	<cfif rc.content.getisReadOnly() AND 
+		  (rc.content.getUser().getuserid() eq rc.oUser.getUserid()) OR
+		  rc.oUser.checkPermission("WIKI_ADMIN")>
+	<br />
+	<p class="buttons">
+		<cfif rc.oUser.checkPermission("WIKI_EDIT")>
+		<a href="#event.buildLink(rc.onEditWiki)#/#rc.urlPage#.cfm" id="buttonLinks">
+			<span>Edit Page</span>
+		</a>
+		</cfif>
+		&nbsp;
+		<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
+		<a href="#event.buildLink(rc.onDeleteWiki)#/id/#rc.content.getPage().getPageID()#.cfm" class="delete" id="buttonLinks">
+			<span>Delete Page</span>
+		</a>
+		</cfif>
+	</p>
 	</cfif>
-	&nbsp;
-	<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
-	<a href="#event.buildLink(rc.onDeleteWiki)#/id/#rc.content.getPage().getPageID()#.cfm" class="delete" id="buttonLinks">
-		<span>Delete Page</span>
-	</a>
-	</cfif>
-</p>
 </cfif>
 </cfoutput>

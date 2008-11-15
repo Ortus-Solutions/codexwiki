@@ -381,54 +381,6 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="searchWiki" hint="do a search" access="public" returntype="struct" output="false">
-	<cfargument name="search" hint="the search string" type="string" required="Yes">
-	<cfset var qResults = 0 />
-	<cfset var status = 0 />
-
-	<cfif NOT Len(arguments.search)>
-		<cfset status = {error="No search query provided"} />
-		<cfreturn status />
-	</cfif>
-
-	<cftry>
-	<cfsearch collection="#getAppName()#"
-				suggestions="2"
-				name="qResults"
-				status="status"
-				criteria="#arguments.search#"
-				>
-		<cfcatch>
-			<cfset status = {error="Search currently not available. #cfcatch.Message#"} />
-			<cfreturn status />
-		</cfcatch>
-	</cftry>
-
-	<cfset status.results = qResults />
-	<cfreturn status />
-</cffunction>
-
-<cffunction name="refreshSearch" hint="refreshes the search index" access="public" returntype="void" output="false">
-	<cfscript>
-		var tql = "select page.name as pageName, content.content, content.createdDate from wiki.Page as page join wiki.Content as content where content.isActive = :true";
-		var query = getTransfer().createQuery(tql);
-		var qContents = 0;
-
-		query.setParam("true", true, "boolean");
-
-		qContents = getTransfer().listByQuery(query);
-	</cfscript>
-
-	<cfindex action="refresh"
-			collection = "#getAppName()#"
-			body = "content"
-			title="pageName"
-			key="pageName"
-			query="qContents"
-			custom1="createdDate"
-			>
-</cffunction>
-
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

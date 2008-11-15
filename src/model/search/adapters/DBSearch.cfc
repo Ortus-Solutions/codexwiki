@@ -100,7 +100,8 @@ $Build ID:	@@build_id@@
 		<cfsavecontent variable="search">
 		<cfoutput>
 			<style>
-			.highlight { background-color: yellow; }
+			.highlight { background-color: yellow; font-weight:bold }
+			cite {color: green; }
 			</style>
 			<p>
 				Found #arguments.result.results.recordCount# results in #arguments.result.searched# 
@@ -112,8 +113,9 @@ $Build ID:	@@build_id@@
 				<li>
 					<a href="#pageRoot & page_name#.cfm">#replaceNoCase(page_name, "_", " ", "all")# </a><br/>
 					#highlightSearchTerm(arguments.event.getValue("search_query",''),pagecontent_content)#
-				<br /><br />
 				</li>
+				<cite>#pageRoot#<strong>#page_name#</strong>.cfm</cite>
+				<br /><br />
 			</cfloop>
 			</ol>
 		</cfoutput>

@@ -82,21 +82,26 @@ $Build ID:	@@build_id@@
 
 <!--- Form --->
 <form action="#event.buildLink(rc.onSubmit)#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
-	<div class="blockLabels">
-		<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 
-		<!--- Control Holder & Text Area --->
-		<div class="ctrlHolder">
-	      <label for="content"><em>*</em> Wiki Content</label>
-	      <textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
-	    </div>
-
-		<!--- Comment Editing --->
-		<div class="ctrlHolder">
-		     <label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Edit Comment</label>
-		     <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
-		</div>
-	</div>
+	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
+	
+	<!--- Control Holder & Text Area --->
+	<label for="content"><em>*</em> Wiki Content</label>
+	<textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
+	
+	<!--- Comment Editing --->
+	<fieldset title="Change Information">
+		<legend>Change Information & Options</legend>
+		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
+		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
+		<textarea name="comment" id="comment" rows="2" cols="50"></textarea>
+		
+		<label>
+		<input value="true" id="isReadOnly" type="checkbox" name="isReadOnly" <cfif rc.content.getIsReadOnly()>checked="checked"</cfif>/>
+		Page is read-only
+		</label> 
+		If checked, only page author <strong>#rc.oUser.getUsername()#</strong> and a user with WIKI_ADMIN privileges can edit a read-only page.
+	</fieldset>
 
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">

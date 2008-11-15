@@ -78,22 +78,26 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 <h1>
 	<img src="includes/images/history.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>: History
+	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>: Page History
 </h1>
 
-<ol>
+<p>Below is the current history for this page.  You can preview the version by clicking on the links.</p>
+
+<ul>
 	<cfloop query="rc.history">
 	<li>
-		<a href="javascript:doDisplay('#contentid#')">Version #version#, created on #printDate(createddate)# #printTime(createddate)# by #username#</a>
+		<a href="javascript:doDisplay('#contentid#')">Version #version#</a>
+		<em>#printDate(createddate)# #printTime(createddate)# by <strong>#username#</strong></em>
 		<cfif isActive>
-		| <img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
-		<cfelse>
+		<img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
+		</cfif>
+		<cfif not isActive>
 			<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
-			| <img src="includes/images/arrow_merge.png" align="absmiddle">
+			<img src="includes/images/arrow_merge.png" align="absmiddle">
 			  <a href="#event.buildLink(rc.onReplaceActive)#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
 			</cfif>
 			<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
-			| <img src="includes/images/bin_closed.png" align="absmiddle">
+			<img src="includes/images/bin_closed.png" align="absmiddle">
 			  <a href="#event.buildLink(rc.onDelete)#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
 			</cfif>
 		</cfif>
@@ -103,7 +107,9 @@ $Build ID:	@@build_id@@
 		<div class="historyload" id="contentshow_#contentid#" loaded="0">
 		 <span class="loading">Loading...</span>
 		</div>
+		<br />
 	</li>
 	</cfloop>
-</ol>
+</ul>
+
 </cfoutput>

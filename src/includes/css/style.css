@@ -15,7 +15,7 @@
 body {
 	margin: 0; padding: 0;
 	font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 74%;
+	font-size: 70%;
 	line-height: 1.5;
 	color: #333; 
 	background: #FFF url(../images/bg.gif) repeat-x;	
@@ -246,20 +246,27 @@ input.invalidLookupInput, textarea.invalidLookupInput, .invalidLookupInput{
 	border: 1px solid #cccccc;
 }
 .tablelisting tr{
-	background-color: #eaeaea;
+	background-color: #F7F7F7;
 }
 .tablelisting tr.even{
 	background-color: #ffffff;
 }
 .tablelisting tr:hover { background: #d7eafe}
+
 .tablelisting th {
 	text-align: left;
 	background-color: #999999;
 	color: #ffffff;
 	padding: 5px;
 }
+.tablelisting th.center{
+	text-align:center;
+}
 .tablelisting td{
 	padding: 5px;
+}
+.tablelisting td.center{
+	text-align: center;
 }
 .tablelisting th a {
 	color: #ffffff;
@@ -369,6 +376,7 @@ div.grippie {
 	position: absolute;
 	top: 3px; left: 5px;
 	margin: 0; padding: 0;
+	cursor: pointer;
 }
 
 #header-logo #logo h1 {

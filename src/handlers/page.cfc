@@ -224,6 +224,9 @@ $Build ID:	@@build_id@@
 			var messages = 0;
 			var oContent = 0;
 			
+			/* Params */
+			event.paramValue("isReadOnly",false);
+			
 			/* Get Page */
 			rc.page = getWikiService().getPage(pageName=rc.pageName);
 			/* Get Content */

@@ -30,6 +30,7 @@
 			<property name="version" column="pagecontent_version" type="numeric"/>
 			<property name="createdDate" column="pagecontent_createdate" type="date"/>
 			<property name="isActive" column="pagecontent_isActive" type="boolean"/>
+			<property name="isReadOnly" type="boolean" column="pagecontent_isReadOnly"/>
 			<manytoone name="Page">
 				<link column="FKpage_id" to="wiki.Page"/>
 			</manytoone>

@@ -91,6 +91,18 @@ $Build ID:	@@build_id@@
 			   name="wiki_name" id="wiki_name" 
 			   value="#rc.CodexOptions.wiki_name#" size="60" required="true">
      	<br /><br />
+		
+		<!--- Wiki Name --->
+		<label for="wiki_name">Wiki Outgoing Email</label>
+		The email to use to send out email.<br />
+		<input type="text"
+			   dName="Wiki Outgoing Email"
+			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
+			   value="#rc.CodexOptions.wiki_outgoing_email#" 
+			   size="60" required="true" mask="email">
+     	<br /><br />
+		
+		
 		<!--- Default Page --->
 		<label for="wiki_defaultpage_label">Wiki Default Page Label</label>
      	The label for the menu item for the default wiki page.<br />
