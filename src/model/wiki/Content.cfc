@@ -47,6 +47,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="validate" hint="returns an array of error messages. If the array is empty, validation has passed" access="public" returntype="array" output="false">
+	<cfargument name="isCommentsMandatory" type="boolean" required="true" hint="is Comments Mandatory"/>
 	<cfscript>
 		var messages = ArrayNew(1);
 
@@ -55,7 +56,7 @@ $Build ID:	@@build_id@@
 			ArrayAppend(messages, "Content cannot be empty.");
 		}
 
-		if(NOT Len(Trim(getComment())))
+		if(arguments.isCommentsMandatory and NOT Len(Trim(getComment())))
 		{
 			ArrayAppend(messages, "Comment cannot be empty.");
 		}

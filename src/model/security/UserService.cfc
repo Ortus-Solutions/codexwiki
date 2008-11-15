@@ -20,7 +20,10 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent hint="This is the user service using Transfer" output="false">
+<cfcomponent name="UserService"
+			 hint="This is the user service using Transfer" 
+			 output="false"
+			 extends="codex.model.baseobjects.BaseService">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
@@ -31,13 +34,9 @@ $Build ID:	@@build_id@@
 		<cfargument name="Datasource" 	hint="the Datasource obj" type="transfer.com.sql.Datasource" required="Yes">
 		<!--- ************************************************************* --->
 		<cfscript>
-			instance = StructNew();
-	
-			setTransfer(arguments.transfer);
-			setDatasource(arguments.datasource);
-	
-			arguments.transaction.advise(this, "^save");
-	
+			/* Init */
+			super.init(argumentCollection=arguments);
+			
 			return this;
 		</cfscript>
 	</cffunction>
@@ -357,27 +356,7 @@ $Build ID:	@@build_id@@
 			getTransfer().save(arguments.User);
 		</cfscript>
 	</cffunction>
-	
-<!------------------------------------------- ACCESSORS/MUTATORS ------------------------------------------->
-
-	<!--- Get Set Datasource --->
-	<cffunction name="getDatasource" access="private" output="false" returntype="transfer.com.sql.Datasource" hint="Get Datasource">
-		<cfreturn instance.Datasource/>
-	</cffunction>	
-	<cffunction name="setDatasource" access="private" output="false" returntype="void" hint="Set Datasource">
-		<cfargument name="Datasource" type="transfer.com.sql.Datasource" required="true"/>
-		<cfset instance.Datasource = arguments.Datasource/>
-	</cffunction>
-	
-	<!--- Get Set Transfer --->
-	<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
-		<cfreturn instance.transfer />
-	</cffunction>	
-	<cffunction name="setTransfer" access="private" returntype="void" output="false">
-		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
-		<cfset instance.transfer = arguments.transfer />
-	</cffunction>
-	
+		
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 	<cffunction name="queryToStruct" hint="Convert a permissions query to a structure" access="private" output="false" returntype="struct">

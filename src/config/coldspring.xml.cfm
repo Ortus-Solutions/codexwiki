@@ -42,7 +42,9 @@
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
 	<!-- Config -->
 	<bean id="ConfigService" class="codex.model.wiki.ConfigService" />
-
+	<!--  Search Factory -->
+	<bean id="SearchFactory" class="codex.model.search.SearchFactory" />
+	<bean id="SearchEngine" factory-bean="SearchFactory" factory-method="getSearchEngine" />	
 	<!-- Parsers -->
 	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />
 	<bean id="Feed" class="codex.model.wiki.parser.Feed" />

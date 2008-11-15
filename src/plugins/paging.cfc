@@ -31,17 +31,24 @@ $Build ID:	@@build_id@@
     <cffunction name="init" access="public" returntype="paging" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
-  		super.Init(arguments.controller);
-  		setpluginName("paging");
-  		setpluginVersion("1.0");
-  		setpluginDescription("Paging plugin");
-  		
-  		/* Paging properties */
-  		setPagingMaxRows( getSetting("PagingMaxRows") );
-  		setPagingBandGap( getSetting('PagingBandGap') );
-  		
-  		//Return instance
-  		return this;
+			var CodexOptions = 0;
+			/* Init */
+	  		super.Init(arguments.controller);
+	  		
+	  		/* Properties */
+	  		setpluginName("paging");
+	  		setpluginVersion("1.0");
+	  		setpluginDescription("Paging plugin");
+	  		
+	  		/* Get Codex Options */
+	  		CodexOptions = getColdboxOCM().get("CodexOptions");
+	  		
+	  		/* Paging properties */
+	  		setPagingMaxRows( CodexOptions.wiki_paging_bandgap );
+	  		setPagingBandGap( CodexOptions.wiki_paging_maxrows );
+	  		
+	  		//Return instance
+	  		return this;
 		</cfscript>
 	</cffunction>
 

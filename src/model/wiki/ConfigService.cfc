@@ -20,21 +20,21 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent hint="The Config Service layer" output="false">
+<cfcomponent name="ConfigService"
+			 hint="The Config Service layer" 
+			 output="false" 
+			 extends="codex.model.baseobjects.BaseService">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<!--- Init --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="ConfigService" output="false">
-		<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+		<cfargument name="transfer"    hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 		<cfscript>
-			instance = StructNew();
-
-			setTransfer(arguments.transfer);
-
-			arguments.transaction.advise(this, "^save");
-
+			/* Init */
+			super.init(argumentCollection=arguments);
+			
 			return this;
 		</cfscript>
 	</cffunction>
@@ -70,16 +70,58 @@ $Build ID:	@@build_id@@
 			getTransfer().save(arguments.customHTML);
 		</cfscript>
 	</cffunction>
+	
+	<!--- getOptions --->
+	<cffunction name="getOptions" output="false" access="public" returntype="struct" hint="Get all the wiki options as a structure">
+		<!--- ************************************************************* --->
+		<cfargument name="returnFormat" type="string" required="false" default="struct" hint="The return format of the results: struct or query"/>
+		<!--- ************************************************************* --->
+		<cfscript>
+			var qOptions = 0;
+			var x=1;
+			var rtnStruct = structnew();
+			
+			/* Get Options */
+			qOptions = getTransfer().list('wiki.Option');
+			
+			/* Query Format? */
+			if( arguments.returnFormat eq "query" ){ return qOptions; }
+			
+			/* Convert To Struct */
+			for(x=1; x lte qOptions.recordcount; x+=1){
+				rtnStruct[qOptions.name[x]] = qOptions.value[x];
+			}
+			/* Return */
+			return rtnStruct;
+		</cfscript>
+	</cffunction>
+	
+	<!--- Get Option --->
+	<cffunction name="getOption" output="false" access="public" returntype="codex.model.wiki.Option" hint="Returns a role by ID or a new user object.">
+		<!--- ************************************************************* --->
+		<cfargument name="option_id" type="string" required="false" default=""/>
+		<cfargument name="name" 	 type="string" required="false" default="" hint="Option name"/>
+		<!--- ************************************************************* --->
+		<cfscript>
+			var oOption = "";
+			var sqlProps = structnew();
+	
+			/* prepare sqlProps */
+			if( len(arguments.option_id) ){
+				sqlProps.option_id = arguments.option_id;
+			}
+			if( len(arguments.name) ){
+				sqlProps.name = arguments.name;
+			}
+			
+			/* Get user now. */
+			oOption = getTransfer().readByPropertyMap('wiki.Option', sqlProps);
+						
+			return oOption;
+		</cfscript>
+	</cffunction>
+
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
-
-	<!--- Get/Set --->
-	<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
-		<cfreturn instance.transfer />
-	</cffunction>
-	<cffunction name="setTransfer" access="private" returntype="void" output="false">
-		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
-		<cfset instance.transfer = arguments.transfer />
-	</cffunction>
 
 </cfcomponent>

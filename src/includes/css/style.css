@@ -230,12 +230,17 @@ input[type=text], input[type=password], input[type=checkbox], select {
 	padding: 5px;
 	background: #FFFFFF url(../images/topfade.gif) repeat-x scroll center top;
 }
-input[type=text], input[type=password], input[type=checkbox], select { padding: .30em }
+input[type=text], input[type=password], input[type=checkbox], select { padding: .4em }
 input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=checkbox]:focus, select:focus {
 	border: 1px solid #886;
 }
 input[type=text].error, input[type=password].error, input[type=checkbox].error, textarea.error, select.error { 
 	border:1px dotted red;
+}
+/* Validation */
+input.invalidLookupInput, textarea.invalidLookupInput, .invalidLookupInput{
+	border: 1px dotted #F00000;
+	background:#FFECE6;
 }
 .tablelisting{
 	border: 1px solid #cccccc;
@@ -601,10 +606,13 @@ div.grippie {
 	float: right;
 }
 
-/* Validation */
-input.invalidLookupInput, textarea.invalidLookupInput, .invalidLookupInput{
-	border: 1px dotted #F00000;
-	background:#FFECE6 url(../images/topfade.gif) repeat-x scroll center top;
+.wikiChooser{
+	background: white;
+	border:1px inset #ccc;
+	padding:10px;
+	height:350px;
+	overflow: auto;	
+	display: none;
 }
 
 /* RTE */

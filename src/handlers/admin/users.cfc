@@ -67,7 +67,7 @@ $Build ID:	@@build_id@@
 												   active=rc.active,
 												   role_id=rc.role_id,
 												   startrow=rc.boundaries.startRow,
-												   maxRows=getSetting("PagingMaxRows"));
+												   maxRows=rc.CodexOptions.wiki_paging_maxrows);
 
 			/* Found Rows */
 			if( rc.qUsers.recordcount ){

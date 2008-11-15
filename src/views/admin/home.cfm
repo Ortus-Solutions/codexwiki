@@ -28,4 +28,28 @@ $Build ID:	@@build_id@@
 	making changes to the system settings. As you can see, a new panel has appeared in your sidebar that will let you 
 	manage CodeX. So please use the available menu options under the <strong>Admin Menu</strong> box.
 </p>
+
+
+<h3>Current Wiki Options</h3>
+
+<table class="tablelisting" width="98%" align="center">
+	<tr>
+		<th width="250">Option</th>
+		<th>Value</th>
+	</tr>
+	
+	<tr>
+		<td><strong>Codex Version</strong></td>
+		<td>#getSetting("Codex").Version# #getSetting("Codex").Suffix#</td>
+	</tr>	
+	<cfset count=1>
+	<cfloop array="#rc.sortedOptions#" index="i">
+		<cfset count+=1>
+		<tr <cfif count mod 2 eq 0>class="even"</cfif>>
+			<td><strong>#i#</strong></td>
+			<td>#rc.CodexOptions[i]#</td>
+		</tr>
+	</cfloop>
+</table>
+
 </cfoutput>

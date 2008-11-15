@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent hint="The Wiki Service layer" output="false">
+<cfcomponent hint="The Wiki Service layer" output="false" extends="codex.model.baseobjects.BaseService">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
@@ -31,18 +31,14 @@ $Build ID:	@@build_id@@
 	<cfargument name="securityService" hint="the security service" type="codex.model.security.SecurityService" required="Yes">
 	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfscript>
-		instance = StructNew();
-
-		setTransfer(arguments.transfer);
-		setDatasource(arguments.datasource);
-
+		/* Init */
+		super.init(argumentCollection=arguments);
+		
+		/* Properties */
 		setSecurityService(arguments.securityService);
-
 		setAppName(arguments.configBean.getKey("appName"));
-
-		arguments.transaction.advise(this, "^save");
-		arguments.transaction.advise(this, "^delete");
-
+		
+		/* Return */
 		return this;
 	</cfscript>
 </cffunction>
@@ -214,6 +210,17 @@ $Build ID:	@@build_id@@
 			saveContent(arguments.content);
 		</cfscript>
 	</cflock>
+</cffunction>
+
+<!--- getPages --->
+<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki">
+	<cfscript>
+		var query = 0;
+		
+		query = getTransfer().list('wiki.Page','name');
+		
+		return query;
+	</cfscript>
 </cffunction>
 
 <cffunction name="getPagesByCategory" hint="Returns Pages by Category" access="public" returntype="query" output="false">
@@ -392,7 +399,7 @@ $Build ID:	@@build_id@@
 				criteria="#arguments.search#"
 				>
 		<cfcatch>
-			<cfset status = {error="Search currently not available"} />
+			<cfset status = {error="Search currently not available. #cfcatch.Message#"} />
 			<cfreturn status />
 		</cfcatch>
 	</cftry>
@@ -463,24 +470,6 @@ $Build ID:	@@build_id@@
 
 		return content;
 	</cfscript>
-</cffunction>
-
-<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
-	<cfreturn instance.transfer />
-</cffunction>
-
-<cffunction name="setTransfer" access="private" returntype="void" output="false">
-	<cfargument name="transfer" type="transfer.com.Transfer" required="true">
-	<cfset instance.transfer = arguments.transfer />
-</cffunction>
-
-<cffunction name="getDatasource" access="private" returntype="transfer.com.sql.Datasource" output="false">
-	<cfreturn instance.datasource />
-</cffunction>
-
-<cffunction name="setDatasource" access="private" returntype="void" output="false">
-	<cfargument name="datasource" type="transfer.com.sql.Datasource" required="true">
-	<cfset instance.datasource = arguments.datasource />
 </cffunction>
 
 <cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">

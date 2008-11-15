@@ -20,24 +20,28 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="SecurityService" hint="This service takes care of authentication and security." output="false">
+<cfcomponent name="SecurityService" 
+			 hint="This service takes care of authentication and security." 
+			 output="false"
+			 extends="codex.model.baseobjects.BaseService">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="SecurityService" output="false">
 		<!--- ************************************************************* --->
-		<cfargument name="configBean" 	hint="the ColdBox config Bean" type="coldbox.system.beans.configBean" required="Yes">
-		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="coldbox.system.beans.configBean" required="Yes">
+		<cfargument name="transfer" 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 		<!--- ************************************************************* --->
 		<cfscript>
-			instance = StructNew();
-
-			/* User session Key */
-			setUserSessionKey('auth_user_id');
-			setConfigBean(arguments.configBean);
+			/* Init */
+			super.init(argumentCollection=arguments);
 			
-			setTransfer(arguments.transfer);
+			/* Set properties */
+			instance.UserSessionKey = 'auth_user_id';
+			instance.configBean = arguments.configBean;
+			
+			/* Advices */
 			arguments.transaction.advise(this, "^sendPasswordReminder");
 			
 			return this;
@@ -208,10 +212,6 @@ $Build ID:	@@build_id@@
 	<cffunction name="getconfigBean" access="public" returntype="coldbox.system.beans.configBean" output="false">
 		<cfreturn instance.configBean>
 	</cffunction>
-	<cffunction name="setconfigBean" access="public" returntype="void" output="false">
-		<cfargument name="configBean" type="coldbox.system.beans.configBean" required="true">
-		<cfset instance.configBean = arguments.configBean>
-	</cffunction>
 	
 	<!--- getter and setter for UserService --->
 	<cffunction name="getUserService" access="public" returntype="codex.model.security.UserService" output="false">
@@ -226,25 +226,9 @@ $Build ID:	@@build_id@@
 	<cffunction name="getuserSessionKey" access="public" returntype="string" output="false">
 		<cfreturn instance.userSessionKey>
 	</cffunction>
-	<cffunction name="setuserSessionKey" access="public" returntype="void" output="false">
-		<cfargument name="userSessionKey" type="string" required="true">
-		<cfset instance.userSessionKey = arguments.userSessionKey>
-	</cffunction>
 	
-	<!--- Get Set Transfer --->
-	<cffunction name="getTransfer" access="private" returntype="transfer.com.Transfer" output="false">
-		<cfreturn instance.transfer />
-	</cffunction>	
-	<cffunction name="setTransfer" access="private" returntype="void" output="false">
-		<cfargument name="transfer" type="transfer.com.Transfer" required="true">
-		<cfset instance.transfer = arguments.transfer />
-	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	<!--- Get the util object --->
-	<cffunction name="getUtil" output="false" access="private" returntype="codex.model.util.utility" hint="Utility Object">
-		<cfreturn CreateObject("component","codex.model.util.utility")>
-	</cffunction>
 
 </cfcomponent>

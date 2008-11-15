@@ -28,8 +28,8 @@ $Build ID:	@@build_id@@
 			 cache="true" cacheTimeout="0">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" type="ioc" scope="instance" />
-
+	<cfproperty name="WikiService" 	type="ioc" scope="instance" />
+	<cfproperty name="SearchEngine" type="ioc" scope="instance" />
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<cffunction name="init" access="public" returntype="page" output="false">
@@ -55,7 +55,7 @@ $Build ID:	@@build_id@@
 			rc.onShowHistory="page/showHistory";
 			
 			//default page comes from the settings
-			arguments.event.paramValue("page", getSetting('DefaultPage') );
+			arguments.event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
 			
 			/* Appends CSS & JS */
 			rc.cssAppendList = "wiki.show";
@@ -196,16 +196,19 @@ $Build ID:	@@build_id@@
 	<cffunction name="search" hint="searchs active pages" access="public" returntype="void" output="false">
 		<cfargument name="event" type="any">
 		<cfscript>
+			var rc = event.getCollection();
 			var search_query = arguments.event.getValue("search_query", "");
-			var result = getWikiService().searchWiki(search_query);
-	
-			arguments.event.setValue("result", result);
+			var result = instance.SearchEngine.search(search_query);
 	
 			/* Messagebox when search is not available */
-			if ( StructKeyExists(arguments.event.getValue("result"), "error") ){
-				getPlugin("messagebox").setMessage("warning", arguments.event.getValue("result").error );
+			if ( StructKeyExists(result, "error") ){
+				getPlugin("messagebox").setMessage("error", result.error );
 			}
-	
+			else{
+				/* Render Results */
+				rc.searchResults = instance.SearchEngine.renderSearch(result,arguments.event,getController());
+			}
+			/* Set View to render */
 			arguments.event.setView("wiki/search");
 		</cfscript>
 	</cffunction>
@@ -226,7 +229,7 @@ $Build ID:	@@build_id@@
 			/* Get Content */
 			oContent = rc.page.getNewContentVersion(rc);
 			/* Validate Content */
-			messages = oContent.validate();
+			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
 			if(ArrayLen(messages))
 			{
 				/* MB & content set */

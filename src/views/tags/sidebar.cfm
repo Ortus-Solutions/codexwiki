@@ -45,8 +45,9 @@ $Build ID:	@@build_id@@
 		<li><a href="#event.buildLink(rc.xehAdmin,0)#.cfm">Admin Dashboard</a></li>
 		<li><a href="#event.buildLink(rc.xehAdminUsers,0)#.cfm">User Management</a></li>
 		<li><a href="#event.buildLink(rc.xehAdminCustomHTML,0)#.cfm">Custom HTML</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminAPI,0)#.cfm">API Docs</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminOptions,0)#.cfm">System Options</a></li>
 		<li><a href="#event.buildLink(rc.xehadminlookups,0)#.cfm">System Lookups</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminAPI,0)#.cfm">API Docs</a></li>
 	</ul>
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
@@ -63,7 +64,7 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#pageShowRoot(getSetting('DefaultPage'))#.cfm">Dashboard</a></li>
+		<li><a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm">Dashboard</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialHelp)#.cfm">Help</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#.cfm">Rss Feeds</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category List</a></li>

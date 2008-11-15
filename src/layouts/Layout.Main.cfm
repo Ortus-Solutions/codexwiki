@@ -28,4 +28,9 @@ $Build ID:	@@build_id@@
 	</cfloop>	<!--- Global JS --->	<script type="text/javascript" src="includes/scripts/jquery-1.2.3.pack.js"></script>	<script type="text/javascript" src="includes/scripts/codex.js"></script>	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">		<script type="text/javascript" src="includes/scripts/#js#.js"></script>	</cfloop>
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<script type="text/javascript" src="#js#.js"></script>
-	</cfloop>	<!--- Render Title --->	#renderView('tags/title')#	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeHeadEnd()#	</cfoutput></head><cfoutput><body>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getafterBodyStart()#	<!-- wrap starts here -->	<div id="wrap">		<!-- header -->		#renderView('tags/header')#		<!-- Sidebar -->		<div id="sidebar" >			#renderView('tags/sidebar')#		</div>				<!-- Main -->		<div id="main">			#renderView()#		</div>		</div>	<!-- wrap ends here -->	<!-- footer starts here -->	<div class="footer">		#renderView('tags/footer')#	</div>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeBodyEnd()#</body></cfoutput></html>
+	</cfloop>	<!--- Render Title --->	#renderView('tags/title')#	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeHeadEnd()#	</cfoutput></head><cfoutput><body>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getafterBodyStart()#	<!-- wrap starts here -->	<div id="wrap">		<!-- header -->		#renderView('tags/header')#		<!-- Sidebar -->		<div id="sidebar" >
+			<!--- Render Custom HTML --->
+			#rc.oCustomHTML.getBeforeSideBar()#			<!--- Render SideBar --->
+			#renderView('tags/sidebar')#
+			<!--- Render Custom HTML --->
+			#rc.oCustomHTML.getAfterSideBar()#		</div>				<!-- Main -->		<div id="main">			#renderView()#		</div>		</div>	<!-- wrap ends here -->	<!-- footer starts here -->	<div class="footer">		#renderView('tags/footer')#	</div>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeBodyEnd()#</body></cfoutput></html>

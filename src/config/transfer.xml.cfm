@@ -56,9 +56,17 @@
 			<property name="beforeHeadEnd" type="string" column="customHTML_beforeHeadEnd" />
 			<property name="afterBodyStart" type="string" column="customHTML_afterBodyStart" />
 			<property name="beforeBodyEnd" type="string" column="customHTML_beforeBodyEnd" />
+			<property name="afterSideBar" type="string" column="customHTML_afterSideBar" />
+			<property name="beforeSideBar" type="string" column="customHTML_beforeSideBar" />
 			<property name="modifyDate" type="date" column="customHTML_modify_date"/>
 		</object>
 
+		<object name="Option" table="wiki_options" decorator="codex.model.wiki.Option">
+			<id name="option_id" type="UUID" generate="true" />
+			<property name="name"  type="string" column="option_name" />
+			<property name="value"  type="string" column="option_value" />
+		</object>
+		
   	</package>
 
 	<!--Security Package -->

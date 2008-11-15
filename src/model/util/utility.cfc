@@ -22,67 +22,43 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="utility" hint="A utility component for developer usage." output="false">
 
-<!------------------------------------------- TIMER METHODS ------------------------------------------->
-
-	<cffunction name="timerStart" access="public" returntype="void" output="false" hint="Start the timer with label.">
-		<cfargument name="Label" 	 required="true" type="string">
-		<!--- Create request timer --->
-		<cfset var timerStruct = structnew()>
-		<cfset timerStruct.stime = getTickcount()>
-		<cfset timerStruct.label = arguments.label>
-		<!--- Place in request scope --->
-		<cfset request[hash(arguments.label)] = timerStruct>
-	</cffunction>
-
-	<!--- ************************************************************* --->
-
-	<cffunction name="timerStop" access="public" returntype="void" output="false" hint="Stop the timer with label">
-		<cfargument name="Label" 	 required="true" type="string">
-		<cfset var stopTime = getTickcount()>
-		<cfset var timerStruct = "">
-		<cfset var labelhash = hash(arguments.label)>
-
-		<!--- Check if the label exists --->
-		<cfif StructKeyExists(request,labelhash)>
-			<cfset timerStruct = request[labelhash]>
-			<cfset addRow(timerStruct.label,stopTime - timerStruct.stime)>
-		<cfelse>
-			<cfset addRow("#arguments.label# invalid",0)>
-		</cfif>
-	</cffunction>
-
-	<!--- ************************************************************* --->
-
-	<cffunction name="logTime" access="public" returntype="void" output="false" hint="Use this method to add a new timer entry to the timers.">
-		<cfargument name="Label" 	 required="true" type="string" hint="The lable of the timer.">
-		<cfargument name="Tickcount" required="true" type="string" hint="The tickcounts of the time.">
-		<cfset addRow(arguments.label,arguments.tickcount)>
+	<cffunction name="sleeper" access="public" returntype="void" output="false" hint="Make the main thread of execution sleep for X amount of seconds.">
+		<!--- ************************************************************* --->
+		<cfargument name="milliseconds" type="numeric" required="yes" hint="Milliseconds to sleep">
+		<!--- ************************************************************* --->
+		<cfset CreateObject("java", "java.lang.Thread").sleep(arguments.milliseconds)>
 	</cffunction>
 	
-	<!--- ************************************************************* --->
-	
-	<cffunction name="getTimerScope" access="public" returntype="query" output="false">
-		<!---Get the timer scope if it exists, else create it --->
-		<cfif not structKeyExists(request,"DebugTimers")>
-			<cfset request.DebugTimers = QueryNew("Method,Time,Timestamp")>
-		</cfif>
-		<cfreturn request.DebugTimers>
-	</cffunction>
-
-	<!--- ************************************************************* --->
-
-	<cffunction name="addRow" access="public" returntype="void" output="false">
-		<cfargument name="Label" 	 required="true" type="string" hint="The lable of the timer.">
-		<cfargument name="Tickcount" required="true" type="string" hint="The tickcounts of the time.">
+	<!--- Get File Last Modified --->
+	<cffunction name="FileLastModified" access="public" returntype="string" output="false" hint="Get the last modified date of a file">
+		<!--- ************************************************************* --->
+		<cfargument name="filename" type="string" required="yes">
+		<!--- ************************************************************* --->
 		<cfscript>
-		var qTimer = getTimerScope();
-		QueryAddRow(qTimer,1);
-		QuerySetCell(qTimer, "Method", arguments.Label);
-		QuerySetCell(qTimer, "Time", arguments.Tickcount);
-		QuerySetCell(qTimer, "Timestamp", now());
+		var objFile =  createObject("java","java.io.File").init(JavaCast("string",arguments.filename));
+		// Calculate adjustments fot timezone and daylightsavindtime
+		var Offset = ((GetTimeZoneInfo().utcHourOffset)+1)*-3600;
+		// Date is returned as number of seconds since 1-1-1970
+		return DateAdd('s', (Round(objFile.lastModified()/1000))+Offset, CreateDateTime(1970, 1, 1, 0, 0, 0));
 		</cfscript>
 	</cffunction>
-
+	
+	<!--- Get Absolute Path --->
+	<cffunction name="getAbsolutePath" access="public" output="false" returntype="string" hint="Turn any system path, either relative or absolute, into a fully qualified one">
+		<!--- ************************************************************* --->
+		<cfargument name="path" type="string" required="true" hint="Abstract pathname">
+		<!--- ************************************************************* --->
+		<cfscript>
+		var FileObj = CreateObject("java","java.io.File").init(JavaCast("String",arguments.path));
+		if(FileObj.isAbsolute()){
+			return arguments.path;
+		}
+		else{
+			return ExpandPath(arguments.path);
+		}
+		</cfscript>
+	</cffunction>
+	
 <!------------------------------------------- UTILITY METHODS ------------------------------------------->
 
 	<cffunction name="throw" access="public" hint="Facade for cfthrow" output="false">
@@ -94,23 +70,27 @@ $Build ID:	@@build_id@@
 		<!--- ************************************************************* --->
 		<cfthrow type="#arguments.type#" message="#arguments.message#"  detail="#arguments.detail#" extendedinfo="#arguments.extendedinfo#">
 	</cffunction>
-
-	<!--- ************************************************************* --->
-
-	<cffunction name="dump" access="public" hint="Facade for cfmx dump" returntype="void">
-		<cfargument name="var" required="yes" type="any">
-		<cfdump var="#var#">
+	
+	<!--- ReThrow --->
+	<cffunction name="rethrow" access="public" hint="Facade for rethrow" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="exception" type="any" required="true" hint="The exception object"/>
+		<!--- ************************************************************* --->
+		<cfthrow object="#arguments.exception#">
 	</cffunction>
 
-	<!--- ************************************************************* --->
+	
+	<cffunction name="dump" access="public" hint="Facade for cfmx dump" returntype="void">
+		<cfargument name="var" required="yes" type="any">
+		<cfargument name="abort" type="boolean" required="false" default="false"/>
+		<cfdump var="#var#"><cfif arguments.abort><cfabort></cfif>
+	</cffunction>
 
+	
 	<cffunction name="abort" access="public" hint="Facade for cfabort" returntype="void" output="false">
 		<cfabort>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
-	
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->
 

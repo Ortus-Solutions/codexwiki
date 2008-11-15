@@ -46,28 +46,28 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
-<form action="#getSetting('sesBaseURL')#/#rc.xehonSubmit#" method="post" class="uniForm" onsubmit="submitForm()">
-	<div class="blockLabels">
-		<div class="ctrlHolder">
-		     <label for="comment"><em>*</em> Before Head End</label>
-		     <textarea name="beforeHeadEnd" id="beforeHeadEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeHeadEnd()#</textarea>
-		</div>
-		<div class="ctrlHolder">
-		     <label for="comment"><em>*</em> After Body Start</label>
-		     <textarea name="afterBodyStart" id="afterBodyStart" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getafterBodyStart()#</textarea>
-		</div>
-		<div class="ctrlHolder">
-		     <label for="comment"><em>*</em> Before Body End</label>
-		     <textarea name="beforeBodyEnd" id="beforeBodyEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeBodyEnd()#</textarea>
-		</div>
-	</div>
-
+<form action="#event.buildLink(rc.xehonSubmit,0)#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
+    <label for="beforeHeadEnd"> Before Head End</label>
+    <textarea name="beforeHeadEnd" id="beforeHeadEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeHeadEnd()#</textarea>
+    
+	<label for="afterBodyStart"> After Body Start</label>
+    <textarea name="afterBodyStart" id="afterBodyStart" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getafterBodyStart()#</textarea>
+    
+	<label for="beforeBodyEnd"> Before Body End</label>
+    <textarea name="beforeBodyEnd" id="beforeBodyEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeBodyEnd()#</textarea>
+		
+	<label for="beforeSideBar"> Before Side Bar</label>
+    <textarea name="beforeSideBar" id="beforeSideBar" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeSideBar()#</textarea>
+	
+	<label for="afterSideBar"> After Side Bar</label>
+    <textarea name="afterSideBar" id="afterSideBar" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getAfterSideBar()#</textarea>
+	
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>
 

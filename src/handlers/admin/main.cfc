@@ -31,6 +31,11 @@ $Build ID:	@@build_id@@
 	<cffunction name="home" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext">
 		<cfscript>
+			var rc = event.getCollection();
+			
+			/* Sorted Options */
+			rc.sortedOptions = structSort(rc.CodexOptions);
+				
 			event.setView('admin/home');
 		</cfscript>
 	</cffunction>

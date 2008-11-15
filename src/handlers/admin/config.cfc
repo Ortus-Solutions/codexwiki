@@ -28,16 +28,17 @@ $Build ID:	@@build_id@@
 
 	<!--- Dependencies --->
 	<cfproperty name="ConfigService" type="ioc" scope="instance">
+	<cfproperty name="WikiService"	 type="ioc" scope="instance">
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<!--- custom html --->
 	<cffunction name="customhtml" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			
-			rc.xehonSubmit = "admin.config/savecustomhtml.cfm"; 
+			rc.xehonSubmit = "admin.config/savecustomhtml"; 
 			
 			rc.jsAppendList = "jquery.textarearesizer.compressed";
 			
@@ -50,7 +51,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- custom html --->
 	<cffunction name="savecustomhtml" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfargument name="Event" type="any">
 		<cfscript>
 			var oCustomHTML = "";
 			
@@ -71,33 +72,61 @@ $Build ID:	@@build_id@@
 
 	<!--- options --->
 	<cffunction name="options" access="public" returntype="void" output="false" hint="Wiki options">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
 			var rc = event.getCollection();	
 			
 			/* Exit Handlers */
-			rc.xehOnSubmit = "admin.config/saveoptions.cfm";
-			rc.xehReinitApp = "admin.config/doReinit.cfm";
+			rc.xehOnSubmit = "admin.config/saveoptions";
+			rc.xehReinitApp = "admin.config/doReinit";
+			
+			/* Required */
+			rc.jsAppendList = 'formvalidation,jquery.uitablefilter';
+			/* All Pages */
+			rc.qPages = getWikiService().getPages();	
 			
 			/* Set View */
 			event.setview('admin/config/options');	
 		</cfscript>    
 	</cffunction>
 	
+	<!--- saveOptions --->
+	<cffunction name="saveOptions" access="public" returntype="void" output="false" hint="Save wiki options">
+		<cfargument name="Event" type="any" required="yes">
+		<cfscript>	
+			var rc = event.getCollection();
+			var oOption = 0;
+			var newOptions = structnew();
+			
+			/* Loop and Save Options */
+			for(key in rc.CodexOptions){
+				/* Get Option */
+				oOption = instance.ConfigService.getOption(name=key);
+				/* Populate it */
+				oOption.setValue(rc[key]);
+				newOptions[key] = rc[key];
+				/* Save */
+				instance.ConfigService.save(oOption);	
+			}
+			/* Re-Cache */
+			getColdboxOCM().set("CodexOptions",newOptions,0);
+			/* Mb */
+			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
+			/* Re-Route */
+			setNextRoute(route="admin.config/options");
+		</cfscript>
+	</cffunction>
+	
 	<!--- doReinit --->
 	<cffunction name="doReinit" access="public" returntype="void" output="false" hint="Reinit the application">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
-		    var pass = getSetting('ReinitPassword');
 		    
-			/* Validate password. */
-			if( pass neq "" and CompareNoCase(pass,event.getvalue('fwreinit','')) neq 0){
-				getPlugin("messagebox").setMessage(type="error", message="The password you entered is incorrect.");
-				setNextRoute('admin.config/options');
-			}
-			
-			/* If I reach here, then the pass validated and the app reinited. */
-			getPlugin("messagebox").setMessage(type="info", message="Application reinitialized successfully");
+		    /* Flag for Reinit */
+		    getController().setColdboxInitiated(false);
+		    /* MB */
+			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
+			/* Re Route */
 			setNextRoute('admin.config/options');
 		</cfscript>     
 	</cffunction>
@@ -107,6 +136,10 @@ $Build ID:	@@build_id@@
 	
 	<cffunction name="getConfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">
 		<cfreturn instance.ConfigService />
+	</cffunction>
+	
+	<cffunction name="getWikiService" access="public" returntype="codex.model.wiki.WikiService" output="false">
+		<cfreturn instance.WikiService>
 	</cffunction>
 
 </cfcomponent>

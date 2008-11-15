@@ -31,6 +31,8 @@ $Build ID:	@@build_id@@
 <p>
 &copy; 2008 <strong>Compound Theory & Ortus Solutions</strong> &nbsp;&nbsp;
 Design by: <a href="http://www.styleshout.com/">styleshout</a>
+<br />
+Running <a href="http://www.codexwiki.org">CodexWiki</a> v#getSetting("Codex").Version# #getSetting("Codex").suffix#
 
 </p>
 </cfoutput>

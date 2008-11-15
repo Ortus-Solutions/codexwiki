@@ -20,31 +20,36 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="task"
-			 extends="codex.handlers.baseHandler"
-			 output="false"
-			 hint="runs scheduled tasks"
-			 autowire="true"
-			 cache="true" 
-			 cacheTimeout="0">
+<cfcomponent extends="transfer.com.TransferDecorator" hint="A wiki option" output="false">
 
-	<!--- Dependencies --->
-	<cfproperty name="SearchEngine" type="ioc" scope="instance">
-	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-	<cffunction name="refreshSearch" hint="refreshes the search index" access="public" returntype="void" output="false">
-		<cfargument name="event" type="any">
+	<!--- Scaffolding Table Config --->
+	<cffunction name="gettableConfig" access="public" returntype="struct" output="false" hint="Get the table config for scaffolding">
+		<cfreturn instance.tableConfig>
+	</cffunction>
+	<cffunction name="settableConfig" access="public" returntype="void" output="false" hint="Set the table config for scaffolding">
+		<cfargument name="tableConfig" type="struct" required="true">
+		<cfset instance.tableConfig = arguments.tableConfig>
+	</cffunction>
+
+<!------------------------------------------- PACKAGE ------------------------------------------->
+
+<!------------------------------------------- PRIVATE ------------------------------------------->
+
+	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
 		<cfscript>
-			instance.SearchEngine.refreshSearch();
-	
-			arguments.event.noRender();
+			/* Table Config for scaffolding*/
+			var tc = structnew();
+			
+			tc.SortBy = "name";
+			
+			tc.name.maxlength = 255;
+						
+			/* Set the config */
+			setTableConfig(tc);
 		</cfscript>
 	</cffunction>
 	
-<!------------------------------------------- PACKAGE ------------------------------------------->
-	
-<!------------------------------------------- PRIVATE ------------------------------------------->
-
 
 </cfcomponent>

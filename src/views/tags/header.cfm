@@ -23,13 +23,13 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <!--- Main Header And Tabs --->
 <div id="header">
-	<span id="slogan">CodexWiki</span>
+	<span id="slogan">CodexWiki v#getSetting("Codex").Version# #getSetting("Codex").suffix#</span>
 	<!-- tabs -->
 	<cfif not event.valueExists("print")>
 	<ul>
 		<!--- Wiki Tab --->
 		<li <cfif refindnocase("^page",event.getCurrentHandler())>id="current"</cfif>>
-			<a href="#pageShowRoot(getSetting('DefaultPage'))#.cfm"><span>Wiki</span></a>
+			<a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm"><span>Wiki</span></a>
 		</li>
 
 		<cfif rc.oUser.getisAuthorized()>
@@ -51,7 +51,7 @@ $Build ID:	@@build_id@@
 
 <!--- Sub Header --->
 <div id="header-logo">
-	<div id="logo"><h1>#getSetting("WikiName")#</h1></div>
+	<div id="logo"><h1>#rc.CodexOptions.wiki_name#</h1></div>
 	<cfif not event.valueExists("print")>
 	<form method="post" class="search" action="#event.buildLink(rc.xehWikiSearch)#.cfm">
 		<p><input name="search_query" class="textbox" type="text" />

@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfscript>
 	htmlBaseURL = getController().getSetting("htmlBaseURL");
-	wikiName = getController().getSetting("WikiName");
+	wikiName = getColdBoxOCM().get("CodexOptions").wiki_name;
 
 	function getSetting(arg)
 	{
@@ -71,10 +71,6 @@ $Build ID:	@@build_id@@
 		<!--- Sub Header --->
 		<div id="header-logo">
 			<div id="logo">Code<span class="red">X</span></div>
-			<form method="post" class="search" action="" onsubmit="window.alert('Not implemented'); return false">
-				<p><input name="search_query" class="textbox" type="text" />
-						<input name="search" class="searchbutton" value="Search" type="submit" /></p>
-			</form>
 		</div>
 
 		<div id="main">

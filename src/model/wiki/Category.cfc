@@ -35,7 +35,7 @@ $Build ID:	@@build_id@@
 		<cfoutput>
 == Category: #getName()# ==
 
-All pages under the Category '#getName()#':
+All pages under the Category ''#getName()#'':<br/>
 <feed url="/feed/page/listByCategory.cfm?category=#getName()#" display="numbered" />
 		</cfoutput>
 		</cfsavecontent>

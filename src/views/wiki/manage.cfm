@@ -93,7 +93,7 @@ $Build ID:	@@build_id@@
 
 		<!--- Comment Editing --->
 		<div class="ctrlHolder">
-		     <label for="comment"><em>*</em> Edit Comment</label>
+		     <label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Edit Comment</label>
 		     <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
 		</div>
 	</div>

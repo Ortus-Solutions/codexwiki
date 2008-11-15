@@ -36,25 +36,22 @@
 	<YourSettings>
 		<!-- Codex System Information -->
 		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Alpha'}" />
-		<!--Wiki config settings -->
-		<Setting name="WikiName" 					value="Codex Base Install"/>
 		<!--Transfer Settings -->
 		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>
 		<!-- Wiki Keys -->
 		<Setting name="ShowKey" 					value="wiki"/>
-		<Setting name="DefaultPage" 				value="Dashboard"/>
 		<!-- Lookups Settings -->
 		<Setting name="lookups_tables"	value="{'Permissions':'security.Permission', 
 												'Roles':'security.Role', 
-												'Security Rules':'security.SecurityRules'}" />		
+												'Security Rules':'security.SecurityRules',
+												'System Options':'wiki.Option',
+												'Wiki Namespaces':'wiki.Namespace',
+												'Wiki Categories':'wiki.Category'}" />		
 		<Setting name="lookups_imgPath"	value="includes/lookups/images" />
 		<Setting name="lookups_cssPath"	value="includes/lookups/styles" />
 		<Setting name="lookups_jsPath"	value="includes/lookups/js" />
-		<!-- Paging Max Rows -->
-		<Setting name="PagingMaxRows" 				value="10"/>
-		<Setting name="PagingBandGap" 				value="5"/>	
 	</YourSettings>
 
 	<MailServerSettings />

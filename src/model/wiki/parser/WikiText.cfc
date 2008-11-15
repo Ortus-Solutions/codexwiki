@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiText" output="false">
-	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
+	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfscript>
 		variables.instance = StructNew();
 		variables.static = StructNew();
@@ -33,7 +33,7 @@ $Build ID:	@@build_id@@
 
 		initJavaLoader();
 
-		setLinkPattern(arguments.coldBoxController.getSetting('htmlBaseURL') & "/" & arguments.coldboxController.getSetting("ShowKey") & "/${title}.cfm");
+		setLinkPattern(arguments.configBean.getKey('sesBaseURL') & "/" & arguments.configBean.getKey("ShowKey") & "/${title}.cfm");
 
 		//this will eventually get replaced when we implement images
 		setImagePattern("image/${image}.cfm");
