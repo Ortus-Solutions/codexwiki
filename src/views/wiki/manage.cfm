@@ -86,6 +86,11 @@ $Build ID:	@@build_id@@
 	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 	
 	<!--- Control Holder & Text Area --->
+	<div class="float-right">
+		<a href="#pageShowRoot('Help:Cheatsheet')#.cfm">Markup Cheatsheet</a>
+		| 
+		<a href="#pageShowRoot('Help:Contents')#.cfm">Wiki Help</a>
+	</div>
 	<label for="content"><em>*</em> Wiki Content</label>
 	<textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	

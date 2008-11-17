@@ -213,6 +213,22 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
+	<!--- directory --->
+	<cffunction name="directory" access="public" returntype="void" output="false" hint="Pages Directory">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	    <cfscript>
+			var rc = event.getCollection();
+			
+			/* Required */
+			rc.jsAppendList = 'jquery.uitablefilter';
+			/* Get All Pages */
+			rc.qPages = getWikiService().getPages();	
+			
+			/* View */
+			event.setView('wiki/directory');
+		</cfscript> 
+	</cffunction>
+	
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->

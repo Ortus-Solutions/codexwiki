@@ -52,6 +52,7 @@ $Build ID:	@@build_id@@
 			rc.xehAdminOptions = "admin/config/options";			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile/user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.showKey#/Help:Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
 			rc.xehSpecialCategory = "#instance.showKey#/Special:Categories";
 			rc.xehWikiSearch = "page/search";
+			rc.xehPageDirectory = "page/directory";
 			
 			/* User Exit Handlers */			rc.xehUserdoLogin = "user/doLogin";			rc.xehUserLogin = "user/login";			rc.xehUserLogout = "user/logout";			rc.xehUserRegistration = "user/registration";			rc.xehUserReminder = "user/reminder";			/* Get a user from session */			rc.oUser = getSecurityService().getUserSession();			/* Get the wiki's custom HTML */			rc.oCustomHTML = getConfigService().getCustomHTML();			/* Get the wiki's Options */
 			rc.CodexOptions = getColdboxOCM().get('CodexOptions');			/* Printable Doctype Check */

@@ -67,7 +67,9 @@ $Build ID:	@@build_id@@
 		<li><a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm">#rc.codexOptions.wiki_defaultpage_label#</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialHelp)#.cfm">Help</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#.cfm">Rss Feeds</a></li>
-		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category List</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category Listing</a></li>
+		<li><a href="#event.buildLink(rc.xehPageDirectory)#.cfm">Wiki Page Directory</a></li>
+		
 	</ul>
 </div>
 </cfif>

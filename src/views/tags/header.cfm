@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 	<cfif not event.valueExists("print")>
 	<ul>
 		<!--- Wiki Tab --->
-		<li <cfif refindnocase("^page",event.getCurrentHandler())>id="current"</cfif>>
+		<li <cfif refindnocase("^page",event.getCurrentEvent())>id="current"</cfif>>
 			<a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm"><span>Wiki</span></a>
 		</li>
 
