@@ -1,4 +1,3 @@
-<cfsilent>
 <!-----------------------------------------------------------------------
 ********************************************************************************
 Copyright 2008 by 
@@ -21,4 +20,20 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-</cfsilent>
+<cfoutput>
+<h2>
+	<img src="includes/images/user.png" align="absmiddle"> Registration Validation
+</h2>
+
+<!--- Messagebox --->
+#getPlugin("messagebox").renderit()#
+
+<p>
+	<cfif rc.oUser.getisConfirmed()>
+		You can now start using this wiki. Please follow this <a href="#event.buildLink(rc.xehUserLogin)#.cfm">link to login</a> to the system.
+	<cfelse>
+		Your user could not be confirmed. Either your user does not exist or the confirmation number is wrong.
+	</cfif>
+</p>
+
+</cfoutput>

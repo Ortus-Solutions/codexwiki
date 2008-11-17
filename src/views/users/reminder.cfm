@@ -24,19 +24,29 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			$('##_buttonbar').slideUp("fast");
-			$('##_loader').fadeIn("slow");
-		}
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Form Validation */
+		$('##reminderform').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			alias		: 'dName',
+			callback	: 'submitForm'
+		});			
+	});
+	function submitForm(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+		return true;
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<h1>
+<h2>
 	<img src="includes/images/key.png" align="absmiddle"> Password Reminder
-</h1>
+</h2>
 
 <p>
 Please enter your email address below and click the Send Password button. This will generate a new temporary password and email it to you.
@@ -46,13 +56,15 @@ Please enter your email address below and click the Send Password button. This w
 <!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
-<form name="reminderform" id="reminderform" method="post" action="#event.buildLink(rc.xehDoReminder)#.cfm" onsubmit="submitForm()">
+<form name="reminderform" id="reminderform" method="post" action="#event.buildLink(rc.xehDoReminder)#.cfm">
 
 	<p class="align-center">
 	<br /><br />
 	<label for="email" class="inline">Email</label>
 	<input type="text" name="email" id="email"
 		   size="50"
+		   dName="Email Address"
+		   required="true"
 		   maxlength="255"/>
 	</p>
 	

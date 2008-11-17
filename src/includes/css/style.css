@@ -506,6 +506,7 @@ div.grippie {
 .inline { display: inline; }
 .clear { clear: both; }
 .red   { color: #CC0000; }
+.green { color: green}
 .blue   { color: #003366; }
 .bold { font-weight: bold; }
 

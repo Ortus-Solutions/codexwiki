@@ -24,19 +24,30 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			$('##_buttonbar').slideUp("fast");
-			$('##_loader').fadeIn("slow");
-		}
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Form Validation */
+		$('##loginform').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			alias		: 'dName',
+			callback	: 'submitForm'
+		});			
+	});
+	
+	function submitForm(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+		return true;
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<h1>
+<h2>
 	<img src="includes/images/key.png" align="absmiddle"> User Login
-</h1>
+</h2>
 
 <p>
 Log in to the wiki system by using the form below.
@@ -48,15 +59,15 @@ Log in to the wiki system by using the form below.
 <!--- Message Box --->
 #getPlugin("messagebox").renderit()#
 
-<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm" onsubmit="submitForm()">
+<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm">
 
 	<p class="align-center">
 		<br /><br />
 		<label for="username" class="inline">Username</label>
-		<input type="text" name="username" id="username" size="30" maxlength="50"/>
+		<input type="text" name="username" id="username" size="30" maxlength="50" dName="Username" required="true"/>
 		<br /><br />
 		<label for="username" class="inline">Password</label>
-		<input type="password" name="password" id="password" size="30" maxlength="50"/>
+		<input type="password" name="password" id="password" size="30" maxlength="50" dName="Password" required="true"/>
 	</p>
 
 	<br />

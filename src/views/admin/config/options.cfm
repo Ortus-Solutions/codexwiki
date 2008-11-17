@@ -102,7 +102,16 @@ $Build ID:	@@build_id@@
 			   size="60" required="true" mask="email">
      	<br /><br />
 		
+		<!--- Wiki Default Role --->
+		<label for="wiki_defaultrole_id">Default Role</label>
+		The default role assigned to users when they register for this wiki.<br />
+		<select name="wiki_defaultrole_id" id="wiki_defaultrole_id" required="true" dName="Default Role" style="width:200px">
+			<cfloop query="rc.qRoles">
+				<option value="#roleid#" <cfif roleid eq rc.CodexOptions.wiki_defaultrole_id>selected="selected"</cfif>>#role#</option>
+			</cfloop>
+		</select>
 		
+		<br /><br />
 		<!--- Default Page --->
 		<label for="wiki_defaultpage_label">Wiki Default Page Label</label>
      	The label for the menu item for the default wiki page.<br />
@@ -174,6 +183,10 @@ $Build ID:	@@build_id@@
 			   value="0">No
 		
 		<br /><br />
+	</fieldset>
+	
+	<fieldset>
+		<legend>Paging Options</legend>
 		<!--- Max Rows --->
 		<label for="wiki_paging_maxrows">Paging Max Rows</label>
 		The maximum number of rows for paging.<br />

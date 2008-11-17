@@ -64,7 +64,7 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm">Dashboard</a></li>
+		<li><a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm">#rc.codexOptions.wiki_defaultpage_label#</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialHelp)#.cfm">Help</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#.cfm">Rss Feeds</a></li>
 		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category List</a></li>
@@ -77,6 +77,7 @@ $Build ID:	@@build_id@@
 <!--- User Login Box --->
 <!--- ***************************************************************************************************** --->
 
+	
 <cfif not rc.oUser.getisAuthorized()>
 	<h1> <img src="includes/images/key.png" align="absmiddle"> User Login </h1>
 <cfelse>
@@ -86,39 +87,54 @@ $Build ID:	@@build_id@@
 <div class="left-box">
 	
 	<cfif not rc.oUser.getisAuthorized()>
+		<!--- Only show for non login event --->
+		<cfif not listfindnocase("user.login,user.registration",event.getCurrentEvent())>
+		<!--- Don't Show if in login event' --->
 		<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm" onsubmit="onLoginForm()">
-		<!--- ref Route --->
-		<input type="hidden" name="refRoute" value="#cgi.script_name#" />
-		<p>
-		<label for="username">Username</label>
-		<input type="text" name="username" id="username" size="20" maxlength="50" />
-		
-		<label for="username">Password</label>
-		<input type="password" name="password" id="password" size="20" maxlength="50" />
-		
-		<br />
-		
-		<!--- Loader --->
-		<div id="_loader_login" class="align-center formloader">
+			<!--- ref Route --->
+			<input type="hidden" name="refRoute" value="#cgi.script_name#" />
 			<p>
-				Submitting...<br />
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username" size="20" maxlength="50" />
+			
+			<label for="username">Password</label>
+			<input type="password" name="password" id="password" size="20" maxlength="50" />
+			
+			<br />
+			
+			<!--- Loader --->
+			<div id="_loader_login" class="align-center formloader">
+				<p>
+					Submitting...<br />
+					<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+					<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				</p>
+			</div>
+			
+			<!--- Button Bar --->
+			<div align="center" id="_buttonbar_login">
+				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
+				<!--- Registration Permission Link --->
+				<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<br /><br />
+				<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
+			</div>
+			<br />
 			</p>
-		</div>
-		
-		<!--- Button Bar --->
-		<div align="center" id="_buttonbar_login">
-			<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
-			<!--- Registration Permission Link --->
-			<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+		</form>
+		<cfelse>
 			<br /><br />
-			<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
-		</div>
-		<br />
-		</p>
-	</form>
-	
+			<!--- Button Bar --->
+			<div align="center" id="_buttonbar_login">
+				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
+				<!--- Registration Permission Link --->
+				<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<br /><br />
+				<input type="button" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" 
+					   onClick="window.location='#event.buildLink(rc.xehUserLogin)#.cfm'"/>
+			</div>
+			<br />
+		</cfif>
 	<cfelse>
 		<p>
 			Welcome back <strong>#rc.oUser.getfname()# #rc.oUser.getlname()#</strong>!
@@ -139,4 +155,5 @@ $Build ID:	@@build_id@@
 	</cfif>
 </div>
 
+<!--- End if not in login event --->
 </cfoutput>

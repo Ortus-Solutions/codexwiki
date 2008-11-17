@@ -29,6 +29,7 @@ $Build ID:	@@build_id@@
 	<!--- Dependencies --->
 	<cfproperty name="ConfigService" type="ioc" scope="instance">
 	<cfproperty name="WikiService"	 type="ioc" scope="instance">
+	<cfproperty name="UserService"	 type="ioc" scope="instance">
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
@@ -82,8 +83,10 @@ $Build ID:	@@build_id@@
 			
 			/* Required */
 			rc.jsAppendList = 'formvalidation,jquery.uitablefilter';
-			/* All Pages */
+			/* Get All Pages */
 			rc.qPages = getWikiService().getPages();	
+			/* Get All Roles */
+			rc.qRoles = getUserService().getAllRoles();
 			
 			/* Set View */
 			event.setview('admin/config/options');	
@@ -140,6 +143,10 @@ $Build ID:	@@build_id@@
 	
 	<cffunction name="getWikiService" access="public" returntype="codex.model.wiki.WikiService" output="false">
 		<cfreturn instance.WikiService>
+	</cffunction>
+	
+	<cffunction name="getUserService" access="public" output="false" returntype="codex.model.security.UserService" hint="Get UserService">
+		<cfreturn instance.UserService/>
 	</cffunction>
 
 </cfcomponent>

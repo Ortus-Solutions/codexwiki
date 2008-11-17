@@ -1,4 +1,3 @@
-<cfsilent>
 <!-----------------------------------------------------------------------
 ********************************************************************************
 Copyright 2008 by 
@@ -21,4 +20,14 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-</cfsilent>
+<cfoutput>
+<h2>
+	<img src="includes/images/user.png" align="absmiddle"> Registration Confirmation
+</h2>
+
+<p>
+	Your new account has been succesfully created. Please verify your identity by clicking on the validation link
+	 that you will receive in your email address.  Thanks and have a great day.
+</p>
+
+</cfoutput>

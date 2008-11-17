@@ -32,11 +32,21 @@ $Build ID:	@@build_id@@
 		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 		<cfargument name="Datasource" 	hint="the Datasource obj" type="transfer.com.sql.Datasource" required="Yes">
+		<cfargument name="ConfigBean" 		required="true" type="coldbox.system.beans.configBean" hint="The ColdBox Config Bean">
+		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service">
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Init */
 			super.init(argumentCollection=arguments);
 			
+			/* Config Bean */
+			instance.ConfigBean = arguments.ConfigBean;
+			instance.ConfigService = arguments.configService;
+			
+			/* More Transactions */
+			arguments.transaction.advise(this, "^registerUser");
+			
+			/* Return Instance */
 			return this;
 		</cfscript>
 	</cffunction>
@@ -268,6 +278,37 @@ $Build ID:	@@build_id@@
 			return oUser;
 		</cfscript>
 	</cffunction>
+	
+	<!--- Get User By Email Address --->
+	<cffunction name="isUsernameValid" output="false" access="public" returntype="boolean" hint="Checks if a username is valid.">
+		<!--- ************************************************************* --->
+		<cfargument name="username" type="string" required="true"/>
+		<!--- ************************************************************* --->
+		<cfscript>
+			var qUser = "";
+			var sqlProps = structnew();
+			
+			/* Validate Username */
+			if( len(trim(arguments.username)) eq 0 ){
+				return false;
+			}
+			
+			/* prepare sqlProps */
+			sqlProps.username = arguments.username;
+			sqlProps.isActive = 1;
+			
+			/* Get user now. */
+			qUser = getTransfer().listByPropertyMap('security.User', sqlProps);
+			
+			/* Validate Username */
+			if( qUser.recordcount ){
+				return false;
+			}	
+			else{
+				return true;
+			}
+		</cfscript>
+	</cffunction>
 
 	<!--- Get User with or without id --->
 	<cffunction name="getUser" output="false" access="public" returntype="codex.model.security.User" hint="Returns a user by ID or a new user object.">
@@ -342,6 +383,54 @@ $Build ID:	@@build_id@@
 			/* Save User */
 			getTransfer().save(arguments.User);
 		</cfscript>
+	</cffunction>
+	
+	<cffunction name="registerUser" hint="Registers a user" access="public" returntype="void" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
+		<!--- ************************************************************* --->
+		<cfset var email = 0>
+		<cfset var CodexOptions = instance.ConfigService.getOptions()>
+		<cfset var link = "">
+		
+		<!--- Save User --->
+		<cfset saveUser(arguments.User)>
+		
+		<!--- Create Link --->
+		<cfset link = "#instance.configBean.getKey('sesBaseURL')#/user/validateRegistration/confirm/#arguments.user.getuserid()#.cfm">
+		
+		<!--- Email --->
+		<cfsavecontent variable="email">
+		<cfoutput>
+		Dear #arguments.user.getfname()# #arguments.user.getlname()#,<br /><br />
+		
+		Thank you for registering in the #CodexOptions.wiki_name#. Please click on the link below to activate your account.
+		You cannot use your account until it has been verified.<br /><br />
+		
+		<a href="#link#">#link#</a>
+		</cfoutput>
+		</cfsavecontent>
+		
+		<!--- Mail It --->
+		<cfmail to="#arguments.user.getEmail()#"
+			    from="#CodexOptions.wiki_outgoing_email#"
+			    subject="#CodexOptions.wiki_name# User Registration"
+			    type="HTML">
+		<cfoutput>#email#</cfoutput>
+		</cfmail>
+	</cffunction>
+	
+	<cffunction name="confirmUser" hint="Confirms a user" access="public" returntype="boolean" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="User" hint="The User object" type="codex.model.security.User" required="Yes">
+		<!--- ************************************************************* --->
+		<cfif arguments.User.getIsPersisted()>
+			<cfset arguments.user.setIsConfirmed(true)>
+			<cfset saveUser(arguments.User)>
+			<cfreturn true>
+		<cfelse>
+			<cfreturn false>
+		</cfif>
 	</cffunction>
 	
 	<!--- Save User Perm --->

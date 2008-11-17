@@ -32,6 +32,7 @@ $Build ID:	@@build_id@@
 		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="coldbox.system.beans.configBean" required="Yes">
 		<cfargument name="transfer" 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service">
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Init */
@@ -40,6 +41,7 @@ $Build ID:	@@build_id@@
 			/* Set properties */
 			instance.UserSessionKey = 'auth_user_id';
 			instance.configBean = arguments.configBean;
+			instance.configService = arguments.configService;
 			
 			/* Advices */
 			arguments.transaction.advise(this, "^sendPasswordReminder");
@@ -120,7 +122,9 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var genPassword = "";
 			var email = "";
-			
+			var CodexOptions = instance.ConfigService.getOptions();
+			var link = "#instance.configBean.getKey('sesBaseURL')#/user/login.cfm";
+		
 			/* Generate a password */
 			genPassword = hash(arguments.user.getEmail() & createUUID() & now());
 			
@@ -132,14 +136,18 @@ $Build ID:	@@build_id@@
 		<!--- Email --->
 		<cfsavecontent variable="email">
 		<cfoutput>
-		A new CodeX password has been generated for you: <strong>#genPassword#</strong><br />
-		Please use this password with your current username and login to your account.
+		A new password has been generated for you: <strong>#genPassword#</strong><br />
+		Please use this password with your current username and login to your account.<br /><br />
+		
+		<a href="#link#">Click here to login</a>
+		<br /><br />
+		Login Link: #link#
 		</cfoutput>
 		</cfsavecontent>
 		<!--- Mail It --->
 		<cfmail to="#arguments.user.getEmail()#"
-			    from="#getConfigBean().getKey('OwnerEmail')#"
-			    subject="CodeX Password Reminder"
+			    from="#CodexOptions.wiki_outgoing_email#"
+			    subject="#CodexOptions.wiki_name# Password Reminder"
 			    type="HTML">
 		<cfoutput>#email#</cfoutput>
 		</cfmail>		
