@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 
 	<!--- Home Page --->
 	<cffunction name="home" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext">
+		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			
@@ -42,7 +42,7 @@ $Build ID:	@@build_id@@
 
 	<!--- api --->
 	<cffunction name="api" access="public" returntype="void" output="false" hint="Show the API" cache="true" cacheTimeout="30">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="any" required="yes">
 	    <cfset var rc = event.getCollection()>
 	    <cfscript>
 			/* Setup the Cfc Viewer */

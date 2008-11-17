@@ -48,8 +48,8 @@ $Build ID:	@@build_id@@
 		</cfscript>	</cffunction>	<cffunction name="onRequestStart" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfset var rc = event.getCollection()>		<!--- CF Debug Mode or Not --->
 		<cfsetting showdebugoutput="#getDebugMode()#">
 		<cfscript>
-			/* Setup the global exit handlers For the admin*/			rc.xehAdmin = "admin.main/home";			rc.xehAdminAPI = "admin.main/api";			rc.xehAdminUsers = "admin.users/list";			rc.xehAdminLookups = "admin.lookups/display";			rc.xehAdminCustomHTML = "admin.config/customhtml";
-			rc.xehAdminOptions = "admin.config/options";			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile.user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.showKey#/Help:Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
+			/* Setup the global exit handlers For the admin*/			rc.xehAdmin = "admin/main/home";			rc.xehAdminAPI = "admin/main/api";			rc.xehAdminUsers = "admin/users/list";			rc.xehAdminLookups = "admin/lookups/display";			rc.xehAdminCustomHTML = "admin/config/customhtml";
+			rc.xehAdminOptions = "admin/config/options";			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile/user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.showKey#/Help:Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
 			rc.xehSpecialCategory = "#instance.showKey#/Special:Categories";
 			rc.xehWikiSearch = "page/search";
 			

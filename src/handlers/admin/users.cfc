@@ -40,12 +40,12 @@ $Build ID:	@@build_id@@
 			var boundaries = structnew();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin.users/list";
+			rc.xehUserListing = "admin/users/list";
 			rc.pagingLink = "#getSetting('sesBaseURL')#/#rc.xehUserListing#/page/@page@.cfm";
-			rc.xehUserCreate = "admin.users/new.cfm";
-			rc.xehUserEdit = "admin.users/edit";
-			rc.xehUserDelete = "admin.users/doDelete.cfm";
-			rc.xehUserPerms = "admin.users/permissions";
+			rc.xehUserCreate = "admin/users/new.cfm";
+			rc.xehUserEdit = "admin/users/edit";
+			rc.xehUserDelete = "admin/users/doDelete.cfm";
+			rc.xehUserPerms = "admin/users/permissions";
 
 			/* Search Criteria */
 			event.paramValue("search_criteria","");
@@ -105,8 +105,8 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin.users/list.cfm";
-			rc.xehUserCreate = "admin.users/doCreate.cfm";
+			rc.xehUserListing = "admin/users/list.cfm";
+			rc.xehUserCreate = "admin/users/doCreate.cfm";
 
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
@@ -134,7 +134,7 @@ $Build ID:	@@build_id@@
 			/* Error Checks */
 			if( arraylen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin.users/new");
+				setNextRoute(route="admin/users/new");
 			}
 			else{
 				/* Set Role */
@@ -143,7 +143,7 @@ $Build ID:	@@build_id@@
 				oUserService.saveUser(oUser);
 
 				getPlugin("messagebox").setMessage("info","User added successfully");
-				setNextRoute(route="admin.users/list");
+				setNextRoute(route="admin/users/list");
 			}
 		</cfscript>
 	</cffunction>
@@ -155,13 +155,13 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin.users/list.cfm";
-			rc.xehUserUpdate = "admin.users/doEdit";
+			rc.xehUserListing = "admin/users/list.cfm";
+			rc.xehUserUpdate = "admin/users/doEdit";
 
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){
 				getPlugin("messagebox").setMessage("warning", "user id not detected");
-				setNextRoute("admin.users/list");
+				setNextRoute("admin/users/list");
 			}
 
 			/* Get all the roles */
@@ -193,7 +193,7 @@ $Build ID:	@@build_id@@
 			errors = oClonedUser.validate(edit=true);
 			if( ArrayLen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin.users/edit/user_id/#rc.user_id#");
+				setNextRoute(route="admin/users/edit/user_id/#rc.user_id#");
 			}
 			else{
 				/* Set/update role */
@@ -210,7 +210,7 @@ $Build ID:	@@build_id@@
 				
 				/* Message of success */
 				getPlugin("messagebox").setMessage("info","User updated!");
-				setNextRoute(route="admin.users/list");
+				setNextRoute(route="admin/users/list");
 			}
 		</cfscript>
 	</cffunction>
@@ -222,14 +222,14 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehAddPerm = "admin.users/addPermission.cfm";
-			rc.xehRemovePerm = "admin.users/removePermission";
-			rc.xehUserListing = "admin.users/list.cfm";
+			rc.xehAddPerm = "admin/users/addPermission.cfm";
+			rc.xehRemovePerm = "admin/users/removePermission";
+			rc.xehUserListing = "admin/users/list.cfm";
 
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){
 				getPlugin("messagebox").setMessage("warning", "user id not detected");
-				setNextRoute("admin.users/list");
+				setNextRoute("admin/users/list");
 			}
 
 			/* Get the current User */
@@ -258,7 +258,7 @@ $Build ID:	@@build_id@@
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
 				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
-				setNextRoute("admin.users/permissions/user_id/#rc.user_id#");
+				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
 			}
 
 			/* Get user and perm */
@@ -276,7 +276,7 @@ $Build ID:	@@build_id@@
 			}
 
 			/* relocate */
-			setNextRoute('admin.users/permissions/user_id/#rc.user_id#');
+			setNextRoute('admin/users/permissions/user_id/#rc.user_id#');
 		</cfscript>
 	</cffunction>
 
@@ -291,7 +291,7 @@ $Build ID:	@@build_id@@
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
 				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
-				setNextRoute("admin.users/permissions/user_id/#rc.user_id#");
+				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
 			}
 
 			/* get Permission_id and user_id */
@@ -303,7 +303,7 @@ $Build ID:	@@build_id@@
 			getPlugin("messagebox").setMessage("info", "permission removed");
 
 			/* relocate */
-			setNextRoute('admin.users/permissions/user_id/#rc.user_id#');
+			setNextRoute('admin/users/permissions/user_id/#rc.user_id#');
 		</cfscript>
 	</cffunction>
 
@@ -338,7 +338,7 @@ $Build ID:	@@build_id@@
 			}
 
 			/* Relocate back to listing */
-			setNextRoute(route="admin.users/list");
+			setNextRoute(route="admin/users/list");
 		</cfscript>
 	</cffunction>
 

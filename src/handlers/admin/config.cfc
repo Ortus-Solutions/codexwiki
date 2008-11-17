@@ -39,7 +39,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var rc = event.getCollection();
 			
-			rc.xehonSubmit = "admin.config/savecustomhtml"; 
+			rc.xehonSubmit = "admin/config/savecustomhtml"; 
 			
 			rc.jsAppendList = "jquery.textarearesizer.compressed";
 			
@@ -67,7 +67,7 @@ $Build ID:	@@build_id@@
 			getPlugin("messagebox").setMessage("info", "Custom HTML Saved!");
 			
 			/* Re Route */
-			setNextRoute('admin.config/customhtml');
+			setNextRoute('admin/config/customhtml');
 		</cfscript>
 	</cffunction>
 
@@ -78,8 +78,8 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();	
 			
 			/* Exit Handlers */
-			rc.xehOnSubmit = "admin.config/saveoptions";
-			rc.xehReinitApp = "admin.config/doReinit";
+			rc.xehOnSubmit = "admin/config/saveoptions";
+			rc.xehReinitApp = "admin/config/doReinit";
 			
 			/* Required */
 			rc.jsAppendList = 'formvalidation,jquery.uitablefilter';
@@ -116,7 +116,7 @@ $Build ID:	@@build_id@@
 			/* Mb */
 			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
 			/* Re-Route */
-			setNextRoute(route="admin.config/options");
+			setNextRoute(route="admin/config/options");
 		</cfscript>
 	</cffunction>
 	
@@ -130,7 +130,7 @@ $Build ID:	@@build_id@@
 		    /* MB */
 			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
 			/* Re Route */
-			setNextRoute('admin.config/options');
+			setNextRoute('admin/config/options');
 		</cfscript>     
 	</cffunction>
 	

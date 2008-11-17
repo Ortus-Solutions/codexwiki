@@ -89,7 +89,7 @@ $Build ID:	@@build_id@@
 			operation="HTTPRequest"
 			startDate="#Now()#"
 			startTime="03:00 AM"
-			url="#htmlBaseURL#/system.task/refreshSearch.cfm"
+			url="#htmlBaseURL#/system/task/refreshSearch.cfm"
 			>
 
 <p>
