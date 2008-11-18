@@ -65,7 +65,7 @@ $Build ID:	@@build_id@@
 <p>Add a new <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
 <!--- Add Form --->
-<form name="addform" id="addform" action="#event.buildLink(rc.xehLookupCreate,0)#.cfm" method="post">
+<form name="addform" id="addform" action="#event.buildLink(rc.xehLookupCreate)#.cfm" method="post">
 <!--- Lookup Class Choosen to Add --->
 <input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
 

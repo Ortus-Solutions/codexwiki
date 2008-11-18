@@ -41,10 +41,10 @@ $Build ID:	@@build_id@@
 
 			/* Exit Handlers */
 			rc.xehUserListing = "admin/users/list";
-			rc.pagingLink = "#getSetting('sesBaseURL')#/#rc.xehUserListing#/page/@page@.cfm";
-			rc.xehUserCreate = "admin/users/new.cfm";
+			rc.pagingLink = "#rc.xehUserListing#/page/@page@";
+			rc.xehUserCreate = "admin/users/new";
 			rc.xehUserEdit = "admin/users/edit";
-			rc.xehUserDelete = "admin/users/doDelete.cfm";
+			rc.xehUserDelete = "admin/users/doDelete";
 			rc.xehUserPerms = "admin/users/permissions";
 
 			/* Search Criteria */
@@ -105,8 +105,11 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin/users/list.cfm";
-			rc.xehUserCreate = "admin/users/doCreate.cfm";
+			rc.xehUserListing = "admin/users/list";
+			rc.xehUserCreate = "admin/users/doCreate";
+			
+			/* JS */
+			rc.jsAppendList = "formvalidation";
 
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
@@ -125,6 +128,13 @@ $Build ID:	@@build_id@@
 			var oUserService = getUserService();
 			var errors = ArrayNew(1);
 
+			/* Validate username */
+			if( not oUserService.isUsernameValid(event.getValue("username","")) ){
+				getPlugin("messagebox").setMessage("error","The username you choose is already taken. Please try another one.");
+				new(arguments.event);
+				return;
+			}
+			
 			//create new user object.
 			oUser = oUserService.getUser();
 			//Populate it
@@ -155,9 +165,12 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin/users/list.cfm";
+			rc.xehUserListing = "admin/users/list";
 			rc.xehUserUpdate = "admin/users/doEdit";
-
+			
+			/* JS */
+			rc.jsAppendList = "formvalidation";
+			
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){
 				getPlugin("messagebox").setMessage("warning", "user id not detected");
@@ -183,12 +196,12 @@ $Build ID:	@@build_id@@
 			var oClonedUser = "";
 			var errors = ArrayNew(1);
 			var passChange = false;
-
+			
+			/* Get User and start checks */
 			oUser = oUserService.getUser(rc.user_id);
 			oClonedUser = oUser.clone();
-
 			getPlugin("beanFactory").populateBean(oClonedUser);
-
+			
 			/* Validate it */
 			errors = oClonedUser.validate(edit=true);
 			if( ArrayLen(errors) ){
@@ -222,9 +235,9 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehAddPerm = "admin/users/addPermission.cfm";
+			rc.xehAddPerm = "admin/users/addPermission";
 			rc.xehRemovePerm = "admin/users/removePermission";
-			rc.xehUserListing = "admin/users/list.cfm";
+			rc.xehUserListing = "admin/users/list";
 
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){

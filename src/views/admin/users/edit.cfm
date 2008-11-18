@@ -23,15 +23,25 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			if( _CF_checkuserForm(document.getElementById('userForm')) ){
-				$('##_buttonbar').slideUp("fast");
-				$('##_loader').fadeIn("slow");
-				$('##userForm').submit();
-			}
-		}
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Form Validation */
+		$('##userForm').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			alias		: 'dName',
+			callback	: 'prepareSubmit'
+		});			
+	});
+	function submitForm(){
+		$('##userForm').submit();		
+	}
+	function prepareSubmit(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+		return true;
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
@@ -40,8 +50,8 @@ $Build ID:	@@build_id@@
 	
 <!--- BACK --->
 <div class="backbutton">
-	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#">Back</a>
+	<img src="includes/images/arrow_left.png" align="absmiddle">
+	<a href="#event.buildlink(rc.xehUserListing)#">Back</a>
 </div>
 
 <!--- Title --->
@@ -52,26 +62,26 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<cfform name="userForm" id="userForm" action="#getSetting('sesBaseURL')#/#rc.xehUserUpdate#/user_id/#rc.user_id#.cfm">
+<form name="userForm" id="userForm" action="#event.buildlink(rc.xehUserUpdate)#/user_id/#rc.user_id#.cfm">
 	
 	<fieldset>
 	<legend><strong>User Information</strong></legend>
 	
 	<label for="fname">First Name</label>
-	<cfinput type="text" name="fname" id="fname" size="30" 
-			 message="Please enter the first name"
+	<input type="text" name="fname" id="fname" size="30" 
+			 dName="First Name"
 			 required="true"
 			 value="#rc.thisUser.getfname()#">
 	
 	<label for="lname">Last Name</label>
-	<cfinput type="text" name="lname" id="lname" size="30" 
-			 message="Please enter the last name"
+	<input type="text" name="lname" id="lname" size="30" 
+			 dName="Last Name"
 			 required="true"
 			 value="#rc.thisUser.getlname()#">
 			 
 	<label for="email">Email Address</label>
-	<cfinput type="text" name="email" id="email" size="30" 
-			 message="Please enter the email address"
+	<input type="text" name="email" id="email" size="30" 
+			 dName="Email" mask="email"
 			 required="true"
 			 value="#rc.thisUser.getemail()#">
 			 
@@ -82,11 +92,11 @@ $Build ID:	@@build_id@@
 		
 		<!--- Role --->
 		<label for="role_id">User Role</label>
-		<cfselect name="role_id" id="role_id" required="true" message="Please choose a role for this user." style="width:200px">
+		<select name="role_id" id="role_id" required="true" dName="Role" style="width:200px">
 			<cfloop query="rc.qRoles">
 			<option value="#rc.qRoles.roleid#" <cfif rc.thisUser.getRole().getroleID() eq rc.qRoles.roleid>selected="selected"</cfif>>#rc.qRoles.role#</option>
 			</cfloop>
-		</cfselect>
+		</select>
 		
 		<!--- Active Bit --->
 		<label for="isActive">Active</label>
@@ -104,15 +114,15 @@ $Build ID:	@@build_id@@
 		
 		<!--- UserName --->
 		<label for="username">Username</label>
-		<cfinput type="text" name="username" id="username" size="30" 
-				 message="Please enter the username"
+		<input type="text" name="username" id="username" size="30" 
+				 dName="Username"
 				 required="true" 
 				 value="#rc.thisUser.getUsername()#">
 		
 		<!--- Password --->
 		<label for="newpassword">New Password</label>
 		<p>Only fill this new password if you would like to change the user's password.</p>
-		<input type="password" name="newpassword" id="newpassword" size="30">
+		<input type="password" name="newpassword" id="newpassword" size="30" value="">
 		
 	</fieldset>
 	
@@ -123,26 +133,26 @@ $Build ID:	@@build_id@@
 		<p>
 			Submitting...<br />
 	
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>	
 	<!--- Create / Cancel --->
-	<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-		<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#" id="buttonLinks">
+	<div id="_buttonbar" class="buttons align-center">
+		<a href="#event.buildLink(rc.xehUserListing)#.cfm" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
+				<img src="includes/images/cancel.png" border="0" align="absmiddle">
 				Cancel
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:submitForm()" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
+				<img src="includes/images/add.png" border="0" align="absmiddle">
 				Update User
 			</span>
 		</a>
 	</div>
 	<br />
-</cfform>
+</form>
 </cfoutput>

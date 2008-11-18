@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 		}
 		function deleteRecord(recordID){
 			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-			window.location='#getSetting('sesBaseURL')#/#rc.xehRemovePerm#/user_id/#rc.user_id#/permissionID/'+recordID+'.cfm';
+			window.location='#event.buildLink(rc.xehRemovePerm)#/user_id/#rc.user_id#/permissionID/'+recordID+'.cfm';
 		}
 	</script>
 </cfoutput>
@@ -41,8 +41,8 @@ $Build ID:	@@build_id@@
 	
 <!--- BACK --->
 <div class="backbutton">
-	<img src="#getSetting("htmlBaseURL")#/includes/images/arrow_left.png" align="absmiddle">
-	<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#">Back</a>
+	<img src="includes/images/arrow_left.png" align="absmiddle">
+	<a href="#event.buildLink(rc.xehUserListing)#">Back</a>
 </div>
 
 <!--- Title --->
@@ -53,15 +53,15 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Add Permission  --->
-<form name="addPermForm" id="addPermForm" method="POST" action="#getSetting('sesBaseURL')#/#rc.xehAddPerm#">
+<form name="addPermForm" id="addPermForm" method="POST" action="#event.buildLink(rc.xehAddPerm)#.cfm">
 	<input type="hidden" name="user_id" id="user_id" value="#rc.user_id#">
 	<div style="margin:10px;">
 		
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
 			<p>
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
 		</div>
 		
@@ -76,7 +76,7 @@ $Build ID:	@@build_id@@
 		<!--- Search Button --->
 		<a href="javascript:submitForm()" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/magnifier.png" border="0" align="absmiddle">
+				<img src="includes/images/magnifier.png" border="0" align="absmiddle">
 				Add Permission
 			</span>
 		</a>
@@ -90,9 +90,9 @@ $Build ID:	@@build_id@@
 	<div>
 		<p>
 			<cfloop query="rc.qUserPerms">
-			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" align="absmiddle"> 
+			<img src="includes/images/accept.png" align="absmiddle"> 
 			
-			<a class="noborder" href="javascript:deleteRecord('#rc.qUserPerms.permissionID#');" title="Remove Permission"><img src="#getSetting('sesBaseURL')#/includes/images/stop.png" id="delete_#rc.qUserPerms.permissionID#" align="absmiddle" title="Remove Permission" border="0"></a>
+			<a class="noborder" href="javascript:deleteRecord('#rc.qUserPerms.permissionID#');" title="Remove Permission"><img src="includes/images/stop.png" id="delete_#rc.qUserPerms.permissionID#" align="absmiddle" title="Remove Permission" border="0"></a>
 			
 			#rc.qUserPerms.permission#<br />
 			</cfloop>
@@ -109,7 +109,7 @@ $Build ID:	@@build_id@@
 	<div>
 		<p>
 			<cfloop query="rc.qRolePerms">
-			<img src="#getSetting('sesBaseURL')#/includes/images/accept.png" align="absmiddle"> #rc.qRolePerms.permission#<br />
+			<img src="includes/images/accept.png" align="absmiddle"> #rc.qRolePerms.permission#<br />
 			</cfloop>
 		</p>
 	</div>
@@ -117,9 +117,9 @@ $Build ID:	@@build_id@@
 
 <!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-		<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#.cfm" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/cancel.png" border="0" align="absmiddle">
+				<img src="includes/images/cancel.png" border="0" align="absmiddle">
 				Cancel
 			</span>
 		</a>

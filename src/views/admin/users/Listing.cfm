@@ -35,7 +35,7 @@ $Build ID:	@@build_id@@
 		}
 		function deleteRecord(recordID){
 			if( recordID != null ){
-				$('##delete_'+recordID).attr('src','#getSetting('sesBaseURL')#/includes/images/ajax-spinner.gif');
+				$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
 				$("input[@name='user_id']").each(function(){
 					if( this.value == recordID ){ this.checked = true;}
 					else{ this.checked = false; }
@@ -60,14 +60,14 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#getSetting('sesBaseURL')#/#rc.xehUserListing#.cfm">
+<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#.cfm">
 	
 	<div style="margin:10px;">
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
 			<p>
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="#getSetting('sesBaseURL')#/includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
 		</div>
 		
@@ -96,7 +96,7 @@ $Build ID:	@@build_id@@
 		<!--- Search Button --->
 		<a href="javascript:searchForm()" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/magnifier.png" border="0" align="absmiddle">
+				<img src="includes/images/magnifier.png" border="0" align="absmiddle">
 				Search
 			</span>
 		</a>
@@ -105,20 +105,20 @@ $Build ID:	@@build_id@@
 </form>
 
 <!--- Results Form --->
-<form name="userForm" id="userForm" action="#getSetting('sesBaseURL')#/#rc.xehUserDelete#" method="post">
+<form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#.cfm" method="post">
 	
 	<!--- Add / Delete --->
 	<div class="buttons float-right" style="margin-top:12px;">
-		<a href="#getSetting('sesBaseURL')#/#rc.xehUserCreate#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/add.png" border="0" align="absmiddle">
+				<img src="includes/images/add.png" border="0" align="absmiddle">
 				Add User
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" id="buttonLinks">
 			<span>
-				<img src="#getSetting('sesBaseURL')#/includes/images/stop.png" border="0" align="absmiddle">
+				<img src="includes/images/stop.png" border="0" align="absmiddle">
 				Delete User(s)
 			</span>
 		</a>
@@ -148,7 +148,7 @@ $Build ID:	@@build_id@@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_lname">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_lname/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_lname/#rc.sortOrder#/#rc.page#.cfm">
 				Name
 				</a>
 				<!--- Sort Orders --->
@@ -159,7 +159,7 @@ $Build ID:	@@build_id@@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_email">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_email/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_email/#rc.sortOrder#/#rc.page#.cfm">
 				Email
 				</a>
 				<!--- Sort Orders --->
@@ -170,7 +170,7 @@ $Build ID:	@@build_id@@
 			<th align="center" width="95">
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserListing#/sort/user_isconfirmed/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_isconfirmed/#rc.sortOrder#/#rc.page#.cfm">
 				Confirmed
 				</a>
 				<!--- Sort Orders --->
@@ -195,11 +195,11 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Permissions Command --->
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserPerms#/user_id/#user_id#.cfm" title="Edit User Permissions"><img src="#getSetting('sesBaseURL')#/includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
+				<a href="#event.buildLink(rc.xehUserPerms)#/user_id/#user_id#.cfm" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
 				<!--- Edit Command --->
-				<a href="#getSetting('sesBaseURL')#/#rc.xehUserEdit#/user_id/#user_id#.cfm" title="Edit User"><img src="#getSetting('sesBaseURL')#/includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
+				<a href="#event.buildlink(rc.xehUserEdit)#/user_id/#user_id#.cfm" title="Edit User"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
 				<!--- Delete Command --->
-				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="#getSetting('sesBaseURL')#/includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
+				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
 			</td>
 	
 		</tr>
