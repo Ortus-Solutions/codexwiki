@@ -101,8 +101,6 @@ INSERT INTO "wiki_namespace" ("namespace_id", "namespace_name", "namespace_descr
 	('58F2F981-F62A-3124-E886BBF8CE6C5295','Help','Help',0);
 INSERT INTO "wiki_namespace" ("namespace_id", "namespace_name", "namespace_description", "namespace_isdefault") VALUES
 	('F1C0292E-CB06-FD09-41D904E8550FE734','','Default Namespace',1);
-INSERT INTO "wiki_namespace" ("namespace_id", "namespace_name", "namespace_description", "namespace_isdefault") VALUES
-	('F27A7642-FE5A-9A72-5E5FBAF142443678','Category','Category',0);
 /*!40000 ALTER TABLE "wiki_namespace" ENABLE KEYS;*/
 UNLOCK TABLES;
 

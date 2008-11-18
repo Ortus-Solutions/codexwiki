@@ -83,33 +83,63 @@ $Build ID:	@@build_id@@
 
 <p>Below is the current history for this page.  You can preview the version by clicking on the links.</p>
 
-<ul>
+<form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff)#/#rc.page.getName()#.cfm" method="get">
+	
+	<input type="submit" value="View Changes"><br /><br />
+	
 	<cfloop query="rc.history">
-	<li>
-		<a href="javascript:doDisplay('#contentid#')">Version #version#</a>
-		<em>#printDate(createddate)# #printTime(createddate)# by <strong>#username#</strong></em>
 		<cfif isActive>
-		<img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
+			<cfset activeVersion = version>
 		</cfif>
-		<cfif not isActive>
-			<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
-			<img src="includes/images/arrow_merge.png" align="absmiddle">
-			  <a href="#event.buildLink(rc.onReplaceActive)#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
-			</cfif>
-			<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
-			<img src="includes/images/bin_closed.png" align="absmiddle">
-			  <a href="#event.buildLink(rc.onDelete)#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
-			</cfif>
-		</cfif>
-		<div>
-			#Replace(XMLFormat(comment), chr(10), "<br/>", "all")#
-		</div>
+		<table width="100%" class="tablelisting" border="0">
+			<tr>
+				<th width="50" class="center">Diff</th>
+				<th width="50" class="center">Version</th>
+				<th width="140" class="center">Date</th>
+				<th width="90" class="center">Author</th>
+				<th>Comment</th>
+				<th width="125" class="center">Actions</th>
+			</tr>
+			
+			<tr>
+				<td>
+					<input type="radio" value="#version#" name="old_version" id="old_version" <cfif version eq (activeVersion-1)>checked="checked"</cfif>>
+					<input type="radio" value="#version#" name="version" id="version" <cfif isActive>checked="checked"</cfif>>
+				</td>
+				
+				<td class="center">
+					<a href="javascript:doDisplay('#contentid#')">#version#</a></td>
+				
+				<td class="center">#printDate(createddate)# #printTime(createddate,"short")#</td>
+				
+				<td class="center">#username#</td>
+				
+				<td>#Replace(XMLFormat(comment), chr(10), "<br/>", "all")#</td>
+				
+				<td class="center">
+					<cfif isActive>
+						<img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
+					</cfif>
+					<cfif not isActive>
+						<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
+						<img src="includes/images/arrow_merge.png" align="absmiddle">
+						  <a href="#event.buildLink(rc.onReplaceActive)#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
+						</cfif>
+						<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
+						<img src="includes/images/bin_closed.png" align="absmiddle">
+						  <a href="#event.buildLink(rc.onDelete)#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
+						</cfif>
+					</cfif>
+				</td>
+			</tr>
+		</table>
 		<div class="historyload" id="contentshow_#contentid#" loaded="0">
 		 <span class="loading">Loading...</span>
 		</div>
-		<br />
-	</li>
 	</cfloop>
-</ul>
+	<br />
+	<input type="submit" value="View Changes">
+	
+</form>
 
 </cfoutput>

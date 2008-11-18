@@ -61,6 +61,39 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<cffunction name="getContentByPageVersion" hint="returns a specific content object" access="public" returntype="codex.model.wiki.Content" output="false">
+	<cfargument name="pageName" hint="the specific page name" type="string" required="yes">
+	<cfargument name="version" hint="the version number" type="string" required="yes">
+	<cfscript>
+		var tql = 0;
+		var query = 0;
+		var content = 0;
+	</cfscript>
+	<cfsavecontent variable="tql">
+	<cfoutput>
+		from
+			wiki.Content as content
+			join
+			wiki.Page as page
+		where
+			page.name = :name AND
+			content.version = :version
+	</cfoutput>
+	</cfsavecontent>
+	<cfscript>
+		query = getTransfer().createQuery(tql);
+
+		query.setCacheEvaluation(true);
+
+		query.setParam("name", arguments.pageName);
+		query.setParam("version",arguments.version);
+
+		content = getTransfer().readByQuery("wiki.Content", query);
+
+		return content;
+	</cfscript>
+</cffunction>
+
 <cffunction name="getPage" hint="returns a specific page object" access="public" returntype="codex.model.wiki.Page" output="false">
 	<cfargument name="pageID" hint="the specific page id" type="string" required="no">
 	<cfargument name="pageName" hint="the page name" type="string" required="no">

@@ -58,10 +58,10 @@ $Build ID:	@@build_id@@
 
 <cfoutput>
 <!--- Title --->
-<h1>
+<h2>
 	<img src="includes/images/directory.png" border="0" align="absmiddle">
 	Wiki Page Directory
-</h1>
+</h2>
 
 <p>Below is the current page directory for this wiki.  You can filter to find specific pages or click on 
 the page name to visit the page.</p>
@@ -70,8 +70,8 @@ the page name to visit the page.</p>
 <input name="pageFilter" id="pageFilter" value="Type Here To Filter" 
 	   size="50" type="text"
 	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
-<br />
-<label>Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
+<br /><br />
+<label class="inlineLabel">Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
 </label>
 
 <cfloop query="rc.qNamespaces">

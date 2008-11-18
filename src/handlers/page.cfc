@@ -150,9 +150,51 @@ $Build ID:	@@build_id@@
 			rc.onReplaceActive ="page/replaceActive";
 			rc.onDelete ="page/deleteContent";
 			rc.onPreview = "page/renderContent";
+			rc.onDiff = "page/diff";
 			
 			/* View */
 			arguments.event.setView("wiki/showHistory");
+		</cfscript>
+	</cffunction>
+	
+	<!--- diff --->
+	<cffunction name="diff" access="public" returntype="void" output="false" hint="Diff pages">
+		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+	    <cfscript>
+		    var rc = event.getCollection();
+			var pageName = arguments.event.getValue("page");
+			var ContentArray = 0;
+			var oldContentArray = 0;
+			var oDiffer = getMyPlugin("diff");
+			
+			/* CSS & JS */
+			rc.cssAppendList = "page.showHistory";
+			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+			
+			/* Exit Handler */
+			rc.onShowHistory = "page/showHistory";
+			
+			/* Get the Page content */
+			rc.page = getWikiService().getPage(pageName=pageName);
+			rc.CurrentContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.version);
+			rc.oldContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.old_version);
+			
+			/* Convert To Arrays For Differencing*/
+			ContentArray = listToArray(rc.CurrentContent.getContent(),chr(10));
+			oldContentArray = listToArray(rc.oldContent.getContent(),chr(10));
+			
+			/* Diff Setup */
+			rc.diff = oDiffer.DiffArrays(oldContentArray,ContentArray);
+			rc.parallel = oDiffer.parallelize(rc.diff,oldContentArray,ContentArray);
+			/* Diff CSS */
+			rc.diffcss = structnew();
+			rc.diffcss["+"] = "ins";
+			rc.diffcss["-"] = "del";
+			rc.diffcss["!"] = "upd";
+			rc.diffcss[""] = "";
+			
+			/* View */
+			event.setView("wiki/showDiff");
 		</cfscript>
 	</cffunction>
 	

@@ -32,10 +32,49 @@ div.historyload {
 }
 
 div.history {
-	border:3px solid #ccc;
+	border:1px inset #ccc;
+	background: white;
 }
 
 div.overflow {
 	overflow: auto;
 	height: 300px;
+}
+
+/* DIFF */
+table.diff { width: 100%; }
+.diff tr, table.diff { 
+	margin: 0px; 
+	padding: 0px; 
+	background-color: white;
+	
+}
+.diff td { 
+	margin: 0px; 
+	padding: 3px; 
+	border-collapse: collapse; 
+	font-family: monspace;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: normal;
+	vertical-align: top; 
+	}
+.diff td.linenum {
+	background-color: #EFEFEF; 
+	color: #666666; 
+	border-right: 1px solid #d0d0d0; 
+	border-left: 1px solid #c0c0c0;
+	border-bottom: 1px solid #ccc;
+	text-align: right; 
+}
+.diff .ins { background-color: #afa; }
+.diff .insLight { background-color: #EFFFEF; }
+.diff .del { background-color: #faa; }
+.diff .delLight{ background-color: #FFEFEF;}
+.diff .upd { background-color: #aaf; }
+.diff .diffContent{
+	width:100%;
+	overflow:auto;
+	height:auto;
+	line-height: 1.2em;
 }

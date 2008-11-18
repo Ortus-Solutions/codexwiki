@@ -34,3 +34,8 @@ INSERT INTO codex.wiki_options ( option_id, option_name, option_value ) VALUES (
 ;
 INSERT INTO codex.wiki_options ( option_id, option_name, option_value ) VALUES ('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD')
 ;
+
+
+
+
+
