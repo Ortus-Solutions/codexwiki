@@ -1,4 +1,4 @@
-﻿/*
+/*
  * jQuery Form Validation plug-in version 1.1.5
  * Last Update : July 13, 2008
  * New features:
@@ -211,7 +211,7 @@ if (!window.jQuery) {
 				return true;
 			
 			if (settings['err_list'])	
-				err_list += '- "' + obj.attr(settings['alias']) + '" ' + err_msgs['equal'] + ' ' + $('#'+tname).attr('alias') + '\n';
+				err_list += '- "' + obj.attr(settings['alias']) + '" ' + err_msgs['equal'] + ' ' + $('#'+tname).attr(settings['alias']) + '\n';
 			return false;
 		}
 		//compare field with defval attr, make sure that val was altered

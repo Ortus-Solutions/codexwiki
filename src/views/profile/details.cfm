@@ -21,9 +21,9 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfoutput>
-<h1>
+<h2>
 	<img src="includes/images/user.png" align="absmiddle"> My Profile
-</h1>
+</h2>
 
 <p>
 Below you can see your current profile in the system. You can click on the <strong>Edit Profile</strong> button to make changes to your profile.
@@ -46,7 +46,7 @@ Below you can see your current profile in the system. You can click on the <stro
 	
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">
-		<a href="#event.buildLink(rc.xehEditProfile,0)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehEditProfile)#.cfm" id="buttonLinks">
 			<span>
 				<img src="includes/images/page_edit.png" border="0" align="absmiddle">
 				Edit Profile

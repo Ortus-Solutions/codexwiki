@@ -24,22 +24,32 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			if( _CF_checkpasswordForm(document.getElementById('passwordForm')) ){
-				$('##passwordForm').submit();
-				$('##_buttonbar').slideUp("fast");
-				$('##_loader').fadeIn("slow");
-			}
-		}
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Form Validation */
+		$('##passwordForm').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			alias		: 'dName',
+			callback	: 'prepareSubmit'
+		});			
+	});
+	function prepareSubmit(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+		return true;
+	}
+	function submitForm(){
+		$('##passwordForm').submit();
+	}
 	</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<h1>
+<h2>
 	<img src="includes/images/key.png" align="absmiddle"> Change Password
-</h1>
+</h2>
 
 <p>
 Please enter the information below, to change your password
@@ -49,32 +59,30 @@ Please enter the information below, to change your password
 #getPlugin("messagebox").renderit()#
 
 <!--- Profile Details --->
-<cfform name="passwordForm" id="passwordForm"
-		action="#event.buildLink(rc.xehdoChangePass,0)#.cfm"
+<form name="passwordForm" id="passwordForm"
+		action="#event.buildLink(rc.xehdoChangePass)#.cfm"
 		method="post">
+			
 <fieldset >
 	<legend>Password Change Request</legend>
 	<div>
 		<p>
 		<label >Current Password: </label>
-		<cfinput name="c_password" id="c_password" type="password"
+		<input name="c_password" id="c_password" type="password" dName="Current Password"
 				 required="true"
-				 message="Please enter your current password."
-				 size="30"
+				 size="35"
 				 maxlength="50">
 		<br />
 		<label >New Password: </label>
-		<cfinput name="n_password" id="n_password" type="password"
+		<input name="n_password" id="n_password" type="password" dName="New Password"
 				 required="true"
-				 message="Please enter the new password."
-				 size="30"
+				 size="35"
 				 maxlength="50">
 		<br />
 		<label >New Password Confirmation: </label>
-		<cfinput name="n2_password" id="n2_password" type="password"
-				 required="true"
-				 message="Please enter your new password confirmation."
-				 size="30"
+		<input name="n2_password" id="n2_password" type="password" dName="New Password Confirmation"
+				 required="true" equal="n_password"
+				 size="35"
 				 maxlength="50">
 		</p>
 	</div>
@@ -100,6 +108,6 @@ Please enter the information below, to change your password
 
 </div>
 <br />
-</cfform>
+</form>
 
 </cfoutput>

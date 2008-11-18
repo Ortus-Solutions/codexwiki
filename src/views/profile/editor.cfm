@@ -24,22 +24,32 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			if( _CF_checkdetailsForm(document.getElementById('detailsForm')) ){
-				$('##detailsForm').submit();
-				$('##_buttonbar').slideUp("fast");
-				$('##_loader').fadeIn("slow");
-			}
-		}
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* Form Validation */
+		$('##detailsForm').formValidation({
+			err_class 	: "invalidLookupInput",
+			err_list	: true,
+			alias		: 'dName',
+			callback	: 'prepareSubmit'
+		});			
+	});
+	function prepareSubmit(){
+		$('##_buttonbar').slideUp("fast");
+		$('##_loader').fadeIn("slow");
+		return true;
+	}
+	function submitForm(){
+		$('##detailsForm').submit();
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
-<h1>
+<h2>
 	<img src="includes/images/user.png" align="absmiddle"> Update Your Profile
-</h1>
+</h2>
 
 <p>
 Please enter all the required information to update your profile details
@@ -48,7 +58,7 @@ Please enter all the required information to update your profile details
 #getPlugin("messagebox").renderit()#
 
 <!--- Profile Details --->
-<cfform name="detailsForm" id="detailsForm"
+<form name="detailsForm" id="detailsForm"
 		action="#event.buildLink(rc.xehDoEdit,0)#.cfm"
 		method="post">
 
@@ -57,25 +67,22 @@ Please enter all the required information to update your profile details
 	<div>
 		<p>
 		<label for="fname" >First Name:</label>
-		<cfinput type="text" name="fname" id="fname"
+		<input type="text" name="fname" id="fname" dName="First Name"
 				 required="true"
-				 message="Please enter your first name"
 				 value="#rc.oUser.getfname()#"
 				 maxlength="100"
 				 size="40">
 		<br />
 		<label for="lname" >Last Name: </label>
-		<cfinput type="text" name="lname" id="lname"
+		<input type="text" name="lname" id="lname" dName="Last Name"
 				 required="true"
-				 message="Please enter your last name"
 				 value="#rc.oUser.getlname()#"
 				 maxlength="100"
 				 size="40">
 		<br />
 		<label for="email" >Email Address:</label>
-		<cfinput type="text" name="email" id="email"
+		<input type="text" name="email" id="email" dName="Email Address"
 				 required="true"
-				 message="Please enter your email address"
 				 value="#rc.oUser.getemail()#"
 				 maxlength="255"
 				 size="40">
@@ -110,6 +117,6 @@ Please enter all the required information to update your profile details
 	</a>
 </div>
 <br />
-</cfform>
+</form>
 
 </cfoutput>
