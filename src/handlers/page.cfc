@@ -218,14 +218,28 @@ $Build ID:	@@build_id@@
 		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
 	    <cfscript>
 			var rc = event.getCollection();
+			var ids = "";
 			
 			/* Required */
 			rc.jsAppendList = 'jquery.uitablefilter';
 			/* Get All Pages */
 			rc.qPages = getWikiService().getPages();	
+			rc.qNameSpaces = getWikiService().getNamespaces();
 			
 			/* View */
-			event.setView('wiki/directory');
+			if( event.valueExists('pagesTable') ){
+				/* Filter */
+				ids = event.getValue("namespaces","");
+				if( right(ids,1) eq "," ){
+					ids = left(ids, len(ids)-1 );
+				}
+				rc.qPages = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="namespace_id",value=ids,list=true);
+				/* View */
+				event.setView('wiki/directoryPagesTable',true);
+			}
+			else{
+				event.setView('wiki/directory');
+			}
 		</cfscript> 
 	</cffunction>
 	

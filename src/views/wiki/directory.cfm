@@ -26,12 +26,31 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <script type="text/javascript">
 	$(window).ready(function(){
+		attachTableFilter()
+	});
+	function attachTableFilter(){
 		//Page Filter
 		theTable = $('##wikiPagesTable');
 		$("##pageFilter").keyup(function(){
 			$.uiTableFilter(theTable,this.value);
-		});		
-	});
+		});	
+	}
+	function filterPages(){
+		$("##namespace_spinner").toggle();
+		var data = new Object();
+		data.pagesTable = "True";
+		data.namespaces = "";
+		/* Get ID's' */
+		$(".namespaces").each(function(){
+			if(this.checked == true){
+				data.namespaces += this.value + ",";
+			}
+		});
+		$("##wikiPagesDiv").load('#event.buildLink(rc.xehPageDirectory)#.cfm',data,function(){
+			$("##namespace_spinner").toggle();
+			attachTableFilter();
+		});
+	}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -47,24 +66,19 @@ $Build ID:	@@build_id@@
 <p>Below is the current page directory for this wiki.  You can filter to find specific pages or click on 
 the page name to visit the page.</p>
 
-<table id="wikiPagesTable" class="tablelisting" width="100%">
-	<thead>
-		<tr>
-			<th>
-			<strong>Page Filter: </strong>
-			<input name="pageFilter" id="pageFilter" value="Type Here To Filter" 
-				   size="50" type="text"
-				   onClick="if(this.value='Type Here To Filter'){this.value='';}">
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-	<cfloop query="rc.qPages">
-		<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
-			<td><a href="#pageShowRoot(name)#.cfm">#name#</a></td>
-		</tr>
-	</cfloop>
-	</tbody>
-	
-</table>
+<label class="inlineLabel">Page Filter: </label>
+<input name="pageFilter" id="pageFilter" value="Type Here To Filter" 
+	   size="50" type="text"
+	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
+<br />
+<label>Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
+</label>
+
+<cfloop query="rc.qNamespaces">
+	<input type="checkbox" name="namespace" id="namespace" class="namespaces"
+		   value="#namespace_id#" onClick="filterPages()"
+		   checked="checked"><cfif len(name)>#name#<cfelse>#description#</cfif>
+</cfloop>
+<br /><br />
+<div id="wikiPagesDiv">#renderView('wiki/directoryPagesTable')#</div>
 </cfoutput>

@@ -212,14 +212,44 @@ $Build ID:	@@build_id@@
 	</cflock>
 </cffunction>
 
-<!--- getPages --->
-<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki">
+<!--- getNamespaces --->
+<cffunction name="getNamespaces" output="false" access="public" returntype="query" hint="Get a list of all the namespaces in the wiki">
 	<cfscript>
 		var query = 0;
 		
-		query = getTransfer().list('wiki.Page','name');
+		query = getTransfer().list('wiki.Namespace','name');
 		
 		return query;
+	</cfscript>
+</cffunction>
+
+<!--- getPages --->
+<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki">
+	<cfscript>
+		var tql = 0;
+		var query = 0;
+	</cfscript>
+	<cfsavecontent variable="tql">
+	<cfoutput>
+		select page.name, page.pageID,
+			   Namespace.name as Namespace,
+			   Namespace.isDefault,
+			   Namespace.Description as NamespaceDescription,
+			   Namespace.namespace_id
+		from
+			wiki.Page as page
+			join
+			wiki.Namespace as Namespace
+		order by
+		page.name
+	</cfoutput>
+	</cfsavecontent>
+	<cfscript>
+		/* Run Query */
+		query = getTransfer().createQuery(tql);
+		query.setCacheEvaluation(true);
+		/* REturn it */
+		return getTransfer().listByQuery(query);
 	</cfscript>
 </cffunction>
 
