@@ -21,7 +21,14 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <!--- Header for download on other browsers --->
-<cfheader name="Content-Disposition" value="inline; filename=webprint.#rc.layout_extension#">
+<cfif event.valueExists("content") >
+	<cfset fileTitle = rc.content.getPage().getCleanName()>
+<cfelse>
+	<cfset fileTitle = "webprint">
+</cfif>
+
+
+<cfheader name="Content-Disposition" value="inline; filename=#fileTitle#.#rc.layout_extension#">
 
 <!--- Document --->
 <cfdocument pagetype="letter" format="#Event.getValue("print","flashpaper")#">
