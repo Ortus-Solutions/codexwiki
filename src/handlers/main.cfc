@@ -55,30 +55,9 @@ $Build ID:	@@build_id@@
 			rc.xehPageDirectory = "page/directory";
 			
 			/* User Exit Handlers */			rc.xehUserdoLogin = "user/doLogin";			rc.xehUserLogin = "user/login";			rc.xehUserLogout = "user/logout";			rc.xehUserRegistration = "user/registration";			rc.xehUserReminder = "user/reminder";			/* Get a user from session */			rc.oUser = getSecurityService().getUserSession();			/* Get the wiki's custom HTML */			rc.oCustomHTML = getConfigService().getCustomHTML();			/* Get the wiki's Options */
-			rc.CodexOptions = getColdboxOCM().get('CodexOptions');			/* Printable Doctype Check */
-			isPrintFormat(arguments.event);
+			rc.CodexOptions = getColdboxOCM().get('CodexOptions');
 		</cfscript>	</cffunction>	<cffunction name="onRequestEnd" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<!--- ON Request End Here --->	</cffunction>	<cffunction name="onException" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<!--- ON Exception Handler Here --->		<cfscript>			//Grab Exception From request collection, placed by ColdBox			var exceptionBean = event.getValue("ExceptionBean");			/* Log our exception to our logs */			getPlugin("logger").logErrorWithBean(exceptionBean);		</cfscript>	</cffunction>
 <!------------------------------------------- DEPENDENCIES ------------------------------------------->	<!--- Security Service --->	<cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">		<cfreturn instance.SecurityService />	</cffunction>	<!--- Config Service --->	<cffunction name="getConfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">		<cfreturn instance.ConfigService />	</cffunction>
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
-		<cfargument name="Event" type="any">
-		<cfscript>
-		if( not reFindNoCase("^(flashpaper|pdf|HTML)$",event.getValue("print","")) ){
-			return;
-		}
-		else{
-			/* Change Layout */
-			Event.setLayout("Layout.Print");
-			/* Set Extensions */
-			if ( Event.getValue("print") eq "pdf" )
-			{
-				event.setValue("layout_extension","pdf");
-			}
-			else if( event.getValue("print") eq "flashpaper"){
-				event.setValue("layout_extension","swf");
-			}			else{				Event.setLayout("Layout.html");			}
-		}
-		</cfscript>
-	</cffunction>
-</cfcomponent>
+	</cfcomponent>

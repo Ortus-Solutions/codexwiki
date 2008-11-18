@@ -44,17 +44,8 @@ $(window).ready(function(){
 <div align="right" style="margin-bottom:15px;">
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
 		<img src="includes/images/history.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">History</a> |
+		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">View Page History</a>
 	</cfif>
-
-	<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot(rc.urlPage)#/pdf.cfm" target="_blank">PDF</a> |
-
-	<img src="includes/images/flash_16x16.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot(rc.urlPage)#/flashpaper.cfm" target="_blank">SWF</a> |
-
-	<img src="includes/images/html_16x16.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot(rc.urlPage)#/HTML.cfm" target="_blank">HTML</a>
 </div>
 </cfif>
 
@@ -102,5 +93,22 @@ $(window).ready(function(){
 		</cfif>
 	</p>
 	</cfif>
+	
+	<!--- Format Bar --->
+	<div id="downloadFormatsBar">
+		<strong>Download in other Formats:</strong><br />
+		<img src="includes/images/code.png" border="0" align="absmiddle">
+		<a href="#pageShowRoot(rc.urlPage)#/markup.cfm" target="_blank">Markup</a> |
+		
+		<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle">
+		<a href="#pageShowRoot(rc.urlPage)#/pdf.cfm" target="_blank">PDF</a> |
+	
+		<img src="includes/images/flash_16x16.png" border="0" align="absmiddle">
+		<a href="#pageShowRoot(rc.urlPage)#/flashpaper.cfm" target="_blank">SWF</a> |
+	
+		<img src="includes/images/html_16x16.png" border="0" align="absmiddle">
+		<a href="#pageShowRoot(rc.urlPage)#/HTML.cfm" target="_blank">HTML</a>
+	</div>
+
 </cfif>
 </cfoutput>

@@ -46,3 +46,7 @@ div#categories ul li {
 	padding: 0 10px 0 0;
 	font-weight: normal;
 }
+#downloadFormatsBar{
+	margin:30px 0px 10px 0px;
+	text-align:center;
+}

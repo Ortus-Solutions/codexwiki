@@ -1,0 +1,1 @@
+<cfoutput>#rc.content.getContent()#</cfoutput>

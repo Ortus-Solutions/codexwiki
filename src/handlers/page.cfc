@@ -30,7 +30,11 @@ $Build ID:	@@build_id@@
 	<!--- dependencies --->
 	<cfproperty name="WikiService" 	type="ioc" scope="instance" />
 	<cfproperty name="SearchEngine" type="ioc" scope="instance" />
-<!------------------------------------------- PUBLIC ------------------------------------------->
+	
+	<!--- IMPLICIT PROPERTIES --->
+	<cfset this.prehandler_only = "show">
+	
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<cffunction name="init" access="public" returntype="page" output="false">
 		<cfargument name="controller" type="any" required="yes">
@@ -42,7 +46,20 @@ $Build ID:	@@build_id@@
 			return this;
 		</cfscript>
 	</cffunction>
+
+<!------------------------------------------- IMPLICIT ------------------------------------------>
+
+	<!--- preHandler --->
+	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="">
+		<cfargument name="Event" type="any" required="yes">
+		<cfscript>	
+			/* Printable Doctype Check */
+			isPrintFormat(arguments.event);
+		</cfscript>
+	</cffunction>
 	
+<!------------------------------------------- PUBLIC ------------------------------------------>
+
 	<cffunction name="show" access="public" returntype="void" output="false">
 		<cfargument name="event" type="any">
 		<cfscript>
@@ -70,7 +87,12 @@ $Build ID:	@@build_id@@
 			/* Set views according to persistance */
 			if(rc.content.getIsPersisted())
 			{
-				arguments.event.setView("wiki/show");
+				if( event.getValue("print","") eq "markup"){
+					arguments.event.setView("wiki/showMarkup");
+				}
+				else{
+					arguments.event.setView("wiki/show");
+				}
 			}
 			else
 			{
@@ -361,4 +383,31 @@ $Build ID:	@@build_id@@
 	<cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
 		<cfreturn instance.wikiService />
 	</cffunction>
-</cfcomponent>
+
+	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
+		<cfargument name="Event" type="any">
+		<cfscript>
+		if( not reFindNoCase("^(flashpaper|pdf|HTML|markup)$",event.getValue("print","")) ){
+			return;
+		}
+		else{
+			/* Change Layout */
+			Event.setLayout("Layout.Print");
+			/* Set Extensions */
+			if ( Event.getValue("print") eq "pdf" )
+			{
+				event.setValue("layout_extension","pdf");
+			}
+			else if( event.getValue("print") eq "flashpaper"){
+				event.setValue("layout_extension","swf");
+			}
+			else if( event.getValue("print") eq "markup"){
+				event.setLayout("Layout.MarkupExport");
+			}
+			else{
+				Event.setLayout("Layout.html");
+			}
+		}
+		</cfscript>
+	</cffunction>
+	</cfcomponent>

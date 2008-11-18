@@ -49,19 +49,57 @@ $Build ID:	@@build_id@@
 	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>
 </h2>
 
-<br />
+<h3>Version Info Comparison</h3>
+<!--- Info Table --->
+<table class="tablelisting">
+	<tr>
+		<th class="center">Info</th>
+		<th class="center">Version #rc.version#</th>
+		<th class="center">Version #rc.old_version#</th>
+	</tr>
+	<tr>
+		<td><strong>Author</strong></td>
+		<td><a href="mailto:#rc.currentContent.getUser().getEmail()#">#rc.currentContent.getUser().getUsername()#</a></td>
+		<td><a href="mailto:#rc.oldContent.getUser().getEmail()#">#rc.oldContent.getUser().getUsername()#</a></td>
+		
+	</tr>
+	<tr>
+		<td><strong>Read Only</strong></td>
+		<td>#rc.currentContent.getisReadOnly()#</td>
+		<Td>#rc.oldContent.getisReadOnly()#</Td>
+	</tr>
+	<tr>
+		<td><strong>Created Date</strong></td>
+		<td>#printDate(rc.currentContent.getCreatedDate())# at  #printTime(rc.currentContent.getCreatedDate())#</td>
+		<td>#printDate(rc.oldContent.getCreatedDate())# at #printTime(rc.oldContent.getCreatedDate())#</td>
+	</tr>
+	<tr>
+		<td><strong>Comment</strong></td>
+		<td>#rc.currentContent.getComment()#</td>
+		<td>#rc.oldContent.getComment()#</td>
+	</tr>
+</table>
+
+
+<h3>Content Differences</h3>
+
+<!--- Legend --->
+<div id="legend">
+  <dl>
+	<dt /><dd>Unmodified</dd>
+   	<dt class="ins"/><dd>Added</dd>
+   	<dt class="del"/><dd>Removed</dd>
+   	<dt class="upd"/><dd>Modified</dd>
+  </dl>
+</div>
+
 <table class="diff tablelisting" cellspacing="0" border="1">
 	<tr>
-		<th colspan="2" class="center">Version #rc.version#<br />
-		#printDate(rc.currentContent.getcreatedDate())# at #printTime(rc.currentContent.getCreatedDate())#<br />
-		(by #rc.CurrentContent.getUser().getUsername()#)
+		<th colspan="2" class="center">Version #rc.version#
 		</th>
-		<th colspan="2" class="center">Version #rc.old_version#<br />
-			#printDate(rc.currentContent.getcreatedDate())# at #printTime(rc.currentContent.getCreatedDate())#<br />
-			(by #rc.oldContent.getUser().getUsername()#)
+		<th colspan="2" class="center">Version #rc.old_version#
 		</th>
 	</tr>
-
 <cfloop query="rc.parallel">
 	<tr>
 		<td class="linenum"><cfif IsNumeric(AtSecond)>#NumberFormat(AtSecond)#<cfelse>&nbsp;</cfif></td>

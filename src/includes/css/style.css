@@ -138,7 +138,7 @@ blockquote{
 #toc h2, .toc h2 {
 	border:medium none;
 	display:inline;
-	font-size: 16px;
+	font-size: 12px;
 	font-weight:bold;
 	padding:0pt;
 }
@@ -150,6 +150,7 @@ blockquote{
 }
 #toc li, .toc li{
 	margin: 3px 0px 3px 0px;
+	font-size: 10px;
 }
 /* form elements */
 form {

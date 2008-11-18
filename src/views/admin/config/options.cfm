@@ -91,8 +91,24 @@ $Build ID:	@@build_id@@
 			   name="wiki_name" id="wiki_name" 
 			   value="#rc.CodexOptions.wiki_name#" size="60" required="true">
      	<br /><br />
+	
+		<!--- Wiki Metadata --->
+		<label for="wiki_metadata">Wiki Metadata Description</label>
+		The global metadata description content to place in the metadata tag.<br />
+		<textarea dName="Wiki Metadata"
+			      name="wiki_metadata" id="wiki_metadata"
+			   	  rows="2"  required="true">#rc.CodexOptions.wiki_metadata#</textarea>
+     	<br />
+	
+		<!--- Wiki Keywords --->
+		<label for="wiki_metadata">Wiki Metadata Keywords</label>
+		The global metadata keywords to place in the metadata tag.<br />
+		<textarea dName="Wiki Metadata Keywords"
+			      name="wiki_metadata_keywords" id="wiki_metadata_keywords"
+			   	  rows="2" required="true">#rc.CodexOptions.wiki_metadata_keywords#</textarea>
+     	<br />
 		
-		<!--- Wiki Name --->
+		<!--- Wiki Outgoing Email --->
 		<label for="wiki_name">Wiki Outgoing Email</label>
 		The email to use to send out email.<br />
 		<input type="text"
