@@ -81,6 +81,8 @@ $Build ID:	@@build_id@@
 	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>: Page History
 </h1>
 
+#getPlugin("messagebox").renderit()#
+
 <p>Below is the current history for this page.  You can preview the version by clicking on the links.</p>
 
 <form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff)#/#rc.page.getName()#.cfm" method="get">

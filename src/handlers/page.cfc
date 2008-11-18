@@ -167,6 +167,12 @@ $Build ID:	@@build_id@@
 			var oldContentArray = 0;
 			var oDiffer = getMyPlugin("diff");
 			
+			/* Validate Versions */
+			if( not event.valueExists("version") OR not event.valueExists("old_version") ){
+				getPlugin("messagebox").setMessage(type="warning", message="No version information passed in.");
+				setNextRoute('page/showHistory/#rc.page#');
+			}
+			
 			/* CSS & JS */
 			rc.cssAppendList = "page.showHistory";
 			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
