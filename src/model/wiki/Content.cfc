@@ -69,7 +69,7 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		var args = StructNew();
 
-		args.stringBuilder = createObject("java", "java.lang.StringBuilder").init();
+		args.stringBuilder = createObject("java", "java.lang.StringBuffer").init();
 
 		if(NOT hasRenderedContent())
 		{

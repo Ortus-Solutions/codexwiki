@@ -392,7 +392,7 @@ $Build ID:	@@build_id@@
 <cffunction name="escapeAttributes" hint="returns the string with clean attributes" access="private" returntype="string" output="false">
 	<cfargument name="feedTag" hint="the feed tag" type="string" required="Yes">
 	<cfscript>
-		var builder = createObject("java", "java.lang.StringBuilder").init(arguments.feedTag);
+		var builder = createObject("java", "java.lang.StringBuffer").init(arguments.feedTag);
 		var pattern = createObject("java", "java.util.regex.Pattern").compile('"([^"]+)"');
 		var matcher = pattern.matcher(builder);
 

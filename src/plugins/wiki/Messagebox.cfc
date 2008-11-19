@@ -7,8 +7,8 @@ Description :
 Modification History:
 
 ----------------------------------------------------------------------->
-<cfcomponent name="DateTime" 
-			 hint="A datetime wiki plugin" 
+<cfcomponent name="Messagebox" 
+			 hint="A messagebox wiki plugin" 
 			 extends="coldbox.system.plugin" 
 			 output="false" 
 			 cache="true">

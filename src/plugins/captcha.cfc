@@ -43,7 +43,7 @@ Updates
 		<cfargument name="text" type="string" default="#makeRandomString(arguments.length)#" />
 		<cfargument name="width" type="string" default="200" hint="width of captcha image in pixels" />
 		<cfargument name="height" type="string" default="50" hint="height of captcha image in pixels" />
-		<cfargument name="fonts" type="string" default="verdana,arial,helvetica" hint="fonts to use for characters in captcha image" />
+		<cfargument name="fonts" type="string" default="verdana,arial,times new roman,courier" hint="fonts to use for characters in captcha image" />
 		<cfargument name="message" type="string" default="Please enter the correct code shown in the graphic." hint="Message to display below captcha if validate method failed.">
 		<cfset var ret = "" />
 		

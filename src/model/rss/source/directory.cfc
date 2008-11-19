@@ -93,7 +93,7 @@ $Build ID:	@@build_id@@
 <cffunction name="buildFeedDescription" hint="builds the feed description from the functionmeta" access="private" returntype="string" output="false">
 	<cfargument name="functionMeta" hint="the function meta" type="struct" required="Yes">
 	<cfscript>
-		var description = createObject("java", "java.lang.StringBuilder").init(arguments.functionMeta.hint);
+		var description = createObject("java", "java.lang.StringBuffer").init(arguments.functionMeta.hint);
 		var len = arrayLen(arguments.functionMeta.parameters);
 		var counter = 1;
 		var arg = 0;

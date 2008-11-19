@@ -47,9 +47,9 @@ $Build ID:	@@build_id@@
 	<cfset instance.Content = arguments.Content />
 </cffunction>
 
-<cffunction name="getStringBuilderContent" hint="gets the Content in a java.lang.StringBuilder" access="public" returntype="any" output="false">
+<cffunction name="getStringBuilderContent" hint="gets the Content in a java.lang.StringBuffer" access="public" returntype="any" output="false">
 	<cfscript>
-		return createObject("java", "java.lang.StringBuilder").init(getContent());
+		return createObject("java", "java.lang.StringBuffer").init(getContent());
 	</cfscript>
 </cffunction>
 

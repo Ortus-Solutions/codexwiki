@@ -42,12 +42,13 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#event.buildLink(rc.xehAdmin,0)#.cfm">Admin Dashboard</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminUsers,0)#.cfm">User Management</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminCustomHTML,0)#.cfm">Custom HTML</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminOptions,0)#.cfm">System Options</a></li>
-		<li><a href="#event.buildLink(rc.xehadminlookups,0)#.cfm">System Lookups</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminAPI,0)#.cfm">API Docs</a></li>
+		<li><a href="#event.buildLink(rc.xehAdmin)#.cfm">Admin Dashboard</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminUsers)#.cfm">User Management</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#.cfm">Custom HTML</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminPlugins)#.cfm">Wiki Plugins</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminOptions)#.cfm">System Options</a></li>
+		<li><a href="#event.buildLink(rc.xehadminlookups)#.cfm">System Lookups</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminAPI)#.cfm">API Docs</a></li>
 	</ul>
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
@@ -55,8 +56,8 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> User Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#event.buildLink(rc.xehUserProfile,0)#.cfm">My Profile</a></li>
-		<li><a href="#event.buildLink(rc.xehUserChangePass,0)#.cfm">Change Password</a></li>
+		<li><a href="#event.buildLink(rc.xehUserProfile)#.cfm">My Profile</a></li>
+		<li><a href="#event.buildLink(rc.xehUserChangePass)#.cfm">Change Password</a></li>
 	</ul>
 </div>
 <cfelse>

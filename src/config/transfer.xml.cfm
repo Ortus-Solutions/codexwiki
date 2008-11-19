@@ -52,7 +52,7 @@
 			<property name="createdDate" type="date" column="category_createddate"/>
 		</object>
 
-		<object name="CustomHTML" table="wiki_customHTML" decorator="codex.model.wiki.CustomHTML">
+		<object name="CustomHTML" table="wiki_customhtml" decorator="codex.model.wiki.CustomHTML">
 			<id name="customHTML_id" type="UUID" generate="true" />
 			<property name="beforeHeadEnd" type="string" column="customHTML_beforeHeadEnd" />
 			<property name="afterBodyStart" type="string" column="customHTML_afterBodyStart" />

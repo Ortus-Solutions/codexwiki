@@ -15,7 +15,7 @@ Modification History:
   
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
-    <cffunction name="init" access="public" returntype="DateTime" output="false">
+    <cffunction name="init" access="public" returntype="Time" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
   		super.Init(arguments.controller);
