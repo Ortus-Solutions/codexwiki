@@ -77,18 +77,24 @@ $Build ID:	@@build_id@@
 				tag = replace(tag,"&##34;",'"',"all");
 				tag = replace(tag,"&##39;","'","all");
 				
-				/* Parse it */
-				tagXML = xmlParse(tag);
-				/* Default Args */
-				pluginDef.args = structnew();
-				/* Create Arg Collection From Attributes if any */
-				if( structKeyExists(tagXML[pluginDef.name], "XMLAttributes") ){
-					for(key in tagXML[pluginDef.name].XMLAttributes){
-						pluginDef.args[key] = trim(tagXML[pluginDef.name].XMLAttributes[key]);
+				try{
+					/* Parse it */
+					tagXML = xmlParse(tag);
+					/* Default Args */
+					pluginDef.args = structnew();
+					/* Create Arg Collection From Attributes if any */
+					if( structKeyExists(tagXML[pluginDef.name], "XMLAttributes") ){
+						for(key in tagXML[pluginDef.name].XMLAttributes){
+							pluginDef.args[key] = trim(tagXML[pluginDef.name].XMLAttributes[key]);
+						}
 					}
+					/* Render Plugin Call */
+					replace = instance.controller.getPlugin(plugin=instance.WikiPluginsBasePath & pluginDef.name,customPlugin=true).renderit(argumentCollection=pluginDef.args);
 				}
-				/* Render Plugin Call */
-				replace = instance.controller.getPlugin(plugin=instance.WikiPluginsBasePath & pluginDef.name,customPlugin=true).renderit(argumentCollection=pluginDef.args);
+				catch(Any e){
+					replace = "Error parsing plugin definition: #e.message# & #e.detail#";
+				}
+				
 				/* Replace where we found the first one. */
 				builder.replace(matcher.start(), matcher.end(), replace);
 				/* Reset Matcher and Loop */

@@ -1021,6 +1021,10 @@ In languages where it makes a difference, you can use constructs like <nowiki>{{
 
 
 This page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 14:54:14',1,0);
+
+
+
+
 INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
 	('59121859-EB3F-023C-703B2FFFF21FBAE3','59104F5A-9555-E540-6BCAA65D9AE6F448','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== List basics ==
 
@@ -1419,6 +1423,10 @@ However, it does not seem possible to make all page history lists ordered (unles
 
 
 This page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 15:06:40',1,0);
+
+
+
+
 INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
 	('A873628C-0187-145E-574309C8195CA646','A8736248-DCE2-A123-A6DA083754C59203','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','<div align="center">
 <!--COMMENT MARKUP. Displays:Edit mode only.-->
@@ -1584,6 +1592,11 @@ no indent (normal)<br/>
 |colspan="3" style="border-top:1px solid #cee0f2; font-size:0.9em;"|<references/>
 |}
 </div>','First Import','1','2008-11-16 19:16:53',1,0);
+
+
+
+
+
 INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
 	('A8743C30-A526-DA45-970FB0A65A8F917D','58F2F999-FC99-125A-DB21FCD7085C44A1','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Help Contents ==
 
@@ -1596,10 +1609,17 @@ Welcome to the Codex Wiki.  Here you will find the documentation to edit and cre
 * [[Help:Cheatsheet|Wiki Markup Cheatsheet]] - Wiki Markup Cheatsheet
 * [[Help:Feed Markup|Feed Markup]] - Using feed tags.
 * [[Help:Messagebox Markup|Messagebox Markup]] - Using messagebox tags.
+* [[Help:WikiPlugins|Custom Wiki Plugins]] - Using the Codex Wiki Plugins
+* [[Help:WikiPlugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
 
 === More Information ===
 
 More information can be found via the Wikipedia site [http://en.wikipedia.org/wiki/Help:Contents Wikipedia Help] as this wiki follows many of its markup guidelines.','Messagebox tags.','1','2008-11-16 19:17:49',1,0);
+
+
+
+
+
 INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
 	('A89594E7-970D-BE3D-C32A3395AD685354','A895949D-B7C5-34B5-0E32B0CE52BC3FA0','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Messagebox Markup ==
 The <nowiki><messagebox></nowiki> tag is available to integrate the [http://www.coldboxframework.com ColdBox] Messagebox Plugin into your wiki pages.
@@ -1621,6 +1641,8 @@ The type of messagebox to generate: info, warning or error.
 Example:
 <code><pre><messagebox type="error">My Message</messagebox></pre></code>
 ','First Import','1','2008-11-16 19:54:14',1,0);
+
+
 INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
 	('C90869BF-F321-E64A-26D668F8EE8988B5','C90869A2-090D-50DA-0800C94BB5DB7026','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Feed Markup ==
 The <nowiki><feed></nowiki> tag is available to integrate RSS and ATOM feeds to provide dynamic information into your wiki pages.
@@ -1677,3 +1699,84 @@ Example of a RSS feed cached for 5 minutes
 By default, the default cache time out of the installed ColdBox.
 |-
 |}','Initial creation','1','2008-03-20 08:53:34',1,0);
+
+
+INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+	('B5C4FA6B-CF1E-5C1B-9830AE891E48FCD2','B5C4FA1D-CF1E-5C1B-950B4A04E276B736','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align="right"
+|-
+| __TOC__
+|}
+
+= Codex Wiki Plugins =
+
+== Introduction ==
+Codex comes bundled with a set of custom wiki plugins that can be used in any wiki page by following the following syntax:
+
+<source lang="xml">
+{{{PluginName arg1="" arg2="" ...}}}
+</source>
+
+Basically, you create a tag with the name of the plugin to use and then just create arguments of name-value pairs of whatever arguments the plugin''s ''''''renderit()'''''' method takes in.
+
+== A Wiki Plugin ==
+Creating wiki plugins are very easy. Just drop them in the ''''''/App/plugins/wiki'''''' folder and you are ready to start using them in your wiki pages.
+
+A wiki plugin is exactly just like any other ColdBox plugin. [http://ortus.svnrepository.com/coldbox/trac.cgi/wiki/cbPluginsGuide ColdBox Plugin Guide].
+
+=== Rules ===
+
+# Plugin component must extend ''''coldbox.system.plugin'''' and implement the coldbox plugin init() method.
+# Plugin can just implement the ColdBox init() method with no inheritance, but will not be able to tap into the framework''s supertype''s methods.  It will have to do everything via the injected controller.
+# Plugin must implement a method called ''''''renderit()''''''.
+## This method can have 1 or more arguments.
+
+== Example ==
+
+So if we have a plugin called ''''''DateTime'''''', it''s source code can look like this:
+
+<source lang="coldfusion">
+<cfcomponent name="DateTime" 
+			 hint="A datetime wiki plugin" 
+			 extends="coldbox.system.plugin" 
+			 output="false" 
+			 cache="true">
+  
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
+   
+    <cffunction name="init" access="public" returntype="DateTime" output="false">
+		<cfargument name="controller" type="any" required="true">
+		<cfscript>
+  		super.Init(arguments.controller);
+  		setpluginName("DateTime");
+  		setpluginVersion("1.0");
+  		setpluginDescription("A date time wiki plugin");
+  		//My own Constructor code here
+  		
+  		//Return instance
+  		return this;
+		</cfscript>
+	</cffunction>
+
+<!------------------------------------------- PUBLIC ------------------------------------------->	
+
+    <!--- today --->
+	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today">
+		<cfargument name="format" type="string" required="true" default="full" hint="Full,Short, Medium"/>
+		<cfreturn dateformat(now(),arguments.format)>
+	</cffunction>
+	
+<!------------------------------------------- PRIVATE ------------------------------------------->	
+	
+</cfcomponent>
+</source>
+
+And we can use it in our wiki pages like so:
+
+<source lang="xml">
+//Initial space is left so wiki doesn''t match and you can see the source
+{{{ Messagebox message="Hello World!"}}}
+</source>
+
+That''s it. Welcome to the world of Codex Wiki Plugins.  Now go out and start coding your very own plugins. Below you can see a plugin at work:
+
+{{{WikiPlugins}}}','First Import','1','2008-11-19 09:21:03',1,0);
