@@ -1,10 +1,12 @@
-<!--- 
+<!---
 Migration script:
 Please run this first, then use your favorite IDE or command line to import
 the helpcontent.sql
 --->
-<cfoutput>Migration Starting...</cfoutput>
+<cfoutput><h2>Migration Starting...</h2></cfoutput>
 <cfflush><cfflush>
+
+<cftransaction>
 
 <cfquery name="qHelp" datasource="#request.dsn#">
 DROP TABLE /*!32312 IF EXISTS*/ `wiki_options`;
@@ -18,6 +20,7 @@ CREATE TABLE `wiki_options` (
 )DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
 </cfquery>
 
+<cftry>
 <cfquery name="qHelp" datasource="#request.dsn#">
 ALTER TABLE `wiki_options` ADD UNIQUE INDEX Index_2(`option_name`);
 </cfquery>
@@ -33,8 +36,15 @@ ALTER TABLE `wiki_pagecontent` ADD COLUMN `pagecontent_isReadOnly` BOOLEAN NOT N
 <cfquery name="qHelp" datasource="#request.dsn#">
 ALTER TABLE `wiki_users` ADD UNIQUE INDEX newindex(`user_username`);
 </cfquery>
+	<cfcatch type="database">
+		<p>
+			Database changes already made.
+		</p>
+	</cfcatch>
+</cftry>
+
 <cfquery name="qHelp" datasource="#request.dsn#">
-INSERT INTO wiki_options ( option_id, option_name, option_value ) VALUES 
+INSERT INTO wiki_options ( option_id, option_name, option_value ) VALUES
 ('9F03F883-AFFA-A78C-1A2EDA50675A3B46','wiki_defaultpage','Dashboard'),
 ('9F045002-0E99-A690-7C59F405F98A19BE','wiki_search_engine','codex.model.search.adapters.DBSearch'),
 ('9F0485D1-F0AB-DF57-DCD68A6AE5F2FF33','wiki_name','A Sweet Wiki'),
@@ -53,7 +63,7 @@ INSERT INTO wiki_options ( option_id, option_name, option_value ) VALUES
 select a.*
 from wiki_page a, wiki_namespace b
 where a.FKnamespace_id = b.namespace_id AND
-b.namespace_name = "Help";
+b.namespace_name = 'Help';
 </cfquery>
 <!--- page_ids --->
 <cfset helpIDs = valueList(qHelp.page_id)>
@@ -78,12 +88,38 @@ INSERT INTO wiki_page ( page_id, page_name, FKnamespace_id ) VALUES ('58F2F999-F
 ('59104F5A-9555-E540-6BCAA65D9AE6F448','Help:List_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295'),
 ('A8736248-DCE2-A123-A6DA083754C59203','Help:Cheatsheet','58F2F981-F62A-3124-E886BBF8CE6C5295'),
 ('A895949D-B7C5-34B5-0E32B0CE52BC3FA0','Help:Messagebox_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295'),
-('C90869A2-090D-50DA-0800C94BB5DB7026','Help:Feed_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295')
+('C90869A2-090D-50DA-0800C94BB5DB7026','Help:Feed_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295'),
+('B5C4FA1D-CF1E-5C1B-950B4A04E276B736', 'Help:Codex Wiki Plugins', '58F2F981-F62A-3124-E886BBF8CE6C5295')
 </cfquery>
+
+<!--- let's try and import the help scripts --->
+
+<cffile action="read" file="#expandPath('helpcontent.sql')#" variable="helpsql">
+
+<cfscript>
+	split = "INSERT INTO";
+	helpstatements = helpsql.split(split);
+</cfscript>
+
+<cfloop array="#helpstatements#" index="statement">
+	<cfif statement.startsWith(' `wiki_pagecontent`')>
+
+		<cfset statement = rereplace(statement, ";[\s]*$", "") />
+
+		<cfquery name="qInsert" datasource="#request.dsn#">
+			#split#
+			#PreserveSingleQuotes(statement)#
+		</cfquery>
+	<cfelse>
+		<p>
+			<cfoutput>Statement ignored: [#statement#];</cfoutput>
+		</p>
+	</cfif>
+</cfloop>
+
+</cftransaction>
 
 <cfoutput>
 <h2>Migration Finalized...</h2>
-<p>Please import the <strong>helpcontent.sql</strong> using your MySQL command line tool or HeidiSQL to finalize
-the migration.</p>
 </cfoutput>
 <!--- <cfdump var="#variables#"> --->

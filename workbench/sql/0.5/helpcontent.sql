@@ -17,9 +17,7 @@
 # Database structure for database 'codex'
 #
 
-USE "codex";
-
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('5906B62D-FBD0-6F75-B6B7BF36DCD904C5','59014C5F-C1C6-7E91-A38446214A380C7D','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','==Wiki markup==
 
 The ''''''wiki markup'''''' is the syntax system you can use to format a Wikipedia page; please see [[Help:Editing]] for details on it, and [[Help:Wikitext examples]] for a longer list of the possibilities of Wikitext.
@@ -1025,7 +1023,7 @@ This page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_
 
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('59121859-EB3F-023C-703B2FFFF21FBAE3','59104F5A-9555-E540-6BCAA65D9AE6F448','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== List basics ==
 
 CodexWiki offers three types of lists. ''''''Ordered lists'''''', ''''''unordered lists'''''', and ''''''definition lists''''''. In the following sections, ordered lists are used for examples. Unordered lists would give corresponding results.
@@ -1427,7 +1425,7 @@ This page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_G
 
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('A873628C-0187-145E-574309C8195CA646','A8736248-DCE2-A123-A6DA083754C59203','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','<div align="center">
 <!--COMMENT MARKUP. Displays:Edit mode only.-->
 {|align="center" style="width:100%; border:2px #a3b1bf solid; background:#f5faff; text-align:left;"
@@ -1597,7 +1595,7 @@ no indent (normal)<br/>
 
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('A8743C30-A526-DA45-970FB0A65A8F917D','58F2F999-FC99-125A-DB21FCD7085C44A1','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Help Contents ==
 
 Welcome to the Codex Wiki.  Here you will find the documentation to edit and create pages on this wiki.
@@ -1620,7 +1618,7 @@ More information can be found via the Wikipedia site [http://en.wikipedia.org/wi
 
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('A89594E7-970D-BE3D-C32A3395AD685354','A895949D-B7C5-34B5-0E32B0CE52BC3FA0','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Messagebox Markup ==
 The <nowiki><messagebox></nowiki> tag is available to integrate the [http://www.coldboxframework.com ColdBox] Messagebox Plugin into your wiki pages.
 
@@ -1643,7 +1641,7 @@ Example:
 ','First Import','1','2008-11-16 19:54:14',1,0);
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('C90869BF-F321-E64A-26D668F8EE8988B5','C90869A2-090D-50DA-0800C94BB5DB7026','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Feed Markup ==
 The <nowiki><feed></nowiki> tag is available to integrate RSS and ATOM feeds to provide dynamic information into your wiki pages.
 
@@ -1701,7 +1699,7 @@ By default, the default cache time out of the installed ColdBox.
 |}','Initial creation','1','2008-03-20 08:53:34',1,0);
 
 
-INSERT INTO "wiki_pagecontent" ("pagecontent_id", "FKpage_id", "FKuser_id", "pagecontent_content", "pagecontent_comment", "pagecontent_version", "pagecontent_createdate", "pagecontent_isActive", "pagecontent_isReadOnly") VALUES
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
 	('B5C4FA6B-CF1E-5C1B-9830AE891E48FCD2','B5C4FA1D-CF1E-5C1B-950B4A04E276B736','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align="right"
 |-
 | __TOC__
