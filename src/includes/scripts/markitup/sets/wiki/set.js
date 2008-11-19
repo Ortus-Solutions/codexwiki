@@ -67,8 +67,9 @@ mySettings = {
 		{separator:'---------------' },
 		{name:'No Wiki',className: 'nowikiGen', openWith:'<nowiki>No Wiki', closeWith:'</nowiki>'},
 		{name:'Code',className: 'codeGen', openWith:'(!(<source lang="[![Language:!:coldfusion]!]">|!|<pre>)!)', closeWith:'(!(</source>|!|</pre>)!)'},
-		{name:'Messagebox', className: 'messageboxGen', openWith:'<Messagebox message="[![Message:]!]" type="[![Type:!:info,error or warning]!]"', closeWith:' />'},
+		{name:'Messagebox', className: 'messageboxGen', openWith:'{{{Messagebox message="[![Message:]!]" type="[![Type:!:info,error or warning]!]"', closeWith:'}}}'},
 		{name:'RSS', className: 'rssGen', openWith:'<feed url="[![URL:]!]" display="[![Display:!:bullet or numbered]!]" cache="[![Cache Tiemout:]!]"', closeWith:' />'},
+		{name:'Wiki Plugin', className: 'pluginGen', openWith:'{{{[![Plugin Name:]!]', closeWith:'}}}'},
 		{separator:'---------------' },
 		{name:'Preview', call:'CodexPreview', className:'preview'},
 		{name:'Help', className:'helpGen', call:'openHelp'}

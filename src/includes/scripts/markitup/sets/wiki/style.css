@@ -73,7 +73,9 @@
 .markItUp .messageboxGen a {
 	background-image:url(images/messagebox.png);
 }
-
+.markItUp .pluginGen a {
+	background-image:url(images/plugin_icon.png);
+}
 .markItUp .preview a {
 	background-image:url(images/preview.png);
 }
