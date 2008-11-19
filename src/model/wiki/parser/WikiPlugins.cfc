@@ -34,7 +34,10 @@ $Build ID:	@@build_id@@
 		/* Setup the coldbox controller */
 		instance.controller = arguments.ColdBoxController;
 		/* Setup WikiPlugins Location */
-		instance.WikiPluginsLocation = "wiki.";
+		instance.WikiPluginsLocation = instance.controller.getSetting("MyPluginsPath") & "/wiki";
+		/* Instantiation Path */
+		instance.WikiPluginsBasePath = "wiki.";
+				
 		return this;
 	</cfscript>
 </cffunction>
@@ -45,68 +48,54 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		//do this with Java, as it is fast
 		var builder = arguments.renderable.getStringBuilderContent();
-		var pattern = createObject("java", "java.util.regex.Pattern").compile("(</?plugin[^>]*/>)");
-		var matcher = pattern.matcher(builder);
+		var installedPlugins = getPlugins();
+		var pattern = 0;
+		var matcher = 0;
+		var x = 1;
 		var tag = 0;
 		var tagXML = 0;
 		var replace = 0;
 		var pluginDef = structnew();
-		var oPlugin = 0;
+		var key = 0;
 		
-		/* Plugin Declaration <plugin />
-			Arguments:
-				name = Name of Plugin
-				core = true or false for core coldbox plugin
-				invoker= the method arg combination
-		 */
+		/* Loop Over Wiki Plugins */
 		
-		while(matcher.find())
-		{
-			tag = matcher.group();
-			/* XML Parse it */
-			try{
-				tagXML = xmlParse(tag);
-			}
-			catch(Any e){
-				getUtil().dump(tag);
-				getUtil().dump(e,1);
-			}
-			getUtil().dump(tag,1);
-			/* Verify the name of the plugin, else return nothing */
-			if( structKeyExists(tagXML,"XMLAttributes") and 
-				structKeyExists(tagXML.XMLAttributes,"name") and 
-				structKeyExists(tagXML.XMLAttributes,"invoke")){
-				/* Get Core Definition */
-				if( structKeyExists(tagXML.XMLAttributes,"core") ){
-					pluginDef.core = trim(tagXML.XMLAttributes.core);
-					pluginDef.name = trim(tagXML.XMLAttributes.name);
-				}
-				else{
-					pluginDef.core = false;
-					pluginDef.name = instance.WikiPluginsLocation & trim(tagXML.XMLAttributes.name);
-				}
-				/* Get Invoke Definition */
-				pluginDef.invoke = trim(tagXML.XMLAttributes.invoke);
+		for(x=1; x lte installedPlugins.recordcount;x+=1){
+			/* This Plugin */
+			pluginDef.name = ripExtension(installedPlugins.name[x]);
+			/* Prepare Pattern */
+			pattern = createObject("java", "java.util.regex.Pattern").compile("\{\{\{#pluginDef.name#[^\}]*\}\}\}");
+			/* Match */
+			matcher = pattern.matcher(builder);
+			/* Loop And Parse */
+			while(matcher.find()){
+				/* Get Group */
+				tag = matcher.group();
+				tag = replace(tag,"{{{","<");
+				tag = replace(tag,"}}}","/>");
+				/* Quotes */
+				tag = replace(tag,"&##34;",'"',"all");
+				tag = replace(tag,"&##39;","'","all");
 				
-				/* Get Plugin Object */
-				if( pluginDef.core ){
-					oPlugin = instance.controller.getPlugin(pluginDef.name);
+				/* Parse it */
+				tagXML = xmlParse(tag);
+				/* Default Args */
+				pluginDef.args = structnew();
+				/* Create Arg Collection From Attributes if any */
+				if( structKeyExists(tagXML[pluginDef.name], "XMLAttributes") ){
+					for(key in tagXML[pluginDef.name].XMLAttributes){
+						pluginDef.args[key] = trim(tagXML[pluginDef.name].XMLAttributes[key]);
+					}
 				}
-				else{
-					oPlugin = instance.controller.getMyPlugin(pluginDef.name); 
-				}
-				/* Invoker */
-				replace = evaluate('oPlugin.#pluginDef.invoke#');
-			}//end if name and method found.
-			else{
-				replace = "";
-			}
+				/* Render Plugin Call */
+				replace = instance.controller.getPlugin(plugin=instance.WikiPluginsBasePath & pluginDef.name,customPlugin=true).renderit(argumentCollection=pluginDef.args);
+				/* Replace where we found the first one. */
+				builder.replace(matcher.start(), matcher.end(), replace);
+				/* Reset Matcher and Loop */
+				matcher.reset();				
+			}//end matcher finds.
 			
-			/* Replace where we found the first one. */
-			builder.replace(matcher.start(), matcher.end(), replace);
-			/* Reset the matcher */
-			matcher.reset();
-		}
+		}//end looping on wiki plugins to find matchings
 
 		/* Set our content back from our builder */
 		arguments.renderable.setContent(builder.toString());
@@ -119,10 +108,24 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-
-<!---  Get the Utility Object. --->
-<cffunction name="getUtil" output="false" access="private" returntype="any" hint="Utility Method">
-	<cfreturn CreateObject("component","codex.model.util.utility")>
-</cffunction>
+	<!--- Get Plugins --->
+	<cffunction name="getPlugins" access="public" returntype="query" hint="Get the installed plugins" output="false" >
+		<cfset var qPlugins = 0>
+		
+		<cfdirectory action="list" directory="#instance.WikiPluginsLocation#" name="qPlugins" filter="*.cfc">
+		
+		<cfreturn qPlugins>
+	</cffunction>
+	
+	<!--- Rip Extension --->
+	<cffunction name="ripExtension" access="public" returntype="string" output="false" hint="Rip the extension of a filename.">
+		<cfargument name="filename" type="string" required="true">
+		<cfreturn reReplace(arguments.filename,"\.[^.]*$","")>
+	</cffunction>
+	
+	<!---  Get the Utility Object. --->
+	<cffunction name="getUtil" output="false" access="private" returntype="any" hint="Utility Method">
+		<cfreturn CreateObject("component","codex.model.util.utility")>
+	</cffunction>
 
 </cfcomponent>

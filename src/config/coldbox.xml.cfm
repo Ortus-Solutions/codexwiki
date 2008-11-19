@@ -105,10 +105,11 @@
 			<Property name="rulesBeanMethod">getSecurityRules</Property>
 			<Property name="validatorIOC">SecurityService</Property>
 		</Interceptor>
+		<!-- Wiki Plugins Translations -->
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
-			<Property name="ignoreXMLTagList">feed,messagebox,plugin</Property>
-			<Property name="allowedAttributes">style,url,cache,display,arguments,name</Property>
+			<Property name="ignoreXMLTagList">feed,messagebox</Property>
+			<Property name="allowedAttributes">style,url,cache,display,type</Property>
 		</Interceptor>
 		<!-- Feed Translations -->
 		<Interceptor class="codex.interceptors.wiki.Feed">
@@ -116,11 +117,9 @@
 		<!-- MessageBox Translations -->
 		<Interceptor class="codex.interceptors.wiki.MessageBox">
 		</Interceptor>	
-		<!-- Wiki Plugins Translations -->
 		<Interceptor class="codex.interceptors.wiki.WikiPlugins">
 		</Interceptor>		
-			
-
+		
 	</Interceptors>
 
 

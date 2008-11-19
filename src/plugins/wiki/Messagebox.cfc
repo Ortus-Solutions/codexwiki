@@ -15,13 +15,13 @@ Modification History:
   
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
-    <cffunction name="init" access="public" returntype="DateTime" output="false">
+    <cffunction name="init" access="public" returntype="Messagebox" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
   		super.Init(arguments.controller);
-  		setpluginName("DateTime");
+  		setpluginName("Messagebox");
   		setpluginVersion("1.0");
-  		setpluginDescription("A date time wiki plugin");
+  		setpluginDescription("A messagebox plugin. Valid Types are info, warning, error");
   		//My own Constructor code here
   		
   		//Return instance
@@ -33,8 +33,28 @@ Modification History:
 
     <!--- today --->
 	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today">
-		<cfargument name="format" type="string" required="true" default="full" hint="Full,Short, Medium"/>
-		<cfreturn dateformat(now(),arguments.format)>
+		<cfargument name="message"  required="true" type="string" hint="The message to display"/>
+		<cfargument name="type" 	required="true" type="string" default="info" hint="The type of messagebox: info, error, warning">
+		
+		<cfscript>
+			var content = "";
+			
+			/* Header */
+			if(arguments.type eq "info"){
+				content = '<div class="cbox_messagebox_info"><p class="cbox_messagebox">';
+			}
+			else if(arguments.type eq "warning"){
+				content = '<div class="cbox_messagebox_warning"><p class="cbox_messagebox">';
+			}
+			else if(arguments.type eq "error"){
+				content = '<div class="cbox_messagebox_error"><p class="cbox_messagebox">';
+			}
+			
+			/* Content */
+			content = content & arguments.message & "</p></div>";
+			
+			return content;			
+		</cfscript>
 	</cffunction>
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->	

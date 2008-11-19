@@ -50,7 +50,6 @@
 	<bean id="WikiPlugins" class="codex.model.wiki.parser.WikiPlugins" singleton="false" />
 	<bean id="Feed" class="codex.model.wiki.parser.Feed" />
 	<bean id="MessageBox" class="codex.model.wiki.parser.MessageBox" />
-
 	<!-- rss -->
 	<bean id="RSSManager" class="codex.model.rss.RSSManager" />
 
