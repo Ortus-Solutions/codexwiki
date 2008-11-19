@@ -107,15 +107,19 @@
 		</Interceptor>
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
-			<Property name="ignoreXMLTagList">feed,messagebox</Property>
-			<Property name="allowedAttributes">style,url,cache,display</Property>
+			<Property name="ignoreXMLTagList">feed,messagebox,plugin</Property>
+			<Property name="allowedAttributes">style,url,cache,display,arguments,name</Property>
 		</Interceptor>
 		<!-- Feed Translations -->
 		<Interceptor class="codex.interceptors.wiki.Feed">
 		</Interceptor>
 		<!-- MessageBox Translations -->
 		<Interceptor class="codex.interceptors.wiki.MessageBox">
+		</Interceptor>	
+		<!-- Wiki Plugins Translations -->
+		<Interceptor class="codex.interceptors.wiki.WikiPlugins">
 		</Interceptor>		
+			
 
 	</Interceptors>
 

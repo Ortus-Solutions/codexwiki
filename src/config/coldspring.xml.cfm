@@ -47,6 +47,7 @@
 	<bean id="SearchEngine" factory-bean="SearchFactory" factory-method="getSearchEngine" />	
 	<!-- Parsers -->
 	<bean id="WikiText" class="codex.model.wiki.parser.WikiText" />
+	<bean id="WikiPlugins" class="codex.model.wiki.parser.WikiPlugins" singleton="false" />
 	<bean id="Feed" class="codex.model.wiki.parser.Feed" />
 	<bean id="MessageBox" class="codex.model.wiki.parser.MessageBox" />
 

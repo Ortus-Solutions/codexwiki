@@ -190,9 +190,9 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		//save the name space first
 		getTransfer().save(arguments.content.getPage().getNamespace());
-
+		/* Save the Page */
 		getTransfer().save(arguments.content.getPage());
-
+		/* Loop over Categories in the Content */
 		while(iterator.hasNext())
 		{
 			category = iterator.next();
@@ -209,7 +209,7 @@ $Build ID:	@@build_id@@
 		{
 			arguments.content.setUser(getSecurityService().getUserSession());
 		}
-
+		/* Persist the content now. */
 		getTransfer().save(arguments.content);
 	</cfscript>
 </cffunction>
@@ -229,17 +229,21 @@ $Build ID:	@@build_id@@
 	<!--- lock this, so we only have 1 active content at any given time --->
 	<cflock name="codex.wiki.saveContentVersion.#arguments.content.getPage().getName()#" timeout="60">
 		<cfscript>
+			/* Get the active content object */
 			activeContent = getContent(pageName=arguments.content.getPage().getName());
-
+			/* Check if found? */
 			if(activeContent.getIsPersisted())
 			{
+				/* Found, so deactivate it */
 				activeContent.setIsActive(false);
+				/* Increase the version of the incoming content */
 				arguments.content.setVersion(activeContent.getVersion() + 1);
+				/* Save the now old content. */
 				saveContent(activeContent);
 			}
-
+			/* Activate incoming content to save */
 			arguments.content.setIsActive(true);
-
+			/* Save it */
 			saveContent(arguments.content);
 		</cfscript>
 	</cflock>
