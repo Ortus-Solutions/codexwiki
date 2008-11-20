@@ -33,7 +33,9 @@ $Build ID:	@@build_id@@
 
 		initJavaLoader();
 
-		setLinkPattern(arguments.configBean.getKey('sesBaseURL') & "/" & arguments.configBean.getKey("ShowKey") & "/${title}.cfm");
+		setWikiBase(arguments.configBean.getKey("ShowKey") & "/");
+		setLinkPattern(arguments.configBean.getKey("ShowKey") & "/${title}.cfm");
+
 
 		//this will eventually get replaced when we implement images
 		setImagePattern("image/${image}.cfm");
@@ -42,35 +44,15 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="_dump">
-	<cfargument name="s">
-	<cfargument name="abort" default="true">
-	<cfset var g = "">
-		<cfdump var="#arguments.s#">
-		<cfif arguments.abort>
-		<cfabort>
-		</cfif>
-</cffunction>
-
 <cffunction name="configure" hint="configuration method for configuraiton by the listener" access="public" returntype="void" output="false">
 	<cfargument name="ignoreXMLTagList" hint="the list of xml tags to ignore" type="string" required="No" default="">
 	<cfargument name="allowedAttributes" hint="the list of extra attributes that are allowed in html tags" type="string" required="No" default="">
 	<cfscript>
 
-		var config = 0;
-		var TagNode = 0;
+		var config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
+		var TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
 		var xmlTag = 0;
 		var attrib = 0;
-
-		try
-		{
-			config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
-			TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
-		}
-		catch(Any exc)
-		{
-			_dump(exc);
-		}
 	</cfscript>
 
 	<cfloop list="#arguments.allowedAttributes#" index="attrib">
@@ -85,7 +67,7 @@ $Build ID:	@@build_id@@
 	</cfloop>
 	<cfscript>
 		//this tells the parser to ignore these XML tags
-		config.addCodeFormatter("coldfusion", getJavaLoader().create("com.codexwiki.bliki.ColdFusionCodeFilter").init());
+		config.addCodeFormatter("coldfusion", getJavaLoader().create("com.codexwiki.bliki.codeFilter.ColdFusionCodeFilter").init());
 
 		setConfiguration(config);
 	</cfscript>
@@ -95,7 +77,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="renderable" hint="renderable object, should be static" type="any" required="Yes">
 	<cfargument name="visitData" hint="struct of data that gets passed around" type="struct" required="Yes">
 	<cfscript>
-		var model = createModel();
+		var model = createModel(arguments.visitData.content);
 
 		arguments.renderable.setContent(model.render(arguments.renderable.getContent()));
 
@@ -151,7 +133,9 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
-	<cfreturn getJavaLoader().create("info.bliki.wiki.model.WikiModel").init(getConfiguration(), "/${image}", getLinkPattern()) />
+	<cfargument name="content" hint="the content that this page is being created for" type="codex.model.wiki.Content" required="Yes">
+	<cfreturn getJavaLoader().create("com.codexwiki.bliki.model.WikiModel").init(getConfiguration(), "/${image}", getLinkPattern(),
+																				getWikiBase() & arguments.content.getPage().getName() & ".cfm") />
 </cffunction>
 
 <cffunction name="getLinkPattern" access="private" returntype="string" output="false">
@@ -180,6 +164,15 @@ $Build ID:	@@build_id@@
 <cffunction name="setConfiguration" access="private" returntype="void" output="false">
 	<cfargument name="Configuration" type="any" required="true">
 	<cfset instance.Configuration = arguments.Configuration />
+</cffunction>
+
+<cffunction name="getWikiBase" access="private" returntype="string" output="false">
+	<cfreturn instance.wikiBase />
+</cffunction>
+
+<cffunction name="setWikiBase" access="private" returntype="void" output="false">
+	<cfargument name="wikiBase" type="string" required="true">
+	<cfset instance.wikiBase = arguments.wikiBase />
 </cffunction>
 
 

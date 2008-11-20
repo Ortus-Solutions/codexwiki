@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="codex-cfsyntax" default="dist" basedir=".">
+<project name="codex-bliki-extensions" default="dist" basedir=".">
 	<property name="src" location="."/>
 	<property name="build" location="./bin"/>
 	<property name="dist" location="../../../src/model/wiki/parser/lib/bliki"/>	
@@ -10,8 +10,8 @@
   </target>
     
   <target name="dist" depends="compile" description="generate the distribution" >
-  	<delete file="${dist}/cfsyntax-src.zip"/>
-    <zip destfile="${dist}/cfsyntax-src.zip">
+  	<delete file="${dist}/bliki-extensions-src.zip"/>
+    <zip destfile="${dist}/bliki-extensions-src.zip">
       <fileset dir="${src}">
       	<exclude name="**/*.class"/>
       	<exclude name="**/*._java"/>
@@ -28,7 +28,7 @@
   		<format property="DSTAMP" pattern="yyyyMMddHHmmss"/>
     </tstamp>
     <mkdir dir="${dist}"/>
-    <jar jarfile="${dist}/cfsyntax-${DSTAMP}.jar" basedir="${build}"/>  	
+    <jar jarfile="${dist}/bliki-extensions-${DSTAMP}.jar" basedir="${build}"/>  	
   </target>	
 	
   <target name="clean" description="clean up" >
@@ -40,7 +40,7 @@
 	
   <target name="cleanALL" depends="clean">
   	<delete>
-		<fileset dir="${dist}" includes="cfsyntax-*.jar"/>
+		<fileset dir="${dist}" includes="bliki-extensions-*.jar"/>
 	</delete>
   </target>
 	

@@ -1,4 +1,4 @@
-package com.codexwiki.bliki;
+package com.codexwiki.bliki.codeFilter;
 
 import info.bliki.wiki.tags.code.AbstractCPPBasedCodeFilter;
 import info.bliki.wiki.tags.code.SourceCodeFormatter;
