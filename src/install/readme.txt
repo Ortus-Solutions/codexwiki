@@ -42,20 +42,23 @@ To install the database, just use mysql command line tools, HeidiSQL or MySQLAdm
 to restore the database using the script found on the appropriate version.
 
 /codex
-	/workbench
-		/sql
+	/install
+		/migration
 			/{Version}
-				/codexwiki.sql (The entire codex database backup)
-				/helpcontent.sql (The new helpcontent sql, only import if upgrading)
+				/codexwiki_MySQLAdminBackup.sql (The entire codex database backup using MySQL Admin)
+				/codexwiki_mysqldump.sql (The entire codex database backup using MySQL dump utility)
+				/helpcontent.sql (The new helpcontent sql, used by the migration script.)
+				/deletehelp.sql (A utility help script to remove help content, can be used standalone)
 				/migration.cfm (The coldfusion migration script if upgrading from a another release)
 				/Application.cfm (Where the datasource declaration is located)
 
 New Install
-If you are doing a new installation, just restore the database from the codexwiki.sql file.
+If you are doing a new installation, just restore the database from the codexwiki.sql file. Either
+the MySQL Admin Backup file or the normal mysql dump file.
 
 Upgrading Your Installation
-If you are upgrading, please run the migration.cfm template and then import the helpcontent.sql
-with your tool of choice.
+If you are upgrading, please run the migration.cfm template from your browser.  This will
+migrate your current wiki DB to this release.
 
 ********************************************************************************
 Source Code Installation

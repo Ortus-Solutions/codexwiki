@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Codex.ReleaseBuild" default="build" basedir=".">
+
+	<description>Codex Release Build</description>
+
+	<!-- common values for build file -->
+	<property file="common.properties"/>
+
+	<!-- dynamic values for build -->
+	<tstamp prefix="start"/>
+	
+	<!--  Additional Task Definitions -->
+	
+	<!-- 	Ant Tasks	-->
+
+	<target name="init" description="Initializes a project and all relevant data">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<target name="clean" description="Remove all directories">
+		<delete dir="${src.dir}" verbose="true"/> 
+		<delete dir="${build.dir}" verbose="true"/> 
+		<delete dir="${dist.dir}" verbose="true"/> 
+	</target>
+
+	<target name="export-app" depends="clean,init" description="Clean export of entire application">
+	   	<svn username="${svn.user}" password="${svn.password}" javasvn="true" javahl="false">
+			<export srcUrl= "${svn.url}/${svn.workbench}" destPath="${src.dir}/${svn.workbench}" force="true"/>
+	   		<export srcUrl= "${svn.url}/${svn.source}" destPath="${src.dir}/${svn.source}" force="true"/>
+		</svn>
+	</target>
+
+	<target name="build" depends="export-app" description="Copies fileset from source to build directory, adding a label file">
+		<!-- Copy Structure -->
+		<copy todir="${build.dir}/codex/">
+        	<fileset dir="${src.dir}/${svn.source}">
+        	</fileset>
+        </copy>		
+		<copy todir="${build.dir}/${svn.workbench}">
+        	<fileset dir="${src.dir}/${svn.workbench}">
+        	</fileset>
+        </copy>		
+		
+		<delete dir="${src.dir}"/>
+			
+		<concat destfile="${build.dir}\${build.label}">Built on ${start.TODAY}</concat>
+	</target>
+		
+	<target name="archive" depends="build" description="Creates a zip archive of site for (re)distribution">
+		<zip destfile="${dist.dir}/codexNB.zip"
+	       basedir="${build.dir}"
+	       update="true"
+	  />
+		<delete dir="${build.dir}"/>
+		
+		<copy todir="${download.dir}">
+			<fileset dir="${dist.dir}"/>
+		</copy>
+		
+		<delete dir="${dist.dir}"/>
+		
+	</target>
+	
+</project>
