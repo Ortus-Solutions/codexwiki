@@ -1018,7 +1018,7 @@ For the latter, and a discussion on when tables are appropriate, see [[Wikipedia
 In languages where it makes a difference, you can use constructs like <nowiki>{{grammar:case|word}}</nowiki> to convert a word from the nominative case to some other case.  For example, <nowiki>{{grammar:genitive|{{CURRENTMONTHNAME}}}}</nowiki> means the same as <nowiki>{{CURRENTMONTHNAMEGEN}}</nowiki>. <!-- Is there a reference for this, other than the source code (for example, phase3/languages/Lnaguage*.php) ? -->
 
 
-This page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 14:54:14',1,0);
+This page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 14:54:14',1,1);
 
 
 
@@ -1420,7 +1420,7 @@ However, it does not seem possible to make all page history lists ordered (unles
 
 
 
-This page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 15:06:40',1,0);
+This page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 15:06:40',1,1);
 
 
 
@@ -1589,7 +1589,7 @@ no indent (normal)<br/>
 
 |colspan="3" style="border-top:1px solid #cee0f2; font-size:0.9em;"|<references/>
 |}
-</div>','First Import','1','2008-11-16 19:16:53',1,0);
+</div>','First Import','1','2008-11-16 19:16:53',1,1);
 
 
 
@@ -1612,7 +1612,7 @@ Welcome to the Codex Wiki.  Here you will find the documentation to edit and cre
 
 === More Information ===
 
-More information can be found via the Wikipedia site [http://en.wikipedia.org/wiki/Help:Contents Wikipedia Help] as this wiki follows many of its markup guidelines.','Messagebox tags.','1','2008-11-16 19:17:49',1,0);
+More information can be found via the Wikipedia site [http://en.wikipedia.org/wiki/Help:Contents Wikipedia Help] as this wiki follows many of its markup guidelines.','Messagebox tags.','1','2008-11-16 19:17:49',1,1);
 
 
 
@@ -1638,7 +1638,7 @@ The type of messagebox to generate: info, warning or error.
 
 Example:
 <code><pre><messagebox type="error">My Message</messagebox></pre></code>
-','First Import','1','2008-11-16 19:54:14',1,0);
+','First Import','1','2008-11-16 19:54:14',1,1);
 
 
 INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
@@ -1696,7 +1696,7 @@ Example of a RSS feed cached for 5 minutes
 
 By default, the default cache time out of the installed ColdBox.
 |-
-|}','Initial creation','1','2008-03-20 08:53:34',1,0);
+|}','Initial creation','1','2008-03-20 08:53:34',1,1);
 
 
 INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
@@ -1777,4 +1777,4 @@ And we can use it in our wiki pages like so:
 
 That''s it. Welcome to the world of Codex Wiki Plugins.  Now go out and start coding your very own plugins. Below you can see a plugin at work:
 
-{{{WikiPlugins}}}','First Import','1','2008-11-19 09:21:03',1,0);
+{{{WikiPlugins}}}','First Import','1','2008-11-19 09:21:03',1,1);
