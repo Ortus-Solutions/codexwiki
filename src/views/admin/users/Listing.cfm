@@ -1,19 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by 
+Copyright 2008 by
 Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
 www.transfer-orm.org |  www.coldboxframework.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-    		
-	http://www.apache.org/licenses/LICENSE-2.0 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 $Build Date: @@build_date@@
@@ -40,12 +40,12 @@ $Build ID:	@@build_id@@
 					if( this.value == recordID ){ this.checked = true;}
 					else{ this.checked = false; }
 				});
-			}	
+			}
 			//Submit Form
 			submitForm();
 		}
 		function confirmDelete(recordID){
-			confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!", function(){deleteRecord(recordID)});			
+			confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!", function(){deleteRecord(recordID)});
 		}
 	</script>
 </cfoutput>
@@ -61,7 +61,7 @@ $Build ID:	@@build_id@@
 
 <!--- Table Manager Jumper --->
 <form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#.cfm">
-	
+
 	<div style="margin:10px;">
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
@@ -70,11 +70,11 @@ $Build ID:	@@build_id@@
 				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 			</p>
 		</div>
-		
+
 		<!--- Filter --->
 		<label class="inline" for="search_criteria">Search</label>
 		<input type="text" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
-		
+
 		<!--- Role --->
 		<label class="inline" for="role_id">User Role</label>
 		<select name="role_id" id="role_id">
@@ -83,7 +83,7 @@ $Build ID:	@@build_id@@
 			<option value="#rc.qRoles.roleid#" <cfif rc.role_id eq rc.qRoles.roleid>selected="selected"</cfif>>#rc.qRoles.role#</option>
 			</cfloop>
 		</select>
-		
+
 		<!--- Active --->
 		&nbsp;
 		<label class="inline" for="active">Active</label>
@@ -91,8 +91,8 @@ $Build ID:	@@build_id@@
 			<option value="1" <cfif rc.active>selected="selected"</cfif>>True</option>
 			<option value="0" <cfif not rc.active>selected="selected"</cfif>>False</option>
 		</select>
-		
-		
+
+
 		<!--- Search Button --->
 		<a href="javascript:searchForm()" id="buttonLinks">
 			<span>
@@ -106,24 +106,7 @@ $Build ID:	@@build_id@@
 
 <!--- Results Form --->
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#.cfm" method="post">
-	
-	<!--- Add / Delete --->
-	<div class="buttons float-right" style="margin-top:12px;">
-		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
-			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle">
-				Add User
-			</span>
-		</a>
-		&nbsp;
-		<a href="javascript:confirmDelete()" id="buttonLinks">
-			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle">
-				Delete User(s)
-			</span>
-		</a>
-	</div>
-	
+
 	<!--- Records Found --->
 	<div style="margin-top: 12px">
 		<p>
@@ -134,14 +117,14 @@ $Build ID:	@@build_id@@
 		</cfif>
 		</p>
 	</div>
-	
+
 	<!--- Paging --->
 	#getMyPlugin("paging").renderit(FoundRows=rc.FoundRows,link=rc.pagingLink)#
-	
+
 	<br />
 	<!--- Render Results --->
 	<table class="tablelisting" width="100%">
-	
+
 		<!--- Display Fields Found in Query --->
 		<tr>
 			<th style="width: 20px"></th>
@@ -180,7 +163,7 @@ $Build ID:	@@build_id@@
 			</th>
 			<th align="center" width="65">ACTIONS</th>
 		</tr>
-	
+
 		<!--- Loop Through Query Results --->
 		<cfloop query="rc.qUsers">
 		<tr <cfif CurrentRow MOD(2) eq 1> class="even"</cfif>>
@@ -191,7 +174,7 @@ $Build ID:	@@build_id@@
 			<td>#user_fname# #user_lname#</td>
 			<td><a href="mailto:#user_email#">#user_email#<a/></td>
 			<td align="center">#yesnoformat(user_isconfirmed)#</td>
-			
+
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Permissions Command --->
@@ -201,11 +184,29 @@ $Build ID:	@@build_id@@
 				<!--- Delete Command --->
 				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
 			</td>
-	
+
 		</tr>
 		</cfloop>
 	</table>
-	
+
+	<!--- Add / Delete --->
+	<div class="buttons">
+		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
+			<span>
+				<img src="includes/images/add.png" border="0" align="absmiddle">
+				Add User
+			</span>
+		</a>
+		&nbsp;
+		<a href="javascript:confirmDelete()" id="buttonLinks">
+			<span>
+				<img src="includes/images/stop.png" border="0" align="absmiddle">
+				Delete User(s)
+			</span>
+		</a>
+	</div>
+
+
 </form>
 
 </cfoutput>

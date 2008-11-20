@@ -42,14 +42,35 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<cffunction name="_dump">
+	<cfargument name="s">
+	<cfargument name="abort" default="true">
+	<cfset var g = "">
+		<cfdump var="#arguments.s#">
+		<cfif arguments.abort>
+		<cfabort>
+		</cfif>
+</cffunction>
+
 <cffunction name="configure" hint="configuration method for configuraiton by the listener" access="public" returntype="void" output="false">
 	<cfargument name="ignoreXMLTagList" hint="the list of xml tags to ignore" type="string" required="No" default="">
 	<cfargument name="allowedAttributes" hint="the list of extra attributes that are allowed in html tags" type="string" required="No" default="">
 	<cfscript>
-		var config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
-		var TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
+
+		var config = 0;
+		var TagNode = 0;
 		var xmlTag = 0;
 		var attrib = 0;
+
+		try
+		{
+			config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
+			TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
+		}
+		catch(Any exc)
+		{
+			_dump(exc);
+		}
 	</cfscript>
 
 	<cfloop list="#arguments.allowedAttributes#" index="attrib">
@@ -80,11 +101,12 @@ $Build ID:	@@build_id@@
 
 		if(NOT StructKeyExists(arguments.visitData, "categories"))
 		{
-			arguments.visitData.categories = ArrayNew(1);
+			arguments.visitData.categories = createObject("java", "java.util.ArrayList").init();
 		}
 
 		//use java, it's fast
-		arguments.visitData.categories.addAll(model.getCategories());
+		//bastards changed the category collectin from a Set to a Map.
+		arguments.visitData.categories.addAll(model.getCategories().keySet());
 	</cfscript>
 </cffunction>
 
@@ -110,6 +132,7 @@ $Build ID:	@@build_id@@
 				<cfdirectory action="list" filter="*.jar" directory="#path#" name="qFiles">
 				<cfloop query="qFiles">
 					<cfset ArrayAppend(paths, directory & "/" & name) />
+					<cfset println("Loading: #name#") />
 				</cfloop>
 				<cfset server[static.SERVER_SCOPE_KEY] = createObject("component", "coldbox.system.extras.javaloader.JavaLoader").init(paths) />
 			</cfif>
