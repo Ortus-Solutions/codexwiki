@@ -11,11 +11,11 @@
 		<Setting name="DebugPassword" 			value="" />
 		<Setting name="ReinitPassword" 			value="" />
 		<Setting name="onInvalidEvent"			value="" />
-		<Setting name="CustomErrorTemplate"		value="" />
+		<Setting name="CustomErrorTemplate"		value="includes/templates/error.cfm" />
 		<Setting name="ExceptionHandler"		value="main.onException" />
 	</environment>
 
-	<environment name="development" urls="cf:82">
+	<environment name="development2" urls="cf:82">
 		<Setting name="HandlerCaching"			value="false" />
 		<Setting name="HandlersIndexAutoReload" value="true" />
 		<Setting name="DebugMode"	 			value="false" />

@@ -22,7 +22,13 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfscript>
 	htmlBaseURL = getController().getSetting("htmlBaseURL");
-	wikiName = getController().getColdBoxOCM().get("CodexOptions").wiki_name;
+	CodexOptions = getController().getColdBoxOCM().get("CodexOptions");
+	if( isStruct(CodexOptions) ){
+		wikiName = CodexOptions.wiki_name;
+	}
+	else{
+		wikiName = "";
+	}
 
 	function getSetting(arg)
 	{
