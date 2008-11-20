@@ -80,6 +80,9 @@ $Build ID:	@@build_id@@
 			if( len(event.getTrimValue('filePlugin')) eq 0){
 				getPlugin("messagebox").setMessage(type="warning", message="Please choose a file to upload");
 			}
+			else if( listLast(event.getTrimValue("filePlugin"),".") neq "cfc" ){
+				getPlugin("messagebox").setMessage(type="warning", message="Only cfc uploads are allowed");
+			}
 			else{
 				/* Upload File */
 				oPlugin.uploadPlugin('filePlugin');
