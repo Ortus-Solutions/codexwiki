@@ -283,16 +283,6 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
-<cffunction name="_dump">
-	<cfargument name="s">
-	<cfargument name="abort" default="true">
-	<cfset var g = "">
-		<cfdump var="#arguments.s#">
-		<cfif arguments.abort>
-		<cfabort>
-		</cfif>
-</cffunction>
-
 	<!--- directory --->
 	<cffunction name="directory" access="public" returntype="void" output="false" hint="Pages Directory">
 		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
