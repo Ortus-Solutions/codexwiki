@@ -350,11 +350,16 @@ div.grippie {
 	margin: 0; padding: 0;
 }
 
-#header-logo #logo h1 {
+#header-logo #logo h1 a {
 	font: bold 30px "trebuchet MS", Arial, Tahoma, Sans-Serif;
 	margin: 0; padding: 0;
 	letter-spacing: -1px;
 	color: #000;	
+	border: none;
+}
+
+#header-logo #logo h1 a:hover {
+	border-bottom: 1px dotted #000;
 }
 
 /* navigation tabs */
