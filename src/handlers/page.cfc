@@ -145,11 +145,21 @@ $Build ID:	@@build_id@@
 	<cffunction name="renderPreview" access="public" returntype="void" output="false" hint="Render Content Previews">
 		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
-			var oContent = getWikiService().getContent();
+		    var oContent = getWikiService().getContent();
+			var page = 0;
+			
+			/* Check if sending Page */
+			if( event.valueExists("pagename") ){
+				/* Get and set it for preview rendering. */
+				page = getWikiService().getPage(pageName=event.getValue("pageName"));
+				oContent.setPage(page);
+			}
+			
 			/* Get Content */
 			oContent.populate(arguments.event.getCollection());
+			
 			/* Render Data */
-			event.renderData(type='PLAIN', data=oContent.render(),contentTYpe='text/html');
+			event.renderData(data=oContent.render());
 		</cfscript>
 	</cffunction>
 

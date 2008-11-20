@@ -28,7 +28,7 @@ mySettings = {
 		{name:'Numeric list', openWith:'(!(# |!|#)!)'}, 
 		{separator:'---------------' },
 		{name:'Picture', key:"P", replaceWith:'[[Image:[![Url:!:http://]!]|[![name]!]]]'}, 
-		{name:'Internal Link', key:"L", openWith:"[[[![Link]!] ", closeWith:']]', placeHolder:'Your text to link here...' },
+		{name:'Internal Link', key:"L", openWith:"[[[![Link]!]|", closeWith:']]', placeHolder:'Your text to link here...' },
 		{name:'Url', openWith:"[[![Url:!:http://]!] ", closeWith:']', placeHolder:'Your text to link here...' },
 		{	name:'Table generator', 
 			className:'tablegenerator', 

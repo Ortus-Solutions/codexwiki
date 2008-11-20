@@ -53,6 +53,10 @@ $Build ID:	@@build_id@@
 	function selectSearch(engine){
 		$('##wiki_search_engine').val(engine);
 	}
+	function submitReinit(){
+		$('##_loader2').toggle();
+		$('##ReinitSubmit').toggle();
+	}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -68,14 +72,24 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Reinit Box --->
-<form action="#event.buildLink(rc.xehReinitApp,0)#.cfm" name="reinitForm" id="reinitForm" method="post">
+<form action="#event.buildLink(rc.xehReinitApp,0)#.cfm" name="reinitForm" id="reinitForm" method="post" onSubmit="submitReinit()">
 	<fieldset>
 	<legend><strong>Codex Information</strong></legend>
 		<label>Codex Version:</label>
 	    	#getSetting('Codex').Version# #getSetting('Codex').Suffix#<br />
 		<label for="fwreinit">Restart CodeX:</label>
 		This will start the application fresh, clean the cache and settings<br />
-	    <input type="submit" name="submit" value="Reinitialize Application">
+	    <input type="submit" id="ReinitSubmit" name="ReinitSubmit" value="Reinitialize Application">
+	    
+	    <!--- Loader --->
+		<div id="_loader2" class="align-center formloader">
+			<p>
+				Reloading...<br />
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			</p>
+		</div>
+		
    </fieldset>
 </form>
 

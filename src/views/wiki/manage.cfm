@@ -43,7 +43,7 @@ $Build ID:	@@build_id@@
 				},
 			onShow: function(dialog)
 				{
-					var data = {content: content.val()};
+					var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
 					//Post Preview
 					$.post("#event.BuildLink(rc.onPreview)#.cfm", data,
 						function(string, status)
