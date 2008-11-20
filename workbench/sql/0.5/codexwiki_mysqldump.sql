@@ -187,7 +187,7 @@ INSERT INTO "wiki_page" ("page_id", "page_name", "FKnamespace_id") VALUES
 INSERT INTO "wiki_page" ("page_id", "page_name", "FKnamespace_id") VALUES
 	('A895949D-B7C5-34B5-0E32B0CE52BC3FA0','Help:Messagebox_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295');
 INSERT INTO "wiki_page" ("page_id", "page_name", "FKnamespace_id") VALUES
-	('B5C4FA1D-CF1E-5C1B-950B4A04E276B736','Help:WikiPlugins','58F2F981-F62A-3124-E886BBF8CE6C5295');
+	('B5C4FA1D-CF1E-5C1B-950B4A04E276B736','Help:Codex Wiki Plugins','58F2F981-F62A-3124-E886BBF8CE6C5295');
 INSERT INTO "wiki_page" ("page_id", "page_name", "FKnamespace_id") VALUES
 	('C90869A2-090D-50DA-0800C94BB5DB7026','Help:Feed_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295');
 INSERT INTO "wiki_page" ("page_id", "page_name", "FKnamespace_id") VALUES
@@ -1853,7 +1853,7 @@ Welcome to the Codex Wiki.  Here you will find the documentation to edit and cre
 * [[Help:Cheatsheet|Wiki Markup Cheatsheet]] - Wiki Markup Cheatsheet
 * [[Help:Feed Markup|Feed Markup]] - Using feed tags.
 * [[Help:Messagebox Markup|Messagebox Markup]] - Using messagebox tags.
-* [[Help:WikiPlugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
+* [[Help:Codex Wiki Plugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
 
 === More Information ===
 

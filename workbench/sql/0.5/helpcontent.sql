@@ -1607,8 +1607,7 @@ Welcome to the Codex Wiki.  Here you will find the documentation to edit and cre
 * [[Help:Cheatsheet|Wiki Markup Cheatsheet]] - Wiki Markup Cheatsheet
 * [[Help:Feed Markup|Feed Markup]] - Using feed tags.
 * [[Help:Messagebox Markup|Messagebox Markup]] - Using messagebox tags.
-* [[Help:WikiPlugins|Custom Wiki Plugins]] - Using the Codex Wiki Plugins
-* [[Help:WikiPlugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
+* [[Help:Codex Wiki Plugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
 
 === More Information ===
 
