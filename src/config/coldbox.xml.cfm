@@ -76,7 +76,7 @@
 		<ObjectDefaultLastAccessTimeout>15</ObjectDefaultLastAccessTimeout>
 		<ReapFrequency>1</ReapFrequency>
 		<MaxObjects>50</MaxObjects>
-		<FreeMemoryPercentageThreshold>3</FreeMemoryPercentageThreshold>
+		<FreeMemoryPercentageThreshold>0</FreeMemoryPercentageThreshold>
 		<UseLastAccessTimeouts>true</UseLastAccessTimeouts>
 		<EvictionPolicy>LRU</EvictionPolicy>
 	</Cache>
