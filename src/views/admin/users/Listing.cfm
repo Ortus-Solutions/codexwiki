@@ -106,7 +106,24 @@ $Build ID:	@@build_id@@
 
 <!--- Results Form --->
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#.cfm" method="post">
-
+	
+	<!--- Add / Delete --->
+	<div class="buttons">
+		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
+			<span>
+				<img src="includes/images/add.png" border="0" align="absmiddle">
+				Add User
+			</span>
+		</a>
+		&nbsp;
+		<a href="javascript:confirmDelete()" id="buttonLinks">
+			<span>
+				<img src="includes/images/stop.png" border="0" align="absmiddle">
+				Delete User(s)
+			</span>
+		</a>
+	</div>
+	
 	<!--- Records Found --->
 	<div style="margin-top: 12px">
 		<p>
@@ -205,6 +222,7 @@ $Build ID:	@@build_id@@
 			</span>
 		</a>
 	</div>
+	<br />
 
 
 </form>
