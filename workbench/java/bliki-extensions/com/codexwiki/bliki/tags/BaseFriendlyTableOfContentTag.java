@@ -36,7 +36,7 @@ public class BaseFriendlyTableOfContentTag extends TableOfContentTag
 			writer.append(contentString);
 			writer.append("</h2>\n</div>");
 			renderToC(writer, getTableOfContent(), 0);
-			writer.append("</td></tr></table><hr/>\n");
+			writer.append("</td></tr></table>\n");
 		}
 	}
 
