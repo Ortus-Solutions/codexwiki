@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Codex.ReleaseBuild" default="build" basedir=".">
+<project name="Codex.ReleaseBuild" default="distribute" basedir=".">
 
 	<description>Codex Release Build</description>
-
-	<!-- common values for build file -->
-	<property file="common.properties"/>
-
+	
+	<!-- Properties -->
+	<property name="src.dir" 			value="src" />
+	<property name="workbench.dir" 		value="workbench" />
+	<property name="build.dir" 			value="build" />
+	<property name="dist.dir" 			value="dist" />
+	<property name="ftp.server"  		value="ftp.codexwiki.org" />
+	<property name="ftp.remotedir" 		value="/httpdocs/builds" />
+	
 	<!-- dynamic values for build -->
 	<tstamp prefix="start"/>
 	
-	<!--  Additional Task Definitions -->
-	
-	<!-- 	Ant Tasks	-->
-
-	<target name="init" description="Initializes a project and all relevant data">
+	<target name="init" description="Initializes a project and all relevant data" depends="clean">
+		<input addproperty="codex.version" message="Codex Version" />
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${dist.dir}"/>
 	</target>
 
 	<target name="clean" description="Remove all directories">
-		<delete dir="${src.dir}" verbose="true"/> 
 		<delete dir="${build.dir}" verbose="true"/> 
 		<delete dir="${dist.dir}" verbose="true"/> 
 	</target>
 
-	<target name="export-app" depends="clean,init" description="Clean export of entire application">
-	   	<svn username="${svn.user}" password="${svn.password}" javasvn="true" javahl="false">
-			<export srcUrl= "${svn.url}/${svn.workbench}" destPath="${src.dir}/${svn.workbench}" force="true"/>
-	   		<export srcUrl= "${svn.url}/${svn.source}" destPath="${src.dir}/${svn.source}" force="true"/>
-		</svn>
-	</target>
-
-	<target name="build" depends="export-app" description="Copies fileset from source to build directory, adding a label file">
-		<!-- Copy Structure -->
+	<target name="build" depends="init" description="Copies fileset from source to build directory, adding a label file">
+		<!-- Copy Codex -->
 		<copy todir="${build.dir}/codex/">
-        	<fileset dir="${src.dir}/${svn.source}">
+        	<fileset dir="${src.dir}">
         	</fileset>
         </copy>		
-		<copy todir="${build.dir}/${svn.workbench}">
-        	<fileset dir="${src.dir}/${svn.workbench}">
+        <!-- Create Workbench -->
+        <mkdir dir="${build.dir}/workbench"/>
+        <!-- Copy Stuff -->
+		<copy todir="${build.dir}/frameworks">
+			<fileset dir="${workbench.dir}/frameworks">
         	</fileset>
         </copy>		
-		
-		<delete dir="${src.dir}"/>
-			
+        <!-- Copy Migrations -->
+        <copy todir="${build.dir}/codex/install/migrations">
+			<fileset dir="${workbench.dir}/sql">
+				<exclude name="EAGeneration"/>
+			</fileset>
+		</copy>		
+		<!--Build Stuff -->	
 		<concat destfile="${build.dir}\${build.label}">Built on ${start.TODAY}</concat>
 	</target>
 		
-	<target name="archive" depends="build" description="Creates a zip archive of site for (re)distribution">
-		<zip destfile="${dist.dir}/codexNB.zip"
-	       basedir="${build.dir}"
-	       update="true"
-	  />
+	<target name="distribute" depends="build" description="Creates a zip archive of site for (re)distribution">
+		
+		<zip destfile="${dist.dir}/codex_v${codex.version}.zip"
+			 basedir="${build.dir}"
+			 update="true"/>
+		
 		<delete dir="${build.dir}"/>
 		
-		<copy todir="${download.dir}">
-			<fileset dir="${dist.dir}"/>
-		</copy>
+	</target>
+	
+	<target name="ftp.deploy" depends="distribute" >
+		<input message="Please enter ftp server username:" addproperty="ftp.username" />
+		<input message="Please enter fpt server password:" addproperty="ftp.password" />
 		
-		<delete dir="${dist.dir}"/>
-		
+		<ftp action="send" server="${ftp.server}" userid="${ftp.username}" password="${ftp.password}" 
+			remotedir="${ftp.remotedir}" passive="yes" verbose="yes">
+			<fileset dir="${dist.dir}/codex_v${codex.version}.zip" />
+		</ftp>
 	</target>
 	
 </project>
