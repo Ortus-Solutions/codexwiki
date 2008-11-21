@@ -32,7 +32,6 @@
         	</fileset>
         </copy>		
         <!-- Create Workbench -->
-        <mkdir dir="${build.dir}/workbench"/>
         <!-- Copy Stuff -->
 		<copy todir="${build.dir}/frameworks">
 			<fileset dir="${workbench.dir}/frameworks">
@@ -45,7 +44,7 @@
 			</fileset>
 		</copy>		
 		<!--Build Stuff -->	
-		<concat destfile="${build.dir}\${build.label}">Built on ${start.TODAY}</concat>
+		<concat destfile="${build.dir}\${codex.version}.txt">Built on ${start.TODAY}</concat>
 	</target>
 		
 	<target name="distribute" depends="build" description="Creates a zip archive of site for (re)distribution">
