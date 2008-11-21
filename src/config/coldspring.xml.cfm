@@ -4,13 +4,13 @@
 	<!--Transfer Factory: PERSISTANCE MANAGED BY COLDSPRING -->
 	<bean id="TransferFactory" class="transfer.TransferFactory" singleton="true" autowire="no">
 		<constructor-arg name="datasourcePath">
-			<value>${Transfer.datasourcePath}</value>
+			<value>${Transfer_datasourcePath}</value>
 		</constructor-arg>
 		<constructor-arg name="configPath">
-			<value>${Transfer.configPath}</value>
+			<value>${Transfer_configPath}</value>
 		</constructor-arg>
 		<constructor-arg name="definitionPath">
-			<value>${Transfer.definitionPath}</value>
+			<value>${Transfer_definitionPath}</value>
 		</constructor-arg>
 	</bean>
 	

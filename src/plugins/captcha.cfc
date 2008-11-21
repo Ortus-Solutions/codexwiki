@@ -52,8 +52,7 @@ Updates
 			<cfimage action="captcha" 
 					 text="#arguments.text#"
 					 width="#arguments.width#" 
-					 height="#arguments.height#"
-					 fonts="#arguments.fonts#" />
+					 height="#arguments.height#" />
 			<cfif not isValidated()>
 			<br /><span class="cb_captchamessage"><cfoutput>#arguments.message#</cfoutput></span>
 			</cfif>

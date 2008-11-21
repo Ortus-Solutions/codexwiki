@@ -63,7 +63,7 @@ $Build ID:	@@build_id@@
 		}
 
 		xFeed = xmlParse(arguments.feedTag);
-		xFeed = xFeed[1].feed.xmlAttributes; //convenience
+		xFeed = xFeed.feed.xmlAttributes; //convenience
 
 		//if not url, just return it
 		if(NOT StructKeyExists(xFeed, "url"))
@@ -198,21 +198,21 @@ $Build ID:	@@build_id@@
 	</cfif>
 </cffunction>
 
-<cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager" access="public" returntype="xml" output="false">
+<cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager. Returns xml" access="public" returntype="any" output="false">
 	<!---
 	/feed/page/listByCategory.cfm
 	 --->
 	<cfscript>
 		var feedData = getFeedData();
-		var url = replace(feedData.url, "/feed/", "");
-		var root = ListGetAt(url, 1, "?");
+		var urlString = replace(feedData.url, "/feed/", "");
+		var root = ListGetAt(urlString, 1, "?");
 		var queryString = "";
 		var source = listGetAt(root, "1", "/");
 		var feed = replaceNoCase(listGetAt(root, "2", "/"), ".cfm", "");
 
-		if(ListLen(url, "?") eq 2)
+		if(ListLen(urlString, "?") eq 2)
 		{
-			queryString = ListGetAt(url, 2, "?");
+			queryString = ListGetAt(urlString, 2, "?");
 		}
 
 		return getRssManager().getRss(source, feed, queryStringToStruct(queryString));
@@ -238,7 +238,7 @@ $Build ID:	@@build_id@@
 
 <cffunction name="buildRSSFeed" hint="taks an rss feed, and builds the display for htat" access="private" returntype="string" output="false">
 	<cfargument name="data" hint="the rss feed arguments.data" type="struct" required="Yes">
-	<cfargument name="url" hint="the url the rss feed has" type="string" required="Yes">
+	<cfargument name="urlString" hint="the url the rss feed has" type="string" required="Yes">
 	<cfargument name="listType" hint="the list type to display, ul, or ol" type="string" required="Yes">
 	<cfscript>
 		var html = 0;
@@ -262,7 +262,7 @@ $Build ID:	@@build_id@@
 			<cfif StructKeyExists(arguments.data, "lastBuildDate")>
 			(Last Built: #arguments.data.lastBuildDate#)
 			</cfif>
-			[<a href="#arguments.url#">rss</a>]
+			[<a href="#arguments.urlString#">rss</a>]
 		</p>
 		<cfif StructKeyExists(arguments.data, "description")>
 			<p class="description">
@@ -316,7 +316,7 @@ $Build ID:	@@build_id@@
 
 <cffunction name="buildAtomFeed" hint="taks an atom feed, and builds the display for htat" access="private" returntype="string" output="false">
 	<cfargument name="data" hint="the rss feed arguments.data" type="struct" required="Yes">
-	<cfargument name="url" hint="the url the rss feed has" type="string" required="Yes">
+	<cfargument name="urlString" hint="the url the rss feed has" type="string" required="Yes">
 	<cfargument name="listType" hint="the list type to display, ul, or ol" type="string" required="Yes">
 	<cfscript>
 		var html = 0;
@@ -340,7 +340,7 @@ $Build ID:	@@build_id@@
 			<cfif StructKeyExists(arguments.data, "updated")>
 			(Last Built: #arguments.data.updated#)
 			</cfif>
-			[<a href="#arguments.url#">atom</a>]
+			[<a href="#arguments.urlString#">atom</a>]
 		</p>
 
 		<cfif StructKeyExists(arguments.data, "description")>

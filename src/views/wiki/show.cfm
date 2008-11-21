@@ -93,7 +93,6 @@ $(window).ready(function(){
 		</cfif>
 	</p>
 	</cfif>
-	
 	<!--- Format Bar --->
 	<div id="downloadFormatsBar">
 		<strong>Download in other Formats:</strong><br />
@@ -102,10 +101,12 @@ $(window).ready(function(){
 		
 		<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle">
 		<a href="#pageShowRoot(rc.urlPage)#/pdf.cfm" target="_blank">PDF</a> |
-	
+		
+		<cfif getSetting("CFMLEngine",1) neq "RAILO">
 		<img src="includes/images/flash_16x16.png" border="0" align="absmiddle">
 		<a href="#pageShowRoot(rc.urlPage)#/flashpaper.cfm" target="_blank">SWF</a> |
-	
+		</cfif>
+		
 		<img src="includes/images/html_16x16.png" border="0" align="absmiddle">
 		<a href="#pageShowRoot(rc.urlPage)#/HTML.cfm" target="_blank">HTML</a>
 	</div>

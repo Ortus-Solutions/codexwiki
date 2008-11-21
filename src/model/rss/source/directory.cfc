@@ -35,9 +35,9 @@ $Build ID:	@@build_id@@
 
 <cffunction name="list"
 			displayname="RSS Feed List"
-			hint="A list of all the feeds currently available in this wiki"
+			hint="A list of all the feeds currently available in this wiki. Returns XML"
 			access="public"
-			returntype="xml"
+			returntype="any"
 			rss = "true"
 			output="false">
 	<cfscript>
@@ -49,7 +49,7 @@ $Build ID:	@@build_id@@
 
 		rss.title = "Rss Feed list";
 		rss.link = getBaseURL() & "directory/list.cfm";
-		rss.description = "A list of all the feeds currently available in this wiki";
+		rss.description = "A list of all the feeds currently available in this wiki. You can use any of the feed links below in your wiki pages by using the 'feed' tag.";
 		rss.version = "rss_2.0";
 
 		rss.item = ArrayNew(1);
@@ -97,10 +97,11 @@ $Build ID:	@@build_id@@
 		var len = arrayLen(arguments.functionMeta.parameters);
 		var counter = 1;
 		var arg = 0;
-
+		
+		
 		if(len)
 		{
-			description.append("<p>URL Parameters: <ul>");
+			description.append("<p><strong>URL Parameters:</strong> <ul>");
 
 			for(; counter <= len; counter++)
 			{

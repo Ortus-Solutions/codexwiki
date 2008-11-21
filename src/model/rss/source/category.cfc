@@ -34,9 +34,9 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="list" displayname="Category Listing"
-						hint="Listing of all Categories"
+						hint="Listing of all Categories. Returns xml"
 						access="public"
-						returntype="xml"
+						returntype="any"
 						rss="true"
 						output="false">
 	<cfscript>

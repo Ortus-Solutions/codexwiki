@@ -13,6 +13,7 @@ mySettings = {
 	onShiftEnter:		{keepDefault:false, replaceWith:'\n\n'},
 	onTab		:		{keepDefault:false, replaceWith:'\t'},
 	resizeHandle: true,
+	beforeInsert:function(h){markupInserted();},
 	markupSet: [
 		{name:'Heading 1', key:'1', openWith:'== ', closeWith:' ==', placeHolder:'Your title here...' },
 		{name:'Heading 2', key:'2', openWith:'=== ', closeWith:' ===', placeHolder:'Your title here...' },

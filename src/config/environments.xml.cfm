@@ -11,7 +11,7 @@
 		<Setting name="DebugPassword" 			value="" />
 		<Setting name="ReinitPassword" 			value="" />
 		<Setting name="onInvalidEvent"			value="" />
-		<Setting name="CustomErrorTemplate"		value="includes/templates/error.cfm" />
+		<Setting name="CustomErrorTemplate"		value="" />
 		<Setting name="ExceptionHandler"		value="main.onException" />
 	</environment>
 

@@ -35,9 +35,9 @@ $Build ID:	@@build_id@@
 
 <cffunction displayname="List Pages By Category"
 			name="listByCategory"
-			hint="Listing of pages, by a given category"
+			hint="Listing of pages, by a given category. Returns xml"
 			access="public"
-			returntype="xml"
+			returntype="any"
 			rss = "true"
 			output="false">
 	<cfargument name="category" hint="The category name, if not provided, defaults to pages with no category" type="string" required="false" default="">
@@ -70,9 +70,9 @@ $Build ID:	@@build_id@@
 
 <cffunction displayname="Wiki Updates"
 			name="listUpdates"
-			hint="A list of all the latest wiki updates"
+			hint="A list of all the latest wiki updates. Returns xml"
 			access="public"
-			returntype="xml"
+			returntype="any"
 			rss = "true"
 			output="false">
 	<cfargument name="numberOfUpdates" hint="number of updates to retrieve, defaults to 10" type="numeric" required="No" default="10">

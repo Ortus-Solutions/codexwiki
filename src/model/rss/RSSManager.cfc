@@ -37,7 +37,7 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="getRSS" hint="returns an rss feed structure" access="public" returntype="xml" output="false">
+<cffunction name="getRSS" hint="returns an rss feed structure in xml." access="public" returntype="any" output="false">
 	<cfargument name="sourceName" hint="the name of the feed source" type="string" required="Yes">
 	<cfargument name="feed" hint="the name of the feed to pass back" type="string" required="Yes">
 	<cfargument name="feedArgs" hint="the rss feed arguments" type="struct" required="Yes">

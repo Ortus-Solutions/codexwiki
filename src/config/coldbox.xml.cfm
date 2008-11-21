@@ -37,9 +37,9 @@
 		<!-- Codex System Information -->
 		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta 1'}" />
 		<!--Transfer Settings -->
-		<Setting name="Transfer.datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
-		<Setting name="Transfer.configPath" 		value="/codex/config/transfer.xml.cfm"/>
-		<Setting name="Transfer.definitionPath" 	value="/codex/config/definitions"/>
+		<Setting name="Transfer_datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
+		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>
+		<Setting name="Transfer_definitionPath" 	value="/codex/config/definitions"/>
 		<!-- Wiki Keys -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<!-- Lookups Settings -->

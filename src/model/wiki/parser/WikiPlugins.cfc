@@ -92,7 +92,7 @@ $Build ID:	@@build_id@@
 					replace = instance.controller.getPlugin(plugin=instance.WikiPluginsBasePath & pluginDef.name,customPlugin=true).renderit(argumentCollection=pluginDef.args);
 				}
 				catch(Any e){
-					replace = "Error parsing plugin definition: #e.message# & #e.detail#";
+					replace = "Error parsing plugin definition: #e.message# #e.detail#";
 				}
 				
 				/* Replace where we found the first one. */

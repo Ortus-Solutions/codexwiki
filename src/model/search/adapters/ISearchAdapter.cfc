@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfinterface name="ISearchAdapter" hint="The Search Interface">
+<cfinterface displayname="ISearchAdapter" hint="The Search Interface">
 	
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="codex.model.search.adapters.ISearchAdapter" output="false">

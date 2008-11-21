@@ -29,5 +29,24 @@ $Build ID:	@@build_id@@
 		</cfif>
 		
 		<!--- WHATEVER YOU WANT BELOW --->		<cfsetting enablecfoutputonly="no">		<cfreturn true>	</cffunction>	<!--- on Application End --->	<cffunction name="onApplicationEnd" returnType="void"  output="false">		<!--- ************************************************************* --->		<cfargument name="applicationScope" type="struct" required="true">		<!--- ************************************************************* --->		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	<!--- on Session Start --->	<cffunction name="onSessionStart" returnType="void" output="false">		<cfset super.onSessionStart()>		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	<!--- on Session End --->	<cffunction name="onSessionEnd" returnType="void" output="false">		<!--- ************************************************************* --->		<cfargument name="sessionScope" type="struct" required="true">		<cfargument name="appScope" 	type="struct" required="false">		<!--- ************************************************************* --->		<cfset super.onSessionEnd(argumentCollection=arguments)>		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	<!--- on Missing Template End --->	<cffunction name="onMissingTemplate" returnType="boolean" output="true">		<!--- ************************************************************* --->		<cfargument name="targetPage" type="string" required="true">		<!--- ************************************************************* --->		<cfset var route = "">		<!--- We go directly to app scope because onApplicationStart executes first. --->		<cfset var appRoot = application.cbController.getSetting('AppMapping')>		<cfsetting enablecfoutputonly="yes">
-				<!--- Make sure we have a proper root --->		<cfif left(appRoot,1) neq "/">			<cfset appRoot = "/" & appRoot>		</cfif>		<!--- Clean the root from the app root and rip the extension to get our route. --->		<cfset route = reReplace(replacenocase(arguments.targetPage,appRoot,""),"\.[^.]*$","")>		<!--- This route is our new cgi.path_info --->		<cfset request.ses = {path_info = route, script_name = appRoot & "/index.cfm"}>				<!--- Now process the ColdBox Request --->		<cfset onRequestStart('index.cfm')>		
-		<cfsetting enablecfoutputonly="no">		<cfreturn true>	</cffunction></cfcomponent>
+		
+		<!--- Make sure we have a proper root --->		<cfif left(appRoot,1) neq "/">			<cfset appRoot = "/" & appRoot>		</cfif>		<!--- Clean the root from the app root and rip the extension to get our route. --->		<cfset route = reReplace(replacenocase(arguments.targetPage,appRoot,""),"\.[^.]*$","")>		<!--- This route is our new cgi.path_info --->		<cfset request.ses = {path_info = route, script_name = appRoot & "/index.cfm"}>				<!--- Now process the ColdBox Request --->		<cfset onRequestStart('index.cfm')>		
+		<cfsetting enablecfoutputonly="no">		<cfreturn true>	</cffunction>
+	
+	<!--- On Error for Railo --->
+	<cffunction name="onError" output="true" access="public" returntype="void">
+		<cfargument name="Exception" required="true" type="any" />
+   		<cfargument name="EventName" required="true" type="String" />
+		<cfsetting enablecfoutputonly="yes">
+		<cfif structKeyExists(server,"railo")>
+			<cfif structKeyExists(exception,"type") and exception.type eq "missinginclude">
+				<cfset onMissingTemplate(targetPage=exception.missingFileName_rel)>
+			<cfelse>
+				<cfthrow object="#arguments.Exception#">
+			</cfif>
+		<cfelse>
+			<cfthrow object="#arguments.Exception#">
+		</cfif>
+		<cfsetting enablecfoutputonly="no">
+	</cffunction>
+</cfcomponent>

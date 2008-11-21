@@ -26,46 +26,54 @@ $Build ID:	@@build_id@@
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-	function CodexPreview()
-	{
-		var content = $("##content");
+function CodexPreview()
+{
+	var content = $("##content");
 
-		var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
-			close:false,
-			onOpen: function(dialog)
-				{
-				 	dialog.overlay.fadeIn("normal", function()
-					 	{
-					 		dialog.container.fadeIn("fast");
-					 		dialog.data.fadeIn("fast");
-					 	}
-					 )
-				},
-			onShow: function(dialog)
-				{
-					var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
-					//Post Preview
-					$.post("#event.BuildLink(rc.onPreview)#.cfm", data,
-						function(string, status)
-						{
-							dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
-						}
-					);
-				}
+	var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
+		close:false,
+		onOpen: function(dialog)
+			{
+			 	dialog.overlay.fadeIn("normal", function()
+				 	{
+				 		dialog.container.fadeIn("fast");
+				 		dialog.data.fadeIn("fast");
+				 	}
+				 )
+			},
+		onShow: function(dialog)
+			{
+				var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
+				//Post Preview
+				$.post("#event.BuildLink(rc.onPreview)#.cfm", data,
+					function(string, status)
+					{
+						dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
+					}
+				);
 			}
-			);
-	}
+		}
+		);
+}
 
-	function submitForm(){
-		$('##_buttonbar').slideUp("fast");
-		$('##_loader').fadeIn("slow");
-	}
-
-	$(document).ready(function() {
-		//$('.resizable').TextAreaResizer();
-		$("##content").markItUp(mySettings);
-	});
-
+function submitForm(){
+	needToConfirm=false;
+	$('##_buttonbar').slideUp("fast");
+	$('##_loader').fadeIn("slow");
+}
+function askLeaveConfirmation(){
+	if (needToConfirm){
+   		return "You have unsaved changes.";
+   	}    
+}
+function markupInserted(){
+	needToConfirm = true;
+}
+$(document).ready(function() {
+	$("##content").markItUp(mySettings);
+	needToConfirm = false;
+	window.onbeforeunload = askLeaveConfirmation;
+});
 </script>
 </cfoutput>
 </cfsavecontent>
