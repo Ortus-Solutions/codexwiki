@@ -52,10 +52,10 @@ $Build ID:	@@build_id@@
 	<cfargument name="memento" hint="the memento to populate the new content object" type="struct" required="Yes">
 	<cfscript>
 		var content = getWikiService().getContent();
-
-		content.populate(arguments.memento);
+			
 		content.setPage(this);
-
+		content.populate(arguments.memento);
+		
 		return content;
 	</cfscript>
 </cffunction>

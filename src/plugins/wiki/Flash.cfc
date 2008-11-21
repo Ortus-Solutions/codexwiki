@@ -45,7 +45,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->	
 	
     <!--- renderit --->
-	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today">
+	<cffunction name="renderit" output="false" access="public" returntype="string" hint="Embed a flash movie.">
 		<cfargument name="movie" 			type="string"  required="true" default="" hint="The movie path"/>
 		<cfargument name="name" 			type="string"  required="false" default="" hint="The name of the movie"/>
 		<cfargument name="id" 				type="string"  required="false" default="" hint="The default id for the movie"/>

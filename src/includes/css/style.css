@@ -385,6 +385,10 @@ div.grippie {
 	letter-spacing: -1px;
 	color: #000;	
 }
+#header-logo #logo h1 a{
+	border: none;	
+	color: black;
+}
 
 /* navigation tabs */
 #header ul {

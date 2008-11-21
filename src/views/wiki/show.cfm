@@ -33,6 +33,17 @@ $(window).ready(function(){
 			return confirm("Are you sure you wish to delete the page '#rc.content.getPage().getName()#'?<br/>This cannot be undone!", function(){gotoLink(_this)});
 	});
 });
+function createNewPage(){
+	var page = ''
+	
+	page = prompt('Please enter the page name to create. Remember that namespaces are followed by a : \nEx: ISDepartment:MyGreatPage or just MyGreatPage?');
+	
+	if( page != undefined && page != ''){
+		page = page.replace(/ /g,"_");
+		window.location='#event.buildLink(rc.onCreateWiki)#/'+page+".cfm";
+	}
+	
+}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -42,12 +53,17 @@ $(window).ready(function(){
 <!--- Print & Floating Top Bar --->
 <cfif not event.valueExists("print")>
 <div align="right" style="margin-bottom:15px;">
+	<cfif rc.oUser.checkPermission("WIKI_CREATE")>
+		<img src="includes/images/add.png" border="0" align="absmiddle">
+		<a href="javascript:createNewPage()">Create Page</a>&nbsp;
+	</cfif>
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
 		<img src="includes/images/history.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">View Page History</a>
+		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">Page History</a>
 	</cfif>
 </div>
 </cfif>
+
 
 <!--- Messsagebox --->
 #getPlugin("messagebox").renderit()#
