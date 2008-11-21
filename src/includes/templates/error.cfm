@@ -23,7 +23,7 @@ $Build ID:	@@build_id@@
 <cfscript>
 	htmlBaseURL = getController().getSetting("htmlBaseURL");
 	CodexOptions = getController().getColdBoxOCM().get("CodexOptions");
-	if( isStruct(CodexOptions) ){
+	if( isStruct(CodexOptions) and structKeyExists(CodexOptions,"wiki_name")){
 		wikiName = CodexOptions.wiki_name;
 	}
 	else{
