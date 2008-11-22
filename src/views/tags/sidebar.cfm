@@ -43,12 +43,12 @@ $Build ID:	@@build_id@@
 <div class="left-box">
 	<ul class="sidemenu">
 		<li><a href="#event.buildLink(rc.xehAdmin)#.cfm">Admin Dashboard</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminUsers)#.cfm">User Management</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#.cfm">Custom HTML</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminPlugins)#.cfm">Wiki Plugins</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminOptions)#.cfm">System Options</a></li>
-		<li><a href="#event.buildLink(rc.xehadminlookups)#.cfm">System Lookups</a></li>
 		<li><a href="#event.buildLink(rc.xehAdminAPI)#.cfm">API Docs</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminOptions)#.cfm">Codex Options</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#.cfm">Custom HTML</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminUsers)#.cfm">User Management</a></li>
+		<li><a href="#event.buildLink(rc.xehadminlookups)#.cfm">System Lookups</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminPlugins)#.cfm">Wiki Plugins</a></li>
 	</ul>
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
@@ -118,7 +118,7 @@ $Build ID:	@@build_id@@
 			<div align="center" id="_buttonbar_login">
 				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
 				<!--- Registration Permission Link --->
-				<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
 				<br /><br />
 				<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
 			</div>
@@ -131,7 +131,7 @@ $Build ID:	@@build_id@@
 			<div align="center" id="_buttonbar_login">
 				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
 				<!--- Registration Permission Link --->
-				<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
 				<br /><br />
 				<input type="button" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" 
 					   onClick="window.location='#event.buildLink(rc.xehUserLogin)#.cfm'"/>

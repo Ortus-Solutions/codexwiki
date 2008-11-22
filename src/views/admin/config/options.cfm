@@ -64,9 +64,9 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="includes/images/cog.png" align="absmiddle"> Options</h2>
+<h2><img src="includes/images/cog.png" align="absmiddle"> Codex Options</h2>
 <p>
-	Below you can see the CodexWiki general options and version information. Please be careful when editing the main options as it affects the entire wiki installation.
+	Below you can see the Codex general options and version information. Please be careful when editing the main options as it affects the entire wiki installation.
 </p>
 <!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
@@ -130,17 +130,7 @@ $Build ID:	@@build_id@@
 			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
 			   value="#rc.CodexOptions.wiki_outgoing_email#" 
 			   size="60" required="true" mask="email">
-     	<br /><br />
-		
-		<!--- Wiki Default Role --->
-		<label for="wiki_defaultrole_id">Default Role</label>
-		The default role assigned to users when they register for this wiki.<br />
-		<select name="wiki_defaultrole_id" id="wiki_defaultrole_id" required="true" dName="Default Role" style="width:200px">
-			<cfloop query="rc.qRoles">
-				<option value="#roleid#" <cfif roleid eq rc.CodexOptions.wiki_defaultrole_id>selected="selected"</cfif>>#role#</option>
-			</cfloop>
-		</select>
-		
+
 		<br /><br />
 		<!--- Default Page --->
 		<label for="wiki_defaultpage_label">Wiki Default Page Label</label>
@@ -213,6 +203,32 @@ $Build ID:	@@build_id@@
 			   value="0">No
 		
 		<br /><br />
+	</fieldset>
+	
+	<fieldset>
+		<legend>Wiki Registration</legend>
+		
+		<!--- Wiki Registration --->
+		<label for="wiki_registration">Enable/Disable Wiki Registration</label> 
+		Activate wiki user registration or not.<br />
+		<input type="radio" 
+			   name="wiki_registration" id="wiki_registration"
+			   <cfif rc.CodexOptions.wiki_registration>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="wiki_registration" id="wiki_registration"
+			   <cfif not rc.CodexOptions.wiki_registration>checked="checked"</cfif>
+			   value="0">No
+
+		<!--- Wiki Default Role --->
+		<label for="wiki_defaultrole_id">Default Role</label>
+		The default role assigned to users when they register for this wiki.<br />
+		<select name="wiki_defaultrole_id" id="wiki_defaultrole_id" required="true" dName="Default Role" style="width:200px">
+			<cfloop query="rc.qRoles">
+				<option value="#roleid#" <cfif roleid eq rc.CodexOptions.wiki_defaultrole_id>selected="selected"</cfif>>#role#</option>
+			</cfloop>
+		</select>
+		
 	</fieldset>
 	
 	<fieldset>

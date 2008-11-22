@@ -47,10 +47,9 @@ to restore the database using the script found on the appropriate version.
 			/{Version}
 				/codexwiki_MySQLAdminBackup.sql (The entire codex database backup using MySQL Admin)
 				/codexwiki_mysqldump.sql (The entire codex database backup using MySQL dump utility)
-				/helpcontent.sql (The new helpcontent sql, used by the migration script.)
-				/deletehelp.sql (A utility help script to remove help content, can be used standalone)
 				/migration.cfm (The coldfusion migration script if upgrading from a another release)
 				/Application.cfm (Where the datasource declaration is located)
+				/assets (A folder of assets used by the migration scripts)
 
 New Install
 If you are doing a new installation, just restore the database from the codexwiki.sql file. Either

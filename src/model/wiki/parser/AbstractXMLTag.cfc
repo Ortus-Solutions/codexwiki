@@ -138,4 +138,9 @@ $Build ID:	@@build_id@@
 		<cfthrow type="#arguments.type#" message="#arguments.message#" detail="#arguments.detail#">
 </cffunction>
 
+<!---  Get the Utility Object. --->
+<cffunction name="getUtil" output="false" access="private" returntype="any" hint="Utility Method">
+	<cfreturn CreateObject("component","codex.model.util.utility")>
+</cffunction>	
+
 </cfcomponent>

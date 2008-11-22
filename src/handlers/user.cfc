@@ -24,7 +24,26 @@ $Build ID:	@@build_id@@
 	<!--- Dependencies --->
 	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
 	<cfproperty name="UserService" 		type="ioc" scope="instance" />
-	<!------------------------------------------- PUBLIC ------------------------------------------->	<cffunction name="login" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			var rc = event.getCollection();			/* JS */
+
+	<!--- Implicit Properties --->
+	<cfset this.prehandler_only = "registration,doregistration">
+
+<!----------------------------------------- IMPLICIT ------------------------------------->	
+
+	<!--- preHandler --->
+	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="Handler interceptor">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfscript>
+			var rc = event.getCollection();
+			
+			/* Check For Registration setting */
+			if( not rc.CodexOptions.wiki_registration ){
+				getPlugin("messagebox").setMessage(type="warning", message="Wiki registration is not enabled.");
+				setNextRoute(rc.xehDashboard);
+			}
+		</cfscript>
+	</cffunction>	
+<!------------------------------------------- PUBLIC ------------------------------------------->	<cffunction name="login" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			var rc = event.getCollection();			/* JS */
 			rc.jsAppendList = "formvalidation";
 			
 			/* login view */			event.setView("users/login");		</cfscript>	</cffunction>	<cffunction name="doLogin" access="public" returntype="void" output="false">

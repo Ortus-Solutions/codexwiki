@@ -51,7 +51,7 @@ $Build ID:	@@build_id@@
 
 <p>
 Log in to the wiki system by using the form below.
-<cfif rc.oUser.checkPermission('WIKI_REGISTRATION')>
+<cfif rc.CodexOptions.wiki_registration>
 	If you do not have an account, <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">please create an account first.</a>
 </cfif>
 <br /><br />
