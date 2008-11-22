@@ -105,6 +105,16 @@ $(document).ready(function() {
 	<!--- Comment Editing --->
 	<fieldset title="Change Information">
 		<legend>Change Information & Options</legend>
+		
+		<cfif event.getCurrentAction() eq "edit">
+		<!--- PageName --->
+		<label for="PageName">Rename Page</label>
+		You can rename the page here if you so desire. Please note that links or settings pointing to this page will
+		need to be updated as well. This just updates the page record, not its pointers.<br />
+		<input type="text" name="RenamePageName" id="RenamePageName" value="#rc.content.getpage().getName()#" size="50">
+		</cfif>
+		
+		<!--- Comments --->
 		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
 		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
 		<textarea name="comment" id="comment" rows="2" cols="50"></textarea>

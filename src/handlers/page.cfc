@@ -341,7 +341,8 @@ $Build ID:	@@build_id@@
 
 			/* Params */
 			event.paramValue("isReadOnly",false);
-
+			event.paramValue("RenamePageName","");
+			
 			/* Get Page */
 			rc.page = getWikiService().getPage(pageName=rc.pageName);
 			/* Get Content */
@@ -358,7 +359,15 @@ $Build ID:	@@build_id@@
 			}
 			else
 			{
+				/* Save Content */
 				rc.page.addContentVersion(oContent);
+				/* Check for Page Renaming */
+				if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
+					rc.page.setName(rc.RenamePageName);
+					rc.pageName = rc.RenamePageName;
+					getWikiService().save(rc.page);
+				}
+				/* Re Route */
 				setNextRoute(route=instance.showKey & rc.pageName, persist="page");
 			}
 		</cfscript>
