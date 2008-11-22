@@ -108,7 +108,7 @@ $Build ID:	@@build_id@@
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#.cfm" method="post">
 	
 	<!--- Add / Delete --->
-	<div class="buttons">
+	<div class="buttons float-right">
 		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle">
@@ -125,7 +125,7 @@ $Build ID:	@@build_id@@
 	</div>
 	
 	<!--- Records Found --->
-	<div style="margin-top: 12px">
+	<div>
 		<p>
 		<cfif rc.qusers.recordcount>
 		<em>Records: #rc.boundaries.startrow# - #rc.qUsers.recordcount#</em>
@@ -138,7 +138,6 @@ $Build ID:	@@build_id@@
 	<!--- Paging --->
 	#getMyPlugin("paging").renderit(FoundRows=rc.FoundRows,link=rc.pagingLink)#
 
-	<br />
 	<!--- Render Results --->
 	<table class="tablelisting" width="100%">
 
@@ -186,9 +185,12 @@ $Build ID:	@@build_id@@
 		<tr <cfif CurrentRow MOD(2) eq 1> class="even"</cfif>>
 			<!--- Delete Checkbox with PK--->
 			<td>
+				<cfif not user_isDefault>
 				<input type="checkbox" name="user_id" id="user_id" value="#user_id#" />
+				</cfif>
 			</td>
-			<td>#user_fname# #user_lname#</td>
+			<td><cfif user_isDefault><img src="includes/images/asterisk_orange.png" align="absmiddle"></cfif>
+				#user_fname# #user_lname#</td>
 			<td><a href="mailto:#user_email#">#user_email#<a/></td>
 			<td align="center">#yesnoformat(user_isconfirmed)#</td>
 
@@ -198,13 +200,17 @@ $Build ID:	@@build_id@@
 				<a href="#event.buildLink(rc.xehUserPerms)#/user_id/#user_id#.cfm" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
 				<!--- Edit Command --->
 				<a href="#event.buildlink(rc.xehUserEdit)#/user_id/#user_id#.cfm" title="Edit User"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
+				<cfif not user_isDefault>
 				<!--- Delete Command --->
 				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
+				</cfif>
 			</td>
 
 		</tr>
 		</cfloop>
 	</table>
+	
+	<p><img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Default User</strong></p>
 
 	<!--- Add / Delete --->
 	<div class="buttons">

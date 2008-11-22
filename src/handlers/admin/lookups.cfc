@@ -44,6 +44,16 @@ $Build ID:	@@build_id@@
 			/* Get js Files */
 			qFiles = getFiles(getSetting('ApplicationPath') & getSetting('lookups_jsPath'),"*.js");
 			instance.jsList = valueList(qFiles.name);
+			/* Handler Package Path */
+			instance.handlerPackage = getSetting('lookups_packagePath');
+			if( len(instance.handlerPackage) neq 0){
+				instance.handlerPackage = instance.handlerPackage & ".";
+			} 
+			/* View PackagePath */
+			instance.viewPackage = getSetting('lookups_packagePath');
+			if( len(instance.viewPackage) neq 0 ){
+				instance.viewPackage = instance.viewPackage & "/";
+			}
 			
 			return this;
 		</cfscript>
@@ -66,7 +76,7 @@ $Build ID:	@@build_id@@
 			/* Validations */
 			if( listFindNoCase(exceptList,event.getCurrentAction()) ){
 				/* Global Exit Handler for this handler */
-				rc.xehLookupList 	= "admin/lookups/display";
+				rc.xehLookupList 	= "#instance.viewPackage#lookups/display";
 				
 				/* Custom CSS According to settings */
 				for(x=1;x lte listlen(instance.cssList);x=x+1){
@@ -88,10 +98,10 @@ $Build ID:	@@build_id@@
 		var key = "";
 		
 		/* SET XEH */
-		rc.xehLookupCreate = "admin/lookups/dspCreate";
-		rc.xehLookupDelete = "admin/lookups/doDelete";
-		rc.xehLookupEdit = "admin/lookups/dspEdit";
-		rc.xehLookupClean = "admin/lookups/cleanDictionary";
+		rc.xehLookupCreate = "#instance.handlerPackage#lookups/dspCreate";
+		rc.xehLookupDelete = "#instance.handlerPackage#lookups/doDelete";
+		rc.xehLookupEdit = "#instance.handlerPackage#lookups/dspEdit";
+		rc.xehLookupClean = "#instance.handlerPackage#lookups/cleanDictionary";
 		
 		//Get System Lookups
 		rc.systemLookups = getSetting("lookups_tables");
@@ -123,7 +133,7 @@ $Build ID:	@@build_id@@
 			event.setValue("sortBy",rc.mdDictionary.sortBy);
 
 		//Set view to render
-		event.setView("admin/lookups/Listing");
+		event.setView("#instance.viewPackage#lookups/Listing");
 		</cfscript>
 	</cffunction>
 
@@ -139,7 +149,7 @@ $Build ID:	@@build_id@@
 			getPlugin("messagebox").setMessage("info", "Metadata Dictionary Cleaned.");
 					
 			/* Relocate back to listing */
-			setNextRoute(route="admin/lookups/display");
+			setNextRoute(route="#instance.viewPackage#lookups/display");
 		</cfscript>
 	</cffunction>
 
@@ -167,7 +177,7 @@ $Build ID:	@@build_id@@
 		}
 				
 		/* Relocate back to listing */
-		setNextRoute(route="admin/lookups/display/lookupclass/#rc.lookupclass#");
+		setNextRoute(route="#instance.handlerPackage#lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -184,7 +194,7 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "admin/lookups/doCreate";
+		rc.xehLookupCreate = "#instance.handlerPackage#lookups/doCreate";
 
 		//Get Lookup's md Dictionary
 		rc.mdDictionary = getlookupService().getDictionary(rc.lookupclass);
@@ -197,7 +207,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//Set view.
-		event.setView("admin/lookups/Add");
+		event.setView("#instance.viewPackage#lookups/Add");
 		</cfscript>
 	</cffunction>
 
@@ -251,7 +261,7 @@ $Build ID:	@@build_id@@
 		//Tell service to save object
 		getLookupService().save(oLookup);		
 		/* Relocate back to listing */
-		setNextRoute(route="admin/lookups/display/lookupclass/#rc.lookupclass#");
+		setNextRoute(route="#instance.handlerPackage#lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -268,8 +278,8 @@ $Build ID:	@@build_id@@
 		fncLookupCheck(event);
 		
 		/* exit handlers */
-		rc.xehLookupCreate = "admin/lookups/doUpdate";
-		rc.xehLookupUpdateRelation = "admin/lookups/doUpdateRelation";
+		rc.xehLookupCreate = "#instance.handlerPackage#lookups/doUpdate";
+		rc.xehLookupUpdateRelation = "#instance.handlerPackage#lookups/doUpdateRelation";
 		
 		//Get the passed id's TO Object
 		rc.oLookup = getLookupService().getLookupObject(rc.lookupClass,rc.id);
@@ -296,7 +306,7 @@ $Build ID:	@@build_id@@
 			}
 		}
 		//view to display
-		event.setView("admin/lookups/Edit");
+		event.setView("#instance.viewPackage#lookups/Edit");
 		</cfscript>
 	</cffunction>
 
@@ -336,7 +346,7 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to listing */
-			setNextRoute(route="admin/lookups/display/lookupclass/#rc.lookupclass#");
+			setNextRoute(route="#instance.handlerPackage#lookups/display/lookupclass/#rc.lookupclass#");
 		</cfscript>
 	</cffunction>
 
@@ -391,7 +401,7 @@ $Build ID:	@@build_id@@
 			getLookupService().save(oLookup);
 
 			/* Relocate back to edit */
-			setNextRoute(route="admin/lookups/dspEdit/lookupclass/#rc.lookupclass#/id/#rc.id#",suffix="##m2m_#rc.linkAlias#");		
+			setNextRoute(route="#instance.handlerPackage#lookups/dspEdit/lookupclass/#rc.lookupclass#/id/#rc.id#",suffix="##m2m_#rc.linkAlias#");		
 		</cfscript>
 	</cffunction>
 
@@ -407,7 +417,7 @@ $Build ID:	@@build_id@@
 		<cfargument name="event" type="any" required="true"/>
 		<cfscript>
 		if ( event.getTrimValue("lookupclass","") eq "")
-			setNextRoute("admin/lookups/display");
+			setNextRoute("#instance.handlerPackage#lookups/display");
 		</cfscript>
 	</cffunction>
 	
