@@ -2,7 +2,7 @@
 <!-- Declare as many tiers as you like with a unique name -->
 <environmentcontrol>
 
-	<environment name="development" urls="localhost,codex.lmajano:8080,codex.jfetmac">
+	<environment name="development" urls="localhost,codex.lmajano,codex.jfetmac">
 		<Setting name="HandlerCaching"			value="false" />
 		<Setting name="EventCaching"			value="false" />
 		<Setting name="HandlersIndexAutoReload" value="true" />
