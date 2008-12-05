@@ -147,6 +147,8 @@ INSERT INTO "wiki_options" ("option_id", "option_name", "option_value") VALUES
 	('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki');
 INSERT INTO "wiki_options" ("option_id", "option_name", "option_value") VALUES
 	('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki');
+INSERT INTO "wiki_options" ("option_id", "option_name", "option_value") VALUES
+	('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true');
 /*!40000 ALTER TABLE "wiki_options" ENABLE KEYS;*/
 UNLOCK TABLES;
 

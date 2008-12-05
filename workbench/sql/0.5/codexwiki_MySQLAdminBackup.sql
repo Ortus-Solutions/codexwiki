@@ -91,7 +91,8 @@ INSERT INTO "wiki_options" ("option_id","option_name","option_value") VALUES
  ('9F0716AB-AF0A-8D94-4AEAA59490D24CB2','wiki_outgoing_email','myemail@email.com'),
  ('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD'),
  ('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki'),
- ('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki');
+ ('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki'),
+ ('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true');
 /*!40000 ALTER TABLE "wiki_options" ENABLE KEYS */;
 
 
