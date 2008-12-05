@@ -78,8 +78,14 @@ $Build ID:	@@build_id@@
 	<cfargument name="visitData" hint="struct of data that gets passed around" type="struct" required="Yes">
 	<cfscript>
 		var model = createModel(arguments.visitData.content);
-
-		arguments.renderable.setContent(model.render(arguments.renderable.getContent()));
+		var contentToRender = arguments.renderable.getContent();
+		
+		/* Cleanup {{{ }}} for <nowiki> */
+		contentToRender = REplace(contentToRender,"{{{","<nowiki>{{{","all");
+		contentToRender = REplace(contentToRender,"}}}","}}}</nowiki>","all");
+		
+		/* Here is where the magic happens, we render the wiki text */
+		arguments.renderable.setContent(model.render(contentToRender));
 
 		if(NOT StructKeyExists(arguments.visitData, "categories"))
 		{
