@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 		<!--- Main CSS --->	<link rel="stylesheet" type="text/css" href="includes/css/style.css" />	<!--- loop around the cssAppendList, to add page specific css --->	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />	</cfloop>
 	<cfloop list="#event.getValue("cssFullAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#css#.css" />
-	</cfloop>	<!--- Global JS --->	<script type="text/javascript" src="includes/scripts/jquery-1.2.3.pack.js"></script>	<script type="text/javascript" src="includes/scripts/codex.js"></script>	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">		<script type="text/javascript" src="includes/scripts/#js#.js"></script>	</cfloop>
+	</cfloop>	<!--- Global JS --->	<script type="text/javascript" src="includes/scripts/jquery-latest.pack.js"></script>	<script type="text/javascript" src="includes/scripts/codex.js"></script>	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">		<script type="text/javascript" src="includes/scripts/#js#.js"></script>	</cfloop>
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<script type="text/javascript" src="#js#.js"></script>
 	</cfloop>	<!--- Render Title --->	#renderView('tags/title')#	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeHeadEnd()#	</cfoutput></head><cfoutput><body>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getafterBodyStart()#	<!-- wrap starts here -->	<div id="wrap">		<!-- header -->		#renderView('tags/header')#		<!-- Sidebar -->		<div id="sidebar" >

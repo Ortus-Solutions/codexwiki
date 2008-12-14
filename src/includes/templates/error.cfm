@@ -47,7 +47,7 @@ $Build ID:	@@build_id@@
 	<link rel="stylesheet" type="text/css" href="#htmlBaseURL#/includes/css/style.css" />
 
 	<!--- Code JS --->
-	<script type="text/javascript" src="#htmlBaseURL#/includes/scripts/jquery-1.2.3.pack.js"></script>
+	<script type="text/javascript" src="#htmlBaseURL#/includes/scripts/jquery-latest.pack.js"></script>
 	<script type="text/javascript" src="#htmlBaseURL#/includes/scripts/codex.js"></script>
 
 	<title>
