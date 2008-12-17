@@ -53,6 +53,12 @@
 			 basedir="${build.dir}"
 			 update="true"/>
 		
+		<delete dir="${build.dir}/frameworks" />
+		
+		<zip destfile="${dist.dir}/codex_v${codex.version}_noframeworks.zip"
+					 basedir="${build.dir}"
+					 update="true"/>
+				
 		<delete dir="${build.dir}"/>
 		
 	</target>
