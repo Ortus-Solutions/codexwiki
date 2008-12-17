@@ -29,8 +29,9 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		variables.instance = StructNew();
 		variables.static = StructNew();
-		variables.static.SERVER_SCOPE_KEY = "6201BF9B-D46E-52D0-D7023F30A340B7B4";
-
+		/* Set unique server Key */
+		variables.static.SERVER_SCOPE_KEY = hash(arguments.configBean.getKey('ApplicationPath') & "6201BF9B-D46E-52D0-D7023F30A340B7B4");
+		
 		initJavaLoader();
 
 		setWikiBase(arguments.configBean.getKey("ShowKey") & "/");
