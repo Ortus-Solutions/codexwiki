@@ -49,6 +49,9 @@ a.noborder{
 	font-weight: bold; 
 	color: #333;
 	cursor: pointer;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
 }
 #buttonLinks:hover{
 	background: #FFFFF0;
@@ -176,24 +179,19 @@ input {
 	font: normal 1em Verdana, sans-serif;
 	color:#777;
 }
-input.button { 
-	margin: 0; 
-	font: bolder 12px Verdana, Sans-serif; 
-	border: 1px solid #CCC; 
-	padding: 1px; 
-	background: #FFF;
-	color: #CC0000;
-}
 input[type=button], input[type=submit], input[type=reset] { 
 	margin: 0; 
 	font-size: 100%; 
 	font-family: Arial, Sans-serif; 
 	border: 1px solid #CCC; 
 	background: #FFFFFF url(../images/headerbg.gif) repeat-x bottom left; 
-	padding: 3px; 
+	padding: 5px; 
 	font-weight: bold; 
 	color: #333;
 	cursor: pointer;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
 }
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
  background: #FFFFF0;
