@@ -60,8 +60,6 @@
 
 	<BugTracerReports />
 
-	<DevEnvironments />
-
 	<WebServices />
 
 	<Layouts>
@@ -90,10 +88,7 @@
 			<Property name="configFile">config/environments.xml.cfm</Property>
 		</Interceptor>
 		<!-- autowire -->
-		<Interceptor class="coldbox.system.interceptors.autowire">
-			<Property name="debugMode">false</Property>
-			<Property name="completeDIMethodName">onDIComplete</Property>
-		</Interceptor>
+		<Interceptor class="coldbox.system.interceptors.autowire" />
 		<!-- Custom SES -->
 		<Interceptor class="codex.interceptors.util.ses">
 			<Property name="configFile">config/routes.cfm</Property>
@@ -107,6 +102,7 @@
 			<Property name="rulesBeanMethod">getSecurityRules</Property>
 			<Property name="validatorIOC">SecurityService</Property>
 		</Interceptor>
+		
 		<!-- Wiki Plugins Translations -->
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
@@ -119,6 +115,7 @@
 		<!-- MessageBox Translations -->
 		<Interceptor class="codex.interceptors.wiki.MessageBox">
 		</Interceptor>	
+		<!-- Custom Wiki Plugins -->
 		<Interceptor class="codex.interceptors.wiki.WikiPlugins">
 		</Interceptor>		
 		
