@@ -26,16 +26,16 @@ $Build ID:	@@build_id@@
 
 <cffunction name="init" hint="Constructor" access="public" returntype="Feed" output="false">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
-	<cfargument name="coldBoxController" hint="The coldbox controller" type="coldbox.system.controller" required="true">
+	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
 	<cfscript>
-		super.init("feed");
+		super.init("feed",arguments.configBean);
 
-		setBaseURL(arguments.coldBoxController.getSetting("sesBaseURL"));
-
+		setBaseURL(arguments.configBean.getKey("sesBaseURL"));
+		
 		setCacheManager(arguments.coldboxOCM);
 		setRSSManager(arguments.rssManager);
-
+		
 		return this;
 	</cfscript>
 </cffunction>
@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="state" hint="the state transported across doStart(), doStartTag(), doEndTag() and doEnd()" type="struct" required="Yes">
 	<cfscript>
 		var static = createObject("component", "codex.model.wiki.parser.renderable.StaticRenderable").init(arguments.builder.substring(0, arguments.matcher.start()));
-		var feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(arguments.tag, getBaseURL(), getCacheManager(), getRSSManager());
+		var feed = createObject("component", "codex.model.wiki.parser.renderable.FeedRenderable").init(arguments.tag, getBaseURL(), getCacheManager(), getRSSManager(), getRewriteExtension());
 
 		ArrayAppend(arguments.state.results, static);
 		ArrayAppend(arguments.state.results, feed);

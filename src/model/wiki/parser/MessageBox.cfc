@@ -25,8 +25,9 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="MessageBox" output="false">
+	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfscript>
-		super.init("messagebox");
+		super.init("messagebox",arguments.configBean);
 
 		return this;
 	</cfscript>

@@ -31,6 +31,7 @@
 		<Setting name="IOCFramework"				value="coldspring" />
 		<Setting name="IOCDefinitionFile"			value="/codex/config/coldspring.xml.cfm" />
 		<Setting name="IOCObjectCaching"			value="false" />
+		<Setting name="RequestContextDecorator" 	value="codex.model.coldbox.RequestContextDecorator"/>
 	</Settings>
 
 	<YourSettings>

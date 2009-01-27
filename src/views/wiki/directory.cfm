@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 				data.namespaces += this.value + ",";
 			}
 		});
-		$("##wikiPagesDiv").load('#event.buildLink(rc.xehPageDirectory)#.cfm',data,function(){
+		$("##wikiPagesDiv").load('#event.buildLink(rc.xehPageDirectory)#',data,function(){
 			$("##namespace_spinner").toggle();
 			attachTableFilter();
 		});

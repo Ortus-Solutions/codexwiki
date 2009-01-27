@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#.cfm">
+<form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#">
 
 	<div style="margin:10px;">
 		<!--- Loader --->
@@ -105,11 +105,11 @@ $Build ID:	@@build_id@@
 </form>
 
 <!--- Results Form --->
-<form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#.cfm" method="post">
+<form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#" method="post">
 	
 	<!--- Add / Delete --->
 	<div class="buttons float-right">
-		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserCreate)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle">
 				Add User
@@ -147,7 +147,7 @@ $Build ID:	@@build_id@@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_lname">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_lname/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_lname/' & rc.sortOrder & '/' & rc.page)#">
 				Name
 				</a>
 				<!--- Sort Orders --->
@@ -158,7 +158,7 @@ $Build ID:	@@build_id@@
 			<th >
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_email">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_email/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_email/' & rc.sortOrder & '/' & rc.page)#">
 				Email
 				</a>
 				<!--- Sort Orders --->
@@ -169,7 +169,7 @@ $Build ID:	@@build_id@@
 			<th align="center" width="95">
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing)#/sort/user_isconfirmed/#rc.sortOrder#/#rc.page#.cfm">
+				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_isconfirmed/' & rc.sortOrder & '/' & rc.page)#">
 				Confirmed
 				</a>
 				<!--- Sort Orders --->
@@ -197,9 +197,9 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Permissions Command --->
-				<a href="#event.buildLink(rc.xehUserPerms)#/user_id/#user_id#.cfm" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
+				<a href="#event.buildLink(rc.xehUserPerms & '/user_id/' & user_id)#" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
 				<!--- Edit Command --->
-				<a href="#event.buildlink(rc.xehUserEdit)#/user_id/#user_id#.cfm" title="Edit User"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
+				<a href="#event.buildlink(rc.xehUserEdit & '/user_id/' & user_id)#" title="Edit User"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
 				<cfif not user_isDefault>
 				<!--- Delete Command --->
 				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
@@ -214,7 +214,7 @@ $Build ID:	@@build_id@@
 
 	<!--- Add / Delete --->
 	<div class="buttons">
-		<a href="#event.buildLink(rc.xehUserCreate)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserCreate)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle">
 				Add User

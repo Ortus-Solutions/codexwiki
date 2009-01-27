@@ -29,6 +29,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="baseURL" hint="the base url to draw links from" type="string" required="Yes">
 	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
 	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="Yes">
+	<cfargument name="rewriteExtension" hint="the rewrite extension" type="string" required="Yes">
 	<cfscript>
 		var xFeed = 0;
 		var cleanFeed = 0;
@@ -41,7 +42,8 @@ $Build ID:	@@build_id@@
 		setFeedTag(arguments.feedTag);
 		setCacheManager(arguments.coldboxOCM);
 		setRssManager(arguments.rssManager);
-
+		setrewriteExtension(arguments.rewriteExtension);
+		
 		if(NOT arguments.feedTag.endsWith("/>"))
 		{
 			arguments.feedTag = replace(arguments.feedTag, ">", "/>");
@@ -194,13 +196,13 @@ $Build ID:	@@build_id@@
 	<cfelseif FindNoCase("atom", data.version)>
 		<cfreturn buildAtomFeed(data, feedData.url, feedData.listType) />
 	<cfelse>
-		<cfreturn "Not atom, not rss... what is it? - #data.verson# -"/>
+		<cfreturn "Not atom, not rss... what is it? - #data.version# - #getRelativeFeed()#"/>
 	</cfif>
 </cffunction>
 
 <cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager. Returns xml" access="public" returntype="any" output="false">
 	<!---
-	/feed/page/listByCategory.cfm
+	/feed/page/listByCategory(.cfm)
 	 --->
 	<cfscript>
 		var feedData = getFeedData();
@@ -208,8 +210,8 @@ $Build ID:	@@build_id@@
 		var root = ListGetAt(urlString, 1, "?");
 		var queryString = "";
 		var source = listGetAt(root, "1", "/");
-		var feed = replaceNoCase(listGetAt(root, "2", "/"), ".cfm", "");
-
+		var feed = replaceNoCase(listGetAt(root, "2", "/"), ".cfm","");
+		
 		if(ListLen(urlString, "?") eq 2)
 		{
 			queryString = ListGetAt(urlString, 2, "?");
@@ -270,42 +272,44 @@ $Build ID:	@@build_id@@
 			</p>
 		</cfif>
 		<#arguments.listType#>
-		<cfloop array="#arguments.data.item#" index="item">
-			<li>
-				<p class="title">
-					<cfif StructKeyExists(item, "link")>
-						<a href="#item.link#">#item.title#</a>
-					<cfelse>
-						#item.title#
-					</cfif>
-				</p>
-				<p class="description">
-				<cfif StructKeyExists(item, "description")>
-					#item.description.value#
-				</cfif>
-				</p>
-
-				<cfif StructKeyExists(item, "category")>
-					<p> Categories:
-					<cfset list = ""/>
-					<cfloop array="#item.category#" index="category">
-						<cfif StructKeyExists(category, "domain")>
-							<cfset list = listAppend(list, ' <a href="#category.domain#">#category.value#</a>') />
+		<cfif structKeyExists(arguments.data,"item")>
+			<cfloop array="#arguments.data.item#" index="item">
+				<li>
+					<p class="title">
+						<cfif StructKeyExists(item, "link")>
+							<a href="#item.link#">#item.title#</a>
 						<cfelse>
-							<cfset list = listAppend(list, ' #category.value#') />
+							#item.title#
 						</cfif>
-					</cfloop>
-					#list#
 					</p>
-				</cfif>
-
-				<cfif StructKeyExists(item, "pubDate")>
-				<p class="pubdate">
-					(#item.pubDate#)
-				</p>
-				</cfif>
-			</li>
-		</cfloop>
+					<p class="description">
+					<cfif StructKeyExists(item, "description")>
+						#item.description.value#
+					</cfif>
+					</p>
+	
+					<cfif StructKeyExists(item, "category")>
+						<p> Categories:
+						<cfset list = ""/>
+						<cfloop array="#item.category#" index="category">
+							<cfif StructKeyExists(category, "domain")>
+								<cfset list = listAppend(list, ' <a href="#category.domain#">#category.value#</a>') />
+							<cfelse>
+								<cfset list = listAppend(list, ' #category.value#') />
+							</cfif>
+						</cfloop>
+						#list#
+						</p>
+					</cfif>
+	
+					<cfif StructKeyExists(item, "pubDate")>
+					<p class="pubdate">
+						(#item.pubDate#)
+					</p>
+					</cfif>
+				</li>
+			</cfloop>
+		</cfif>
 		</#arguments.listType#>
 	</div>
 	</cfoutput>
@@ -458,6 +462,15 @@ $Build ID:	@@build_id@@
 <cffunction name="setCacheManager" access="private" returntype="void" output="false">
 	<cfargument name="cacheManager" type="coldbox.system.cache.cacheManager" required="true">
 	<cfset instance.cacheManager = arguments.cacheManager />
+</cffunction>
+
+<cffunction name="getrewriteExtension" access="private" output="false" returntype="string" hint="Get rewriteExtension">
+	<cfreturn instance.rewriteExtension/>
+</cffunction>
+
+<cffunction name="setrewriteExtension" access="private" output="false" returntype="void" hint="Set rewriteExtension">
+	<cfargument name="rewriteExtension" type="string" required="true"/>
+	<cfset instance.rewriteExtension = arguments.rewriteExtension/>
 </cffunction>
 
 </cfcomponent>

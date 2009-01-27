@@ -62,7 +62,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="userForm" id="userForm" action="#event.buildlink(rc.xehUserUpdate)#/user_id/#rc.user_id#.cfm">
+<form name="userForm" id="userForm" action="#event.buildlink(rc.xehUserUpdate & '/user_id/' & rc.user_id)#">
 	
 	<fieldset>
 	<legend><strong>User Information</strong></legend>
@@ -139,7 +139,7 @@ $Build ID:	@@build_id@@
 	</div>	
 	<!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center">
-		<a href="#event.buildLink(rc.xehUserListing)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/cancel.png" border="0" align="absmiddle">
 				Cancel

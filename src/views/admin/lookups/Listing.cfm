@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <script type="text/javascript">
 	function loadLookup(lookupClass){
-		window.location='#event.buildLink(rc.xehLookupList,0)#/lookupClass/' + lookupClass + '.cfm';
+		window.location='#event.buildLink(linkTo=rc.xehLookupList,override=true)#/lookupClass/' + lookupClass + '#event.getRewriteExtension()#';
 	}
 	function submitForm(){
 		$('##_listloader').fadeIn();
@@ -83,24 +83,24 @@ $Build ID:	@@build_id@@
 		<!--- Utility Buttons --->
 		&nbsp;
 		<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm" class="buttonLinks">Reload Listing</a>
+		<a href="#event.buildLink(rc.xehLookupList & "/lookups/" & rc.lookupclass)#" class="buttonLinks">Reload Listing</a>
 		&nbsp;
 		<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupClean,0)#.cfm" class="buttonLinks">Reload Dictionary</span>
+		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">Reload Dictionary</span>
 		</a>
 	</p>
 </form>
 
 <!--- Results Form --->
 <div>
-	<form name="lookupForm" id="lookupForm" action="#event.buildLink(rc.xehLookupDelete,0)#.cfm" method="post">
+	<form name="lookupForm" id="lookupForm" action="#event.buildLink(rc.xehLookupDelete)#" method="post">
 	<!--- The lookup class selected for deletion purposes --->
 	<input type="hidden" name="lookupclass" id="lookupclass" value="#rc.lookupClass#">
 
 	<!--- Add / Delete Button Bar --->
 	<div id="listButtonBar">
 		<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupCreate,0)#/lookupClass/#rc.lookupClass#.cfm" class="buttonLinks">
+		<a href="#event.buildLink(rc.xehLookupCreate & "/lookups/" & rc.lookupclass)#" class="buttonLinks">
 			Add Record
 		</a>
 		&nbsp;
@@ -133,7 +133,7 @@ $Build ID:	@@build_id@@
 					<cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>&##8226;</cfif>
 
 					<!--- Sort Column --->
-					<a href="#event.buildLink(rc.xehLookupList,0)#/lookupClass/#rc.lookupClass#/sortby/#rc.mdDictionary.FieldsArray[i].alias#/sortOrder/#rc.sortOrder#.cfm">
+					<a href="#event.buildLink(rc.xehLookupList & '/lookupClass/' & rc.lookupClass & '/sortby/' & rc.mdDictionary.FieldsArray[i].alias & '/sortOrder/' & rc.sortOrder)#">
 						#rc.mdDictionary.FieldsArray[i].alias#
 					</a>
 					
@@ -174,7 +174,7 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Edit Record --->
-				<a href="#event.buildLink(rc.xehLookupEdit,0)#/lookupClass/#rc.lookupClass#/id/#rc.qListing[rc.mdDictionary.PK][currentrow]#.cfm" title="Edit Record">
+				<a href="#event.buildLink(rc.xehLookupEdit & '/lookupClass/' & rc.lookupClass & '/id/' & rc.qListing[rc.mdDictionary.PK][currentrow])#" title="Edit Record">
 				<img src="#rc.imgPath#/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 				<!--- Delete Record --->

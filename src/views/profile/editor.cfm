@@ -59,7 +59,7 @@ Please enter all the required information to update your profile details
 
 <!--- Profile Details --->
 <form name="detailsForm" id="detailsForm"
-		action="#event.buildLink(rc.xehDoEdit,0)#.cfm"
+		action="#event.buildLink(rc.xehDoEdit)#"
 		method="post">
 
 <fieldset >
@@ -102,7 +102,7 @@ Please enter all the required information to update your profile details
 
 <!--- Button Bar --->
 <div align="center" id="_buttonbar">
-	<a href="#event.buildLink(rc.xehUserProfile,0)#.cfm" id="buttonLinks">
+	<a href="#event.buildLink(rc.xehUserProfile)#" id="buttonLinks">
 		<span>
 			<img src="includes/images/cancel.png" border="0" align="absmiddle">
 			Cancel

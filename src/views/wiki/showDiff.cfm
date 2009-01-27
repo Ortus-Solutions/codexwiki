@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 <!--- Menu bar --->	
 <div class="float-right">
 	<img src="includes/images/history.png" border="0" align="absmiddle">
-	<a href="#event.buildLink(rc.onShowHistory)#/#rc.page.getName()#.cfm">Back To History</a>
+	<a href="#event.buildLink(rc.onShowHistory & "/" & rc.page.getName())#">Back To History</a>
 </div>
 
 <!--- Title --->
@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 	<img src="includes/images/history.png" border="0" align="absmiddle">
 	Changes between Version <strong>#event.getValue('version',"")#</strong> and 
 	<strong>#event.getValue("old_version",'')#</strong> of 
-	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>
+	<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.page.getName())))#">#rc.page.getCleanName()#</a>
 </h2>
 
 <h3>Version Info Comparison</h3>

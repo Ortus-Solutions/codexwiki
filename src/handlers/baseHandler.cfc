@@ -35,7 +35,8 @@ $Build ID:	@@build_id@@
 		<cfargument name="addToken"		required="false" type="boolean" default="false"	hint="Wether to add the tokens or not. Default is false">
 		<cfargument name="suffix" 		type="string" 	required="true" default="" hint="String to append after .cfm"/>
 		<!--- ************************************************************* --->
-		<cfset arguments.route = arguments.route & ".cfm" & arguments.suffix>
+		<cfset var event = getController().getRequestService().getContext()>
+		<cfset arguments.route = arguments.route & event.getRewriteExtension() & arguments.suffix>
 		<cfset getController().setNextRoute(argumentCollection=arguments)>
 	</cffunction>
 	
@@ -47,14 +48,18 @@ $Build ID:	@@build_id@@
 		<cfargument name="persist" 			type="string"  required="false" default="" hint="What request collection keys to persist in the relocation">
 		<cfargument name="varStruct" 		type="struct"  required="false" default="#structNew()#" hint="A structure key-value pairs to persist.">
 		<!--- ************************************************************* --->
+		<cfset var _event = getController().getRequestService().getContext()>
+		
 		<cfif len(arguments.queryString)>
-			<cfset arguments.queryString = arguments.queryString & ".cfm">
+			<cfset arguments.queryString = arguments.queryString & _event.getRewriteExtension()>
 		<cfelse>
-			<cfset arguments.event = arguments.event & ".cfm">
+			<cfset arguments.event = arguments.event & _event.getRewriteExtension()>
 		</cfif>
 		<cfset getController().setNextEvent(argumentCollection=arguments)>
 	</cffunction>
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->
+
+	
 
 </cfcomponent>

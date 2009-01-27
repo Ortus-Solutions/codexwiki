@@ -42,13 +42,13 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> Admin Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#event.buildLink(rc.xehAdmin)#.cfm">Admin Dashboard</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminAPI)#.cfm">API Docs</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminOptions)#.cfm">Codex Options</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#.cfm">Custom HTML</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminUsers)#.cfm">User Management</a></li>
-		<li><a href="#event.buildLink(rc.xehadminlookups)#.cfm">System Lookups</a></li>
-		<li><a href="#event.buildLink(rc.xehAdminPlugins)#.cfm">Wiki Plugins</a></li>
+		<li><a href="#event.buildLink(rc.xehAdmin)#">Admin Dashboard</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminAPI)#">API Docs</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminOptions)#">Codex Options</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#">Custom HTML</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminUsers)#">User Management</a></li>
+		<li><a href="#event.buildLink(rc.xehadminlookups)#">System Lookups</a></li>
+		<li><a href="#event.buildLink(rc.xehAdminPlugins)#">Wiki Plugins</a></li>
 	</ul>
 </div>
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
@@ -56,8 +56,8 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/shield.png" align="absmiddle"> User Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#event.buildLink(rc.xehUserProfile)#.cfm">My Profile</a></li>
-		<li><a href="#event.buildLink(rc.xehUserChangePass)#.cfm">Change Password</a></li>
+		<li><a href="#event.buildLink(rc.xehUserProfile)#">My Profile</a></li>
+		<li><a href="#event.buildLink(rc.xehUserChangePass)#">Change Password</a></li>
 	</ul>
 </div>
 <cfelse>
@@ -65,11 +65,11 @@ $Build ID:	@@build_id@@
 <h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
 <div class="left-box">
 	<ul class="sidemenu">
-		<li><a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm">#rc.codexOptions.wiki_defaultpage_label#</a></li>
-		<li><a href="#event.buildLink(rc.xehSpecialHelp)#.cfm">Help</a></li>
-		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#.cfm">Rss Feeds</a></li>
-		<li><a href="#event.buildLink(rc.xehSpecialCategory)#.cfm">Category Listing</a></li>
-		<li><a href="#event.buildLink(rc.xehPageDirectory)#.cfm">Wiki Page Directory</a></li>
+		<li><a href="#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#">#rc.codexOptions.wiki_defaultpage_label#</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialHelp)#">Help</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialFeeds)#">Rss Feeds</a></li>
+		<li><a href="#event.buildLink(rc.xehSpecialCategory)#">Category Listing</a></li>
+		<li><a href="#event.buildLink(rc.xehPageDirectory)#">Wiki Page Directory</a></li>
 		
 	</ul>
 </div>
@@ -93,7 +93,7 @@ $Build ID:	@@build_id@@
 		<!--- Only show for non login event --->
 		<cfif not listfindnocase("user.login,user.registration",event.getCurrentEvent())>
 		<!--- Don't Show if in login event' --->
-		<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm" onsubmit="onLoginForm()">
+		<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#" onsubmit="onLoginForm()">
 			<!--- ref Route --->
 			<input type="hidden" name="refRoute" value="#cgi.script_name#" />
 			<p>
@@ -116,9 +116,9 @@ $Build ID:	@@build_id@@
 			
 			<!--- Button Bar --->
 			<div align="center" id="_buttonbar_login">
-				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
+				<a href="#event.buildLink(rc.xehUserReminder)#">Forgot Password?</a>
 				<!--- Registration Permission Link --->
-				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#">Register</a></cfif>
 				<br /><br />
 				<input type="submit" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" />
 			</div>
@@ -129,12 +129,12 @@ $Build ID:	@@build_id@@
 			<br /><br />
 			<!--- Button Bar --->
 			<div align="center" id="_buttonbar_login">
-				<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
+				<a href="#event.buildLink(rc.xehUserReminder)#">Forgot Password?</a>
 				<!--- Registration Permission Link --->
-				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">Register</a></cfif>
+				<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#">Register</a></cfif>
 				<br /><br />
 				<input type="button" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" 
-					   onClick="window.location='#event.buildLink(rc.xehUserLogin)#.cfm'"/>
+					   onClick="window.location='#event.buildLink(rc.xehUserLogin)#'"/>
 			</div>
 			<br />
 		</cfif>
@@ -147,7 +147,7 @@ $Build ID:	@@build_id@@
 		<br />
 		<!--- Button Bar --->
 		<div align="center" id="_buttonbar_login">
-			<a href="#event.buildLink(rc.xehUserLogout)#.cfm" id="buttonLinks">
+			<a href="#event.buildLink(rc.xehUserLogout)#" id="buttonLinks">
 				<span>
 					<img src="includes/images/door_out.png" border="0" align="absmiddle">
 					Logout

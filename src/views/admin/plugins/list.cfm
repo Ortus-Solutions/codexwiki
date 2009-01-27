@@ -49,7 +49,7 @@ CodeX Wiki Plugins</h2>
 #getPlugin("messagebox").renderit()#
 
 <form name="uploadForm" id="uploadForm" 
-	  action="#event.buildLink(rc.xehUpload)#.cfm" 
+	  action="#event.buildLink(rc.xehUpload)#" 
 	  enctype="multipart/form-data"
 	  method="post" onSubmit="submitUpload()">
 	<h3>Upload/Install Plugin</h3>
@@ -77,7 +77,7 @@ CodeX Wiki Plugins</h2>
 		<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
 			<td>#name#</td>
 			<td class="center">
-				<a href="#event.buildLink(rc.xehRemove)#/plugin/#getPlugin('Utilities').ripExtension(name)#.cfm" 
+				<a href="#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('Utilities').ripExtension(name))#" 
 				   onClick="return confirm('Do you really want to delete this plugin?')"
 				   title="Remove Plugin"><img src="includes/images/bin_closed.png" align="absmiddle" border="0"></a>
 			</td>
@@ -89,7 +89,7 @@ CodeX Wiki Plugins</h2>
 
 <!--- Reload Button --->
 <div class="align-center" id="reloadPluginsDiv">
-	<a href="#event.buildLink(rc.xehReload)#.cfm" onClick="return submitReload()" id="buttonLinks">
+	<a href="#event.buildLink(rc.xehReload)#" onClick="return submitReload()" id="buttonLinks">
 		<span>
 			<img src="includes/images/arrow_refresh.png" border="0" align="absmiddle">
 			Reload Plugins Index

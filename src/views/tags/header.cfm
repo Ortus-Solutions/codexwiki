@@ -31,20 +31,20 @@ $Build ID:	@@build_id@@
 	<ul>
 		<!--- Wiki Tab --->
 		<li <cfif refindnocase("^page",event.getCurrentEvent())>id="current"</cfif>>
-			<a href="#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm"><span>Wiki</span></a>
+			<a href="#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#"><span>Wiki</span></a>
 		</li>
 
 		<cfif rc.oUser.getisAuthorized()>
 		<!--- User Profile Tab --->
 		<li <cfif refindnocase("^profile",event.getCurrentHandler())>id="current"</cfif>>
-			<a href="#event.buildLink(rc.xehUserProfile,0)#.cfm"><span>My Profile</span></a>
+			<a href="#event.buildLink(rc.xehUserProfile)#"><span>My Profile</span></a>
 		</li>
 		</cfif>
 
 		<!--- Admin Tab --->
 		<cfif rc.oUser.checkPermission("WIKI_ADMIN")>
 		<li <cfif refindnocase("^admin",event.getCurrentHandler())>id="current"</cfif> >
-			<a href="#event.buildLink(rc.xehAdmin,0)#.cfm"><span>Admin</span></a>
+			<a href="#event.buildLink(rc.xehAdmin)#"><span>Admin</span></a>
 		</li>
 		</cfif>
 	</ul>
@@ -54,10 +54,10 @@ $Build ID:	@@build_id@@
 <!--- Sub Header --->
 <div id="header-logo">
 
-	<div id="logo" onClick="window.location='#pageShowRoot(rc.CodexOptions.wiki_defaultpage)#.cfm'"><h1><a href="#getSetting('htmlBaseURL')#">#rc.CodexOptions.wiki_name#</a></h1></div>
+	<div id="logo" onClick="window.location='#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#'"><h1><a href="#getSetting('htmlBaseURL')#">#rc.CodexOptions.wiki_name#</a></h1></div>
 
 	<cfif not event.valueExists("print")>
-	<form method="post" class="search" action="#event.buildLink(rc.xehWikiSearch)#.cfm">
+	<form method="post" class="search" action="#event.buildLink(rc.xehWikiSearch)#">
 		<p><input name="search_query" class="textbox" type="text" />
 				<input name="search" class="searchbutton" value="Search" type="submit" /></p>
 	</form>

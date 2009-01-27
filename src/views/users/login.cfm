@@ -52,14 +52,14 @@ $Build ID:	@@build_id@@
 <p>
 Log in to the wiki system by using the form below.
 <cfif rc.CodexOptions.wiki_registration>
-	If you do not have an account, <a href="#event.buildLink(rc.xehUserRegistration)#.cfm">please create an account first.</a>
+	If you do not have an account, <a href="#event.buildLink(rc.xehUserRegistration)#">please create an account first.</a>
 </cfif>
 <br /><br />
 </p>
 <!--- Message Box --->
 #getPlugin("messagebox").renderit()#
 
-<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#.cfm">
+<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#">
 
 	<p class="align-center">
 		<br /><br />
@@ -83,7 +83,7 @@ Log in to the wiki system by using the form below.
 
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">
-		<a href="#event.buildLink(rc.xehUserReminder)#.cfm">Forgot Password?</a>
+		<a href="#event.buildLink(rc.xehUserReminder)#">Forgot Password?</a>
 		<br /><br />
 		<input type="submit" class="submitButton" value="Log In" />
 	</div>

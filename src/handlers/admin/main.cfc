@@ -47,7 +47,7 @@ $Build ID:	@@build_id@@
 	    <cfscript>
 			/* Setup the Cfc Viewer */
 			rc.cfcViewer = getPlugin("cfcViewer").setup(dirpath="/codex/model",
-														dirLink="#getSetting('sesBaseURL')#/admin.main/api.cfm?");
+														dirLink="#getSetting('sesBaseURL')#/admin.main/api#getRewriteExtension()#?");
 
 			/* Setup the view */
 			event.setView("admin/api");

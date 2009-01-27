@@ -56,7 +56,7 @@ Please enter your email address below and click the Send Password button. This w
 <!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
-<form name="reminderform" id="reminderform" method="post" action="#event.buildLink(rc.xehDoReminder)#.cfm">
+<form name="reminderform" id="reminderform" method="post" action="#event.buildLink(rc.xehDoReminder)#">
 
 	<p class="align-center">
 	<br /><br />

@@ -38,6 +38,14 @@ $Build ID:	@@build_id@@
 		setSecurityService(arguments.securityService);
 		setAppName(arguments.configBean.getKey("appName"));
 		
+		/* Rewrite Extension */
+		if( arguments.configBean.getKey("usingRewrite") ){
+			setRewriteExtension("");
+		}
+		else{
+			setRewriteExtension(".cfm");
+		}
+		
 		/* Return */
 		return this;
 	</cfscript>
@@ -446,6 +454,15 @@ $Build ID:	@@build_id@@
 		//we shouldn't need to discard more than this, as it will cascade
 		getTransfer().discardByClassAndKey("wiki.Page", arguments.pageid);
 	</cfscript>
+</cffunction>
+
+<cffunction name="getrewriteExtension" access="public" output="false" returntype="string" hint="Get rewriteExtension">
+	<cfreturn instance.rewriteExtension/>
+</cffunction>
+
+<cffunction name="setrewriteExtension" access="public" output="false" returntype="void" hint="Set rewriteExtension">
+	<cfargument name="rewriteExtension" type="string" required="true"/>
+	<cfset instance.rewriteExtension = arguments.rewriteExtension/>
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->

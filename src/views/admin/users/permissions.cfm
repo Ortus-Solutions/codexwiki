@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 		}
 		function deleteRecord(recordID){
 			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-			window.location='#event.buildLink(rc.xehRemovePerm)#/user_id/#rc.user_id#/permissionID/'+recordID+'.cfm';
+			window.location='#event.buildLink(linkTo=rc.xehRemovePerm,override=true)#/user_id/#rc.user_id#/permissionID/'+recordID+'#event.getRewriteExtension()#';
 		}
 	</script>
 </cfoutput>
@@ -53,7 +53,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Add Permission  --->
-<form name="addPermForm" id="addPermForm" method="POST" action="#event.buildLink(rc.xehAddPerm)#.cfm">
+<form name="addPermForm" id="addPermForm" method="POST" action="#event.buildLink(rc.xehAddPerm)#">
 	<input type="hidden" name="user_id" id="user_id" value="#rc.user_id#">
 	<div style="margin:10px;">
 		
@@ -117,7 +117,7 @@ $Build ID:	@@build_id@@
 
 <!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-		<a href="#event.buildLink(rc.xehUserListing)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/cancel.png" border="0" align="absmiddle">
 				Cancel

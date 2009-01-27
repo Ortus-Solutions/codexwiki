@@ -29,17 +29,26 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		variables.instance = StructNew();
 		variables.static = StructNew();
+		
 		/* Set unique server Key */
 		variables.static.SERVER_SCOPE_KEY = hash(arguments.configBean.getKey('ApplicationPath') & "6201BF9B-D46E-52D0-D7023F30A340B7B4");
 		
 		initJavaLoader();
-
+	
+		/* Determine Rewrite */
+		if( arguments.configBean.getKey("usingRewrite") ){
+			instance.rewriteExtension = "";
+		}
+		else{
+			instance.rewriteExtension = ".cfm";
+		}
+	
 		setWikiBase(arguments.configBean.getKey("ShowKey") & "/");
-		setLinkPattern(arguments.configBean.getKey("ShowKey") & "/${title}.cfm");
+		setLinkPattern(arguments.configBean.getKey("ShowKey") & "/${title}#instance.rewriteExtension#");
 
 
-		//this will eventually get replaced when we implement images
-		setImagePattern("image/${image}.cfm");
+		/* this will eventually get replaced when we implement images */
+		setImagePattern("image/${image}#instance.rewriteExtension#");
 
 		return this;
 	</cfscript>
@@ -142,7 +151,7 @@ $Build ID:	@@build_id@@
 <cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
 	<cfargument name="content" hint="the content that this page is being created for" type="codex.model.wiki.Content" required="Yes">
 	<cfreturn getJavaLoader().create("com.codexwiki.bliki.model.WikiModel").init(getConfiguration(), "/${image}", getLinkPattern(),
-																				getWikiBase() & arguments.content.getPage().getName() & ".cfm") />
+																				getWikiBase() & arguments.content.getPage().getName() & instance.rewriteExtension) />
 </cffunction>
 
 <cffunction name="getLinkPattern" access="private" returntype="string" output="false">

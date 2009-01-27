@@ -60,12 +60,12 @@ $Build ID:	@@build_id@@
 <!--- BACK --->
 <div class="backbutton">
 	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm">Back</a>
+	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#">Back</a>
 </div>
 <p>Add a new <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
 <!--- Add Form --->
-<form name="addform" id="addform" action="#event.buildLink(rc.xehLookupCreate)#.cfm" method="post">
+<form name="addform" id="addform" action="#event.buildLink(rc.xehLookupCreate)#" method="post">
 <!--- Lookup Class Choosen to Add --->
 <input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
 
@@ -190,7 +190,7 @@ $Build ID:	@@build_id@@
 <!--- Create / Cancel --->
 <div id="_buttonbar">
 	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm" class="buttonLinks">
+	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#" class="buttonLinks">
 		Cancel
 	</a>
 	&nbsp;

@@ -9,7 +9,7 @@
 	<tbody>
 	<cfloop query="rc.qPages">
 		<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
-			<td><a href="#pageShowRoot(name)#.cfm">#name#</a></td>
+			<td><a href="#event.buildLink(pageShowRoot(name))#">#name#</a></td>
 			<td><cfif len(namespace)>#namespace#<cfelse>#namespaceDescription#</cfif></td>
 		</tr>
 	</cfloop>

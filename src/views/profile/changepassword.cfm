@@ -60,7 +60,7 @@ Please enter the information below, to change your password
 
 <!--- Profile Details --->
 <form name="passwordForm" id="passwordForm"
-		action="#event.buildLink(rc.xehdoChangePass)#.cfm"
+		action="#event.buildLink(rc.xehdoChangePass)#"
 		method="post">
 			
 <fieldset >

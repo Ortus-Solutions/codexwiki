@@ -52,7 +52,7 @@ $Build ID:	@@build_id@@
 <!--- BACK --->
 <div class="backbutton">
 	<img src="includes/images/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehUserListing)#.cfm">Back</a>
+	<a href="#event.buildLink(rc.xehUserListing)#">Back</a>
 </div>
 
 <!--- Title --->
@@ -63,7 +63,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserCreate)#.cfm" method="post">
+<form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserCreate)#" method="post">
 	
 	<fieldset>
 	<legend><strong>User Information</strong></legend>
@@ -132,7 +132,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center">
-		<a href="#event.buildLink(rc.xehUserListing)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/cancel.png" border="0" align="absmiddle">
 				Cancel

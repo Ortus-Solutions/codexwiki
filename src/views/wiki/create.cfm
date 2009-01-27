@@ -31,7 +31,7 @@ $Build ID:	@@build_id@@
 		Would you like to create it?
 	</p>
 	<p class="buttons">
-		<input type="button" class="submitButton" onclick="window.location='#event.buildLink(rc.onCreateWiki)#/#URLEncodedFormat(rc.page)#.cfm'" value="Create Page" />
+		<input type="button" class="submitButton" onclick="window.location='#event.buildLink(rc.onCreateWiki & '/' & URLEncodedFormat(rc.page))#'" value="Create Page" />
 	</p>
 <cfelse>
 <p>

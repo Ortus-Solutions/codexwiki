@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
-<form action="#event.buildLink(rc.xehonSubmit,0)#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
+<form action="#event.buildLink(rc.xehonSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">
     <label for="beforeHeadEnd"> Before Head End</label>
     <textarea name="beforeHeadEnd" id="beforeHeadEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeHeadEnd()#</textarea>
     

@@ -46,7 +46,7 @@ Below you can see your current profile in the system. You can click on the <stro
 	
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">
-		<a href="#event.buildLink(rc.xehEditProfile)#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehEditProfile)#" id="buttonLinks">
 			<span>
 				<img src="includes/images/page_edit.png" border="0" align="absmiddle">
 				Edit Profile

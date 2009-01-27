@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 
 <p>
 	<cfif rc.oUser.getisConfirmed()>
-		You can now start using this wiki. Please follow this <a href="#event.buildLink(rc.xehUserLogin)#.cfm">link to login</a> to the system.
+		You can now start using this wiki. Please follow this <a href="#event.buildLink(rc.xehUserLogin)#">link to login</a> to the system.
 	<cfelse>
 		Your user could not be confirmed. Either your user does not exist or the confirmation number is wrong.
 	</cfif>

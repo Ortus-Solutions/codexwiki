@@ -36,7 +36,7 @@ $Build ID:	@@build_id@@
 == Category: #getName()# ==
 
 All pages under the Category ''#getName()#'':<br/>
-<feed url="/feed/page/listByCategory.cfm?category=#getName()#" display="numbered" />
+<feed url="/feed/page/listByCategory#getWikiService().getRewriteExtension()#?category=#getName()#" display="numbered" />
 		</cfoutput>
 		</cfsavecontent>
 		<cfscript>

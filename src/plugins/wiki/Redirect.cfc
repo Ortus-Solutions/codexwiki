@@ -47,10 +47,10 @@ $Build ID:	@@build_id@@
     <!--- today --->
 	<cffunction name="renderit" output="false" access="public" returntype="string" hint="Redirect to another page, just tell it what wiki page to redirect to.">
 		<cfargument name="pageName" type="string" required="true" default="" hint="The page name to redirect to"/>
+		<cfset var event = getController().getRequestService().getContext()>
+		<cfset var urlString = getSetting('showKey') & "/" & replace(trim(arguments.pageName)," ","_","all")>
 		
-		<cfset var urlString = getSetting('showKey') & "/" & replace(trim(arguments.pageName)," ","_","all") & ".cfm">
-		
-		<cflocation url="#urlString#" addtoken="false">
+		<cflocation url="#event.buildLink(urlString)#" addtoken="false">
 	</cffunction>
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->	

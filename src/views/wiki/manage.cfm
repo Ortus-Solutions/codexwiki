@@ -45,7 +45,7 @@ function CodexPreview()
 			{
 				var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
 				//Post Preview
-				$.post("#event.BuildLink(rc.onPreview)#.cfm", data,
+				$.post("#event.BuildLink(rc.onPreview)#", data,
 					function(string, status)
 					{
 						dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
@@ -83,21 +83,21 @@ $(document).ready(function() {
 <!--- Title --->
 <h1>
 	<img src="includes/images/page_edit.png" align="absmiddle"> Editing:
-	"<a href="#pageShowRoot(URLEncodedFormat(rc.content.getPage().getName()))#.cfm">#rc.content.getPage().getCleanName()#</a>"
+	"<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 <!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
-<form action="#event.buildLink(rc.onSubmit)#.cfm" method="post" class="uniForm" onsubmit="submitForm()">
+<form action="#event.buildLink(rc.onSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">
 
 	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 	
 	<!--- Control Holder & Text Area --->
 	<div class="float-right">
-		<a href="#pageShowRoot('Help:Cheatsheet')#.cfm">Markup Cheatsheet</a>
+		<a href="#event.buildLink(pageShowRoot('Help:Cheatsheet'))#">Markup Cheatsheet</a>
 		| 
-		<a href="#pageShowRoot('Help:Contents')#.cfm">Wiki Help</a>
+		<a href="#event.buildLink(pageShowRoot('Help:Contents'))#">Wiki Help</a>
 	</div>
 	<label for="content"><em>*</em> Wiki Content</label>
 	<textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
@@ -137,7 +137,7 @@ $(document).ready(function() {
 
 	<!--- Management Toolbar --->
 	<div id="_buttonbar" class="buttons">
-		<input type="button" class="cancelButton" onclick="window.location='#pageShowRoot(rc.content.getPage().getName())#.cfm'" value="cancel"></input>
+		<input type="button" class="cancelButton" onclick="window.location='#event.buildLink(pageShowRoot(rc.content.getPage().getName()))#'" value="cancel"></input>
    		<input type="button" class="previewButton" onclick="javascript:CodexPreview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>

@@ -72,7 +72,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Reinit Box --->
-<form action="#event.buildLink(rc.xehReinitApp,0)#.cfm" name="reinitForm" id="reinitForm" method="post" onSubmit="submitReinit()">
+<form action="#event.buildLink(rc.xehReinitApp)#" name="reinitForm" id="reinitForm" method="post" onSubmit="submitReinit()">
 	<fieldset>
 	<legend><strong>Codex Information</strong></legend>
 		<label>Codex Version:</label>
@@ -94,7 +94,7 @@ $Build ID:	@@build_id@@
 </form>
 
 <!--- Form --->
-<form action="#event.buildLink(rc.xehonSubmit,0)#.cfm" method="post" id="optionForm" name="optionForm">
+<form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">
 	<fieldset>
 	<legend><strong>General Options</strong></legend>
 	 	<!--- Wiki Name --->

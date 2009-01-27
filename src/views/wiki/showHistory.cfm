@@ -35,7 +35,7 @@ $Build ID:	@@build_id@@
 			var data = new Object();
 			data.contentid = id;
 			//post the retrieval
-			$.post("#event.buildLink(rc.onPreview)#.cfm", data, function(data, status){
+			$.post("#event.buildLink(rc.onPreview)#", data, function(data, status){
 					var length = data.split("\n").length;
 					show.slideUp("normal",function(){
 							var className = "history";
@@ -78,14 +78,14 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 <h1>
 	<img src="includes/images/history.png" border="0" align="absmiddle">
-	<a href="#pageShowRoot(URLEncodedFormat(rc.page.getName()))#.cfm">#rc.page.getCleanName()#</a>: Page History
+	<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.page.getName())))#">#rc.page.getCleanName()#</a>: Page History
 </h1>
 
 #getPlugin("messagebox").renderit()#
 
 <p>Below is the current history for this page.  You can preview the version by clicking on the links.</p>
 
-<form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff)#/#rc.page.getName()#.cfm" method="get">
+<form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff & '/' & rc.page.getName())#" method="get">
 	
 	<input type="submit" value="View Changes"><br /><br />
 	
@@ -125,11 +125,11 @@ $Build ID:	@@build_id@@
 					<cfif not isActive>
 						<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
 						<img src="includes/images/arrow_merge.png" align="absmiddle">
-						  <a href="#event.buildLink(rc.onReplaceActive)#/id/#contentid#.cfm" class="rollback" version="#version#">rollback</a>
+						  <a href="#event.buildLink(rc.onReplaceActive & '/id/' & contentid)#" class="rollback" version="#version#">rollback</a>
 						</cfif>
 						<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
 						<img src="includes/images/bin_closed.png" align="absmiddle">
-						  <a href="#event.buildLink(rc.onDelete)#/id/#contentid#.cfm" class="delete" version="#version#">delete</a>
+						  <a href="#event.buildLink(rc.onDelete & '/id/' & contentid)#" class="delete" version="#version#">delete</a>
 						</cfif>
 					</cfif>
 				</td>

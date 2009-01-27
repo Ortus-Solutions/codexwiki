@@ -28,8 +28,10 @@ The version for this release of Codex is the following:
 
 Releases
 
-- Version 0.5 Beta 1 on Nov 2008
-An incredible amount of changes and updates.
+- Version 0.5 Beta 2 
+
+- Version 0.5 Beta 1 (Nov 2008)
+An incredible amount of changes and updates, please see bug tracker.
 
 ********************************************************************************
 Database Installation
@@ -77,14 +79,28 @@ If you would like to change it, then open the file and change the name of the da
 
 4. Make sure that you have Transfer 1.0 or >, ColdBox 2.6.2 or > and ColdSpring 1.2 installed.
 
-5. Fire up your browser and hit the root's index.cfm for the main wiki page.
+5. If you will not be using url rewrite tools such as mod_rewrite or ISAPI rewrite, then please remove the .htaccess file in the
+root of the application and open the coldbox.xml.cfm configuration file and set the following setting to FALSE:
 
-6. The default login/password for the administrator is the following: 
+	<Setting name="UsingRewrite" value="FALSE" />
+	
+Codex is configured to use mod_rewrite engine by default. If you use something different, please look in the SESRewriteRules folder
+for the appropriate rewrite engine configuration file.  If you choose not to use the rewrite engine, then all URL's will still be 
+SEO friendly, but they will leverage ColdFusion's onMissingTemplate() feature by appending a ".cfm" to every link.
+
+Rewrite URL: http://codex.org/wiki/Dashboard
+Non-Rewrite URL: http://codex.org/wiki/Dashboard.cfm
+
+So please update the setting and rewrite engine accordingly.
+
+6. Fire up your browser and hit the root's index.cfm for the main wiki page.
+
+7. The default login/password for the administrator is the following: 
 
 	username: admin
 	password: codex
 	
-7. (Optional) We have a very simple script to install the verity collection and scheduler. 
+8. (Optional) We have a very simple script to install the verity collection and scheduler. 
 You will find this in install/VerityInstaller.cfm. This will only work on Windows/Linux machines as Verity has not been ported to Mac OS X. 
 By default, Codex uses a DB search engine.  You can configure the Verity search engine from the system options page.
 

@@ -54,7 +54,7 @@ $Build ID:	@@build_id@@
 		var params = new Object();
 		params.username = $('##username').val();
 		//Get REquest
-		$.get('#event.buildLink(rc.xehValidateUsername)#.cfm',params,function(data){
+		$.get('#event.buildLink(rc.xehValidateUsername)#',params,function(data){
 			data = $.trim(data);
 			//Check username
 			if( data == 'true'){
@@ -86,7 +86,7 @@ $Build ID:	@@build_id@@
 <!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
-<form name="registerForm" id="registerForm" method="post" action="#event.buildLink(rc.xehDoRegistration)#.cfm">
+<form name="registerForm" id="registerForm" method="post" action="#event.buildLink(rc.xehDoRegistration)#">
 
 	<fieldset name="personal details">
 		<legend>Personal Details</legend>

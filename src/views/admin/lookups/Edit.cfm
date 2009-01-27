@@ -70,12 +70,12 @@ $Build ID:	@@build_id@@
 <!--- BACK --->
 <div class="backbutton">
 	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm">Back</a>
+	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#">Back</a>
 </div>
 <p>Editing <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
 <!--- Add Form --->
-<form name="editform" id="editform" action="#event.buildLink(rc.xehLookupCreate,0)#.cfm" method="post">
+<form name="editform" id="editform" action="#event.buildLink(rc.xehLookupCreate)#" method="post">
 
 <!--- Lookup Class Choosen to Add --->
 <input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
@@ -209,7 +209,7 @@ $Build ID:	@@build_id@@
 <!--- Create / Cancel --->
 <div id="_buttonbar">
 	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList,0)#/lookupclass/#rc.lookupclass#.cfm" class="buttonLinks">
+	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#" class="buttonLinks">
 		Cancel
 	</a>
 	&nbsp;
@@ -237,7 +237,7 @@ $Build ID:	@@build_id@@
 		<cfset relationArray = rc["#thisArray.alias#Array"]>
 
 		<!--- Display Relation Form --->
-		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#event.buildLink(rc.xehLookupUpdateRelation,0)#.cfm" method="post">
+		<form name="add#thisArray.alias#Form" id="add#thisArray.alias#Form" action="#event.buildLink(rc.xehLookupUpdateRelation)#" method="post">
 			<!--- Lookup Class Choosen to Add --->
 			<input type="hidden" name="lookupClass" id="lookupClass" value="#rc.lookupClass#">
 			<!--- Primary Key Value --->

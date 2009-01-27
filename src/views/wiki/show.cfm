@@ -35,12 +35,11 @@ $(window).ready(function(){
 });
 function createNewPage(){
 	var page = ''
-	
 	page = prompt('Please enter the page name to create. Remember that namespaces are followed by a : \nEx: ISDepartment:MyGreatPage or just MyGreatPage?');
 	
 	if( page != undefined && page != ''){
 		page = page.replace(/ /g,"_");
-		window.location='#event.buildLink(rc.onCreateWiki)#/'+page+".cfm";
+		window.location='#event.buildLink(linkto=rc.onCreateWiki,override=true)#/'+page+"#event.getRewriteExtension()#";
 	}
 	
 }
@@ -59,7 +58,7 @@ function createNewPage(){
 	</cfif>
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
 		<img src="includes/images/history.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.onShowHistory)#/#rc.urlPage#.cfm">Page History</a>
+		<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#">Page History</a>
 	</cfif>
 </div>
 </cfif>
@@ -80,7 +79,7 @@ function createNewPage(){
 		<ul>
 		<cfloop array="#categories#" index="category">
 			<li>
-				<a href="#pageShowRoot(URLEncodedFormat("Category:" & category.getName()))#.cfm">#category.getName()#</a>
+				<a href="#event.buildLink(pageShowRoot(URLEncodedFormat("Category:" & category.getName())))#">#category.getName()#</a>
 			</li>
 		</cfloop>
 		</ul>
@@ -97,13 +96,13 @@ function createNewPage(){
 	<br />
 	<p class="buttons">
 		<cfif rc.oUser.checkPermission("WIKI_EDIT")>
-		<a href="#event.buildLink(rc.onEditWiki)#/#rc.urlPage#.cfm" id="buttonLinks">
+		<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" id="buttonLinks">
 			<span>Edit Page</span>
 		</a>
 		</cfif>
 		&nbsp;
 		<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
-		<a href="#event.buildLink(rc.onDeleteWiki)#/id/#rc.content.getPage().getPageID()#.cfm" class="delete" id="buttonLinks">
+		<a href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="delete" id="buttonLinks">
 			<span>Delete Page</span>
 		</a>
 		</cfif>
@@ -113,18 +112,18 @@ function createNewPage(){
 	<div id="downloadFormatsBar">
 		<strong>Download in other Formats:</strong><br />
 		<img src="includes/images/code.png" border="0" align="absmiddle">
-		<a href="#pageShowRoot(rc.urlPage)#/markup.cfm" target="_blank">Markup</a> |
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/markup'))#" target="_blank">Markup</a> |
 		
 		<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle">
-		<a href="#pageShowRoot(rc.urlPage)#/pdf.cfm" target="_blank">PDF</a> |
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/pdf'))#" target="_blank">PDF</a> |
 		
 		<cfif getSetting("CFMLEngine",1) neq "RAILO">
 		<img src="includes/images/flash_16x16.png" border="0" align="absmiddle">
-		<a href="#pageShowRoot(rc.urlPage)#/flashpaper.cfm" target="_blank">SWF</a> |
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/flashpaper'))#" target="_blank">SWF</a> |
 		</cfif>
 		
 		<img src="includes/images/html_16x16.png" border="0" align="absmiddle">
-		<a href="#pageShowRoot(rc.urlPage)#/HTML.cfm" target="_blank">HTML</a>
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a>
 	</div>
 
 </cfif>
