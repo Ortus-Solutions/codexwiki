@@ -83,7 +83,7 @@ $Build ID:	@@build_id@@
 		<!--- Utility Buttons --->
 		&nbsp;
 		<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupList & "/lookups/" & rc.lookupclass)#" class="buttonLinks">Reload Listing</a>
+		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">Reload Listing</a>
 		&nbsp;
 		<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle">
 		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">Reload Dictionary</span>
@@ -100,7 +100,7 @@ $Build ID:	@@build_id@@
 	<!--- Add / Delete Button Bar --->
 	<div id="listButtonBar">
 		<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupCreate & "/lookups/" & rc.lookupclass)#" class="buttonLinks">
+		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">
 			Add Record
 		</a>
 		&nbsp;
@@ -174,7 +174,7 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Edit Record --->
-				<a href="#event.buildLink(rc.xehLookupEdit & '/lookupClass/' & rc.lookupClass & '/id/' & rc.qListing[rc.mdDictionary.PK][currentrow])#" title="Edit Record">
+				<a href="#event.buildLink(linkTo=rc.xehLookupEdit & '/lookupClass',override=true)#/#rc.lookupClass#/id/#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
 				<img src="#rc.imgPath#/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 				<!--- Delete Record --->
