@@ -111,10 +111,10 @@ $Build ID:	@@build_id@@
 			<ol>
 			<cfloop query="arguments.result.results">
 				<li>
-					<a href="#pageRoot & page_name#.cfm">#replaceNoCase(page_name, "_", " ", "all")# </a><br/>
+					<a href="#pageRoot & page_name & instance.wikiService.getRewriteExtension()#">#replaceNoCase(page_name, "_", " ", "all")# </a><br/>
 					#highlightSearchTerm(arguments.event.getValue("search_query",''),pagecontent_content)#
 				</li>
-				<cite>#pageRoot#<strong>#page_name#</strong>.cfm</cite>
+				<cite>#pageRoot#<strong>#page_name#</strong>#instance.wikiService.getRewriteExtension()#</cite>
 				<br /><br />
 			</cfloop>
 			</ol>
