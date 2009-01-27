@@ -195,8 +195,6 @@ $Build ID:	@@build_id@@
 	    <cfscript>
 		    var rc = event.getCollection();
 			var pageName = arguments.event.getValue("page");
-			var ContentArray = 0;
-			var oldContentArray = 0;
 			var oDiffer = getMyPlugin("diff");
 
 			/* Validate Versions */
@@ -217,13 +215,10 @@ $Build ID:	@@build_id@@
 			rc.CurrentContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.version);
 			rc.oldContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.old_version);
 
-			/* Convert To Arrays For Differencing*/
-			ContentArray = listToArray(rc.CurrentContent.getContent(),chr(10));
-			oldContentArray = listToArray(rc.oldContent.getContent(),chr(10));
-
 			/* Diff Setup */
-			rc.diff = oDiffer.DiffArrays(oldContentArray,ContentArray);
-			rc.parallel = oDiffer.parallelize(rc.diff,oldContentArray,ContentArray);
+			rc.diff = oDiffer.DiffArrays(listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
+			rc.parallel = oDiffer.parallelize(rc.diff,listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
+			
 			/* Diff CSS */
 			rc.diffcss = structnew();
 			rc.diffcss["+"] = "ins";
