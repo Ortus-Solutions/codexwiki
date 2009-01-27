@@ -52,16 +52,16 @@ Description :
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	<cffunction name="getCGIElement" access="private" returntype="string" hint="The request element override method" output="false" >
+	<cffunction name="getCGIElement" access="private" returntype="string" hint="The request element override method" output="true" >
 		<cfargument name="cgielement" required="true" type="string" hint="">
 		<cfscript>
 			/* Are we in request ses mode? */
 			if ( structKeyExists(request,"ses") ){
-				return request.ses[arguments.cgielement];
+				return replace(request.ses[arguments.cgielement],"//","/","all");
 			}
 			/* We are in cgi ses mode. */
 			else{
-				return super.getCGIElement(arguments.cgielement);
+				return replace(super.getCGIElement(arguments.cgielement),"//","/","all");
 			}
 		</cfscript>
 	</cffunction>

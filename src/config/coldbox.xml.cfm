@@ -36,12 +36,22 @@
 	<YourSettings>
 		<!-- Codex System Information -->
 		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta 2'}" />
+		
 		<!--Transfer Settings -->
 		<Setting name="Transfer_datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer_definitionPath" 	value="/codex/config/definitions"/>
+		
 		<!-- Wiki Keys -->
 		<Setting name="ShowKey" 					value="wiki"/>
+		
+		<!-- UsingRewrite: boolean flag that determines if using rewrite or onMissingTemplate() approaches.
+		    
+		     True:  means you are using mod_rewrite or any other rewrite engine. Then .cfm extension are eliminated from URL's
+		     False: means you are using onMissinTemplate() to simulate SEO, so a .cfm will be appended to every URL to simulate a template.
+		 -->
+		<Setting name="UsingRewrite"				value="true" />
+		
 		<!-- Lookups Settings -->
 		<Setting name="lookups_tables"				value="{'Permissions':'security.Permission', 
 															'Roles':'security.Role', 
@@ -52,7 +62,6 @@
 		<Setting name="lookups_imgPath"				value="includes/lookups/images" />
 		<Setting name="lookups_cssPath"				value="includes/lookups/styles" />
 		<Setting name="lookups_jsPath"				value="includes/lookups/js" />
-		<!-- Leave empty if handlers and views not in a package -->
 		<Setting name="lookups_packagePath"			value="admin" />
 	</YourSettings>
 
@@ -103,7 +112,6 @@
 			<Property name="validatorIOC">SecurityService</Property>
 		</Interceptor>
 		
-		<!-- Wiki Plugins Translations -->
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed,messagebox,img</Property>
