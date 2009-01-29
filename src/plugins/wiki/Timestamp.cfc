@@ -45,9 +45,14 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->	
 
     <!--- today --->
-	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today">
+	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today's date and time in a specific format">
 		<cfargument name="format" type="string" required="true" default="full" hint="Full,Short, Medium"/>
-		<cfreturn dateformat(now(),arguments.format) & " " & timeFormat(now(),arguments.format)>
+		<cfargument name="noTime" type="boolean" required="false" default="false" hint="Flag to print also the time or not"/>
+		<Cfif arguments.noTime>
+			<cfreturn dateformat(now(),arguments.format)>
+		<cfelse>
+			<cfreturn dateformat(now(),arguments.format) & " " & timeFormat(now(),arguments.format)>
+		</cfif>
 	</cffunction>
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->	

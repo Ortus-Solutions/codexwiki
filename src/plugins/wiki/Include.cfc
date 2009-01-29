@@ -20,21 +20,25 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="Messagebox" 
-			 hint="A messagebox wiki plugin" 
+<cfcomponent name="Include" 
+			 hint="A plugin to include other wiki pages as content" 
 			 extends="coldbox.system.plugin" 
 			 output="false" 
-			 cache="true">
-  
+			 cache="true"
+			 autowire="true">
+
+	<!--- Dependencies --->  
+	<cfproperty name="WikiService" type="ioc" scope="instance" />
+
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
-    <cffunction name="init" access="public" returntype="Messagebox" output="false">
+    <cffunction name="init" access="public" returntype="Include" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
   		super.Init(arguments.controller);
-  		setpluginName("Messagebox");
+  		setpluginName("Include");
   		setpluginVersion("1.0");
-  		setpluginDescription("A messagebox plugin. Valid Types are info, warning, error");
+  		setpluginDescription("A plugin to include other wiki pages as content.");
   		//My own Constructor code here
   		
   		//Return instance
@@ -45,28 +49,33 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->	
 
     <!--- today --->
-	<cffunction name="renderit" output="false" access="public" returntype="string" hint="This plugin will create a simple messagebox on the page. Look at the output classes so you can skin them.">
-		<cfargument name="message"  required="true" type="string" hint="The message to display"/>
-		<cfargument name="type" 	required="true" type="string" default="info" hint="The type of messagebox: info, error, warning">
-		
+	<cffunction name="renderit" output="false" access="public" returntype="string" hint="Include other pages as content, all you need is the page name to include. If the page name does not exist, it will be replaced with a message saying the page does not exist">
+		<cfargument name="page" type="string" required="true" default="" hint="The page name to render content"/>
+		<cfargument name="args" type="string" required="true" default="" hint="The name-value pairs for token replacements, please add the values in single quotes. Ex: name='luis',age='20'. The name will be replaced in the template by looking at {{{[name]}}} and {{{[age]}}} token."/>
 		<cfscript>
-			var content = "";
+			var pageContent = 0;
+			var content = 0;
+			var x = 1;
 			
-			/* Header */
-			if(arguments.type eq "info"){
-				content = '<div class="cbox_messagebox_info"><p class="cbox_messagebox">';
+			/* Get the Page's Content */
+			pageContent = instance.WikiService.getContent(pageName=trim(arguments.page));
+			/* Try to see if page exists */
+			if( pageContent.getIsPersisted() ){
+				/* Return rendered content */
+				content = pageContent.render();
+				/* Do arg Replacements */
+				for(x=1; x lte ListLen(args);x++){
+					/* Get argument */
+					thisArg = ListGetAt(args,x);
+					/* replacement */
+					content = replacenocase(content,"{{{[#getToken(thisArg,1,"=")#]}}}", replace(getToken(thisArg,2,"="),"'","","all"),"all");
+				}
 			}
-			else if(arguments.type eq "warning"){
-				content = '<div class="cbox_messagebox_warning"><p class="cbox_messagebox">';
+			else{
+				content = "Page: #arguments.page# does not exist";
 			}
-			else if(arguments.type eq "error"){
-				content = '<div class="cbox_messagebox_error"><p class="cbox_messagebox">';
-			}
-			
-			/* Content */
-			content = content & arguments.message & "</p></div>";
-			
-			return content;			
+			/* return content */
+			return content;
 		</cfscript>
 	</cffunction>
 	
