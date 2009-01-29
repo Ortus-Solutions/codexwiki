@@ -6,14 +6,17 @@ import info.bliki.wiki.model.Configuration;
 import info.bliki.wiki.tags.TableOfContentTag;
 
 /**
- * Extension of WikiModel to allow for custom pieces, such as the 
+ * Extension of TracModel to allow for custom pieces, such as the 
  * baseURL for the TableOfContents tag
- * @author mark, luis
+ * @author luis
  *
  */
-public class WikiModel extends info.bliki.wiki.model.WikiModel
+public class TracModel extends info.bliki.wiki.model.TracModel
 {
-
+	
+	/**
+	 * The TOC BaseURL to use when creating the TOC Links.
+	 */
 	private String TOCBaseURL;
 	
 	/**
@@ -23,15 +26,14 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 	 * @param linkBaseURL url pattern for links
 	 * @param TOCBaseURL url pattern for TOC's links
 	 */
-	public WikiModel(Configuration configuration, String imageBaseURL, String linkBaseURL, String TOCBaseURL)
-	{
+	public TracModel(Configuration configuration, String imageBaseURL, String linkBaseURL, String TOCBaseURL){
 		super(configuration, imageBaseURL, linkBaseURL);
-		
+		//Set the local property of the TOCBaseURL
 		setTOCBaseURL(TOCBaseURL);
 	}
 	
 
-	/* (non-Javadoc)
+	/**
 	 * @see info.bliki.wiki.model.AbstractWikiModel#getTableOfContentTag(boolean)
 	 */
 	public TableOfContentTag getTableOfContentTag(boolean isTOCIdentifier) {
@@ -60,7 +62,6 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 	{
 		return TOCBaseURL;
 	}
-
 	
 	private void setTOCBaseURL(String baseURL)
 	{
