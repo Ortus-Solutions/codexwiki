@@ -50,18 +50,33 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- IMPLICIT ------------------------------------------>
 
 	<!--- preHandler --->
-	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="">
+	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="handler interceptor">
 		<cfargument name="Event" type="any" required="yes">
+		<cfset var rc = event.getCollection()>
 		<cfscript>
 			/* Printable Doctype Check */
 			isPrintFormat(arguments.event);
+			
+			/* Test For Space Route, if found, create virtual page. */
+			if( event.valueExists("space") and event.valueExists("pageName") ){
+				rc.page = rc.space & ":" & rc.pagename;
+			}
 		</cfscript>
 	</cffunction>
 
 <!------------------------------------------- PUBLIC ------------------------------------------>
+	
+	<!--- showNamespace --->
+	<cffunction name="showNamespace" access="public" returntype="void" output="false">
+		<cfargument name="Event" type="any" required="yes">
+		<cfset var rc = event.getCollection()>
+		<cfscript>	
+			
+		</cfscript>
+	</cffunction>
 
 	<cffunction name="show" access="public" returntype="void" output="false">
-		<cfargument name="event" type="any">
+		<cfargument name="Event" type="any" required="yes">
 		<cfscript>
 			var rc = arguments.event.getCollection();
 

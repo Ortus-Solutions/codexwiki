@@ -83,7 +83,7 @@ $Build ID:	@@build_id@@
 
 #getPlugin("messagebox").renderit()#
 
-<p>Below is the current history for this page.  You can preview the version by clicking on the links.</p>
+<p>Below is the current history for this page.  You can preview the version by clicking on the version link.</p>
 
 <form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff & '/' & rc.page.getName())#" method="get">
 	

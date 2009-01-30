@@ -132,8 +132,12 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 
 <!--- CUSTOM COURSES GO HERE (they will be checked in order) --->
 
-<!--- show Key matchings --->
+<!--- Main Wiki URL's --->
 <cfset addCourse(pattern="#getSetting('ShowKey')#/:page?/:print?",handler="page",action="show")>
+<!--- Namespace Syntax for Pages --->
+<cfset addCourse(pattern="#getSetting('SpaceKey')#/:space/:pagename/:print?",handler="page",action="show")>
+<!--- Namespace visualizer --->
+<cfset addCourse(pattern="#getSetting('SpaceKey')#/:space",handler="page",action="showNamespace")>
 
 <!--- feed urls --->
 <cfset addCourse(pattern="feed/:source/:feed",handler="feed",action="show")>

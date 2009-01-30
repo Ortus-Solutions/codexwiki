@@ -43,8 +43,9 @@
 		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer_definitionPath" 	value="/codex/config/definitions"/>
 		
-		<!-- Wiki Keys -->
+		<!-- Wiki URL Prefix Keys, they cannot be BLANK -->
 		<Setting name="ShowKey" 					value="wiki"/>
+		<Setting name="SpaceKey" 					value="space"/>
 		
 		<!-- UsingRewrite: boolean flag that determines if using rewrite or onMissingTemplate() approaches.
 		    
