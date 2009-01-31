@@ -157,38 +157,6 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="getNamespace" hint="returns a namespace Object" access="public" returntype="codex.model.wiki.Namespace" output="false">
-	<cfargument name="namespaceID" hint="the specific namespace id" type="string" required="no">
-	<cfargument name="namespaceName" hint="the namespace name" type="string" required="no">
-	<cfscript>
-		var namespace = 0;
-		// retrieve by id
-		if(StructKeyExists(arguments, "namespaceID") AND len(arguments.namespaceID))
-		{
-			return getTransfer().get("wiki.Namespace", arguments.namespaceID);
-		}
-		else if(StructKeyExists(arguments, "namespaceName") AND len(arguments.namespaceName))
-		{
-			namespace = getTransfer().readByProperty("wiki.Namespace", "name", arguments.namespaceName);
-
-			//if the namespace is not persisted, we'll give it the name
-			if(NOT namespace.getIsPersisted())
-			{
-				namespace.setName(arguments.namespaceName);
-				namespace.setDescription(arguments.namespaceName);
-			}
-
-			return namespace;
-		}
-
-		return getTransfer().new("wiki.Namespace");
-	</cfscript>
-</cffunction>
-
-<cffunction name="getDefaultNamespace" hint="gets the default namespace" access="public" returntype="codex.model.wiki.Namespace" output="false">
-	<cfreturn getTransfer().readByProperty("wiki.Namespace", "isDefault", true) />
-</cffunction>
-
 <cffunction name="saveContent" hint="saves the content, and cascades to the page" access="public" returntype="void" output="false">
 	<cfargument name="content" hint="The content object" type="codex.model.wiki.Content" required="Yes">
 	<cfscript>
@@ -257,6 +225,38 @@ $Build ID:	@@build_id@@
 	</cflock>
 </cffunction>
 
+<cffunction name="getNamespace" hint="returns a namespace Object" access="public" returntype="codex.model.wiki.Namespace" output="false">
+	<cfargument name="namespaceID" hint="the specific namespace id" type="string" required="no">
+	<cfargument name="namespaceName" hint="the namespace name" type="string" required="no">
+	<cfscript>
+		var namespace = 0;
+		// retrieve by id
+		if(StructKeyExists(arguments, "namespaceID") AND len(arguments.namespaceID))
+		{
+			return getTransfer().get("wiki.Namespace", arguments.namespaceID);
+		}
+		else if(StructKeyExists(arguments, "namespaceName") AND len(arguments.namespaceName))
+		{
+			namespace = getTransfer().readByProperty("wiki.Namespace", "name", arguments.namespaceName);
+
+			//if the namespace is not persisted, we'll give it the name
+			if(NOT namespace.getIsPersisted())
+			{
+				namespace.setName(arguments.namespaceName);
+				namespace.setDescription(arguments.namespaceName);
+			}
+
+			return namespace;
+		}
+
+		return getTransfer().new("wiki.Namespace");
+	</cfscript>
+</cffunction>
+
+<cffunction name="getDefaultNamespace" hint="gets the default namespace" access="public" returntype="codex.model.wiki.Namespace" output="false">
+	<cfreturn getTransfer().readByProperty("wiki.Namespace", "isDefault", true) />
+</cffunction>
+
 <!--- getNamespaces --->
 <cffunction name="getNamespaces" output="false" access="public" returntype="query" hint="Get a list of all the namespaces in the wiki">
 	<cfscript>
@@ -270,6 +270,7 @@ $Build ID:	@@build_id@@
 
 <!--- getPages --->
 <cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki">
+	<cfargument name="namespace" type="string" required="false" default="" hint="A namespace name to try to match"/>
 	<cfscript>
 		var tql = 0;
 		var query = 0;
@@ -285,6 +286,10 @@ $Build ID:	@@build_id@@
 			wiki.Page as page
 			join
 			wiki.Namespace as Namespace
+		<cfif len(trim(arguments.namespace))>
+		where
+			Namespace.name = :Namespace
+		</cfif>
 		order by
 		page.name
 	</cfoutput>
@@ -292,7 +297,12 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		/* Run Query */
 		query = getTransfer().createQuery(tql);
+		/* Params */
+		if( len(trim(arguments.namespace)) ){
+			query.setParam("Namespace", arguments.namespace);
+		}
 		query.setCacheEvaluation(true);
+		
 		/* REturn it */
 		return getTransfer().listByQuery(query);
 	</cfscript>

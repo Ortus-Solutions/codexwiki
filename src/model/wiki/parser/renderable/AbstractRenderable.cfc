@@ -50,4 +50,9 @@ $Build ID:	@@build_id@@
 	<cfset instance.isDynamic = arguments.isDynamic />
 </cffunction>
 
+<!---  Get the Utility Object. --->
+<cffunction name="getUtil" output="false" access="private" returntype="any" hint="Utility Method">
+	<cfreturn CreateObject("component","codex.model.util.utility")>
+</cffunction>
+
 </cfcomponent>

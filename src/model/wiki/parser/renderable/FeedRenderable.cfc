@@ -200,7 +200,7 @@ $Build ID:	@@build_id@@
 	</cfif>
 </cffunction>
 
-<cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager. Returns xml" access="public" returntype="any" output="false">
+<cffunction name="getRelativeFeed" hint="return a relative feed through the RSS Manager. Returns xml" access="private" returntype="any" output="false">
 	<!---
 	/feed/page/listByCategory(.cfm)
 	 --->
@@ -221,7 +221,7 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="queryStringToStruct" hint="returns a struct from a query string" access="public" returntype="struct" output="false">
+<cffunction name="queryStringToStruct" hint="returns a struct from a query string" access="private" returntype="struct" output="false">
 	<cfargument name="queryString" hint="the query string" type="string" required="Yes">
 	<cfscript>
 		var key = 0;
@@ -254,6 +254,7 @@ $Build ID:	@@build_id@@
 	<div class="rssList">
 		<p>
 			<strong>
+			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" align="absmiddle"></a>
 			<cfif structKeyExists(arguments.data, "link")>
 				<a href="#arguments.data.link#">#arguments.data.title#</a>
 			<cfelse>
@@ -263,8 +264,7 @@ $Build ID:	@@build_id@@
 
 			<cfif StructKeyExists(arguments.data, "lastBuildDate")>
 			(Last Built: #arguments.data.lastBuildDate#)
-			</cfif>
-			[<a href="#arguments.urlString#">rss</a>]
+			</cfif>			
 		</p>
 		<cfif StructKeyExists(arguments.data, "description")>
 			<p class="description">
@@ -272,7 +272,7 @@ $Build ID:	@@build_id@@
 			</p>
 		</cfif>
 		<#arguments.listType#>
-		<cfif structKeyExists(arguments.data,"item")>
+		<cfif structKeyExists(arguments.data,"item") and ArrayLen(arguments.data.item) gt 0>
 			<cfloop array="#arguments.data.item#" index="item">
 				<li>
 					<p class="title">
@@ -309,6 +309,8 @@ $Build ID:	@@build_id@@
 					</cfif>
 				</li>
 			</cfloop>
+		<cfelse>
+			<em>No Records Found</em>
 		</cfif>
 		</#arguments.listType#>
 	</div>
@@ -353,38 +355,42 @@ $Build ID:	@@build_id@@
 			</p>
 		</cfif>
 		<#arguments.listType#>
-		<cfloop array="#arguments.data.entry#" index="entry">
-			<li>
-				<p class="title">
-					<cfif StructKeyExists(entry, "id")>
-						<a href="#entry.id#">#entry.title.value#</a>
-					<cfelse>
-						#item.title.value#
-					</cfif>
-				</p>
-				<p class="description">
-				<cfif StructKeyExists(entry, "summary")>
-					#entry.summary.value#
-				</cfif>
-				</p>
-
-				<cfif StructKeyExists(entry, "category")>
-					<p> Categories:
-					<cfset list = ""/>
-					<cfloop array="#entry.category#" index="category">
-						<cfset list = listAppend(list, ' <a href="#category.scheme#">#category.label#</a>') />
-					</cfloop>
-					#list#
-					</p>
-				</cfif>
-
-				<cfif StructKeyExists(entry, "updated")>
-				<p class="pubdate">
-					(#entry.updated#)
-				</p>
-				</cfif>
-			</li>
-		</cfloop>
+			<cfif structKeyExists(arguments.data,"entry") and ArrayLen(arguments.data.entry) gt 0>
+				<cfloop array="#arguments.data.entry#" index="entry">
+					<li>
+						<p class="title">
+							<cfif StructKeyExists(entry, "id")>
+								<a href="#entry.id#">#entry.title.value#</a>
+							<cfelse>
+								#item.title.value#
+							</cfif>
+						</p>
+						<p class="description">
+						<cfif StructKeyExists(entry, "summary")>
+							#entry.summary.value#
+						</cfif>
+						</p>
+		
+						<cfif StructKeyExists(entry, "category")>
+							<p> Categories:
+							<cfset list = ""/>
+							<cfloop array="#entry.category#" index="category">
+								<cfset list = listAppend(list, ' <a href="#category.scheme#">#category.label#</a>') />
+							</cfloop>
+							#list#
+							</p>
+						</cfif>
+		
+						<cfif StructKeyExists(entry, "updated")>
+						<p class="pubdate">
+							(#entry.updated#)
+						</p>
+						</cfif>
+					</li>
+				</cfloop>
+			<cfelse>
+			<em>No Records Found</em>
+			</cfif>
 		</#arguments.listType#>
 	</div>
 	</cfoutput>
@@ -407,16 +413,6 @@ $Build ID:	@@build_id@@
 
 		return builder.toString();
 	</cfscript>
-</cffunction>
-
-<cffunction name="_dump">
-	<cfargument name="s">
-	<cfargument name="abort" default="true">
-	<cfset var g = "">
-		<cfdump var="#arguments.s#">
-		<cfif arguments.abort>
-		<cfabort>
-		</cfif>
 </cffunction>
 
 <cffunction name="getFeedData" access="private" returntype="struct" output="false">

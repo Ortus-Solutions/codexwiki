@@ -71,7 +71,16 @@ $Build ID:	@@build_id@@
 		<cfargument name="Event" type="any" required="yes">
 		<cfset var rc = event.getCollection()>
 		<cfscript>	
-			
+			/* ui table filter js */
+			rc.jsAppendList = 'jquery.uitablefilter';
+			/* Param incoming value, jsut in case */
+			event.paramValue("namespace","");
+			/* Get All Pages for the incoming namespace */
+			rc.qPages = getWikiService().getPages(namespace=rc.namespace);
+			/* Page Title */
+			rc.pageTitle = "Namespace Viewer For: #rc.namespace#";
+			/* View */
+			event.setView('wiki/spaceViewer');
 		</cfscript>
 	</cffunction>
 
@@ -206,7 +215,7 @@ $Build ID:	@@build_id@@
 
 	<!--- diff --->
 	<cffunction name="diff" access="public" returntype="void" output="false" hint="Diff pages">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
 		    var rc = event.getCollection();
 			var pageName = arguments.event.getValue("page");
@@ -305,7 +314,7 @@ $Build ID:	@@build_id@@
 
 	<!--- directory --->
 	<cffunction name="directory" access="public" returntype="void" output="false" hint="Pages Directory">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
 			var rc = event.getCollection();
 			var ids = "";
