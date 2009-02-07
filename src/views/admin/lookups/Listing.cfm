@@ -100,7 +100,7 @@ $Build ID:	@@build_id@@
 	<!--- Add / Delete Button Bar --->
 	<div id="listButtonBar">
 		<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">
+		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookupclass",override=true)#/#rc.lookupclass#" class="buttonLinks">
 			Add Record
 		</a>
 		&nbsp;

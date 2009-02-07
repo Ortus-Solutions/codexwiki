@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 <!--- BACK --->
 <div class="backbutton">
 	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#">Back</a>
+	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#">Back</a>
 </div>
 <p>Add a new <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
 
@@ -190,7 +190,7 @@ $Build ID:	@@build_id@@
 <!--- Create / Cancel --->
 <div id="_buttonbar">
 	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
-	<a href="#event.buildLink(rc.xehLookupList & '/lookupclass/' & rc.lookupclass)#" class="buttonLinks">
+	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#" class="buttonLinks">
 		Cancel
 	</a>
 	&nbsp;
