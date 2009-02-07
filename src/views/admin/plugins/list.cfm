@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <cfoutput>
-<h2><img src="includes/images/plugin_icon.png" align="absmiddle"> 
+<h2><img src="includes/images/plugin.png" align="absmiddle"> 
 CodeX Wiki Plugins</h2>
 <p>
 	From this panel you can see the installed Wiki Plugins, reload the plugins index,
@@ -104,6 +104,4 @@ CodeX Wiki Plugins</h2>
 	</p>
 </div>
 <br />
-<!--- Plugin Docs --->
-#rc.oWikiPlugin.renderit(title="Installed Plugins Documentation")#
 </cfoutput>

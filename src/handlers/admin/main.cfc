@@ -33,13 +33,30 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var rc = event.getCollection();
 			
+			/* Exit Handler */
+			rc.xehReinitApp = "admin/config/doReinit";
+			
 			/* Sorted Options */
 			rc.sortedOptions = structSort(rc.CodexOptions);
 				
 			event.setView('admin/home');
 		</cfscript>
 	</cffunction>
-
+	
+	<!--- doReinit --->
+	<cffunction name="doReinit" access="public" returntype="void" output="false" hint="Reinit the application">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfscript>
+		    
+		    /* Flag for Reinit */
+		    getController().setColdboxInitiated(false);
+		    /* MB */
+			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
+			/* Re Route */
+			setNextRoute('admin/home');
+		</cfscript>     
+	</cffunction>
+	
 	<!--- api --->
 	<cffunction name="api" access="public" returntype="void" output="false" hint="Show the API" cache="true" cacheTimeout="30">
 		<cfargument name="Event" type="any" required="yes">
@@ -47,7 +64,7 @@ $Build ID:	@@build_id@@
 	    <cfscript>
 			/* Setup the Cfc Viewer */
 			rc.cfcViewer = getPlugin("cfcViewer").setup(dirpath="/codex/model",
-														dirLink="#getSetting('sesBaseURL')#/admin.main/api#getRewriteExtension()#?");
+														dirLink="#getSetting('sesBaseURL')#/admin.main/api#event.getRewriteExtension()#?");
 
 			/* Setup the view */
 			event.setView("admin/api");

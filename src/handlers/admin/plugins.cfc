@@ -51,6 +51,15 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
+	<!--- Docs --->
+	<cffunction name="docs" access="public" returntype="void" output="false" hint="List all installed plugins">
+		<cfargument name="Event" type="any" required="yes">
+		<cfset var rc = event.getCollection()>
+		<cfscript>	
+			event.setView('admin/plugins/docs');
+		</cfscript>
+	</cffunction>
+	
 	<!--- remove --->
 	<cffunction name="Remove" access="public" returntype="void" output="false" hint="Remove a plugin">
 		<cfargument name="Event" type="any" required="yes">

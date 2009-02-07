@@ -22,6 +22,9 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <!--- create a non found wiki page --->
 <cfoutput>
+<!--- Messagebox --->
+#getPlugin("messagebox").renderit()#
+
 <h2><img src="includes/images/shield.png" align="absmiddle"> Welcome to your CodeX Administrator dashboard</h2>
 <p>
 	From this panel, you will be able to manage this CodeX installation. Please read all the instructions whenever
@@ -29,27 +32,48 @@ $Build ID:	@@build_id@@
 	manage CodeX. So please use the available menu options under the <strong>Admin Menu</strong> box.
 </p>
 
+<!--- Reinit Box --->
+<form action="#event.buildLink(rc.xehReinitApp)#" name="reinitForm" id="reinitForm" method="post" onSubmit="submitReinit()">
+	<fieldset>
+	<legend><strong>Codex Information</strong></legend>
+		<label>Codex Version:</label>
+	    	#getSetting('Codex').Version# #getSetting('Codex').Suffix#<br />
+		<label for="fwreinit">Restart CodeX:</label>
+		This will start the application fresh, clean the cache and settings<br />
+	    <input type="submit" id="ReinitSubmit" name="ReinitSubmit" value="Reinitialize Application">
+	    
+	    <!--- Loader --->
+		<div id="_loader2" class="align-center formloader">
+			<p>
+				Reloading...<br />
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			</p>
+		</div>
+		
+   </fieldset>
 
-<h3>Current Wiki Options</h3>
-
-<table class="tablelisting" width="98%" align="center">
-	<tr>
-		<th width="250">Option</th>
-		<th>Value</th>
-	</tr>
-	
-	<tr>
-		<td><strong>Codex Version</strong></td>
-		<td>#getSetting("Codex").Version# #getSetting("Codex").Suffix#</td>
-	</tr>	
-	<cfset count=1>
-	<cfloop array="#rc.sortedOptions#" index="i">
-		<cfset count+=1>
-		<tr <cfif count mod 2 eq 0>class="even"</cfif>>
-			<td><strong>#i#</strong></td>
-			<td>#rc.CodexOptions[i]#</td>
-		</tr>
-	</cfloop>
-</table>
-
+	<fieldset>
+	<legend><strong>Codex Wiki Options</strong></legend>
+		<table class="tablelisting" width="98%" align="center">
+			<tr>
+				<th width="250">Option</th>
+				<th>Value</th>
+			</tr>
+			
+			<tr>
+				<td><strong>Codex Version</strong></td>
+				<td>#getSetting("Codex").Version# #getSetting("Codex").Suffix#</td>
+			</tr>	
+			<cfset count=1>
+			<cfloop array="#rc.sortedOptions#" index="i">
+				<cfset count+=1>
+				<tr <cfif count mod 2 eq 0>class="even"</cfif>>
+					<td><strong>#i#</strong></td>
+					<td>#rc.CodexOptions[i]#</td>
+				</tr>
+			</cfloop>
+		</table>
+	</fieldset>
+</form>
 </cfoutput>

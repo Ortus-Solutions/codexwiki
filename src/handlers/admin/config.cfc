@@ -79,7 +79,6 @@ $Build ID:	@@build_id@@
 			
 			/* Exit Handlers */
 			rc.xehOnSubmit = "admin/config/saveoptions";
-			rc.xehReinitApp = "admin/config/doReinit";
 			
 			/* Required */
 			rc.jsAppendList = 'formvalidation,jquery.uitablefilter';
@@ -120,21 +119,6 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
-	<!--- doReinit --->
-	<cffunction name="doReinit" access="public" returntype="void" output="false" hint="Reinit the application">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-		    
-		    /* Flag for Reinit */
-		    getController().setColdboxInitiated(false);
-		    /* MB */
-			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
-			/* Re Route */
-			setNextRoute('admin/config/options');
-		</cfscript>     
-	</cffunction>
-	
-
 <!------------------------------------------- PRIVATE ------------------------------------------->
 	
 	<cffunction name="getConfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">
