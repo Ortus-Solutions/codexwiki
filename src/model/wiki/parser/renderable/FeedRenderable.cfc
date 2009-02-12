@@ -25,34 +25,36 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="FeedRenderable" output="false">
-	<cfargument name="feedTag" hint="" type="string" required="Yes">
-	<cfargument name="baseURL" hint="the base url to draw links from" type="string" required="Yes">
-	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
-	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="Yes">
-	<cfargument name="rewriteExtension" hint="the rewrite extension" type="string" required="Yes">
+	<cfargument name="feedTag" 		 		type="string" 								required="Yes" hint="">
+	<cfargument name="baseURL" 		 		type="string" 								required="Yes" hint="the base url to draw links from">
+	<cfargument name="coldboxOCM" 	 		type="coldbox.system.cache.cacheManager" 	required="Yes" hint="the coldbox cache. For injecting into Transients">
+	<cfargument name="rssManager" 	 		type="codex.model.rss.RSSManager" 			required="Yes" hint="the rss manager">
+	<cfargument name="rewriteExtension"  	type="string" 								required="Yes" hint="the rewrite extension">
 	<cfscript>
 		var xFeed = 0;
 		var cleanFeed = 0;
 
 		super.init(true);
 
-		//constants
+		//constants for caching
 		instance.static.CACHE_PREFIX = "codex:";
-
+		
 		setFeedTag(arguments.feedTag);
 		setCacheManager(arguments.coldboxOCM);
 		setRssManager(arguments.rssManager);
 		setrewriteExtension(arguments.rewriteExtension);
 		
+		/* Cleanup of end tag if it does not exist */
 		if(NOT arguments.feedTag.endsWith("/>"))
 		{
 			arguments.feedTag = replace(arguments.feedTag, ">", "/>");
 		}
-
+		/* Check if it is valid XML or not? */
 		if(NOT isXML(arguments.feedTag))
 		{
+			/* Try to escape attributes and clean tag contents. */
 			cleanFeed = escapeAttributes(arguments.feedTag);
-
+			
 			if(NOT isXML(cleanFeed))
 			{
 				//if not valid xml, just return it as is.
@@ -63,7 +65,7 @@ $Build ID:	@@build_id@@
 			arguments.feedTag = cleanFeed;
 
 		}
-
+		/* Parse into XML */
 		xFeed = xmlParse(arguments.feedTag);
 		xFeed = xFeed.feed.xmlAttributes; //convenience
 
@@ -73,7 +75,7 @@ $Build ID:	@@build_id@@
 			setIsValidFeedTag(false);
 			return this;
 		}
-
+		/* Check for valid URL's for feeds */
 		if(NOT (lCase(xFeed.url).startsWith("http://") OR lCase(xFeed.url).startsWith("/feed/")))
 		{
 			setIsValidFeedTag(false);
@@ -82,14 +84,19 @@ $Build ID:	@@build_id@@
 
 		//default display is 'ul'
 		xFeed.listType = "ul";
-
 		if(StructKeyExists(xFeed, "display") AND xFeed.display eq "numbered")
 		{
 			xFeed.listType = "ol";
 		}
+		
+		/* Max Items 0=unlimited */
+		if(NOT StructKeyExists(xFeed, "maxitems") OR NOT isNumeric(xFeed.maxItems) OR xFeed.maxItems LT 0 )
+		{
+			xFeed.maxItems = 0;
+		}
 
+		/* Store feed tag data and validation */
 		setFeedData(xFeed);
-
 		setIsValidFeedTag(true);
 
 		return this;
@@ -103,19 +110,21 @@ $Build ID:	@@build_id@@
 	<cfset var args = 0 />
 
 	<cfscript>
+		/* Check if feed is valid */
 		if(NOT getIsValidFeedTag())
 		{
 			return XMLFormat(getFeedTag());
 		}
 
-		//setup the cache key
+		/* Get Feed data */
 		feedData = getFeedData();
+		//setup the cache key
 		key = instance.static.CACHE_PREFIX & feedData.url & ":" & feedData.listType;
+		/* Check the cache time */
+		if ( StructKeyExists(feedData, "cache") ){
+			key &= ":" & feedData.cache;
+		}
 	</cfscript>
-
-	<cfif StructKeyExists(feedData, "cache")>
-		<cfset key &= ":" & feedData.cache />
-	</cfif>
 
 	<!--- make sure only 1 feed renderable tries it at once --->
 	<cfif NOT getCacheManager().lookup(key)>
@@ -125,6 +134,7 @@ $Build ID:	@@build_id@@
 			{
 				args = StructNew();
 				args.objectKey = key;
+				/* Get the rendered Feed Content */
 				args.myObject = getRenderedFeed();
 
 				//if there is no cache item, use the CB default value
@@ -132,7 +142,7 @@ $Build ID:	@@build_id@@
 				{
 					args.timeout = feedData.cache;
 				}
-
+				/* Cache this feed content. */
 				getCacheManager().set(argumentCollection=args);
 			}
 		</cfscript>
@@ -163,12 +173,12 @@ $Build ID:	@@build_id@@
 
 	<!--- if anything goes wrong, display error --->
 	<cftry>
+		<!--- Try to render an external feed param --->
 		<cfif feedData.url.startsWith("http://")>
 			<cffeed action="read" source="#feedData.url#" name="data" timeout="30" userAgent="CodexWiki - http://www.codexwiki.org">
 		<cfelse>
 			<!--- I have to push it to a temporary file. sucks. --->
-			<cfset path = "/" & createObject("java", "java.util.UUID").randomUUID() />
-			<cfset path = expandPath(path) />
+			<cfset path = expandPath(getRSSManager().getTempRSSDirectory() & createObject("java", "java.util.UUID").randomUUID()) />
 			<cffile action="write" file="#path#" output="#getRelativeFeed()#">
 			<cffeed action="read" source="#path#"  name="data">
 			<cffile action="delete" file="#path#">
@@ -178,7 +188,7 @@ $Build ID:	@@build_id@@
 			<cfoutput>
 				<div class="rssList">
 					<p>
-						<strong>Error with feed at: <a href="#feedData.url#">#feedData.url#</a></strong>
+						<strong>Error with feed at: <a href="#feedData.url#" class="externallink">#feedData.url#</a></strong>
 					</p>
 					<p>
 						#cfcatch.message#
@@ -190,11 +200,12 @@ $Build ID:	@@build_id@@
 			<cfreturn html />
 		</cfcatch>
 	</cftry>
-
+	
+	<!--- Parse the content according to rss type --->
 	<cfif FindNoCase("rss", data.version)>
-		<cfreturn buildRSSFeed(data, feedData.url, feedData.listType) />
+		<cfreturn buildRSSFeed(data, feedData.url, feedData.listType, feedData.maxitems) />
 	<cfelseif FindNoCase("atom", data.version)>
-		<cfreturn buildAtomFeed(data, feedData.url, feedData.listType) />
+		<cfreturn buildAtomFeed(data, feedData.url, feedData.listType, feedData.maxitems) />
 	<cfelse>
 		<cfreturn "Not atom, not rss... what is it? - #data.version# - #getRelativeFeed()#"/>
 	</cfif>
@@ -239,14 +250,16 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="buildRSSFeed" hint="taks an rss feed, and builds the display for htat" access="private" returntype="string" output="false">
-	<cfargument name="data" hint="the rss feed arguments.data" type="struct" required="Yes">
-	<cfargument name="urlString" hint="the url the rss feed has" type="string" required="Yes">
-	<cfargument name="listType" hint="the list type to display, ul, or ol" type="string" required="Yes">
+	<cfargument name="data"  		type="struct" 	required="true" 	hint="the rss feed arguments.data">
+	<cfargument name="urlString"  	type="string" 	required="true" 	hint="the url the rss feed has">
+	<cfargument name="listType"  	type="string" 	required="true" 	hint="the list type to display, ul, or ol">
+	<cfargument name="maxItems" 	type="numeric" 	required="true" 	hint="The max items to query">
 	<cfscript>
 		var html = 0;
 		var item = 0;
 		var category = 0;
 		var list = 0;
+		var breakCounter = 0;
 	</cfscript>
 
 	<cfsavecontent variable="html">
@@ -273,17 +286,23 @@ $Build ID:	@@build_id@@
 		</cfif>
 		<#arguments.listType#>
 		<cfif structKeyExists(arguments.data,"item") and ArrayLen(arguments.data.item) gt 0>
+			<!--- Verify the Max items Count --->
+			<cfif arguments.maxItems NEQ 0 AND arrayLen(arguments.data.item) LTE arguments.maxItems>
+				<cfset arguments.maxItems = arrayLen(arguments.data.item)>
+			</cfif>
+			<!--- Start Looping --->
 			<cfloop array="#arguments.data.item#" index="item">
+				<cfset breakCounter++>
 				<li>
 					<p class="title">
 						<cfif StructKeyExists(item, "link")>
-							<a href="#item.link#">#item.title#</a>
+							<a href="#item.link#" class="externallink">#item.title#</a>
 						<cfelse>
 							#item.title#
 						</cfif>
 					</p>
 					<p class="description">
-					<cfif StructKeyExists(item, "description")>
+					<cfif StructKeyExists(item, "description") and StructKeyExists(item.description,"value")>
 						#item.description.value#
 					</cfif>
 					</p>
@@ -293,7 +312,7 @@ $Build ID:	@@build_id@@
 						<cfset list = ""/>
 						<cfloop array="#item.category#" index="category">
 							<cfif StructKeyExists(category, "domain")>
-								<cfset list = listAppend(list, ' <a href="#category.domain#">#category.value#</a>') />
+								<cfset list = listAppend(list, ' <a href="#category.domain#" class="externallink">#category.value#</a>') />
 							<cfelse>
 								<cfset list = listAppend(list, ' #category.value#') />
 							</cfif>
@@ -308,6 +327,10 @@ $Build ID:	@@build_id@@
 					</p>
 					</cfif>
 				</li>
+				<!--- Break Counter Check --->
+				<cfif arguments.maxItems NEQ 0 AND breakCounter EQ arguments.maxItems>
+					<cfbreak />
+				</cfif>
 			</cfloop>
 		<cfelse>
 			<em>No Records Found</em>
@@ -321,14 +344,16 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="buildAtomFeed" hint="taks an atom feed, and builds the display for htat" access="private" returntype="string" output="false">
-	<cfargument name="data" hint="the rss feed arguments.data" type="struct" required="Yes">
-	<cfargument name="urlString" hint="the url the rss feed has" type="string" required="Yes">
-	<cfargument name="listType" hint="the list type to display, ul, or ol" type="string" required="Yes">
+	<cfargument name="data"  		type="struct" 	required="true" 	hint="the rss feed arguments.data">
+	<cfargument name="urlString"  	type="string" 	required="true" 	hint="the url the rss feed has">
+	<cfargument name="listType"  	type="string" 	required="true" 	hint="the list type to display, ul, or ol">
+	<cfargument name="maxItems" 	type="numeric" 	required="true" 	hint="The max items to query">
 	<cfscript>
 		var html = 0;
 		var entry = 0;
 		var category = 0;
 		var list = 0;
+		var breakCounter = 0;
 	</cfscript>
 
 	<cfsavecontent variable="html">
@@ -336,6 +361,7 @@ $Build ID:	@@build_id@@
 	<div class="rssList">
 		<p>
 			<strong>
+			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" align="absmiddle"></a>
 			<cfif structKeyExists(arguments.data, "id")>
 				<a href="#arguments.data.id#">#arguments.data.title.value#</a>
 			<cfelse>
@@ -346,7 +372,6 @@ $Build ID:	@@build_id@@
 			<cfif StructKeyExists(arguments.data, "updated")>
 			(Last Built: #arguments.data.updated#)
 			</cfif>
-			[<a href="#arguments.urlString#">atom</a>]
 		</p>
 
 		<cfif StructKeyExists(arguments.data, "description")>
@@ -356,11 +381,16 @@ $Build ID:	@@build_id@@
 		</cfif>
 		<#arguments.listType#>
 			<cfif structKeyExists(arguments.data,"entry") and ArrayLen(arguments.data.entry) gt 0>
+				<!--- Verify the Max items Count --->
+				<cfif arguments.maxItems NEQ 0 AND arrayLen(arguments.data.entry) LTE arguments.maxItems>
+					<cfset arguments.maxItems = arrayLen(arguments.data.entry)>
+				</cfif>
 				<cfloop array="#arguments.data.entry#" index="entry">
+					<cfset breakCounter++>
 					<li>
 						<p class="title">
 							<cfif StructKeyExists(entry, "id")>
-								<a href="#entry.id#">#entry.title.value#</a>
+								<a href="#entry.id#" class="externallink">#entry.title.value#</a>
 							<cfelse>
 								#item.title.value#
 							</cfif>
@@ -375,7 +405,7 @@ $Build ID:	@@build_id@@
 							<p> Categories:
 							<cfset list = ""/>
 							<cfloop array="#entry.category#" index="category">
-								<cfset list = listAppend(list, ' <a href="#category.scheme#">#category.label#</a>') />
+								<cfset list = listAppend(list, ' <a href="#category.scheme#" class="externallink">#category.label#</a>') />
 							</cfloop>
 							#list#
 							</p>
@@ -387,6 +417,10 @@ $Build ID:	@@build_id@@
 						</p>
 						</cfif>
 					</li>
+					<!--- Break Counter Check --->
+					<cfif arguments.maxItems NEQ 0 AND breakCounter EQ arguments.maxItems>
+						<cfbreak />
+					</cfif>
 				</cfloop>
 			<cfelse>
 			<em>No Records Found</em>

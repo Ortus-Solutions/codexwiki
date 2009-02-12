@@ -269,7 +269,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <!--- getPages --->
-<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki">
+<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki filtered by no or a namespace">
 	<cfargument name="namespace" type="string" required="false" default="" hint="A namespace name to try to match"/>
 	<cfscript>
 		var tql = 0;
@@ -277,17 +277,22 @@ $Build ID:	@@build_id@@
 	</cfscript>
 	<cfsavecontent variable="tql">
 	<cfoutput>
-		select page.name, page.pageID,
+		SELECT page.name, page.pageID,
 			   Namespace.name as Namespace,
 			   Namespace.isDefault,
 			   Namespace.Description as NamespaceDescription,
-			   Namespace.namespace_id
-		from
+			   Namespace.namespace_id,
+			   content.createdDate
+		FROM
 			wiki.Page as page
-			join
+			JOIN
+			wiki.Content as content
+			JOIN
 			wiki.Namespace as Namespace
 		<cfif len(trim(arguments.namespace))>
 		where
+			content.isActive = :true
+			AND
 			Namespace.name = :Namespace
 		</cfif>
 		order by
@@ -301,6 +306,7 @@ $Build ID:	@@build_id@@
 		if( len(trim(arguments.namespace)) ){
 			query.setParam("Namespace", arguments.namespace);
 		}
+		query.setParam("true", true, "boolean");
 		query.setCacheEvaluation(true);
 		
 		/* REturn it */

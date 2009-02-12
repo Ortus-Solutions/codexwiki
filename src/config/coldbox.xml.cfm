@@ -43,6 +43,9 @@
 		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer_definitionPath" 	value="/codex/config/definitions"/>
 		
+		<!-- RSS Settings -->
+		<Setting name="RSSTempDirectory" 			value="/codex/model/rss/tmp"/>
+		
 		<!-- Wiki URL Prefix Keys, they cannot be BLANK -->
 		<Setting name="ShowKey" 					value="wiki"/>
 		<Setting name="SpaceKey" 					value="space"/>
@@ -117,7 +120,7 @@
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
 			<Property name="ignoreXMLTagList">feed,messagebox,img</Property>
-			<Property name="allowedAttributes">style,url,cache,display,type</Property>
+			<Property name="allowedAttributes">style,url,cache,display,type,maxitems</Property>
 		</Interceptor>
 		<!-- Feed Translations -->
 		<Interceptor class="codex.interceptors.wiki.Feed">

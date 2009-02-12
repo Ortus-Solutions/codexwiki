@@ -29,6 +29,7 @@ $Build ID:	@@build_id@@
 	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
 	<cfscript>
+		/* Init Abstraction */
 		super.init("feed",arguments.configBean);
 
 		setBaseURL(arguments.configBean.getKey("sesBaseURL"));

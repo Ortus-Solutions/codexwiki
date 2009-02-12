@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="render" hint="renders the output" access="public" returntype="string" output="false">
-	<cfthrow type="transfer.VirtualMethodException" message="This method is virtual and must be overwritten">
+	<cfthrow type="codex.VirtualMethodException" message="This method is virtual and must be overwritten">
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->

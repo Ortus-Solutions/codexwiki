@@ -20,12 +20,11 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-
 <cfcomponent hint="Abstract base class for XML tag parsing" output="false">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-<cffunction name="visitRenderable" hint="visits a renderable item" access="public" returntype="any" output="false">
+<cffunction name="visitRenderable" hint="visits a renderable item for rendering" access="public" returntype="any" output="false">
 	<cfargument name="renderable" hint="renderable object, should be static" type="any" required="Yes">
 	<cfargument name="visitData" hint="struct of data that gets passed around" type="struct" required="Yes">
 	<cfscript>
@@ -37,9 +36,11 @@ $Build ID:	@@build_id@@
 		arguments.matcher = pattern.matcher(arguments.builder);
 		arguments.tag = 0;
 		arguments.state = {};
-
+		
+		/* doStart() interceptor for all tags */
 		doStart(argumentCollection=arguments);
-
+	
+		/* Pattern Matching */
 		while(arguments.matcher.find())
 		{
 			arguments.tag = arguments.matcher.group();
@@ -79,7 +80,9 @@ $Build ID:	@@build_id@@
 	<cfargument name="tagName" 		hint="the tag this parser is looking for" type="string" required="Yes">
 	<cfargument name="configBean" 	hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 	<cfscript>
+		/* Setup the tag name to parse */
 		setTagName(arguments.tagName);
+		
 		/* Rewrite Extension */
 		if( arguments.configBean.getKey("usingRewrite") ){
 			setrewriteExtension('');

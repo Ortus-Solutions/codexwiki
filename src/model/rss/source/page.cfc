@@ -20,22 +20,24 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent displayname="Page Listing" hint="Listings of pages" output="false">
+<cfcomponent displayname="Page Listing" hint="Listings of pages" output="false" extends="codex.model.rss.AbstractSource">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
+<!--- Constructor --->
 <cffunction name="init" hint="Constructor" access="public" returntype="page" output="false">
 	<cfargument name="baseURL" hint="the base feed url for the links" type="string" required="Yes">
 	<cfscript>
-		setBaseURl(arguments.baseURL);
+		super.init(argumentCollection=arguments);
 
 		return this;
 	</cfscript>
 </cffunction>
 
+<!--- Pages by Category --->
 <cffunction displayname="List Pages By Category"
 			name="listByCategory"
-			hint="Listing of pages, by a given category. Returns xml"
+			hint="Listing of pages, by a given category. Use the category query variable ex: /category/Tutorials or ?category=Tutorials. Returns xml"
 			access="public"
 			returntype="any"
 			rss = "true"
@@ -47,7 +49,7 @@ $Build ID:	@@build_id@@
 		var item = 0;
 
 		rss.title = "Page By Category List";
-		rss.link = getBaseURL() & "page/listByCategory.cfm";
+		rss.link = getBaseURL() & "page/listByCategory?category=arguments.category" & getRewriteExtension();
 		rss.description = "A list of all the pages, filtered by a category";
 		rss.version = "rss_2.0";
 
@@ -58,7 +60,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & name & ".cfm";
+			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/" & name & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);
@@ -68,6 +70,43 @@ $Build ID:	@@build_id@@
 	<cfreturn rss />
 </cffunction>
 
+<!--- Pages by Namespace --->
+<cffunction displayname="List Pages By Namespace"
+			name="listByNamespace"
+			hint="Listing of pages, by a given namespace. Use the namespace query variable ex: /namespace/Help or ?namespace=Help. Returns xml"
+			access="public"
+			returntype="any"
+			rss = "true"
+			output="false">
+	<cfargument name="namespace" hint="The namespace, if not provided, defaults to pages with no namespace" type="string" required="false" default="">
+	<cfscript>
+		var qPages = getWikiService().getPages(namespace=arguments.namespace);
+		var rss = StructNew();
+		var item = 0;
+
+		rss.title = "Page By Namespace";
+		rss.link = getBaseURL() & "page/listByNamespace?namespace=#arguments.namespace#" & getRewriteExtension();
+		rss.description = "A list of all the pages, filtered by a namespace";
+		rss.version = "rss_2.0";
+
+		rss.item = ArrayNew(1);
+	</cfscript>
+
+	<cfloop query="qPages">
+		<cfscript>
+			item = StructNew();
+			item.title = replace(name, "_", " ", "all");
+			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/" & name & getRewriteExtension();
+			item.pubDate = ParseDateTime(createdDate);
+
+			ArrayAppend(rss.item, item);
+		</cfscript>
+	</cfloop>
+	<cffeed action="create" name="#rss#" xmlVar="rss">
+	<cfreturn rss />
+</cffunction>
+
+<!--- All Wiki Updates --->
 <cffunction displayname="Wiki Updates"
 			name="listUpdates"
 			hint="A list of all the latest wiki updates. Returns xml"
@@ -82,7 +121,7 @@ $Build ID:	@@build_id@@
 		var item = 0;
 
 		rss.title = "Wiki Updates";
-		rss.link = getBaseURL() & "page/listUpdates.cfm";
+		rss.link = getBaseURL() & "page/listUpdates" & getRewriteExtension();
 		rss.description = "A list of all the latest wiki updates";
 		rss.version = "rss_2.0";
 
@@ -92,8 +131,8 @@ $Build ID:	@@build_id@@
 	<cfloop query="qUpdates">
 		<cfscript>
 			item = StructNew();
-			item.title = replace(page_name, "_", " ", "all");
-			item.link = getColdBoxController().getSetting('sesBaseURL') & "/" & getColdBoxController().getSetting("ShowKey") & "/" & page_name & ".cfm";
+			item.title = replace(page_name, "_", " ", "all") & " edited by #user_username#";
+			item.link = getConfigbean().getKey('sesBaseURL') & "/" & getConfigbean().getKey("ShowKey") & "/" & page_name & getRewriteExtension();
 			item.pubDate = ParseDateTime(pagecontent_createdate);
 			item.description.value = "Page ";
 
@@ -116,36 +155,10 @@ $Build ID:	@@build_id@@
 	<cfreturn rss />
 </cffunction>
 
-<cffunction name="setWikiService" access="public" returntype="void" output="false">
-	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
-	<cfset instance.wikiService = arguments.wikiService />
-</cffunction>
-
-<cffunction name="setColdBoxController" access="public" returntype="void" output="false">
-	<cfargument name="coldBoxController" type="coldbox.system.controller" required="true">
-	<cfset instance.coldBoxController = arguments.coldBoxController />
-</cffunction>
-
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="getColdBoxController" access="private" returntype="coldbox.system.controller" output="false">
-	<cfreturn instance.coldBoxController />
-</cffunction>
-
-<cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
-	<cfreturn instance.wikiService />
-</cffunction>
-
-<cffunction name="getBaseURL" access="private" returntype="string" output="false">
-	<cfreturn instance.baseURL />
-</cffunction>
-
-<cffunction name="setBaseURL" access="private" returntype="void" output="false">
-	<cfargument name="baseURL" type="string" required="true">
-	<cfset instance.baseURL = arguments.baseURL />
-</cffunction>
 
 
 

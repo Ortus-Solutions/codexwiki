@@ -21,6 +21,7 @@
 			<property name="name" type="string" column="namespace_name"/>
 			<property name="description" type="string" column="namespace_description"/>
 			<property name="isDefault" type="boolean" column="namespace_isdefault"/>
+			<property name="createdDate" type="date" column="namespace_createddate"/>
 		</object>
 
 		<object name="Content" table="wiki_pagecontent" decorator="codex.model.wiki.Content">

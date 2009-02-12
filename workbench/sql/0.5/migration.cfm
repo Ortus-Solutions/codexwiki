@@ -61,6 +61,15 @@ INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VAL
 ('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true');
 </cfquery>
 
+<!--- Append To Namespaces The Create Date--->
+<cfquery name="qNamespace" datasource="#request.dsn#">
+ALTER TABLE `wiki_namespace` ADD COLUMN `namespace_createddate` datetime AFTER `namespace_isdefault`
+</cfquery>
+<cfquery name="qNamespace" datasource="codex">
+UPDATE `wiki_namespace`
+SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(),"HH:mm:ss")#'
+</cfquery>
+
 <!--- Get all Help Namespace pages --->
 <cfquery name="qHelp" datasource="#request.dsn#">
 select a.*

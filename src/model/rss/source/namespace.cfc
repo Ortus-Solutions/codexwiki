@@ -20,12 +20,12 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent displayname="Category Listing" hint="Listings of categoris and the such" output="false" extends="codex.model.rss.AbstractSource">
+<cfcomponent displayname="Namespace Listing" hint="Listings of namespaces and the such" output="false" extends="codex.model.rss.AbstractSource">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <!--- Constructor --->
-<cffunction name="init" hint="Constructor" access="public" returntype="category" output="false">
+<cffunction name="init" hint="Constructor" access="public" returntype="namespace" output="false">
 	<cfargument name="baseURL" hint="the base feed url for the links" type="string" required="Yes">
 	<cfscript>
 		super.init(argumentCollection=arguments);
@@ -35,29 +35,29 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <!--- List Method --->
-<cffunction name="list" displayname="Category Listing"
-						hint="Listing of all the Categories in the system. Returns xml"
+<cffunction name="list" displayname="Namespace Listing"
+						hint="Listing of all the Namespaces in the system. Returns xml"
 						access="public"
 						returntype="any"
 						rss="true"
 						output="false">
 	<cfscript>
-		var qCategories = getWikiService().listCategories();
+		var qNamespaces = getWikiService().getNamespaces();
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "List of all categories";
-		rss.link = getBaseURL() & "category/list" & getRewriteExtension();
-		rss.description = "A list of all the categories in this wiki";
+		rss.title = "List of all Namespaces";
+		rss.link = getBaseURL() & "namespace/list" & getRewriteExtension();
+		rss.description = "A list of all the namespaces in this wiki";
 		rss.version = "rss_2.0";
 
 		rss.item = ArrayNew(1);
 	</cfscript>
-	<cfloop query="qCategories">
+	<cfloop query="qNamespaces">
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/Category:" & URLEncodedFormat(name) & getRewriteExtension();
+			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("SpaceKey") & "/" & URLEncodedFormat(name) & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);

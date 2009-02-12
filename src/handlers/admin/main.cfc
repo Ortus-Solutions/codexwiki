@@ -26,7 +26,14 @@ $Build ID:	@@build_id@@
 			 hint="Our main handler for the admin.">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
-
+	
+	<!---  --->
+	<cffunction name="index" access="public" returntype="void" output="false" hint="Main handler event">
+		<cfargument name="Event" type="any" required="yes">
+		<!--- Home is the main event. --->
+		<cfset home(event)>
+	</cffunction>
+	
 	<!--- Home Page --->
 	<cffunction name="home" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="any">
@@ -34,7 +41,7 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 			
 			/* Exit Handler */
-			rc.xehReinitApp = "admin/config/doReinit";
+			rc.xehReinitApp = "admin/main/doReinit";
 			
 			/* Sorted Options */
 			rc.sortedOptions = structSort(rc.CodexOptions);
@@ -53,7 +60,7 @@ $Build ID:	@@build_id@@
 		    /* MB */
 			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
 			/* Re Route */
-			setNextRoute('admin/home');
+			setNextRoute('admin/main/home');
 		</cfscript>     
 	</cffunction>
 	

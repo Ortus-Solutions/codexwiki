@@ -20,22 +20,24 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent displayname="RSS Feed List" hint="RSS Feeds for Codex" output="false">
+<cfcomponent displayname="RSS Feed List" hint="RSS Feeds for Codex" output="false" extends="codex.model.rss.AbstractSource">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
+<!--- Constructor --->
 <cffunction name="init" hint="Constructor" access="public" returntype="directory" output="false">
 	<cfargument name="baseURL" hint="the base feed url for the links" type="string" required="Yes">
 	<cfscript>
-		setBaseURl(arguments.baseURL);
+		super.init(argumentCollection=arguments);
 
 		return this;
 	</cfscript>
 </cffunction>
 
+<!--- List Method --->
 <cffunction name="list"
 			displayname="RSS Feed List"
-			hint="A list of all the feeds currently available in this wiki. Returns XML"
+			hint="A list of all the feeds currently available in this wiki. Returns xml"
 			access="public"
 			returntype="any"
 			rss = "true"
@@ -48,7 +50,7 @@ $Build ID:	@@build_id@@
 		var item = 0;
 
 		rss.title = "Rss Feed list";
-		rss.link = getBaseURL() & "directory/list.cfm";
+		rss.link = getBaseURL() & "directory/list" & getRewriteExtension();
 		rss.description = "A list of all the feeds currently available in this wiki. You can use any of the feed links below in your wiki pages by using the 'feed' tag.";
 		rss.version = "rss_2.0";
 
@@ -73,7 +75,7 @@ $Build ID:	@@build_id@@
 					item.title = func.displayName;
 					item.description.value = buildFeedDescription(func);
 
-					item.link = getBaseURL() & ListGetAt(meta.name, ListLen(meta.name, "."), ".") & "/" & func.name & ".cfm";
+					item.link = getBaseURL() & ListGetAt(meta.name, ListLen(meta.name, "."), ".") & "/" & func.name & getRewriteExtension();
 
 					ArrayAppend(rss.item, item);
 				}
@@ -90,14 +92,13 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="buildFeedDescription" hint="builds the feed description from the functionmeta" access="private" returntype="string" output="false">
-	<cfargument name="functionMeta" hint="the function meta" type="struct" required="Yes">
+<cffunction name="buildFeedDescription" hint="builds the feed description from the function metadata" access="private" returntype="string" output="false">
+	<cfargument name="functionMeta" hint="the function metadata" type="struct" required="Yes">
 	<cfscript>
 		var description = createObject("java", "java.lang.StringBuffer").init(arguments.functionMeta.hint);
 		var len = arrayLen(arguments.functionMeta.parameters);
 		var counter = 1;
 		var arg = 0;
-		
 		
 		if(len)
 		{
@@ -120,17 +121,8 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		var qCFCs = 0;
 	</cfscript>
-	<cfdirectory action="list" directory="#getDirectoryFromPath(getMetaData(this).path)#" filter="*.cfc" name="qCFCs">
+	<cfdirectory action="list" directory="#getDirectoryFromPath(getMetaData(this).path)#" filter="*.cfc" name="qCFCs" sort="asc">
 	<cfreturn qCFCs />
-</cffunction>
-
-<cffunction name="getBaseURL" access="private" returntype="string" output="false">
-	<cfreturn instance.baseURL />
-</cffunction>
-
-<cffunction name="setBaseURL" access="private" returntype="void" output="false">
-	<cfargument name="baseURL" type="string" required="true">
-	<cfset instance.baseURL = arguments.baseURL />
 </cffunction>
 
 </cfcomponent>
