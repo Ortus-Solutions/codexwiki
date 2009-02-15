@@ -408,6 +408,8 @@ $Build ID:	@@build_id@@
 			rc.page = getWikiService().getPage(pageName=rc.pageName);
 			/* Get Content */
 			oContent = rc.page.getNewContentVersion(rc);
+			/* Get Active Content */
+			oActiveContent = getWikiService().getContent(pageName=rc.pageName);
 			/* Validate Content */
 			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
 			if(ArrayLen(messages))
@@ -415,29 +417,33 @@ $Build ID:	@@build_id@@
 				/* MB & content set */
 				getPlugin("messagebox").setMessage(type="warning", messageArray=messages);
 				rc.content = oContent;
+				/* Save Version for non dirty edits */
+				rc.content.setVersion(oActiveContent.getVersion());
 				/* ReRoute with persistence */
 				setNextRoute(route="page/edit/" & rc.pageName, persist="content");
 			}
 			else
 			{
 				/* Check for Version Modifications just before saving */
-				activeContent = getWikiService().getContent(pageName=rc.pageName);
-				if( activeContent.getVersion() neq rc.pageVersion ){
+				if( oActiveContent.getVersion() neq rc.pageVersion ){
 					getPlugin("messagebox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
 					/* ReRoute */
 					setNextRoute(route=instance.showKey & rc.pageName);
 				}
 				
-				/* Save Content */
+				/* Save New Content to page */
 				rc.page.addContentVersion(oContent);
 				/* Check for Page Renaming */
 				if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
 					rc.page.setName(rc.RenamePageName);
 					rc.pageName = rc.RenamePageName;
 				}
-				/* Page Title & Password */
+				/* Page Extra Properties */
 				rc.page.setTitle(event.getTrimValue("title"));
 				rc.page.setPassword(event.getTrimValue("PagePassword"));
+				rc.page.setDescription(event.getTrimValue("Description"));
+				rc.page.setKeywords(event.getTrimValue("Keywords"));
+				/* Save this Page */
 				getWikiService().save(rc.page);
 				
 				/* Re Route */

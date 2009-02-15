@@ -113,7 +113,6 @@ $(document).ready(function() {
 		<legend><a href="javascript:togglePageOptions()" title="Click to expand page options">Page Options</a></legend>
 		<div id="PageOptionsInstructions">Click to expand page options</div>
 		<div id="PageOptions" class="hidden">
-		<label>Permalink</label> #event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#
 		
 		<cfif event.getCurrentAction() eq "edit">
 		<!--- PageName --->
@@ -126,6 +125,12 @@ $(document).ready(function() {
 		<label for="title">Page HTML Title</label>
 		The HTML title value (If empty, then the actual page name will be used: <strong>#rc.content.getPage().getName()#</strong>)<br />
 		<input type="text" name="title" id="title" value="#rc.content.getpage().getTitle()#" size="50">
+		<label for="title">Page HTML Description</label>
+		The HTML page description<br />
+		<input type="text" name="description" id="description" value="#rc.content.getpage().getdescription()#" size="50">
+		<label for="title">Page HTML Keywords</label>
+		The HTML page keywords<br />
+		<input type="text" name="keywords" id="title" value="#rc.content.getpage().getKeywords()#" size="50">
 		
 		<label for="PagePassword">Page Viewing Password</label>
 		You can password protect this page from viewing by providing a password below.<br />

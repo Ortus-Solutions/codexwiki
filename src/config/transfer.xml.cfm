@@ -13,6 +13,8 @@
 			<property name="name"  		type="string" column="page_name"/>
 			<property name="title" 		type="string" column="page_title" nullable="true"/>
 			<property name="password" 	type="string" column="page_password" nullable="true"/>
+			<property name="description" 	type="string" column="page_description" nullable="true"/>
+			<property name="keywords" 	type="string" column="page_keywords" nullable="true"/>
 			<manytoone name="Namespace">
 				<link column="FKnamespace_id" to="wiki.Namespace"/>
 			</manytoone>

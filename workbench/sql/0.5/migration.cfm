@@ -73,7 +73,9 @@ SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(
 <!--- Add Page Title and passwords --->
 <cfquery name="qNamespace" datasource="#request.dsn#">
 ALTER TABLE `wiki_page` ADD COLUMN `page_title` varchar(255) AFTER `FKnamespace_id`,
- ADD COLUMN `page_password` varchar(255) AFTER `page_title`
+ ADD COLUMN `page_password` varchar(255) AFTER `page_title`,
+ ADD COLUMN `page_description` varchar(255) AFTER `page_password`,
+ ADD COLUMN `page_keywords` varchar(255) AFTER `page_description`
 </cfquery>
 
 <!--- Get all Help Namespace pages --->

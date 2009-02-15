@@ -26,74 +26,66 @@ $Build ID:	@@build_id@@
 <cfelse>
 	<cfset fileTitle = "webprint">
 </cfif>
-
-
+<!--- Content Disposition --->
 <cfheader name="Content-Disposition" value="inline; filename=#fileTitle#.#rc.layout_extension#">
-
-<!--- Document --->
+<!--- CFFDocument --->
 <cfdocument pagetype="letter" format="#Event.getValue("print","flashpaper")#">
-
-<!--- Header --->
-<cfdocumentitem type="header">
-<cfoutput>
-<div style="font-size: 9px; text-align: left;">
-CodexWiki - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
-</div>
-</cfoutput>
-</cfdocumentitem>
-
-<!--- Footer --->
-<cfdocumentitem type="footer">
-<cfoutput>
-<div style="font-size: 9px; text-align: right;">
-Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
-</div>
-</cfoutput>
-</cfdocumentitem>
-<!--- Page --->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<cfoutput>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<!--- Base HREF --->
-	<base href="#getSetting('htmlBaseURL')#">
 	
-	<!--- Main CSS --->
-	<link rel="stylesheet" type="text/css" href="includes/style.css" />
-
-	<!--- loop around the cssAppendList, to add page specific css --->
-	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
-		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />
-	</cfloop>
-
-	#renderView('tags/title')#
-	<!--- Render Custom HTML --->
-	#rc.oCustomHTML.getbeforeHeadEnd()#
-	</cfoutput>
-</head>
-<cfoutput>
-<body>
-	<!--- Render Custom HTML --->
-	#rc.oCustomHTML.getafterBodyStart()#
-	<!-- wrap starts here -->
-	<div id="wrap">
-		<!-- header -->
-		<!--- #renderView('tags/header')#
-
-		<!-- Sidebar -->
-		<div id="sidebar" >
-			#renderView('tags/sidebar')#
-		</div> --->
-
-		<div id="main">
-			#renderView()#
-		</div>
+	<!--- Header --->
+	<cfdocumentitem type="header">
+	<cfoutput>
+	<div style="font-size: 9px; text-align: left;">
+	#rc.CodexOptions.wiki_name# - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
 	</div>
-	<!-- wrap ends here -->
-	<!--- Render Custom HTML --->
-	#rc.oCustomHTML.getbeforeBodyEnd()#
-</body>
-</cfoutput>
-</html>
+	</cfoutput>
+	</cfdocumentitem>
+	
+	<!--- Footer --->
+	<cfdocumentitem type="footer">
+	<cfoutput>
+	<div style="font-size: 9px; text-align: right;">
+	Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
+	</div>
+	</cfoutput>
+	</cfdocumentitem>
+	
+	<!--- Page --->
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<cfoutput>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<!--- Meta Tags --->
+		#renderView('tags/meta')#
+		<!--- Base HREF --->
+		<base href="#getSetting('htmlBaseURL')#">
+		
+		<!--- Main CSS --->
+		<link rel="stylesheet" type="text/css" href="includes/style.css" />
+	
+		<!--- loop around the cssAppendList, to add page specific css --->
+		<cfloop list="#event.getValue("cssAppendList", "")#" index="css">
+			<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />
+		</cfloop>
+		
+		<!--- Title --->
+		#renderView('tags/title')#
+		<!--- Render Custom HTML --->
+		#rc.oCustomHTML.getbeforeHeadEnd()#
+		</cfoutput>
+	</head>
+	<cfoutput>
+	<body>
+		<!--- Render Custom HTML --->
+		#rc.oCustomHTML.getafterBodyStart()#
+		<div id="wrap">
+			<div id="main">
+				#renderView()#
+			</div>
+		</div>
+		<!--- Render Custom HTML --->
+		#rc.oCustomHTML.getbeforeBodyEnd()#
+	</body>
+	</cfoutput>
+	</html>
 </cfdocument>
