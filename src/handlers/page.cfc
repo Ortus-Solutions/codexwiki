@@ -398,7 +398,8 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 			var messages = 0;
 			var oContent = 0;
-
+			var activeContent = 0;
+			
 			/* Params */
 			event.paramValue("isReadOnly",false);
 			event.paramValue("RenamePageName","");
@@ -419,6 +420,14 @@ $Build ID:	@@build_id@@
 			}
 			else
 			{
+				/* Check for Version Modifications just before saving */
+				activeContent = getWikiService().getContent(pageName=rc.pageName);
+				if( activeContent.getVersion() neq rc.pageVersion ){
+					getPlugin("messagebox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
+					/* ReRoute */
+					setNextRoute(route=instance.showKey & rc.pageName);
+				}
+				
 				/* Save Content */
 				rc.page.addContentVersion(oContent);
 				/* Check for Page Renaming */

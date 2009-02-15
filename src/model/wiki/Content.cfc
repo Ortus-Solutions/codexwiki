@@ -50,17 +50,17 @@ $Build ID:	@@build_id@@
 	<cfargument name="isCommentsMandatory" type="boolean" required="true" hint="is Comments Mandatory"/>
 	<cfscript>
 		var messages = ArrayNew(1);
-
+		/* Validate Content */
 		if(NOT Len(Trim(getContent())))
 		{
 			ArrayAppend(messages, "Content cannot be empty.");
 		}
-
+		/* Validate Comments */
 		if(arguments.isCommentsMandatory and NOT Len(Trim(getComment())))
 		{
 			ArrayAppend(messages, "Comment cannot be empty.");
 		}
-
+		
 		return messages;
 	</cfscript>
 </cffunction>

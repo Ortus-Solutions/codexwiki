@@ -97,6 +97,7 @@ $(document).ready(function() {
 <form action="#event.buildLink(rc.onSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">
 
 	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
+	<input type="hidden" name="pageVersion" value="#rc.content.getVersion()#" />
 	
 	<!--- Control Holder & Text Area --->
 	<div class="float-right">
