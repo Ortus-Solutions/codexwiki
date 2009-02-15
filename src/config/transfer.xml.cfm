@@ -10,7 +10,9 @@
   	<package name="wiki">
 		<object name="Page" table="wiki_page" decorator="codex.model.wiki.Page">
 			<id name="pageID" column="page_id" type="UUID" generate="true"/>
-			<property name="name" type="string" column="page_name"/>
+			<property name="name"  		type="string" column="page_name"/>
+			<property name="title" 		type="string" column="page_title" nullable="true"/>
+			<property name="password" 	type="string" column="page_password" nullable="true"/>
 			<manytoone name="Namespace">
 				<link column="FKnamespace_id" to="wiki.Namespace"/>
 			</manytoone>

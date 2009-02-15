@@ -289,9 +289,9 @@ $Build ID:	@@build_id@@
 			wiki.Content as content
 			JOIN
 			wiki.Namespace as Namespace
-		<cfif len(trim(arguments.namespace))>
 		where
 			content.isActive = :true
+		<cfif len(trim(arguments.namespace))>
 			AND
 			Namespace.name = :Namespace
 		</cfif>

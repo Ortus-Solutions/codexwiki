@@ -136,7 +136,9 @@ $Build ID:	@@build_id@@
 			<!--- Don't Show if in login event' --->
 			<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#" onsubmit="onLoginForm()">
 				<!--- ref Route --->
-				<input type="hidden" name="refRoute" value="#cgi.script_name#" />
+				<cfif event.valueExists("content")>
+					<input type="hidden" name="refRoute" value="#event.buildLink(pageShowRoot(rc.content.getPage().getName()))#" />
+				</cfif>
 				<p>
 				<label for="username">Username</label>
 				<input type="text" name="username" id="username" size="20" maxlength="50" />

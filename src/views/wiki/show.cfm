@@ -30,7 +30,9 @@ $Build ID:	@@build_id@@
 $(window).ready(function(){
 	$(".delete").click(function(){
 			var _this = this;
-			return confirm("Are you sure you wish to delete the page '#rc.content.getPage().getName()#'?<br/>This cannot be undone!", function(){gotoLink(_this)});
+			return confirm("Are you sure you wish to delete the page '<strong>#rc.content.getPage().getName()#</strong>'?<br/>This cannot be undone!", function(){
+				gotoLink(_this)
+			});
 	});
 });
 function createNewPage(){

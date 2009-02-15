@@ -65,9 +65,15 @@ INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VAL
 <cfquery name="qNamespace" datasource="#request.dsn#">
 ALTER TABLE `wiki_namespace` ADD COLUMN `namespace_createddate` datetime AFTER `namespace_isdefault`
 </cfquery>
-<cfquery name="qNamespace" datasource="codex">
+<cfquery name="qNamespace" datasource="#request.dsn#">
 UPDATE `wiki_namespace`
 SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(),"HH:mm:ss")#'
+</cfquery>
+
+<!--- Add Page Title and passwords --->
+<cfquery name="qNamespace" datasource="#request.dsn#">
+ALTER TABLE `wiki_page` ADD COLUMN `page_title` varchar(255) AFTER `FKnamespace_id`,
+ ADD COLUMN `page_password` varchar(255) AFTER `page_title`
 </cfquery>
 
 <!--- Get all Help Namespace pages --->

@@ -48,6 +48,15 @@ $Build ID:	@@build_id@@
 	<cfreturn replaceNoCase(getName(), "_", " ", "all") />
 </cffunction>
 
+<cffunction name="getCleanTitle" hint="Get a clean page title" access="public" returntype="string" output="false">
+	<!--- If an HTML page title is set, return that. --->
+	<cfif len(getTitle())>
+		<cfreturn getTitle()>
+	<cfelse>
+		<cfreturn getCleanName() />
+	</cfif>
+</cffunction>
+
 <cffunction name="getNewContentVersion" hint="validates a content version" access="public" returntype="codex.model.wiki.Content" output="false">
 	<cfargument name="memento" hint="the memento to populate the new content object" type="struct" required="Yes">
 	<cfscript>
@@ -70,6 +79,14 @@ $Build ID:	@@build_id@@
 <cffunction name="setWikiService" access="public" returntype="void" output="false">
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />
+</cffunction>
+
+<cffunction name="isProtected" access="public" returntype="boolean" hint="Is this page protected" output="false" >
+	<cfif len(getPassword())>
+		<cfreturn true>
+	<cfelse>
+		<cfreturn false>
+	</cfif>
 </cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->

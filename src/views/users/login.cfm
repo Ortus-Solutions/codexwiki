@@ -60,7 +60,6 @@ Log in to the wiki system by using the form below.
 #getPlugin("messagebox").renderit()#
 
 <form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#">
-
 	<p class="align-center">
 		<br /><br />
 		<label for="username" class="inline">Username</label>

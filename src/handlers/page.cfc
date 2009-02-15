@@ -28,8 +28,9 @@ $Build ID:	@@build_id@@
 			 cache="true" cacheTimeout="0">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" 	type="ioc" scope="instance" />
-	<cfproperty name="SearchEngine" type="ioc" scope="instance" />
+	<cfproperty name="WikiService" 		type="ioc" scope="instance" />
+	<cfproperty name="SearchEngine" 	type="ioc" scope="instance" />
+	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
 
 	<!--- IMPLICIT PROPERTIES --->
 	<cfset this.prehandler_only = "show">
@@ -100,28 +101,68 @@ $Build ID:	@@build_id@@
 
 			/* Appends CSS & JS */
 			rc.cssAppendList = "wiki.show";
-			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+			rc.jsAppendList = "jquery.simplemodal,confirm";
 
 			/* Get Content For Page */
 			rc.content = getWikiService().getContent(pageName=rc.page);
 
 			/* Page */
 			rc.urlPage = URLEncodedFormat(rc.page);
-
+			
 			/* Set views according to persistance */
-			if(rc.content.getIsPersisted())
-			{
-				if( event.getValue("print","") eq "markup"){
+			if(rc.content.getIsPersisted()){
+				/* Check for page protection */
+				if( rc.content.getPage().isProtected() AND NOT instance.securityService.isPageViewable(rc.content.getPage()) ){
+					/* JS */
+					rc.jsAppendList = "formvalidation";
+					/* Exit Handler */
+					rc.xehPasswordCheck = "page/passwordCheck";
+					/* View */
+					arguments.event.setView("wiki/showProtected");
+				}
+				/* Check for printing */
+				else if( event.getValue("print","") eq "markup"){
 					arguments.event.setView("wiki/showMarkup");
 				}
+				/* Normal Display */
 				else{
 					arguments.event.setView("wiki/show");
 				}
 			}
-			else
-			{
+			else{
+				/* Just creation page */
 				arguments.event.setView("wiki/create");
 			}
+		</cfscript>
+	</cffunction>
+	
+	<!--- passwordCheck --->
+	<cffunction name="passwordCheck" access="public" returntype="void" output="false" hint="">
+		<cfargument name="Event" type="any" required="yes">
+		<cfscript>	
+			var rc = event.getCollection();
+			/* Get The Page submitted */
+			var page = getWikiService().getPage(pageName=event.getValue("pageName",""));
+			
+			/* Check page exists */
+			if( page.getIsPersisted() ){
+				/* Check if password is valid? */
+				if( compare(page.getPassword(),event.getValue("PagePassword")) eq 0 ){
+					/* Store protected cookie */
+					instance.securityService.authorizePage(page);
+					setNextRoute(route=instance.showKey & page.getName());
+				}
+				else{
+					getPlugin("messagebox").setMessage(type="warning", message="The password you entered is incorrect.");
+					setNextRoute(route=instance.showKey & page.getName());				
+				}
+			}
+			else{
+				/* Message and take home */
+				getPlugin("messagebox").setMessage(type="error", message="Page not found in our system");
+				setNextEvent(instance.showKey);
+			}
+			
 		</cfscript>
 	</cffunction>
 
@@ -200,7 +241,7 @@ $Build ID:	@@build_id@@
 
 			/* CSS & JS */
 			rc.cssAppendList = "page.showHistory";
-			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+			rc.jsAppendList = "jquery.simplemodal,confirm";
 
 			/* Exit Handlers */
 			rc.onReplaceActive ="page/replaceActive";
@@ -229,7 +270,7 @@ $Build ID:	@@build_id@@
 
 			/* CSS & JS */
 			rc.cssAppendList = "page.showHistory";
-			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,confirm";
+			rc.jsAppendList = "jquery.simplemodal,confirm";
 
 			/* Exit Handler */
 			rc.onShowHistory = "page/showHistory";
@@ -384,8 +425,12 @@ $Build ID:	@@build_id@@
 				if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
 					rc.page.setName(rc.RenamePageName);
 					rc.pageName = rc.RenamePageName;
-					getWikiService().save(rc.page);
 				}
+				/* Page Title & Password */
+				rc.page.setTitle(event.getTrimValue("title"));
+				rc.page.setPassword(event.getTrimValue("PagePassword"));
+				getWikiService().save(rc.page);
+				
 				/* Re Route */
 				setNextRoute(route=instance.showKey & rc.pageName, persist="page");
 			}
@@ -399,7 +444,7 @@ $Build ID:	@@build_id@@
 			var content = 0;
 
 			/* Custom JS */
-			rc.jsAppendList = "jquery.simplemodal-1.1.1.pack,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
+			rc.jsAppendList = "jquery.simplemodal,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
 			/* Markitup Editor */
 			rc.cssFullAppendList = "includes/scripts/markitup/skins/markitup/style,includes/scripts/markitup/sets/wiki/style";
 

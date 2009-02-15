@@ -111,8 +111,6 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
 	<!--- Send a Password Reminder --->
 	<cffunction name="sendPasswordReminder" output="false" access="public" returntype="void"
 				hint="This will generate a new password, set it and send it to the user.">
@@ -153,8 +151,6 @@ $Build ID:	@@build_id@@
 		</cfmail>		
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
 	<!--- Get A User Session --->
 	<cffunction name="getUserSession" output="false" access="public" returntype="codex.model.security.User"
 				hint="This method checks if a user is in an authorized session, else it returns the default user object.">
@@ -183,8 +179,6 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
-	<!--- ************************************************************* --->
-
 	<!--- Clean a user's session. --->
 	<cffunction name="cleanUserSession" output="false" access="public" returntype="void" hint="This method will clean the user session.">
 		<cfscript>
@@ -192,8 +186,6 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
-	<!--- ************************************************************* --->
-
 	<!--- Get Security Rules --->
 	<cffunction name="getSecurityRules" output="false" access="public" returntype="query" hint="Get the security Rules">
 		<cfscript>
@@ -204,7 +196,28 @@ $Build ID:	@@build_id@@
 			return query;
 		</cfscript>
 	</cffunction>
-
+	
+	<!--- Authorize a Protected Page --->
+	<cffunction name="authorizePage" access="public" returntype="void" hint="Authorize a user to view a page" output="false" >
+		<!--- ************************************************************* --->
+		<cfargument name="page" required="true" type="codex.model.wiki.Page" hint="The page object to check">
+		<!--- ************************************************************* --->
+		<cfset cookie["protection-#hash(arguments.page.getName())#"] = hash(arguments.page.getName() & arguments.page.getPassword())>
+	</cffunction>	
+	
+	<!--- Check if a potected page is viewable --->
+	<cffunction name="isPageViewable" access="public" returntype="boolean" hint="Checks Whether a page is protected and user has cookie for it" output="false" >
+		<!--- ************************************************************* --->
+		<cfargument name="page" required="true" type="codex.model.wiki.Page" hint="The page object to check">
+		<!--- ************************************************************* --->
+		<cfif structKeyExists(cookie,"protection-#hash(arguments.page.getName())#") AND
+			  compare(cookie["protection-#hash(arguments.page.getName())#"],hash(arguments.page.getName() & arguments.page.getPassword())) EQ 0>
+			<cfreturn true>
+		<cfelse>
+			<cfreturn false>
+		</cfif>
+	</cffunction>
+	
 <!------------------------------------------- ACCESSOR/MUTATORS ------------------------------------------->
 
 	<!--- getter and setter for sessionstorage --->

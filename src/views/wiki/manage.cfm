@@ -29,9 +29,10 @@ $Build ID:	@@build_id@@
 function CodexPreview()
 {
 	var content = $("##content");
-
+	
+	//Preview Content
 	var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
-		close:false,
+		close: true,
 		onOpen: function(dialog)
 			{
 			 	dialog.overlay.fadeIn("normal", function()
@@ -48,7 +49,7 @@ function CodexPreview()
 				$.post("#event.BuildLink(rc.onPreview)#", data,
 					function(string, status)
 					{
-						dialog.container.html('<div><p class="align-right"><img src="includes/images/cross.png" align="absmiddle"><a href="javascript:$.modal.close();">close</a></p><div class="modalContent">' + string + '</div></div>');
+						dialog.data.html('<div class="modalContent">' + string + '</div>');
 					}
 				);
 			}
@@ -68,6 +69,10 @@ function askLeaveConfirmation(){
 }
 function markupInserted(){
 	needToConfirm = true;
+}
+function togglePageOptions(){
+	$("##PageOptions").slideToggle();	
+	$("##PageOptionsInstructions").slideToggle();	
 }
 $(document).ready(function() {
 	$("##content").markItUp(mySettings);
@@ -102,29 +107,47 @@ $(document).ready(function() {
 	<label for="content"><em>*</em> Wiki Content</label>
 	<textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
 	
-	<!--- Comment Editing --->
-	<fieldset title="Change Information">
-		<legend>Change Information & Options</legend>
+	<!--- Page Options --->
+	<fieldset title="Page Options">
+		<legend><a href="javascript:togglePageOptions()" title="Click to expand page options">Page Options</a></legend>
+		<div id="PageOptionsInstructions">Click to expand page options</div>
+		<div id="PageOptions" class="hidden">
+		<label>Permalink</label> #event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#
 		
 		<cfif event.getCurrentAction() eq "edit">
 		<!--- PageName --->
 		<label for="PageName">Rename Page</label>
 		You can rename the page here if you so desire. Please note that links or settings pointing to this page will
-		need to be updated as well. This just updates the page record, not its pointers.<br />
+		need to be updated as well.<br />
 		<input type="text" name="RenamePageName" id="RenamePageName" value="#rc.content.getpage().getName()#" size="50">
 		</cfif>
 		
-		<!--- Comments --->
-		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
-		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
-		<textarea name="comment" id="comment" rows="2" cols="50"></textarea>
+		<label for="title">Page HTML Title</label>
+		The HTML title value (If empty, then the actual page name will be used: <strong>#rc.content.getPage().getName()#</strong>)<br />
+		<input type="text" name="title" id="title" value="#rc.content.getpage().getTitle()#" size="50">
+		
+		<label for="PagePassword">Page Viewing Password</label>
+		You can password protect this page from viewing by providing a password below.<br />
+		<input type="text" name="PagePassword" id="PagePassword" value="#rc.content.getpage().getPassword()#" size="50">
 		
 		<label>
 		<input value="true" id="isReadOnly" type="checkbox" name="isReadOnly" <cfif rc.content.getIsReadOnly()>checked="checked"</cfif>/>
 		Page is read-only
 		</label> 
 		If checked, only page author <strong>#rc.oUser.getUsername()#</strong> and a user with WIKI_ADMIN privileges can edit a read-only page.
+		</div>
 	</fieldset>
+	
+	<!--- Comment Editing --->
+	<fieldset title="Change Information">
+		<legend>Change Information</legend>
+		
+		<!--- Comments --->
+		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
+		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
+		<textarea name="comment" id="comment" rows="2" cols="50"></textarea>
+		
+		</fieldset>
 
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">

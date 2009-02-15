@@ -53,6 +53,9 @@ a.noborder{
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 }
+#buttonLinks span{
+	padding:5px;
+}
 #buttonLinks:hover{
 	background: #FFFFF0;
 	border: 1px inset #ccc;
@@ -530,40 +533,6 @@ div.grippie {
 	
 }
 
-/* Overlay */
-#modalOverlay {background-color:#000; cursor:wait;}
-
-/* Container */
-#modalContainer {
-	height:70%; 
-	width:70%; 
-	left:15%; 
-	top:15%; 
-	background-color:#fff; 
-	border:3px solid #ccc; 
-	overflow:auto;
-}
-
-/*confirm container */
-#modalConfirmContainer {
-	height:auto; 
-	width:20%;
-	left: 40%;
-	top: 30%; 
-	background-color:#fff; 
-	border:3px solid #ccc;
-}
-
-
-#modalContainer #basicModalContent #modalConfirmContainer {
-	padding:8px;
-}
-#modalData { 
-	padding: 0px; 
-	margin: 0px;
-	text-align: left;
-}
-
 /* Paging */
 .pagingTabs{
 	font-size: .8em;
@@ -659,4 +628,54 @@ div.grippie {
     padding-right: 8px;
 }
 
+/* SImple Modal */
+/* Overlay */
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+/* Container */
+#simplemodal-container {
+	height:80%; 
+	width:80%; 
+	left:10%; 
+	top:10%;
+	background-color:#fff; 
+	border:5px solid #ccc;	
+}
+.simplemodal-close{
+	background: url(../images/x.png) no-repeat; 
+	width:25px; 
+	height:29px; 
+	display:inline; 
+	z-index:3200; 
+	position:absolute; 
+	top:-15px; 
+	right:-18px; 
+	cursor:pointer;
+	border: none;}
+.simplemodal-close:hover{
+	background: url(../images/x.png) no-repeat; 
+	border: none;
+}
+#simplemodal-container #basicModalContent {padding:8px;}
+/*confirm container */
+#modalConfirmContainer {
+	height:auto; 
+	width:25%;
+	left: 40%;
+	top: 30%; 
+	background-color:#fff; 
+	border:5px solid #ccc;
+}
+#modalContainer #basicModalContent{
+	padding:8px;
+}
+.simplemodal-data{
+	height:96.5%; 
+	width: 100%; 
+	overflow: auto;
+	padding: 0px;
+}
+.modalContent { 
+	padding: 0px; 
+	text-align: left;
+}
 /* @end */

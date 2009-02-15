@@ -54,7 +54,7 @@ $Build ID:	@@build_id@@
 			event.paramValue("role_id","0");
 
 			/* JS Lookups */
-			event.setValue("jsAppendList", "jquery.simplemodal-1.1.1.pack,confirm");
+			event.setValue("jsAppendList", "jquery.simplemodal,confirm");
 
 			//Calculate the start row according to page
 			rc.boundaries = getMyPlugin("paging").getboundaries();

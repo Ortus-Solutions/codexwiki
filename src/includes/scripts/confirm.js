@@ -31,12 +31,14 @@ function confirm(msg, callback)
 {
 	confirmDialog.clone().modal(
 		{
-			close: false,
+			close: true,
 			containerId: "modalConfirmContainer",
 			onShow: function(dialog)
 				{
-					dialog.data.find("#message").append(msg);
+					
+                    dialog.data.find("#message").append(msg);
 					var yes = dialog.data.find("#yes");
+					var no = dialog.data.find("#no");
 					yes.click(function()
 						{
 							if($.isFunction(callback))
@@ -46,7 +48,13 @@ function confirm(msg, callback)
 
 							$.modal.close();
 						}
-					)
+					);
+					no.click(function()
+						{
+							$.modal.close();
+						}
+					);
+					
 				}
 		}
 	);

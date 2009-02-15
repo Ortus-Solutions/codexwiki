@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <!--- Header for download on other browsers --->
 <cfif event.valueExists("content") >
-	<cfset fileTitle = rc.content.getPage().getCleanName()>
+	<cfset fileTitle = rc.content.getPage().getCleanTitle()>
 <cfelse>
 	<cfset fileTitle = "webprint">
 </cfif>
