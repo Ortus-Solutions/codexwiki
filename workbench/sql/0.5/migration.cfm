@@ -7,19 +7,6 @@ the helpcontent.sql
 <cfflush><cfflush>
 
 <cftransaction>
-<!--- Drop Wiki Options --->
-<cfquery name="qHelp" datasource="#request.dsn#">
-DROP TABLE /*!32312 IF EXISTS*/ `wiki_options`;
-</cfquery>
-<cfquery name="qHelp" datasource="#request.dsn#">
-CREATE TABLE `wiki_options` (
-  `option_id` varchar(36) NOT NULL,
-  `option_name` varchar(255) NOT NULL,
-  `option_value` text NOT NULL,
-  PRIMARY KEY  (`option_id`)
-)DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
-</cfquery>
-
 <cftry>
 	<!--- Help Removeals --->
 	<cfquery name="qHelp" datasource="#request.dsn#">
@@ -66,7 +53,18 @@ CREATE TABLE `wiki_options` (
 		</p>
 	</cfcatch>
 </cftry>
-
+<!--- Drop Wiki Options --->
+<cfquery name="qHelp" datasource="#request.dsn#">
+DROP TABLE /*!32312 IF EXISTS*/ `wiki_options`;
+</cfquery>
+<cfquery name="qHelp" datasource="#request.dsn#">
+CREATE TABLE `wiki_options` (
+  `option_id` varchar(36) NOT NULL,
+  `option_name` varchar(255) NOT NULL,
+  `option_value` text NOT NULL,
+  PRIMARY KEY  (`option_id`)
+)DEFAULT CHARACTER SET utf8 ENGINE=InnoDB
+</cfquery>
 <!--- Options --->
 <cfquery name="qHelp" datasource="#request.dsn#">
 INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VALUES

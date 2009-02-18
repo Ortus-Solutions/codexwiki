@@ -74,9 +74,9 @@ $Build ID:	@@build_id@@
 		</select>
 		
 		<!--- Search Button --->
-		<a href="javascript:submitForm()" id="buttonLinks">
+		<a href="javascript:submitForm()" class="buttonLinks">
 			<span>
-				<img src="includes/images/magnifier.png" border="0" align="absmiddle">
+				<img src="includes/images/magnifier.png" border="0" align="absmiddle" />
 				Add Permission
 			</span>
 		</a>
@@ -117,9 +117,9 @@ $Build ID:	@@build_id@@
 
 <!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-		<a href="#event.buildLink(rc.xehUserListing)#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/cancel.png" border="0" align="absmiddle">
+				<img src="includes/images/cancel.png" border="0" align="absmiddle" />
 				Cancel
 			</span>
 		</a>

@@ -82,11 +82,18 @@ $Build ID:	@@build_id@@
 		</select>		
 		<!--- Utility Buttons --->
 		&nbsp;
-		<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">Reload Listing</a>
+		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">
+			<span>
+				<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle" />
+				Reload Listing
+			</span>
+		</a>
 		&nbsp;
-		<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle">
-		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">Reload Dictionary</span>
+		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">
+			<span>
+			<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle" />
+			Reload Dictionary
+			</span>
 		</a>
 	</p>
 </form>
@@ -99,14 +106,18 @@ $Build ID:	@@build_id@@
 
 	<!--- Add / Delete Button Bar --->
 	<div id="listButtonBar">
-		<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
 		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookupclass",override=true)#/#rc.lookupclass#" class="buttonLinks">
-			Add Record
+			<span>
+				<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
+				Add Record
+			</span>
 		</a>
 		&nbsp;
-		<img src="#rc.imgPath#/stop.png" border="0" align="absmiddle">
 		<a href="javascript:confirmDelete()" class="buttonLinks">
+			<span>
+			<img src="#rc.imgPath#/stop.png" border="0" align="absmiddle" />
 			Delete Record(s)
+			</span>
 		</a>
 	</div>
 	

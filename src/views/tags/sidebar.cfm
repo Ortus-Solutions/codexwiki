@@ -190,9 +190,9 @@ $Build ID:	@@build_id@@
 			<br />
 			<!--- Button Bar --->
 			<div align="center" id="_buttonbar_login">
-				<a href="#event.buildLink(rc.xehUserLogout)#" id="buttonLinks">
+				<a href="#event.buildLink(rc.xehUserLogout)#" class="buttonLinks">
 					<span>
-						<img src="includes/images/door_out.png" border="0" align="absmiddle">
+						<img src="includes/images/door_out.png" border="0" align="absmiddle" />
 						Logout
 					</span>
 				</a>

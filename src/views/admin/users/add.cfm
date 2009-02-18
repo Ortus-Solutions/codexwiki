@@ -132,16 +132,16 @@ $Build ID:	@@build_id@@
 	
 	<!--- Create / Cancel --->
 	<div id="_buttonbar" class="buttons align-center">
-		<a href="#event.buildLink(rc.xehUserListing)#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserListing)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/cancel.png" border="0" align="absmiddle">
+				<img src="includes/images/cancel.png" border="0" align="absmiddle" />
 				Cancel
 			</span>
 		</a>
 		&nbsp;
-		<a href="javascript:submitForm()" id="buttonLinks">
+		<a href="javascript:submitForm()" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle">
+				<img src="includes/images/add.png" border="0" align="absmiddle" />
 				Create User
 			</span>
 		</a>

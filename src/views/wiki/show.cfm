@@ -98,13 +98,13 @@ function createNewPage(){
 	<br />
 	<p class="buttons">
 		<cfif rc.oUser.checkPermission("WIKI_EDIT")>
-		<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" id="buttonLinks">
+		<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" class="buttonLinks">
 			<span>Edit Page</span>
 		</a>
 		</cfif>
 		&nbsp;
 		<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
-		<a href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="delete" id="buttonLinks">
+		<a href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="buttonLinks">
 			<span>Delete Page</span>
 		</a>
 		</cfif>

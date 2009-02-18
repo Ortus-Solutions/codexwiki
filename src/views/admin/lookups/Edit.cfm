@@ -208,14 +208,18 @@ $Build ID:	@@build_id@@
 
 <!--- Create / Cancel --->
 <div id="_buttonbar">
-	<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle">
 	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#" class="buttonLinks">
+		<span>
+		<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle" />
 		Cancel
+		</span>
 	</a>
 	&nbsp;
-	<img src="#rc.imgPath#/accept.png" border="0" align="absmiddle">
 	<a href="javascript:submitForm()" class="buttonLinks">
-		Update Record
+		<span>
+			<img src="#rc.imgPath#/accept.png" border="0" align="absmiddle" />
+			Update Record
+		</span>
 	</a>
 </div>
 <br />
@@ -266,17 +270,21 @@ $Build ID:	@@build_id@@
 					</select>
 					<!--- Add Button --->
 					<cfif qListing.recordcount>
-						<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
 						<a href="javascript:submitM2M('#thisArray.alias#',1)" class="buttonLinks">
-							Add Relation
+							<span>
+								<img src="#rc.imgPath#/add.png" border="0" align="absmiddle" />
+								Add Relation
+							</span>
 						</a>
 					</cfif>
 					<cfif arraylen(relationArray)>
 					<!--- Remove Button --->
 					&nbsp;
-					<img src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle">
 					<a href="javascript:submitM2M('#thisArray.alias#',0)" class="buttonLinks">
-						Remove Relation(s)
+						<span>
+							<img src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle" />
+							Remove Relation(s)
+						</span>
 					</a>
 					</cfif>
 				</div>

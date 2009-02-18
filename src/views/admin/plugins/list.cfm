@@ -89,9 +89,9 @@ CodeX Wiki Plugins</h2>
 
 <!--- Reload Button --->
 <div class="align-center" id="reloadPluginsDiv">
-	<a href="#event.buildLink(rc.xehReload)#" onClick="return submitReload()" id="buttonLinks">
+	<a href="#event.buildLink(rc.xehReload)#" onClick="return submitReload()" class="buttonLinks">
 		<span>
-			<img src="includes/images/arrow_refresh.png" border="0" align="absmiddle">
+			<img src="includes/images/arrow_refresh.png" border="0" align="absmiddle" />
 			Reload Plugins Index
 		</span>
 	</a>

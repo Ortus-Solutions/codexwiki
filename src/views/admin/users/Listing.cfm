@@ -73,7 +73,7 @@ $Build ID:	@@build_id@@
 
 		<!--- Filter --->
 		<label class="inline" for="search_criteria">Search</label>
-		<input type="text" size="25" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
+		<input type="text" size="20" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
 
 		<!--- Role --->
 		<label class="inline" for="role_id">Role</label>
@@ -101,7 +101,7 @@ $Build ID:	@@build_id@@
 		</select>
 
 		<!--- Search Button --->
-		<a href="javascript:searchForm()" id="buttonLinks">
+		<a href="javascript:searchForm()" class="buttonLinks">
 			<span>
 				<img src="includes/images/magnifier.png" border="0" align="absmiddle">
 				Search
@@ -116,16 +116,16 @@ $Build ID:	@@build_id@@
 	
 	<!--- Add / Delete --->
 	<div class="buttons float-right">
-		<a href="#event.buildLink(rc.xehUserCreate)#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle">
+				<img src="includes/images/add.png" border="0" align="absmiddle" />
 				Add User
 			</span>
 		</a>
 		&nbsp;
-		<a href="javascript:confirmDelete()" id="buttonLinks">
+		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle">
+				<img src="includes/images/stop.png" border="0" align="absmiddle" />
 				Delete User(s)
 			</span>
 		</a>
@@ -227,16 +227,16 @@ $Build ID:	@@build_id@@
 
 	<!--- Add / Delete --->
 	<div class="buttons">
-		<a href="#event.buildLink(rc.xehUserCreate)#" id="buttonLinks">
+		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle">
+				<img src="includes/images/add.png" border="0" align="absmiddle" />
 				Add User
 			</span>
 		</a>
 		&nbsp;
-		<a href="javascript:confirmDelete()" id="buttonLinks">
+		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle">
+				<img src="includes/images/stop.png" border="0" align="absmiddle" />
 				Delete User(s)
 			</span>
 		</a>

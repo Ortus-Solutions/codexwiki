@@ -102,16 +102,16 @@ Please enter all the required information to update your profile details
 
 <!--- Button Bar --->
 <div align="center" id="_buttonbar">
-	<a href="#event.buildLink(rc.xehUserProfile)#" id="buttonLinks">
+	<a href="#event.buildLink(rc.xehUserProfile)#" class="buttonLinks">
 		<span>
-			<img src="includes/images/cancel.png" border="0" align="absmiddle">
+			<img src="includes/images/cancel.png" border="0" align="absmiddle" />
 			Cancel
 		</span>
 	</a>
 	&nbsp;
-	<a href="javascript:submitForm()" id="buttonLinks">
+	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="includes/images/accept.png" border="0" align="absmiddle">
+			<img src="includes/images/accept.png" border="0" align="absmiddle" />
 			Update Profile
 		</span>
 	</a>

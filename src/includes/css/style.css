@@ -39,7 +39,7 @@ a.externallink{
 a.noborder{
 	border-bottom: 0px;
 }
-#buttonLinks{
+.buttonLinks{
 	margin: 0px; 
 	font-size: 100%; 
 	font-family: Verdana, sans-serif; 
@@ -53,12 +53,12 @@ a.noborder{
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 }
-#buttonLinks span{
-	padding:5px;
-}
-#buttonLinks:hover{
+.buttonLinks:hover{
 	background: #FFFFF0;
 	border: 1px inset #ccc;
+}
+.buttonLinks span{
+	padding:5px;
 }
 
 

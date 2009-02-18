@@ -99,9 +99,9 @@ Please enter the information below, to change your password
 
 <!--- Button Bar --->
 <div align="center" id="_buttonbar">
-	<a href="javascript:submitForm()" id="buttonLinks">
+	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="includes/images/accept.png" border="0" align="absmiddle">
+			<img src="includes/images/accept.png" border="0" align="absmiddle" />
 			Update Password
 		</span>
 	</a>
