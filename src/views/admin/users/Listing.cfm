@@ -73,10 +73,10 @@ $Build ID:	@@build_id@@
 
 		<!--- Filter --->
 		<label class="inline" for="search_criteria">Search</label>
-		<input type="text" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
+		<input type="text" size="25" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
 
 		<!--- Role --->
-		<label class="inline" for="role_id">User Role</label>
+		<label class="inline" for="role_id">Role</label>
 		<select name="role_id" id="role_id">
 			<option value="0" <cfif rc.role_id eq rc.qRoles.roleid>selected="selected"</cfif>>All Roles</option>
 			<cfloop query="rc.qRoles">
@@ -91,7 +91,14 @@ $Build ID:	@@build_id@@
 			<option value="1" <cfif rc.active>selected="selected"</cfif>>True</option>
 			<option value="0" <cfif not rc.active>selected="selected"</cfif>>False</option>
 		</select>
-
+		<!--- Confirmed --->
+		&nbsp;
+		<label class="inline" for="active">Confirmed</label>
+		<select name="confirmed" id="confirmed">
+			<option value="-1" <cfif rc.confirmed eq -1>selected="selected"</cfif>>All</option>
+			<option value="1" <cfif rc.confirmed eq 1>selected="selected"</cfif>>True</option>
+			<option value="0" <cfif rc.confirmed eq 0>selected="selected"</cfif>>False</option>
+		</select>
 
 		<!--- Search Button --->
 		<a href="javascript:searchForm()" id="buttonLinks">
@@ -166,7 +173,7 @@ $Build ID:	@@build_id@@
 			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
 			   </cfif>
 			</th>
-			<th align="center" width="95">
+			<th class="center" width="95">
 				<!--- Sort Indicator --->
 				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
 				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_isconfirmed/' & rc.sortOrder & '/' & rc.page)#">
@@ -177,7 +184,7 @@ $Build ID:	@@build_id@@
 			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
 			   </cfif>
 			</th>
-			<th align="center" width="65">ACTIONS</th>
+			<th class="center" width="65">ACTIONS</th>
 		</tr>
 
 		<!--- Loop Through Query Results --->
@@ -189,13 +196,19 @@ $Build ID:	@@build_id@@
 				<input type="checkbox" name="user_id" id="user_id" value="#user_id#" />
 				</cfif>
 			</td>
-			<td><cfif user_isDefault><img src="includes/images/asterisk_orange.png" align="absmiddle"></cfif>
-				#user_fname# #user_lname#</td>
+			<td>
+				<!--- Avatar --->
+				#getMyPlugin("avatar").renderAvatar(size:32)#
+				<!--- Name --->
+				#user_fname# #user_lname#
+				<!--- Default Image --->
+				<cfif user_isDefault><img src="includes/images/asterisk_orange.png" align="absmiddle"></cfif>
+			</td>
 			<td><a href="mailto:#user_email#">#user_email#<a/></td>
-			<td align="center">#yesnoformat(user_isconfirmed)#</td>
+			<td class="center">#yesnoformat(user_isconfirmed)#</td>
 
 			<!--- Display Commands --->
-			<td align="center">
+			<td class="center">
 				<!--- Permissions Command --->
 				<a href="#event.buildLink(rc.xehUserPerms & '/user_id/' & user_id)#" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
 				<!--- Edit Command --->

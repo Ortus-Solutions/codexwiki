@@ -21,25 +21,48 @@ CREATE TABLE `wiki_options` (
 </cfquery>
 
 <cftry>
-<!--- Help Removeals --->
-<cfquery name="qHelp" datasource="#request.dsn#">
-ALTER TABLE `wiki_options` ADD UNIQUE INDEX Index_2(`option_name`);
-</cfquery>
-<cfquery name="qHelp" datasource="#request.dsn#">
-ALTER TABLE `wiki_customhtml` ADD `customHTML_afterSideBar` TEXT NULL AFTER `customHTML_modify_date`;
-</cfquery>
-<cfquery name="qHelp" datasource="#request.dsn#">
-ALTER TABLE `wiki_customhtml` ADD `customHTML_beforeSideBar` TEXT NULL AFTER `customHTML_afterSideBar`;
-</cfquery>
-<cfquery name="qHelp" datasource="#request.dsn#">
-ALTER TABLE `wiki_pagecontent` ADD COLUMN `pagecontent_isReadOnly` BOOLEAN NOT NULL DEFAULT false AFTER `pagecontent_isActive`;
-</cfquery>
-<cfquery name="qHelp" datasource="#request.dsn#">
-ALTER TABLE `wiki_users` ADD UNIQUE INDEX newindex(`user_username`);
-</cfquery>
+	<!--- Help Removeals --->
+	<cfquery name="qHelp" datasource="#request.dsn#">
+	ALTER TABLE `wiki_options` ADD UNIQUE INDEX Index_2(`option_name`);
+	</cfquery>
+	<cfquery name="qHelp" datasource="#request.dsn#">
+	ALTER TABLE `wiki_customhtml` ADD `customHTML_afterSideBar` TEXT NULL AFTER `customHTML_modify_date`;
+	</cfquery>
+	<cfquery name="qHelp" datasource="#request.dsn#">
+	ALTER TABLE `wiki_customhtml` ADD `customHTML_beforeSideBar` TEXT NULL AFTER `customHTML_afterSideBar`;
+	</cfquery>
+	<cfquery name="qHelp" datasource="#request.dsn#">
+	ALTER TABLE `wiki_pagecontent` ADD COLUMN `pagecontent_isReadOnly` BOOLEAN NOT NULL DEFAULT false AFTER `pagecontent_isActive`;
+	</cfquery>
+	<cfquery name="qHelp" datasource="#request.dsn#">
+	ALTER TABLE `wiki_users` ADD UNIQUE INDEX newindex(`user_username`);
+	</cfquery>
 	<cfcatch type="database">
 		<p>
 			Database changes already made, Continuing migration.
+		</p>
+	</cfcatch>
+</cftry>
+<cftry>
+	<!--- Append To Namespaces The Create Date--->
+	<cfquery name="qNamespace" datasource="#request.dsn#">
+	ALTER TABLE `wiki_namespace` ADD COLUMN `namespace_createddate` datetime AFTER `namespace_isdefault`
+	</cfquery>
+	<cfquery name="qNamespace" datasource="#request.dsn#">
+	UPDATE `wiki_namespace`
+	SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(),"HH:mm:ss")#'
+	</cfquery>
+	<!--- Add Page Title and passwords --->
+	<cfquery name="qNamespace" datasource="#request.dsn#">
+	ALTER TABLE `wiki_page` 
+	 ADD COLUMN `page_title` varchar(255) AFTER `FKnamespace_id`,
+	 ADD COLUMN `page_password` varchar(255) AFTER `page_title`,
+	 ADD COLUMN `page_description` varchar(255) AFTER `page_password`,
+	 ADD COLUMN `page_keywords` varchar(255) AFTER `page_description`
+	</cfquery>
+	<cfcatch type="database">
+		<p>
+			Beta 2 changes already done.
 		</p>
 	</cfcatch>
 </cftry>
@@ -58,24 +81,9 @@ INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VAL
 ('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD'),
 ('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki'),
 ('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki'),
-('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true');
-</cfquery>
-
-<!--- Append To Namespaces The Create Date--->
-<cfquery name="qNamespace" datasource="#request.dsn#">
-ALTER TABLE `wiki_namespace` ADD COLUMN `namespace_createddate` datetime AFTER `namespace_isdefault`
-</cfquery>
-<cfquery name="qNamespace" datasource="#request.dsn#">
-UPDATE `wiki_namespace`
-SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(),"HH:mm:ss")#'
-</cfquery>
-
-<!--- Add Page Title and passwords --->
-<cfquery name="qNamespace" datasource="#request.dsn#">
-ALTER TABLE `wiki_page` ADD COLUMN `page_title` varchar(255) AFTER `FKnamespace_id`,
- ADD COLUMN `page_password` varchar(255) AFTER `page_title`,
- ADD COLUMN `page_description` varchar(255) AFTER `page_password`,
- ADD COLUMN `page_keywords` varchar(255) AFTER `page_description`
+('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true'),
+('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','true'),
+('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg');
 </cfquery>
 
 <!--- Get all Help Namespace pages --->
@@ -87,7 +95,6 @@ b.namespace_name = 'Help';
 </cfquery>
 <!--- page_ids --->
 <cfset helpIDs = valueList(qHelp.page_id)>
-
 <!--- Remove Pagecontent --->
 <cfquery name="qHelpContent" datasource="#request.dsn#">
 delete
@@ -130,7 +137,6 @@ where permission = 'WIKI_REGISTRATION'
 </cfquery>
 
 <!--- let's try and import the help scripts --->
-
 <cffile action="read" file="#expandPath('assets/helpcontent.sql')#" variable="helpsql">
 
 <cfscript>

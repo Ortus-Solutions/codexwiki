@@ -20,7 +20,18 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<!--- create a non found wiki page --->
+<!--- js --->
+<cfsavecontent variable="js">
+<cfoutput>
+<script type="text/javascript">
+	function submitReinit(){
+		$('##_loader2').toggle();
+		$('##ReinitSubmit').toggle();
+	}
+</script>
+</cfoutput>
+</cfsavecontent>
+<cfhtmlhead text="#js#">
 <cfoutput>
 <!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
@@ -52,28 +63,5 @@ $Build ID:	@@build_id@@
 		</div>
 		
    </fieldset>
-
-	<fieldset>
-	<legend><strong>Codex Wiki Options</strong></legend>
-		<table class="tablelisting" width="98%" align="center">
-			<tr>
-				<th width="250">Option</th>
-				<th>Value</th>
-			</tr>
-			
-			<tr>
-				<td><strong>Codex Version</strong></td>
-				<td>#getSetting("Codex").Version# #getSetting("Codex").Suffix#</td>
-			</tr>	
-			<cfset count=1>
-			<cfloop array="#rc.sortedOptions#" index="i">
-				<cfset count+=1>
-				<tr <cfif count mod 2 eq 0>class="even"</cfif>>
-					<td><strong>#i#</strong></td>
-					<td>#rc.CodexOptions[i]#</td>
-				</tr>
-			</cfloop>
-		</table>
-	</fieldset>
 </form>
 </cfoutput>

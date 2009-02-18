@@ -53,10 +53,6 @@ $Build ID:	@@build_id@@
 	function selectSearch(engine){
 		$('##wiki_search_engine').val(engine);
 	}
-	function submitReinit(){
-		$('##_loader2').toggle();
-		$('##ReinitSubmit').toggle();
-	}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -90,7 +86,7 @@ $Build ID:	@@build_id@@
 		<textarea dName="Wiki Metadata"
 			      name="wiki_metadata" id="wiki_metadata"
 			   	  rows="2"  required="true">#rc.CodexOptions.wiki_metadata#</textarea>
-     	<br />
+     	<br /><br />
 	
 		<!--- Wiki Keywords --->
 		<label for="wiki_metadata">Wiki Metadata Keywords</label>
@@ -98,7 +94,7 @@ $Build ID:	@@build_id@@
 		<textarea dName="Wiki Metadata Keywords"
 			      name="wiki_metadata_keywords" id="wiki_metadata_keywords"
 			   	  rows="2" required="true">#rc.CodexOptions.wiki_metadata_keywords#</textarea>
-     	<br />
+     	<br /><br />
 		
 		<!--- Wiki Outgoing Email --->
 		<label for="wiki_name">Wiki Outgoing Email</label>
@@ -150,6 +146,52 @@ $Build ID:	@@build_id@@
 		</div>
 		
 		<br /><br />
+		<!--- Comments  --->
+		<label for="wiki_comments_mandatory">Mandatory Page Comments</label> 
+		Whether edit comments for pages should be mandatory or not.<br />
+		<input type="radio" 
+			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
+			   <cfif rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
+			   <cfif not rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
+			   value="0">No
+		
+	</fieldset>
+	
+	<br />
+	
+	<fieldset>
+	<legend><strong>User Avatars</strong></legend>
+		An avatar is an image that follows you from site to site appearing beside your name when you comment on 
+			avatar enabled sites.
+		<!--- Gravatars  --->
+		<label for="wiki_gravatar_display">Show User Avatar</label> 
+		Whether to display a user's <a href="http://en.gravatar.com/">gravatar</a> or not.<br />
+		<input type="radio" 
+			   name="wiki_gravatar_display" id="wiki_gravatar_display"
+			   <cfif rc.CodexOptions.wiki_gravatar_display>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="wiki_gravatar_display" id="wiki_gravatar_display"
+			   <cfif not rc.CodexOptions.wiki_gravatar_display>checked="checked"</cfif>
+			   value="0">No
+		<br /><br />
+		<label for="wiki_gravatar_rating">Avatar Rating</label>
+		The maximum avatar display rating.<br />
+		<select name="wiki_gravatar_rating" id="wiki_gravatar_rating">
+			<option value="G"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "G">selected="selected"</cfif>>G - Suitable for all audiences</option>
+			<option value="PG" <cfif rc.CodeXOptions.wiki_gravatar_rating eq "PG">selected="selected"</cfif>>PG - Possibly offensive, usually for audiences 13 and above</option>
+			<option value="R"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "R">selected="selected"</cfif>>R - Intended for adult audiences above 17</option>
+			<option value="X"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "X">selected="selected"</cfif>>X - Even more mature than above</option>
+		</select>
+	</fieldset>
+	
+	<br />
+	
+	<fieldset>
+	<legend><strong>Search Engine Options</strong></legend>
 		<!--- Default Page --->
 		<label for="wiki_search_engine">Wiki Search Engine</label>
      	The wiki search engine class to use. You can create your own search engine adapters
@@ -166,22 +208,10 @@ $Build ID:	@@build_id@@
 		 	   dName="Search Engine"
 		 	   name="wiki_search_engine" id="wiki_search_engine" 
 		 	   value="#rc.CodexOptions.wiki_search_engine#" size="60" required="true"> 
-		<br /><br />
-		
-		<!--- Comments  --->
-		<label for="wiki_comments_mandatory">Mandatory Page Comments</label> 
-		Whether edit comments for pages should be mandatory or not.<br />
-		<input type="radio" 
-			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
-			   <cfif rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
-			   value="1">Yes
-		<input type="radio" 
-			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
-			   <cfif not rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
-			   value="0">No
-		
-		<br /><br />
+	
 	</fieldset>
+	
+	<br />
 	
 	<fieldset>
 		<legend>Wiki Registration</legend>

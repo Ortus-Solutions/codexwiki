@@ -34,15 +34,14 @@ Below you can see your current profile in the system. You can click on the <stro
 <!--- Profile Details --->
 <fieldset >
 	<legend>My Details</legend>
-	<div>
-		<p>
-		<label class="inline">Name: </label> #rc.oUser.getfname()# #rc.oUser.getlname()#<br />
-		<label class="inline">Email: </label> #rc.oUser.getEmail()#<br />
-		<label class="inline">Username: </label> #rc.oUser.getUsername()#<br />
-		<label class="inline">Created On: </label> #printDate(rc.oUser.getcreatedate())# at #printTime(rc.oUser.getcreatedate())#<br />
-		<label class="inline">Modified On: </label> #printDate(rc.oUser.getModifyDate())# at #printTime(rc.oUser.getModifyDate())#<br />
-		</p>
-	</div>
+	<p>
+	#getMyPlugin("avatar").renderAvatar()#<br />
+	<label class="inline">Name: </label> #rc.oUser.getfname()# #rc.oUser.getlname()#<br />
+	<label class="inline">Email: </label> #rc.oUser.getEmail()#<br />
+	<label class="inline">Username: </label> #rc.oUser.getUsername()#<br />
+	<label class="inline">Created On: </label> #printDate(rc.oUser.getcreatedate())# at #printTime(rc.oUser.getcreatedate())#<br />
+	<label class="inline">Modified On: </label> #printDate(rc.oUser.getModifyDate())# at #printTime(rc.oUser.getModifyDate())#<br />
+	</p>
 	
 	<!--- Button Bar --->
 	<div align="center" id="_buttonbar">

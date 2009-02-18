@@ -50,6 +50,7 @@ $Build ID:	@@build_id@@
 			/* Search Criteria */
 			event.paramValue("search_criteria","");
 			event.paramValue("active",true);
+			event.paramValue("confirmed",-1);
 			event.paramValue("page","1");
 			event.paramValue("role_id","0");
 
@@ -67,7 +68,8 @@ $Build ID:	@@build_id@@
 												   active=rc.active,
 												   role_id=rc.role_id,
 												   startrow=rc.boundaries.startRow,
-												   maxRows=rc.CodexOptions.wiki_paging_maxrows);
+												   maxRows=rc.CodexOptions.wiki_paging_maxrows,
+												   confirmed=rc.confirmed);
 
 			/* Found Rows */
 			if( rc.qUsers.recordcount ){
