@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <script type="text/javascript">
 	function submitUpload(){
-		$('##_uploadLoader').toggle();
+		$('##_uploadLoader').slideToggle();
 		$('##UploadButton').toggle();
 	}
 	function submitReload(){
@@ -52,7 +52,6 @@ CodeX Wiki Plugins</h2>
 	  action="#event.buildLink(rc.xehUpload)#" 
 	  enctype="multipart/form-data"
 	  method="post" onSubmit="submitUpload()">
-	<h3>Upload/Install Plugin</h3>
 	<p>
 	<div id="_uploadLoader" class="formloader float-right">
 		<p>
@@ -60,10 +59,9 @@ CodeX Wiki Plugins</h2>
 			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
 		</p>
 	</div>
-	<label>Plugin File</label>
+	<label>Upload/Install Plugin</label>
 	<input type="file" name="filePlugin" id="filePlugin" size="60">
 	<!--- Loader --->
-	
 	<input type="submit" name="UploadButton" id="UploadButton" value="Upload/Install Plugin">
 	</p>
 </form>

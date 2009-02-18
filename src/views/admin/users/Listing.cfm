@@ -101,10 +101,9 @@ $Build ID:	@@build_id@@
 		</select>
 
 		<!--- Search Button --->
-		<a href="javascript:searchForm()" class="buttonLinks">
+		<a href="javascript:searchForm()" class="buttonLinks" title="Search">
 			<span>
-				<img src="includes/images/magnifier.png" border="0" align="absmiddle">
-				Search
+				<img src="includes/images/magnifier.png" border="0" align="absmiddle" alt="Search">
 			</span>
 		</a>
 		</p>
@@ -119,14 +118,14 @@ $Build ID:	@@build_id@@
 		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle" />
-				Add User
+				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
 				<img src="includes/images/stop.png" border="0" align="absmiddle" />
-				Delete User(s)
+				Delete
 			</span>
 		</a>
 	</div>
@@ -230,14 +229,14 @@ $Build ID:	@@build_id@@
 		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle" />
-				Add User
+				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
 				<img src="includes/images/stop.png" border="0" align="absmiddle" />
-				Delete User(s)
+				Delete
 			</span>
 		</a>
 	</div>

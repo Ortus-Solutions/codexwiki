@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <script type="text/javascript">
 	function submitReinit(){
-		$('##_loader2').toggle();
+		$('##_loader2').slideToggle();
 		$('##ReinitSubmit').toggle();
 	}
 </script>
