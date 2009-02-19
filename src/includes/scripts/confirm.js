@@ -39,18 +39,14 @@ function confirm(msg, callback)
                     dialog.data.find("#message").append(msg);
 					var yes = dialog.data.find("#yes");
 					var no = dialog.data.find("#no");
-					yes.click(function()
-						{
-							if($.isFunction(callback))
-							{
+					yes.click(function(){
+							if($.isFunction(callback)){
 								callback.call();
 							}
-
 							$.modal.close();
 						}
 					);
-					no.click(function()
-						{
+					no.click(function(){
 							$.modal.close();
 						}
 					);
@@ -61,7 +57,6 @@ function confirm(msg, callback)
 
 	return false;
 }
-
 function gotoLink(alink)
 {
 	window.location.href = $(alink).attr("href");

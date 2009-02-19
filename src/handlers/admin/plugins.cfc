@@ -46,6 +46,9 @@ $Build ID:	@@build_id@@
 			/* Plugin */
 			rc.oWikiPlugin = getMyPlugin("wiki.WikiPlugins");
 			rc.qPlugins = rc.oWikiPlugin.getPlugins();
+			
+			/* JS */
+			rc.jsAppendList = "jquery.simplemodal,confirm";
 	
 			event.setView('admin/plugins/list');
 		</cfscript>

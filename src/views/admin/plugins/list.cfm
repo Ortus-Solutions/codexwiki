@@ -32,6 +32,11 @@ $Build ID:	@@build_id@@
 		$('##_reloadUploader').slideToggle();
 		$('##reloadPluginsDiv').slideToggle();
 	}
+	function confirmDelete(plugin,linkTo){
+		confirm("Do you wish to remove the <strong>"+plugin+"</strong> plugin?<br/>This cannot be undone!",function(){
+			window.location.href=linkTo;
+		});
+	}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -75,8 +80,7 @@ CodeX Wiki Plugins</h2>
 		<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
 			<td>#name#</td>
 			<td class="center">
-				<a href="#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('Utilities').ripExtension(name))#" 
-				   onClick="return confirm('Do you really want to delete this plugin?')"
+				<a href="javascript:confirmDelete('#jsstringFormat(getPlugin('Utilities').ripExtension(name))#','#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('Utilities').ripExtension(name))#')" 
 				   title="Remove Plugin"><img src="includes/images/bin_closed.png" align="absmiddle" border="0"></a>
 			</td>
 		</tr>

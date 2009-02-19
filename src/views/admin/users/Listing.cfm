@@ -24,30 +24,30 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function searchForm(){
-			$('##_loader').fadeIn();
-			$('##searchFilterForm').submit();
+<script type="text/javascript">
+	function searchForm(){
+		$('##_loader').fadeIn();
+		$('##searchFilterForm').submit();
+	}
+	function submitForm(){
+		$('##_loader').fadeIn();
+		$('##userForm').submit();
+	}
+	function deleteRecord(recordID){
+		if( recordID != null ){
+			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
+			$("input[@name='user_id']").each(function(){
+				if( this.value == recordID ){ this.checked = true;}
+				else{ this.checked = false; }
+			});
 		}
-		function submitForm(){
-			$('##_loader').fadeIn();
-			$('##userForm').submit();
-		}
-		function deleteRecord(recordID){
-			if( recordID != null ){
-				$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-				$("input[@name='user_id']").each(function(){
-					if( this.value == recordID ){ this.checked = true;}
-					else{ this.checked = false; }
-				});
-			}
-			//Submit Form
-			submitForm();
-		}
-		function confirmDelete(recordID){
-			confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!", function(){deleteRecord(recordID)});
-		}
-	</script>
+		//Submit Form
+		submitForm();
+	}
+	function confirmDelete(recordID){
+		return confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!");
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">

@@ -36,15 +36,15 @@ $Build ID:	@@build_id@@
 
 		<cfif rc.oUser.getisAuthorized()>
 		<!--- User Profile Tab --->
-		<li <cfif refindnocase("^profile",event.getCurrentHandler())>id="current"</cfif>>
+		<li <cfif refindnocase("^profile",event.getCurrentEvent())>id="current"</cfif>>
 			<a href="#event.buildLink(rc.xehUserProfile)#"><span>My Profile</span></a>
 		</li>
 		</cfif>
 
 		<!--- Admin Tab --->
 		<cfif rc.oUser.checkPermission("WIKI_ADMIN")>
-		<li <cfif refindnocase("^admin",event.getCurrentHandler())>id="current"</cfif> >
-			<a href="#event.buildLink(rc.xehAdmin)#"><span>Admin</span></a>
+		<li <cfif refindnocase("^admin",event.getCurrentEvent())>id="current"</cfif> >
+			<a href="#event.buildLink(rc.xehAdmin)#"><span class="adminTab">Admin</span></a>
 		</li>
 		</cfif>
 	</ul>

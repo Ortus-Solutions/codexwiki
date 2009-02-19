@@ -412,6 +412,9 @@ div.grippie {
    text-decoration:none;
    border-bottom: 0px;
 }
+#header a span.adminTab {
+   color: orange;
+}
 #header a span {
    float:left;
    display:block;
@@ -419,11 +422,11 @@ div.grippie {
    padding:5px 15px 4px 6px;
    color:#FFF;
 }
-/* Commented Backslash Hack hides rule from IE5-Mac \*/
-#header a span {float:none;}
-/* End IE5-Mac hack */
 #header a:hover span {
 	color:#FFF;
+}
+#header a:hover span.adminTab{
+	color:orange;
 }
 #header a:hover {
    background-position:0% -42px;
@@ -511,7 +514,7 @@ div.grippie {
 .inline { display: inline; }
 .clear { clear: both; }
 .red   { color: #CC0000; }
-.green { color: green}
+.green { color: green ;}
 .blue   { color: #003366; }
 .bold { font-weight: bold; }
 
