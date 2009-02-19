@@ -399,7 +399,8 @@ $Build ID:	@@build_id@@
 			content.version,
 			content.createdDate,
 			content.isActive,
-			user.username
+			user.username,
+			user.email
 		from
 			wiki.Page as page
 			join

@@ -88,7 +88,6 @@ $Build ID:	@@build_id@@
 <form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff & '/' & rc.page.getName())#" method="get">
 	
 	<input type="submit" value="View Changes"><br /><br />
-	
 	<cfloop query="rc.history">
 		<cfif isActive>
 			<cfset activeVersion = version>
@@ -114,7 +113,12 @@ $Build ID:	@@build_id@@
 				
 				<td class="center">#printDate(createddate)# #printTime(createddate,"short")#</td>
 				
-				<td class="center">#username#</td>
+				<td class="center">
+					<!--- Avatar --->
+					#getMyPlugin("avatar").renderAvatar(email:email,size:32)#
+					<!--- UserName --->
+					#username#
+				</td>
 				
 				<td>#Replace(XMLFormat(comment), chr(10), "<br/>", "all")#</td>
 				
