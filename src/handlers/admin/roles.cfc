@@ -48,175 +48,116 @@ $Build ID:	@@build_id@@
 			/* JS Lookups */
 			event.setValue("jsAppendList", "jquery.simplemodal,confirm");
 
-			//Calculate the start row according to page
-			rc.boundaries = getMyPlugin("paging").getboundaries();
-
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
 
-			/* Get Users */
-			rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,
-												   active=rc.active,
-												   role_id=rc.role_id,
-												   startrow=rc.boundaries.startRow,
-												   maxRows=rc.CodexOptions.wiki_paging_maxrows,
-												   confirmed=rc.confirmed);
-
-			/* Found Rows */
-			if( rc.qUsers.recordcount ){
-				rc.FoundRows = rc.qUsers.foundRows;
-			}
-			else{
-				rc.FoundRows = 0;
-			}
-
-			//Param sort Order
-			if ( event.getValue("sortOrder","") eq "")
-				event.setValue("sortOrder","ASC");
-			else{
-				if ( rc.sortOrder eq "ASC" )
-					rc.sortOrder = "DESC";
-				else
-					rc.sortOrder = "ASC";
-			}
-
-			//Test for Sorting
-			if ( event.getValue("sortby","") neq "" )
-				rc.qUsers = getPlugin("queryHelper").sortQuery(rc.qUsers,"[#rc.sortby#]",rc.sortOrder);
-			else
-				rc.sortby = "";
-
 			/* Set View */
-			event.setView('admin/users/Listing');
+			event.setView('admin/roles/Listing');
 		</cfscript>
 	</cffunction>
 
 	<!--- New user panel --->
-	<cffunction name="new" output="false" access="public" returntype="void" hint="new user editor">
+	<cffunction name="new" output="false" access="public" returntype="void" hint="new role editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin/users/list";
-			rc.xehUserCreate = "admin/users/doCreate";
+			rc.xehListing = "admin/roles/list";
+			rc.xehCreate = "admin/roles/doCreate";
 			
 			/* JS */
 			rc.jsAppendList = "formvalidation";
 
-			/* Get all the roles */
-			rc.qRoles = getUserService().getAllRoles();
-
 			/* Set View */
-			event.setView("admin/users/add");
+			event.setView("admin/roles/add");
 		</cfscript>
 	</cffunction>
 
-	<!--- Create a new user --->
-	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="User Create">
+	<!--- Create a new role --->
+	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="Role Create">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUser = "";
+			var oRole = "";
 			var oUserService = getUserService();
 			var errors = ArrayNew(1);
 
-			/* Validate username */
-			if( not oUserService.isUsernameValid(event.getValue("username","")) ){
-				getPlugin("messagebox").setMessage("error","The username you choose is already taken. Please try another one.");
-				new(arguments.event);
-				return;
-			}
-			
-			//create new user object.
-			oUser = oUserService.getUser();
+			//create new role object.
+			oRole = oUserService.getRole();
 			//Populate it
-			getPlugin("beanFactory").populateBean(oUser);
+			getPlugin("beanFactory").populateBean(oRole);
 			/* Validate it */
-			errors = oUser.validate();
+			errors = oRole.validate();
 			/* Error Checks */
 			if( arraylen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin/users/new");
+				new(event);
 			}
 			else{
-				/* Set Role */
-				oUser.setRole(oUserService.getRole(rc.role_id));
-				/* Save User */
-				oUserService.saveUser(oUser);
-
-				getPlugin("messagebox").setMessage("info","User added successfully");
-				setNextRoute(route="admin/users/list");
+				/* Save Role */
+				oUserService.save(oRole);
+				getPlugin("messagebox").setMessage("info","Role added successfully");
+				setNextRoute(route="admin/roles/list");
 			}
 		</cfscript>
 	</cffunction>
 
 	<!--- Edit Panel --->
-	<cffunction name="edit" output="false" access="public" returntype="void" hint="User editor">
+	<cffunction name="edit" output="false" access="public" returntype="void" hint="Role editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehUserListing = "admin/users/list";
-			rc.xehUserUpdate = "admin/users/doEdit";
+			rc.xehListing = "admin/roles/list";
+			rc.xehUpdate = "admin/roles/doEdit";
 			
 			/* JS */
 			rc.jsAppendList = "formvalidation";
 			
 			/* Verify incoming user id */
-			if( not event.valueExists("user_id") ){
-				getPlugin("messagebox").setMessage("warning", "user id not detected");
-				setNextRoute("admin/users/list");
+			if( not event.valueExists("roleID") ){
+				getPlugin("messagebox").setMessage("warning", "role id not detected");
+				setNextRoute("admin/roles/list");
 			}
 
-			/* Get all the roles */
-			rc.qRoles = getUserService().getAllRoles();
-			rc.thisUser =  getUserService().getUser(rc.user_id);
+			/* Get the role */
+			rc.oRole =  getUserService().getRole(rc.roleID);
 
 			/* Set View */
-			event.setView("admin/users/edit");
+			event.setView("admin/roles/edit");
 		</cfscript>
 	</cffunction>
 
 	<!--- Do Edit --->
-	<cffunction name="doEdit" output="false" access="public" returntype="void" hint="User do edit">
+	<cffunction name="doEdit" output="false" access="public" returntype="void" hint="Edit a Role">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			var oUserService = getUserService();
-			var oUser = "";
-			var oClonedUser = "";
+			var oRole = "";
+			var oClonedRole = "";
 			var errors = ArrayNew(1);
-			var passChange = false;
 			
 			/* Get User and start checks */
-			oUser = oUserService.getUser(rc.user_id);
-			oClonedUser = oUser.clone();
-			getPlugin("beanFactory").populateBean(oClonedUser);
+			oRole = oUserService.getRole(rc.roleID);
+			oClonedRole = oRole.clone();
+			getPlugin("beanFactory").populateBean(oClonedRole);
 			
 			/* Validate it */
-			errors = oClonedUser.validate(edit=true);
+			errors = oClonedRole.validate();
 			if( ArrayLen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin/users/edit/user_id/#rc.user_id#");
+				edit(event);
 			}
 			else{
-				/* Set/update role */
-				oClonedUser.setRole(oUserService.getRole(rc.role_id));
-				oClonedUser.setmodifyDate(now());
-				/* Set password if sent */
-				if( rc.newpassword.length() neq 0 ){
-					oClonedUser.setPassword(rc.newpassword);
-					passChange = true;
-				}
-
 				//Save it
-				oUserService.saveUser(User=oClonedUser,isPasswordChange=passChange);
+				oUserService.save(oClonedRole);
 				
 				/* Message of success */
-				getPlugin("messagebox").setMessage("info","User updated!");
-				setNextRoute(route="admin/users/list");
+				getPlugin("messagebox").setMessage("info","Role updated!");
+				setNextRoute(route="admin/roles/list");
 			}
 		</cfscript>
 	</cffunction>
@@ -228,61 +169,61 @@ $Build ID:	@@build_id@@
 			var rc = event.getCollection();
 
 			/* Exit Handlers */
-			rc.xehAddPerm = "admin/users/addPermission";
-			rc.xehRemovePerm = "admin/users/removePermission";
-			rc.xehUserListing = "admin/users/list";
+			rc.xehAddPerm = "admin/roles/addPermission";
+			rc.xehRemovePerm = "admin/roles/removePermission";
+			rc.xehListing = "admin/roles/list";
 
-			/* Verify incoming user id */
-			if( not event.valueExists("user_id") ){
-				getPlugin("messagebox").setMessage("warning", "user id not detected");
-				setNextRoute("admin/users/list");
+			/* Verify incoming role id */
+			if( not event.valueExists("roleID") ){
+				getPlugin("messagebox").setMessage("warning", "role id not detected");
+				setNextRoute("admin/roles/list");
 			}
 
-			/* Get the current User */
-			rc.thisUser =  getUserService().getUser(rc.user_id);
+			/* Get the role */
+			rc.oRole =  getUserService().getRole(rc.roleID);
 
-			/* Get The User's Perms */
-			rc.qUserPerms = getUserService().getuserPermissions(rc.thisUser.getuserID());
 			/* Get the Role's Perms */
-			rc.qRolePerms = getUserService().getRolePermissions(rc.thisUser.getRole().getroleId());
+			rc.qRolePerms = getUserService().getRolePermissions(rc.roleID);
+			
 			/* Get All the perms */
 			rc.qAllperms = getLookupService().getListing('security.Permission');
 
 			/* Set View */
-			event.setView("admin/users/permissions");
+			event.setView("admin/roles/permissions");
 		</cfscript>
 	</cffunction>
 
 	<!--- Add Permission --->
-	<cffunction name="addPermission" output="false" access="public" returntype="void" hint="User editor">
+	<cffunction name="addPermission" output="false" access="public" returntype="void" hint="Add Role Permission">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUser = "";
+			var oRole = "";
 			var oPerm = "";
 
 			/* Check Permission and user */
-			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
-				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
-				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
+			if( not event.valueExists('permissionID') or not event.valueExists('roleID') ){
+				getPlugin("messagebox").setMessage("warning", "permission or role id not detected");
+				setNextRoute("admin/roles/permissions/roleID/#rc.roleID#");
 			}
 
 			/* Get user and perm */
-			oUser = getUserService().getUser(rc.user_id);
+			oRole = getUserService().getRole(rc.roleID);
 			oPerm = getLookupService().getLookupObject('security.Permission',rc.permissionID);
 
-			/* Check if perm already in user */
-			if( not oUser.containsPermission(oPerm) ){
+			/* Check if perm already in role */
+			if( not oRole.containsPermission(oPerm) ){
 				/* Add Perm and save */
-				getUserService().saveUserPerm(oUser,oPerm);
+				oRole.addPermission(oPerm);
+				getUserService().save(oRole);
 				getPlugin("messagebox").setMessage("info", "permission added");
 			}
 			else{
-				getPlugin("messagebox").setMessage("warning", "permission already in user");
+				getPlugin("messagebox").setMessage("warning", "permission already in role");
 			}
 
 			/* relocate */
-			setNextRoute('admin/users/permissions/user_id/#rc.user_id#');
+			setNextRoute('admin/roles/permissions/roleID/#rc.roleID#');
 		</cfscript>
 	</cffunction>
 
@@ -291,47 +232,48 @@ $Build ID:	@@build_id@@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUser = 0;
+			var oRole = 0;
 			var oPerm = 0;
 
 			/* Check Permission and user */
-			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
-				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
-				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
+			if( not event.valueExists('permissionID') or not event.valueExists('roleID') ){
+				getPlugin("messagebox").setMessage("warning", "permission or role id not detected");
+				setNextRoute("admin/roles/permissions/roleID/#rc.roleID#");
 			}
 
-			/* get Permission_id and user_id */
-			oUser = getUserService().getUser(rc.user_id);
+			/* get Permission_id and roleID */
+			oRole = getUserService().getRole(rc.roleID);
 			oPerm = getLookupService().getLookupObject('security.Permission',rc.permissionID);
 
 			/* Remove Permission */
-			getUserService().deleteUserPerm(oUser,oPerm);
+			oRole.removePermission(oPerm);
+			getUserService().save(oRole);
 			getPlugin("messagebox").setMessage("info", "permission removed");
 
 			/* relocate */
-			setNextRoute('admin/users/permissions/user_id/#rc.user_id#');
+			setNextRoute('admin/roles/permissions/roleID/#rc.roleID#');
 		</cfscript>
 	</cffunction>
 
 	<!--- Delete User --->
-	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete a user.">
+	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete a role.">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oUser = "";
+			var oRole = "";
 			var i = 1;
 
 			try{
 				/* listing or record sent in? */
-				if( event.getValue("user_id","") neq "" ){
+				if( event.getValue("roleID","") neq "" ){
 					/* Loop and delete */
-					for(i=1; i lte listlen(rc.user_id); i=i+1){
-						//Get new user obj
-						oUser = getUserService().getUser(user_id=listGetAt(rc.user_id,i));
+					for(i=1; i lte listlen(rc.roleID); i=i+1){
+						//Get new obj
+						oRole = getUserService().getRole(listGetAt(rc.roleID,i));
 						//Remove it.
-						getUserService().deleteUser(oUser);
+						getUserService().delete(oRole);
 						//set message box
-						getPlugin("messagebox").setMessage("info","User(s) removed");
+						getPlugin("messagebox").setMessage("info","Role(s) removed");
 					}
 				}
 				else{
@@ -340,11 +282,11 @@ $Build ID:	@@build_id@@
 				}
 			}
 			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing user. You can only remove users that do not have any internal links in the system. #e.message# #e.detail#");
+				getPlugin("messagebox").setMessage("error", "Error removing role. You can only remove roles that do not have any internal links in the system. #e.message# #e.detail#");
 			}
 
 			/* Relocate back to listing */
-			setNextRoute(route="admin/users/list");
+			setNextRoute(route="admin/roles/list");
 		</cfscript>
 	</cffunction>
 

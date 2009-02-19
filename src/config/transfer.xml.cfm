@@ -105,7 +105,7 @@
 			<property name="isActive" type="boolean" column="user_isActive"/>
 			<property name="isConfirmed" type="boolean" column="user_isConfirmed"/>
 			<property name="createDate" type="date" column="user_create_date" ignore-insert="true" ignore-update="true" refresh-insert="true"/>
-			<property name="modifyDate" type="date" column="user_modify_date" ignore-insert="true" refresh-update="true"/>
+			<property name="modifyDate" type="date" column="user_modify_date" refresh-update="true"/>
 			<property name="isDefault" type="boolean" column="user_isDefault" ignore-insert="true" refresh-insert="true"/>
 			<manytoone name="Role">
 				<link column="FKrole_id" to="security.Role"/>

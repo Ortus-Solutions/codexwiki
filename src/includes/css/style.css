@@ -171,6 +171,9 @@ label {
 label.error{
 	color: red;
 }
+label.helptext{
+	font-weight: normal;
+}
 .inlineLabel {
 	display: inline;
 	font-weight: bold;

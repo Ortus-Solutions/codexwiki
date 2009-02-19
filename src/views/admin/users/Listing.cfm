@@ -45,7 +45,7 @@ $Build ID:	@@build_id@@
 		submitForm();
 	}
 	function confirmDelete(recordID){
-		return confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!");
+		confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!",function(){deleteRecord(recordID)});
 	}
 </script>
 </cfoutput>
@@ -197,7 +197,7 @@ $Build ID:	@@build_id@@
 			</td>
 			<td>
 				<!--- Avatar --->
-				#getMyPlugin("avatar").renderAvatar(size:32)#
+				#getMyPlugin("avatar").renderAvatar(email:user_email,size:32)#
 				<!--- Name --->
 				#user_fname# #user_lname#
 				<!--- Default Image --->

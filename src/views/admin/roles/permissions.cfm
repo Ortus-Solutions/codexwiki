@@ -23,16 +23,16 @@ $Build ID:	@@build_id@@
 <!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
-	<script type="text/javascript">
-		function submitForm(){
-			$('##_loader').fadeIn();
-			$('##addPermForm').submit();
-		}
-		function deleteRecord(recordID){
-			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-			window.location='#event.buildLink(linkTo=rc.xehRemovePerm,override=true)#/user_id/#rc.user_id#/permissionID/'+recordID+'#event.getRewriteExtension()#';
-		}
-	</script>
+<script type="text/javascript">
+	function submitForm(){
+		$('##_loader').fadeIn();
+		$('##addPermForm').submit();
+	}
+	function deleteRecord(recordID){
+		$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
+		window.location='#event.buildLink(linkTo=rc.xehRemovePerm,override=true)#/roleID/#rc.roleID#/permissionID/'+recordID+'#event.getRewriteExtension()#';
+	}
+</script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
@@ -42,19 +42,19 @@ $Build ID:	@@build_id@@
 <!--- BACK --->
 <div class="backbutton">
 	<img src="includes/images/arrow_left.png" align="absmiddle">
-	<a href="#event.buildLink(rc.xehUserListing)#">Back</a>
+	<a href="#event.buildLink(rc.xehListing)#">Back</a>
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/user.png" align="absmiddle"> User Management : Edit User Permissions</h2>
-<p>From here you can manage the user's a-la-carte permissions and view its inherited role permissions</p>
+<h2><img src="includes/images/vcard.png" align="absmiddle"> Role Management : Edit Role Permissions</h2>
+<p>From here you can manage the role's permissions.</p>
 
 <!--- Render Messagebox. --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Add Permission  --->
 <form name="addPermForm" id="addPermForm" method="POST" action="#event.buildLink(rc.xehAddPerm)#">
-	<input type="hidden" name="user_id" id="user_id" value="#rc.user_id#">
+	<input type="hidden" name="roleID" id="roleID" value="#rc.roleID#">
 	<div style="margin:10px;">
 		
 		<!--- Loader --->
@@ -86,43 +86,31 @@ $Build ID:	@@build_id@@
 
 <!--- Security Info --->
 <fieldset >
-	<legend>User Permissions</legend>
+	<legend>Role Permissions</legend>
 	<div>
 		<p>
-			<cfloop query="rc.qUserPerms">
+			<cfloop query="rc.qRolePerms">
 			<img src="includes/images/accept.png" align="absmiddle"> 
 			
-			<a class="noborder" href="javascript:deleteRecord('#rc.qUserPerms.permissionID#');" title="Remove Permission"><img src="includes/images/stop.png" id="delete_#rc.qUserPerms.permissionID#" align="absmiddle" title="Remove Permission" border="0"></a>
+			<a class="noborder" href="javascript:deleteRecord('#rc.qRolePerms.permissionID#');" title="Remove Permission"><img src="includes/images/stop.png" id="delete_#rc.qRolePerms.permissionID#" align="absmiddle" title="Remove Permission" border="0"></a>
 			
-			#rc.qUserPerms.permission#<br />
+			#rc.qRolePerms.permission#<br />
 			</cfloop>
-			<cfif rc.qUserPerms.recordcount eq 0>
-			<em>No a-la-carte permissions</em>
+			<cfif rc.qRolePerms.recordcount eq 0>
+			<em>No permissions attached</em>
 			</cfif>
 		</p>
 	</div>
 </fieldset>
 
-<!--- Security Info --->
-<fieldset >
-	<legend>Role Permissions</legend>
-	<div>
-		<p>
-			<cfloop query="rc.qRolePerms">
-			<img src="includes/images/accept.png" align="absmiddle"> #rc.qRolePerms.permission#<br />
-			</cfloop>
-		</p>
-	</div>
-</fieldset>
-
 <!--- Create / Cancel --->
-	<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
-		<a href="#event.buildLink(rc.xehUserListing)#" class="buttonLinks">
-			<span>
-				<img src="includes/images/cancel.png" border="0" align="absmiddle" />
-				Cancel
-			</span>
-		</a>
-	</div>
+<div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
+	<a href="#event.buildLink(rc.xehListing)#" class="buttonLinks">
+		<span>
+			<img src="includes/images/cancel.png" border="0" align="absmiddle" />
+			Cancel
+		</span>
+	</a>
+</div>
 
 </cfoutput>

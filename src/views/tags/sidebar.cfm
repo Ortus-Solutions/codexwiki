@@ -44,7 +44,7 @@ $Build ID:	@@build_id@@
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdmin)#">Admin Dashboard</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminUsers)#">User Management</a></li>
-			<li>Role Management</li>
+			<li><a href="#event.buildLink(rc.xehAdminRoles)#">Role Management</a></li>
 		</ul>
 	</div>
 	
