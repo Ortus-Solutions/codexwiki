@@ -119,6 +119,50 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
+	<!--- comments --->
+	<cffunction name="comments" access="public" returntype="void" output="false" hint="Wiki Comment Options">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfscript>
+			var rc = event.getCollection();	
+			
+			/* Exit Handlers */
+			rc.xehOnSubmit = "admin/config/savecomments";
+			
+			/* Required */
+			rc.jsAppendList = 'formvalidation,jquery.uitablefilter';
+			
+			/* Set View */
+			event.setview('admin/config/comments');	
+		</cfscript>    
+	</cffunction>
+	
+	<!--- saveOptions --->
+	<cffunction name="savecomments" access="public" returntype="void" output="false" hint="Save comment wiki options">
+		<cfargument name="Event" type="any" required="yes">
+		<cfscript>	
+			var rc = event.getCollection();
+			var oOption = 0;
+			var newOptions = structnew();
+			
+			/* Loop and Save Options */
+			for(key in rc.CodexOptions){
+				/* Get Option */
+				oOption = instance.ConfigService.getOption(name=key);
+				/* Populate it */
+				oOption.setValue(rc[key]);
+				newOptions[key] = rc[key];
+				/* Save */
+				instance.ConfigService.save(oOption);	
+			}
+			/* Re-Cache */
+			getColdboxOCM().set("CodexOptions",newOptions,0);
+			/* Mb */
+			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
+			/* Re-Route */
+			setNextRoute(route="admin/config/options");
+		</cfscript>
+	</cffunction>
+	
 <!------------------------------------------- PRIVATE ------------------------------------------->
 	
 	<cffunction name="getConfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">

@@ -62,7 +62,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <h2><img src="includes/images/cog.png" align="absmiddle"> Codex Options</h2>
 <p>
-	Below you can see the Codex general options and version information. Please be careful when editing the main options as it affects the entire wiki installation.
+	From here you can manage the overal Codex System Options. Please be careful when editing the main options as it affects the entire wiki installation.
 </p>
 <!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
@@ -78,7 +78,7 @@ $Build ID:	@@build_id@@
 			   dName="Wiki Name"
 			   name="wiki_name" id="wiki_name" 
 			   value="#rc.CodexOptions.wiki_name#" size="60" required="true">
-     	<br /><br />
+     	<br />
 	
 		<!--- Wiki Metadata --->
 		<label for="wiki_metadata">Wiki Metadata Description</label>
@@ -86,7 +86,7 @@ $Build ID:	@@build_id@@
 		<textarea dName="Wiki Metadata"
 			      name="wiki_metadata" id="wiki_metadata"
 			   	  rows="2"  required="true">#rc.CodexOptions.wiki_metadata#</textarea>
-     	<br /><br />
+     	<br />
 	
 		<!--- Wiki Keywords --->
 		<label for="wiki_metadata">Wiki Metadata Keywords</label>
@@ -94,18 +94,19 @@ $Build ID:	@@build_id@@
 		<textarea dName="Wiki Metadata Keywords"
 			      name="wiki_metadata_keywords" id="wiki_metadata_keywords"
 			   	  rows="2" required="true">#rc.CodexOptions.wiki_metadata_keywords#</textarea>
-     	<br /><br />
+     	<br />
 		
 		<!--- Wiki Outgoing Email --->
-		<label for="wiki_name">Wiki Outgoing Email</label>
-		The email to use to send out email.<br />
+		<label for="wiki_outgoing_email">Wiki Administrator Email</label>
+		The email to use to send out email and also receive email notifications from.<br />
 		<input type="text"
 			   dName="Wiki Outgoing Email"
 			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
 			   value="#rc.CodexOptions.wiki_outgoing_email#" 
 			   size="60" required="true" mask="email">
 
-		<br /><br />
+		<br />
+		
 		<!--- Default Page --->
 		<label for="wiki_defaultpage_label">Wiki Default Page Label</label>
      	The label for the menu item for the default wiki page.<br />
@@ -113,7 +114,8 @@ $Build ID:	@@build_id@@
 		 	   dName="Default Page Label"
 		 	   name="wiki_defaultpage_label" id="wiki_defaultpage_label" 
 		 	   value="#rc.CodexOptions.wiki_defaultpage_label#" size="60" required="true"> 
-		<br /><br />
+		<br />
+		
 		<label for="wiki_defaultpage">Wiki Default Page</label>
      	The actual wiki page name to link to.<br />
 		<input type="text" 
@@ -145,7 +147,7 @@ $Build ID:	@@build_id@@
 			</table>
 		</div>
 		
-		<br /><br />
+		<br />
 		<!--- Comments  --->
 		<label for="wiki_comments_mandatory">Mandatory Page Comments</label> 
 		Whether edit comments for pages should be mandatory or not.<br />
@@ -277,7 +279,7 @@ $Build ID:	@@build_id@@
 
 	<!--- Management Toolbar --->
 	<div id="_buttonbar" class="buttons">
-		<input type="submit" class="submitButton" value="Save Wiki Options"></input>
+		<input type="submit" class="submitButton" value="Save Options"></input>
    	</div>
 </form>
 </cfoutput>

@@ -84,6 +84,7 @@ $Build ID:	@@build_id@@
 	<div class="left-box">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminOptions)#">General Options</a></li>
+			<li><a href="#event.buildLink(rc.xehAdminCommentOptions)#">Comments Options</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#">Custom HTML</a></li>
 			<li><a href="#event.buildLink(rc.xehadminlookups)#">System Lookups</a></li>
 		</ul>

@@ -49,8 +49,9 @@ $Build ID:	@@build_id@@
 		<cfsetting showdebugoutput="#getDebugMode()#">
 		<cfscript>
 			/* Setup the global exit handlers For the admin*/
+			rc.xehAdmin = "admin/main/home";
 			if( reFindnocase("^admin",event.getCurrentEvent()) ){				/* Admin Menu */
-				rc.xehAdmin = "admin/main/home";				rc.xehAdminUsers = "admin/users/list";
+				rc.xehAdminUsers = "admin/users/list";
 				rc.xehAdminRoles = "admin/roles/list";
 				/* Wiki Admin */
 				
@@ -63,6 +64,7 @@ $Build ID:	@@build_id@@
 				
 				/* Settings Menu */
 				rc.xehAdminOptions = "admin/config/options";
+				rc.xehAdminCommentOptions = "admin/config/comments";
 				rc.xehAdminCustomHTML = "admin/config/customhtml";
 				rc.xehAdminLookups = "admin/lookups/display";
 			}			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile/user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.showKey#/Help:Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
