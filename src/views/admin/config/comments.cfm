@@ -49,6 +49,7 @@ $Build ID:	@@build_id@@
 <p>
 	The options below have to deal with the Codex Commenting System.
 </p>
+
 <!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
 
@@ -56,34 +57,18 @@ $Build ID:	@@build_id@@
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">
 	<fieldset>
 	<legend><strong>Comment Options</strong></legend>
-	 	<!--- Comments  --->
-		<label for="wiki_comments_mandatory">Mandatory Page Comments</label> 
-		Whether edit comments for pages should be mandatory or not.<br />
+	 	<!--- Activate Comments  --->
+		<label for="commenting_active">Activate Comments</label> 
+		This setting will enable site-wide commenting.<br />
 		<input type="radio" 
-			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
-			   <cfif rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
+			   name="commenting_active" id="commenting_active"
+			   <cfif rc.CodexOptions.commenting_active>checked="checked"</cfif>
 			   value="1">Yes
 		<input type="radio" 
-			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
-			   <cfif not rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
+			   name="commenting_active" id="commenting_active"
+			   <cfif not rc.CodexOptions.commenting_active>checked="checked"</cfif>
 			   value="0">No
 		<br />
-		
-		<!--- Wiki Metadata --->
-		<label for="wiki_metadata">Wiki Metadata Description</label>
-		The global metadata description content to place in the metadata tag.<br />
-		<textarea dName="Wiki Metadata"
-			      name="wiki_metadata" id="wiki_metadata"
-			   	  rows="2"  required="true">#rc.CodexOptions.wiki_metadata#</textarea>
-     	<br />
-	
-		<!--- Wiki Keywords --->
-		<label for="wiki_metadata">Wiki Metadata Keywords</label>
-		The global metadata keywords to place in the metadata tag.<br />
-		<textarea dName="Wiki Metadata Keywords"
-			      name="wiki_metadata_keywords" id="wiki_metadata_keywords"
-			   	  rows="2" required="true">#rc.CodexOptions.wiki_metadata_keywords#</textarea>
-     	<br />
 		
 		<!--- Wiki Outgoing Email --->
 		<label for="wiki_outgoing_email">Wiki Administrator Email</label>
@@ -93,11 +78,46 @@ $Build ID:	@@build_id@@
 			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
 			   value="#rc.CodexOptions.wiki_outgoing_email#" 
 			   size="60" required="true" mask="email">
-
 		<br />
 		
+	</fieldset>
+	
+	<fieldset>
+	<legend><strong>Comment Notifications</strong></legend>
+	 	<!--- Notification Emails  --->
+		<label for="commenting_notifification_emails">Notification Email(s)</label> 
+		Please enter the email addresse(s) in comma-delimitted format that will receive email notifications from new or moderated comments.<br />
+		<input type="text"
+			   dName="Notification Email"
+			   name="commenting_notifification_emails" id="commenting_notifification_emails" 
+			   value="#rc.CodexOptions.commenting_notifification_emails#" 
+			   size="60" required="true" mask="email">
+		<br />
+		<!--- Notification on Comment --->
+		<label for="commenting_notification_onpost">Notification on Post</label> 
+		Send a notification that a comment has been made.<br />
+		<input type="radio" 
+			   name="commenting_notification_onpost" id="commenting_notification_onpost"
+			   <cfif rc.CodexOptions.commenting_notification_onpost>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="commenting_notification_onpost" id="commenting_notification_onpost"
+			   <cfif not rc.CodexOptions.commenting_notification_onpost>checked="checked"</cfif>
+			   value="0">No
+		<br />
 		
-		
+		<!--- Notification on Moderation --->
+		<label for="commenting_notification_onmoderation">Notification for Moderation</label> 
+		Send a notification that a comment needs moderation.<br />
+		<input type="radio" 
+			   name="commenting_notification_onmoderation" id="commenting_notification_onmoderation"
+			   <cfif rc.CodexOptions.commenting_notification_onmoderation>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="commenting_notification_onmoderation" id="commenting_notification_onmoderation"
+			   <cfif not rc.CodexOptions.commenting_notification_onmoderation>checked="checked"</cfif>
+			   value="0">No
+		<br />
 	</fieldset>
 	
 	<!--- Loader --->
