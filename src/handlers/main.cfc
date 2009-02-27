@@ -29,7 +29,8 @@ $Build ID:	@@build_id@@
 		<cfargument name="controller" type="any" required="yes">
 		<cfscript>
 			super.init(arguments.controller);
-			/* Show Key */
+			
+			/* Show Keys */
 			instance.showKey = getSetting('showKey');
 			instance.spaceKey = getSetting('spaceKey');
 			
@@ -61,7 +62,7 @@ $Build ID:	@@build_id@@
 				rc.xehAdminPluginDocs = "admin/plugins/docs";
 				
 				/* Tools Menu */
-				rc.xehAdminAPI = "admin/main/api";
+				rc.xehAdminAPI = "admin/tools/api";
 				
 				/* Settings Menu */
 				rc.xehAdminOptions = "admin/config/options";

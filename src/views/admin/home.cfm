@@ -33,15 +33,24 @@ $Build ID:	@@build_id@@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 <cfoutput>
+	
 <!--- Messagebox --->
 #getPlugin("messagebox").renderit()#
 
+<!--- Welcome --->
 <h2><img src="includes/images/shield.png" align="absmiddle"> Welcome to your CodeX Administrator dashboard</h2>
 <p>
 	From this panel, you will be able to manage this CodeX installation. Please read all the instructions whenever
 	making changes to the system settings. As you can see, a new panel has appeared in your sidebar that will let you 
 	manage CodeX. So please use the available menu options under the <strong>Admin Menu</strong> box.
 </p>
+
+<!--- Beta Notification --->
+<div class="cbox_messagebox_warning">
+	<p class="cbox_messagebox">
+	Please bear in mind that some admin features have not been built yet. Enjoy Codex!
+	</p>
+</div>
 
 <!--- Reinit Box --->
 <form action="#event.buildLink(rc.xehReinitApp)#" name="reinitForm" id="reinitForm" method="post" onSubmit="submitReinit()">

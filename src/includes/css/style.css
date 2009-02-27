@@ -466,6 +466,10 @@ div.grippie {
 	text-transform: uppercase; 
 	background: #333; 
 	letter-spacing: 1px;	
+	cursor: pointer;
+}
+#sidebar h1:hover {
+	color: orange;
 }
 #sidebar .left-box {
 	border: 1px solid #EBEBEB;

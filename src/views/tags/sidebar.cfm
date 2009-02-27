@@ -25,10 +25,13 @@ $Build ID:	@@build_id@@
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-	function onLoginForm(){
-		$('##_buttonbar_login').slideUp("fast");
-		$('##_loader_login').fadeIn("slow");
-	}
+function onLoginForm(){
+	$('##_buttonbar_login').slideUp("fast");
+	$('##_loader_login').fadeIn("slow");
+}
+function toggleItems(it){
+	$("##"+it).slideToggle('fast');
+}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -38,9 +41,10 @@ $Build ID:	@@build_id@@
 <!--- WIKI ADMIN SIDEBAR --->
 <!--- ***************************************************************************************************** --->
 <cfif refindnocase("^admin",event.getCurrentEvent())>
+	
 	<!--- Admin Main Menu --->
-	<h1> <img src="includes/images/shield.png" align="absmiddle"> Admin</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_admin')"><img src="includes/images/shield.png" align="absmiddle"/> Admin</h1>
+	<div class="left-box#isItemVisible('sb_admin')#" id="sb_admin">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdmin)#">Admin Dashboard</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminUsers)#">User Management</a></li>
@@ -49,8 +53,8 @@ $Build ID:	@@build_id@@
 	</div>
 	
 	<!--- Pages --->
-	<h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Admin</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_wikiadmin')"> <img src="includes/images/home.png" align="absmiddle"/> Wiki Admin</h1>
+	<div class="left-box#isItemVisible('sb_wikiadmin')#" id="sb_wikiadmin">
 		<ul class="sidemenu">
 			<li>Pages</li>
 			<li>Namespaces</li>
@@ -60,8 +64,8 @@ $Build ID:	@@build_id@@
 	</div>
 	
 	<!--- Plugins --->
-	<h1> <img src="includes/images/plugin.png" align="absmiddle"> Plugins</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_plugins')"> <img src="includes/images/plugin.png" align="absmiddle"/> Plugins</h1>
+	<div class="left-box#isItemVisible('sb_plugins')#" id="sb_plugins">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminPlugins)#">Install/Remove</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminPluginDocs)#">Plugin Documentation</a></li>
@@ -69,8 +73,8 @@ $Build ID:	@@build_id@@
 	</div>
 	
 	<!--- Tools --->
-	<h1> <img src="includes/images/tools.png" align="absmiddle"> Tools</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_tools')"> <img src="includes/images/tools.png" align="absmiddle"/> Tools</h1>
+	<div class="left-box#isItemVisible('sb_tools')#" id="sb_tools">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminAPI)#">API Docs</a></li>
 			<li>Export</li>
@@ -80,8 +84,8 @@ $Build ID:	@@build_id@@
 	</div>
 	
 	<!--- Settings --->
-	<h1> <img src="includes/images/process.png" align="absmiddle"> Settings</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_settings')"> <img src="includes/images/process.png" align="absmiddle"/> Settings</h1>
+	<div class="left-box#isItemVisible('sb_settings')#" id="sb_settings">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminOptions)#">General Options</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminCommentOptions)#">Comments Options</a></li>
@@ -94,8 +98,8 @@ $Build ID:	@@build_id@@
 <!--- ***************************************************************************************************** --->
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
 	<!--- User Main Menu --->
-	<h1> <img src="includes/images/shield.png" align="absmiddle"> User Menu</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_profile')"> <img src="includes/images/shield.png" align="absmiddle"/> User Menu</h1>
+	<div class="left-box" id="sb_profile">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehUserProfile)#">My Profile</a></li>
 			<li><a href="#event.buildLink(rc.xehUserChangePass)#">Change Password</a></li>
@@ -106,8 +110,8 @@ $Build ID:	@@build_id@@
 <!--- ***************************************************************************************************** --->
 <cfelse>
 	<!--- Wiki Main Menu --->
-	<h1> <img src="includes/images/home.png" align="absmiddle"> Wiki Menu</h1>
-	<div class="left-box">
+	<h1 onClick="toggleItems('sb_wikimenu')"> <img src="includes/images/home.png" align="absmiddle"/> Wiki Menu</h1>
+	<div class="left-box" id="sb_wikimenu">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#">#rc.codexOptions.wiki_defaultpage_label#</a></li>
 			<li><a href="#event.buildLink(rc.xehSpecialHelp)#">Help</a></li>
@@ -124,12 +128,12 @@ $Build ID:	@@build_id@@
 <!--- User Login Box --->
 <!--- ***************************************************************************************************** --->
 	<cfif not rc.oUser.getisAuthorized()>
-		<h1> <img src="includes/images/key.png" align="absmiddle"> User Login </h1>
+		<h1 onClick="toggleItems('sb_userinfo')"> <img src="includes/images/key.png" align="absmiddle"/> User Login </h1>
 	<cfelse>
-		<h1> <img src="includes/images/user.png" align="absmiddle"> User Info </h1>
+		<h1 onClick="toggleItems('sb_userinfo')"> <img src="includes/images/user.png" align="absmiddle"/> User Info </h1>
 	</cfif>
 	
-	<div class="left-box">
+	<div class="left-box" id="sb_userinfo">
 		
 		<cfif not rc.oUser.getisAuthorized()>
 			<!--- Only show for non login event --->
@@ -153,8 +157,8 @@ $Build ID:	@@build_id@@
 				<div id="_loader_login" class="align-center formloader">
 					<p>
 						Submitting...<br />
-						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle"/>
+						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle"/>
 					</p>
 				</div>
 				
