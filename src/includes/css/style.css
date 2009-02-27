@@ -530,6 +530,10 @@ div.grippie {
 }
 
 /* AJAX UI ELements */
+.loadingContainer{
+	text-align: center;
+	padding-top: 20px;	
+}
 .loading {
 	background-image:  url("../images/loading.gif");
 	background-position: left center;

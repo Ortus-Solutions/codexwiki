@@ -26,11 +26,11 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------>
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="codex.model.search.adapters.ISearchAdapter" output="false">
-		<cfargument name="configBean" 	hint="the configuration beam" 	type="coldbox.system.beans.configBean" required="Yes">
-		<cfargument name="configService" type="codex.model.wiki.ConfigService" required="true" default="" hint="The Config Service"/>
-		<cfargument name="transfer"	 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
-		<cfargument name="datasource"   hint="the datasource bean" 		type="transfer.com.sql.Datasource" required="Yes">
-		<cfargument name="wikiService"  type="codex.model.wiki.WikiService" required="true" default="" hint="The wiki service"/>
+		<cfargument name="configBean" 	 	type="coldbox.system.beans.configBean" 	required="true" 	hint="the configuration beam">
+		<cfargument name="configService" 	type="codex.model.wiki.ConfigService" 	required="true" 	default="" hint="The Config Service"/>
+		<cfargument name="transfer"	 	 	type="transfer.com.Transfer" 			required="true" 	hint="the Transfer ORM">
+		<cfargument name="datasource"    	type="transfer.com.sql.Datasource" 		required="true" 	hint="the datasource bean">
+		<cfargument name="wikiService"  	type="codex.model.wiki.WikiService" 	required="true" 	default="" hint="The wiki service"/>
 		<cfscript>
 			
 			/* Properties */

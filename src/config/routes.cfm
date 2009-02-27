@@ -131,6 +131,8 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 -------------------------------------------- --->
 
 <!--- CUSTOM COURSES GO HERE (they will be checked in order) --->
+<!--- 404 Errors --->
+<cfset addCourse(pattern="notfound/",handler="main",action="notfound")>
 
 <!--- Main Wiki URL's --->
 <cfset addCourse(pattern="#getSetting('ShowKey')#/:page?/:print?",handler="page",action="show")>

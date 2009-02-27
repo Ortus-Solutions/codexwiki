@@ -45,7 +45,7 @@ to restore the database using the script found on the appropriate version.
 
 /codex
 	/install
-		/migration
+		/migrations
 			/{Version}
 				/codexwiki_MySQLAdminBackup.sql (The entire codex database backup using MySQL Admin)
 				/codexwiki_mysqldump.sql (The entire codex database backup using MySQL dump utility)

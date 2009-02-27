@@ -10,7 +10,6 @@
 		<Setting name="ConfigAutoReload"        value="false" />
 		<Setting name="DebugPassword" 			value="" />
 		<Setting name="ReinitPassword" 			value="" />
-		<Setting name="onInvalidEvent"			value="" />
 		<Setting name="CustomErrorTemplate"		value="" />
 		<Setting name="ExceptionHandler"		value="main.onException" />
 	</environment>

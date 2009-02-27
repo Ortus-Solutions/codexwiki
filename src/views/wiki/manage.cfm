@@ -31,7 +31,7 @@ function CodexPreview()
 	var content = $("##content");
 	
 	//Preview Content
-	var preview = $('<div style="text-align: center; padding-top: 20px"><span class="loading">Loading Preview...</a></div>').modal({
+	var preview = $('<div class="loadingContainer"><span class="loading">Loading Preview...</a></div>').modal({
 		close: true,
 		onOpen: function(dialog)
 			{
@@ -56,7 +56,33 @@ function CodexPreview()
 		}
 		);
 }
-
+function pageDialog(pagename){
+	//CheatSheet
+	var HelpModal = $('<div class="loadingContainer"><span class="loading">Loading Preview...</a></div>').modal({
+		close: true,
+		onOpen: function(dialog)
+			{
+			 	dialog.overlay.fadeIn("normal", function()
+				 	{
+				 		dialog.container.fadeIn("fast");
+				 		dialog.data.fadeIn("fast");
+				 	}
+				 )
+			},
+		onShow: function(dialog)
+			{
+				var data = {page: pagename};
+				//Page Preview
+				$.post("#event.BuildLink(rc.onPageRender)#", data,
+					function(string, status)
+					{
+						dialog.data.html('<div class="modalContent">' + string + '</div>');
+					}
+				);
+			}
+		}
+	);
+}
 function submitForm(){
 	needToConfirm=false;
 	$('##_buttonbar').slideUp("fast");
@@ -101,7 +127,7 @@ $(document).ready(function() {
 	
 	<!--- Control Holder & Text Area --->
 	<div class="float-right">
-		<a href="#event.buildLink(pageShowRoot('Help:Cheatsheet'))#">Markup Cheatsheet</a>
+		<a href="javascript:pageDialog('#rc.onCheatSheet#')">Markup Cheatsheet</a>
 		| 
 		<a href="#event.buildLink(pageShowRoot('Help:Contents'))#">Wiki Help</a>
 	</div>

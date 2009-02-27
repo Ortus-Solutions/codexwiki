@@ -39,7 +39,6 @@
 		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta 2'}" />
 		
 		<!--Transfer Settings -->
-		<Setting name="Transfer_datasourcePath" 	value="/codex/config/datasource.xml.cfm"/>
 		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>
 		<Setting name="Transfer_definitionPath" 	value="/codex/config/definitions"/>
 		
@@ -83,7 +82,9 @@
 
 	<i18N />
 
-	<Datasources />
+	<Datasources>
+		<Datasource alias="codex" name="codex" dbtype="mysql" username="" password=""/>
+	</Datasources>
 
 	<Cache>
 		<ObjectDefaultTimeout>45</ObjectDefaultTimeout>
@@ -95,7 +96,7 @@
 		<EvictionPolicy>LRU</EvictionPolicy>
 	</Cache>
 
-	<Interceptors>
+	<Interceptors throwOnInvalidStates="false">
         <CustomInterceptionPoints>onWikiPageTranslate</CustomInterceptionPoints>
 		<!-- Environment Control -->
 		<Interceptor class="coldbox.system.interceptors.environmentControl">

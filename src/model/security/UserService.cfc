@@ -29,11 +29,11 @@ $Build ID:	@@build_id@@
 
 	<cffunction name="init" hint="Constructor" access="public" output="false" returntype="UserService">
 		<!--- ************************************************************* --->
-		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
-		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-		<cfargument name="Datasource" 	hint="the Datasource obj" type="transfer.com.sql.Datasource" required="Yes">
-		<cfargument name="ConfigBean" 		required="true" type="coldbox.system.beans.configBean" hint="The ColdBox Config Bean">
-		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service">
+		<cfargument name="transfer" 	 type="transfer.com.Transfer" 				required="Yes" hint="the Transfer ORM">
+		<cfargument name="transaction" 	 type="transfer.com.sql.transaction.Transaction" required="Yes" hint="The Transfer transaction">
+		<cfargument name="Datasource" 	 type="transfer.com.sql.Datasource" 		required="Yes" hint="the Datasource obj">
+		<cfargument name="ConfigBean" 	 type="coldbox.system.beans.configBean" 	required="true" hint="The ColdBox Config Bean">
+		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service">
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Init */

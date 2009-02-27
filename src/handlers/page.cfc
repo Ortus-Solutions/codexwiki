@@ -203,6 +203,15 @@ $Build ID:	@@build_id@@
 	    <cfscript>
 			var content = getWikiService().getContent(arguments.event.getValue('contentid',0));
 			/* Render Data */
+			event.renderData(type='PLAIN', data=content.render(),contentType='text/html');
+		</cfscript>
+	</cffunction>
+	
+	<cffunction name="renderPage" access="public" returntype="void" output="false" hint="Render a Page's Content">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfscript>
+			var content = getWikiService().getContent(pageName=event.getValue("page",""));
+			/* Render Data */
 			event.renderData(type='PLAIN', data=content.render(),contentTYpe='text/html');
 		</cfscript>
 	</cffunction>
@@ -476,7 +485,9 @@ $Build ID:	@@build_id@@
 				rc.onSubmit = "page/doCreate";
 			}
 			rc.onPreview = "page/renderPreview";
+			rc.onPageRender = "page/renderPage";
 			rc.onCancel = "wiki";
+			rc.onCheatSheet = "Help:Cheatsheet";
 
 			/* View */
 			arguments.event.setView("wiki/manage");
