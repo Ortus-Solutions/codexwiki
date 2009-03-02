@@ -108,3 +108,11 @@ So please update the setting and rewrite engine accordingly.
 You will find this in install/VerityInstaller.cfm. This will only work on Windows/Linux machines as Verity has not been ported to Mac OS X. 
 By default, Codex uses a DB search engine.  You can configure the Verity search engine from the system options page.
 
+9. (Optional) Do you need your own custom site design? Easy, just create a coldbox layout in the /layouts/custom folder and try to use the basic
+ColdBox layout: /layouts/Layout.Main.cfm as your guide.  Then open the coldbox.xml and change the Defaultlayout element to point to yours:
+
+<Layouts>
+	<!--Declare the default layout, MANDATORY-->
+	<DefaultLayout>custom/MyLayout.Main.cfm</DefaultLayout>
+</Layouts>
+

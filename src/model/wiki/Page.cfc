@@ -24,7 +24,7 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-<cffunction name="setName" hint="stes the page name, and sets the namespace as required" access="public" returntype="void" output="false">
+<cffunction name="setName" hint="sets the page name, and sets the namespace as required" access="public" returntype="void" output="false">
 	<cfargument name="name" hint="the name of the page" type="string" required="Yes">
 	<cfscript>
 		var nameSpace = 0;
