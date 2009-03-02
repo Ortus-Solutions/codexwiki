@@ -29,6 +29,7 @@
 		<!-- Copy Codex -->
 		<copy todir="${build.dir}/codex/">
         	<fileset dir="${src.dir}">
+        		<exclude name="WEB-INF/**" />
         	</fileset>
         </copy>		
         <!-- Create Workbench -->
