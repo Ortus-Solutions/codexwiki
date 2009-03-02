@@ -74,8 +74,12 @@ Open the file config/coldbox.xml.cfm and update the AppMapping setting to match 
 <-- <I have installed codex under a directory called MyWiki -->
 <Setting name="AppMapping" value="/MyWiki" />
 
-3. By default, CodexWiki uses the datasource called codex, which is declared in the transfer datasource.xml file. 
-If you would like to change it, then open the file and change the name of the datasource.
+3. By default, CodexWiki uses the datasource called codex, which is declared in the coldbox.xml file. 
+If you would like to change it, then open the file and change the name of the datasource where you see this:
+
+<Datasources>
+	<Datasource alias="codex" name="codex" dbtype="mysql" username="" password=""/>
+</Datasources>
 
 4. Make sure that you have Transfer 1.0 or >, ColdBox 2.6.2 or > and ColdSpring 1.2 installed.
 
