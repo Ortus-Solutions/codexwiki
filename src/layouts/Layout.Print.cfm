@@ -20,6 +20,8 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
+<!--- Setup the Wiki Title Name due to cf8 bug on cfdocumentitem --->
+<cfset docTitle = rc.CodexOptions.wiki_name>
 <!--- Header for download on other browsers --->
 <cfif event.valueExists("content") >
 	<cfset fileTitle = rc.content.getPage().getCleanTitle()>
@@ -35,7 +37,7 @@ $Build ID:	@@build_id@@
 	<cfdocumentitem type="header">
 	<cfoutput>
 	<div style="font-size: 9px; text-align: left;">
-	#rc.CodexOptions.wiki_name# - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
+	#docTitle# - #dateformat(now(),"MMM DD, YYYY")# at #timeFormat(now(),"full")#
 	</div>
 	</cfoutput>
 	</cfdocumentitem>
