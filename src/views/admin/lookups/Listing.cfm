@@ -82,7 +82,7 @@ $Build ID:	@@build_id@@
 		</select>		
 		<!--- Utility Buttons --->
 		&nbsp;
-		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookups",override=true)#/#rc.lookupclass#" class="buttonLinks">
+		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookupClass/" & rc.lookupclass,translate=false)#" class="buttonLinks">
 			<span>
 				<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle" />
 				Reload Listing
@@ -106,7 +106,7 @@ $Build ID:	@@build_id@@
 
 	<!--- Add / Delete Button Bar --->
 	<div id="listButtonBar">
-		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookupclass",override=true)#/#rc.lookupclass#" class="buttonLinks">
+		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookupclass/" & rc.lookupclass,translate=false)#" class="buttonLinks">
 			<span>
 				<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
 				Add Record
@@ -144,7 +144,7 @@ $Build ID:	@@build_id@@
 					<cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>&##8226;</cfif>
 
 					<!--- Sort Column --->
-					<a href="#event.buildLink(rc.xehLookupList & '/lookupClass/' & rc.lookupClass & '/sortby/' & rc.mdDictionary.FieldsArray[i].alias & '/sortOrder/' & rc.sortOrder)#">
+					<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupClass',override=true)#/#rc.lookupClass#/sortby/#rc.mdDictionary.FieldsArray[i].alias#/sortOrder/#rc.sortOrder##event.getRewriteExtension()#">
 						#rc.mdDictionary.FieldsArray[i].alias#
 					</a>
 					
@@ -185,7 +185,7 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td align="center">
 				<!--- Edit Record --->
-				<a href="#event.buildLink(linkTo=rc.xehLookupEdit & '/lookupClass',override=true)#/#rc.lookupClass#/id/#rc.qListing[rc.mdDictionary.PK][currentrow]#" title="Edit Record">
+				<a href="#event.buildLink(linkTo=rc.xehLookupEdit & '/lookupClass',override=true)#/#rc.lookupClass#/id/#rc.qListing[rc.mdDictionary.PK][currentrow]##event.getRewriteExtension()#" title="Edit Record">
 				<img src="#rc.imgPath#/page_edit.png" border="0" align="absmiddle" title="Edit Record">
 				</a>
 				<!--- Delete Record --->
