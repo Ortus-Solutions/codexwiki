@@ -8,7 +8,7 @@ the helpcontent.sql
 
 <cftransaction>
 <cftry>
-	<!--- Help Removeals --->
+	<!--- Help Removals --->
 	<cfquery name="qHelp" datasource="#request.dsn#">
 	ALTER TABLE `wiki_options` ADD UNIQUE INDEX Index_2(`option_name`);
 	</cfquery>
@@ -30,6 +30,8 @@ the helpcontent.sql
 		</p>
 	</cfcatch>
 </cftry>
+
+<!--- BETA 2 --->
 <cftry>
 	<!--- Append To Namespaces The Create Date--->
 	<cfquery name="qNamespace" datasource="#request.dsn#">
@@ -39,7 +41,7 @@ the helpcontent.sql
 	UPDATE `wiki_namespace`
 	SET `namespace_createddate` = '#dateformat(now(),"yyyy-mm-dd")# #timeformat(now(),"HH:mm:ss")#'
 	</cfquery>
-	<!--- Add Templates Namespace --->
+	<!--- Add Templates Namespace IF it does not exist --->
 	<cfquery name="qNamespace" datasource="#request.dsn#">
 	select *
 	from `wiki_namespace` WHERE namespace_name = 'Template'
@@ -50,7 +52,7 @@ the helpcontent.sql
 		VALUES ('75D11EE4-8FD9-463C-8892FC02BD905735','Template','Template',0,'2009-02-18 09:18:58')
 		</cfquery>
 	</cfif>
-	<!--- Add Page Title and passwords --->
+	<!--- Add Page Table Modifications --->
 	<cfquery name="qNamespace" datasource="#request.dsn#">
 	ALTER TABLE `wiki_page` 
 	 ADD COLUMN `page_title` varchar(255) AFTER `FKnamespace_id`,
@@ -60,10 +62,11 @@ the helpcontent.sql
 	</cfquery>
 	<cfcatch type="database">
 		<p>
-			Beta 2 changes already done.
+			Beta 2 changes already done. Continuing Migration
 		</p>
 	</cfcatch>
 </cftry>
+
 <!--- Drop Wiki Options --->
 <cfquery name="qHelp" datasource="#request.dsn#">
 DROP TABLE /*!32312 IF EXISTS*/ `wiki_options`;
@@ -95,6 +98,23 @@ INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VAL
 ('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg');
 </cfquery>
 
+<!--- Wiki Registration permission removal --->
+<cfquery name="qInsert" datasource="#request.dsn#">
+delete
+from wiki_users_permissions 
+where FKpermission_id in (select permission_id from wiki_permissions where permission = 'WIKI_REGISTRATION')
+</cfquery>
+<cfquery name="qInsert" datasource="#request.dsn#">
+delete 
+from wiki_role_permissions 
+where FKpermission_id in (select permission_id from wiki_permissions where permission = 'WIKI_REGISTRATION')
+</cfquery>
+<cfquery name="qInsert" datasource="#request.dsn#">
+delete 
+from wiki_permissions 
+where permission = 'WIKI_REGISTRATION'
+</cfquery>
+
 <!--- Get all Help Namespace pages --->
 <cfquery name="qHelp" datasource="#request.dsn#">
 select a.*
@@ -116,8 +136,7 @@ delete
 from wiki_page
 where page_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#helpIDs#">)
 </cfquery>
-
-<!--- Insert New Wiki Help --->
+<!--- Insert New Wiki Help Pages --->
 <cfquery name="qInsert" datasource="#request.dsn#">
 INSERT INTO wiki_page ( page_id, page_name, FKnamespace_id ) VALUES ('58F2F999-FC99-125A-DB21FCD7085C44A1','Help:Contents','58F2F981-F62A-3124-E886BBF8CE6C5295'),
 ('59014C5F-C1C6-7E91-A38446214A380C7D','Help:Wiki_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295'),
@@ -128,31 +147,12 @@ INSERT INTO wiki_page ( page_id, page_name, FKnamespace_id ) VALUES ('58F2F999-F
 ('B5C4FA1D-CF1E-5C1B-950B4A04E276B736','Help:Codex_Wiki_Plugins', '58F2F981-F62A-3124-E886BBF8CE6C5295')
 </cfquery>
 
-<!--- Wiki Registration permission removal --->
-<cfquery name="qInsert" datasource="#request.dsn#">
-delete
-from wiki_users_permissions 
-where FKpermission_id in (select permission_id from wiki_permissions where permission = 'WIKI_REGISTRATION')
-</cfquery>
-<cfquery name="qInsert" datasource="#request.dsn#">
-delete 
-from wiki_role_permissions 
-where FKpermission_id in (select permission_id from wiki_permissions where permission = 'WIKI_REGISTRATION')
-</cfquery>
-<cfquery name="qInsert" datasource="#request.dsn#">
-delete 
-from wiki_permissions 
-where permission = 'WIKI_REGISTRATION'
-</cfquery>
-
 <!--- let's try and import the help scripts --->
 <cffile action="read" file="#expandPath('assets/helpcontent.sql')#" variable="helpsql">
-
 <cfscript>
 	split = "INSERT INTO";
 	helpstatements = helpsql.split(split);
 </cfscript>
-
 <cfloop array="#helpstatements#" index="statement">
 	<cfif statement.startsWith(' `wiki_pagecontent`')>
 

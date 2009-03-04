@@ -113,8 +113,7 @@ CREATE TABLE `wiki_options` (
   `option_id` varchar(36) NOT NULL,
   `option_name` varchar(255) NOT NULL,
   `option_value` text NOT NULL,
-  PRIMARY KEY  (`option_id`),
-  UNIQUE KEY `Index_2` (`option_name`)
+  PRIMARY KEY  (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -126,7 +125,7 @@ CREATE TABLE `wiki_options` (
 LOCK TABLES `wiki_options` WRITE;
 /*!40000 ALTER TABLE `wiki_options` DISABLE KEYS*/;
 INSERT INTO `wiki_options` (`option_id`, `option_name`, `option_value`) VALUES
-	('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','1'),
+	('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','true'),
 	('9F03F883-AFFA-A78C-1A2EDA50675A3B46','wiki_defaultpage','Dashboard'),
 	('9F045002-0E99-A690-7C59F405F98A19BE','wiki_search_engine','codex.model.search.adapters.DBSearch'),
 	('9F0485D1-F0AB-DF57-DCD68A6AE5F2FF33','wiki_name','A Sweet Wiki'),
@@ -138,8 +137,8 @@ INSERT INTO `wiki_options` (`option_id`, `option_name`, `option_value`) VALUES
 	('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD'),
 	('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki'),
 	('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki'),
-	('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','1'),
-	('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','PG');
+	('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true'),
+	('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg');
 /*!40000 ALTER TABLE `wiki_options` ENABLE KEYS*/;
 UNLOCK TABLES;
 
@@ -1832,7 +1831,7 @@ To your left you can see the wiki sidebar.  From here you can comeback to this p
 The top header bar includes our incredible search engine, search for anything in a wiki page or title.  Try it out!
 
 == Top Navigation ==
-If you have the correct permissions or are a registered user, you can view your user profile and manage this wiki.  Just click on the \'\'\'Admin\'\'\' tab to start managing Codex.
+If you have the correct  or are a registered user, you can view your user profile and manage this wiki.  Just click on the \'\'\'Admin\'\'\' tab to start managing Codex.
 
 {{{Messagebox message="Hello Everybody" type="info"}}}','Updates','1','2008-11-19 09:17:48',1,0),
 	('B5C4FA6B-CF1E-5C1B-9830AE891E48FCD2','B5C4FA1D-CF1E-5C1B-950B4A04E276B736','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align="right"
@@ -2061,7 +2060,6 @@ LOCK TABLES `wiki_role_permissions` WRITE;
 INSERT INTO `wiki_role_permissions` (`FKpermission_id`, `FKrole_id`) VALUES
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','883C6A58-05CA-D886-22F7940C19F792BD'),
-	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
 	('8840B7C9-E693-D54B-6A69F07AA5265839','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
 	('8840B7C9-E693-D54B-6A69F07AA5265839','883C6A58-05CA-D886-22F7940C19F792BD'),
 	('8840D553-F9D9-59F9-90B05EF765403F90','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
@@ -2073,7 +2071,6 @@ INSERT INTO `wiki_role_permissions` (`FKpermission_id`, `FKrole_id`) VALUES
 	('88415476-D0F8-32A5-7E7D3340828C0E6B','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
 	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
 	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','883C6A58-05CA-D886-22F7940C19F792BD'),
-	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
 	('A9D04702-CF1E-5C1B-94C2965619E301C8','883C4730-ACC9-1AF4-93737DB4E2E368EF');
 /*!40000 ALTER TABLE `wiki_role_permissions` ENABLE KEYS*/;
 UNLOCK TABLES;
