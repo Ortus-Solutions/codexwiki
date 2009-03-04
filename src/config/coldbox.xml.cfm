@@ -54,7 +54,7 @@
 		     True:  means you are using mod_rewrite or any other rewrite engine. Then .cfm extension are eliminated from URL's
 		     False: means you are using onMissinTemplate() to simulate SEO, so a .cfm will be appended to every URL to simulate a template.
 		 -->
-		<Setting name="UsingRewrite"				value="false" />
+		<Setting name="UsingRewrite"				value="true" />
 		
 		<!-- Lookups Settings -->
 		<Setting name="lookups_tables"				value="{'Permissions':'security.Permission', 
