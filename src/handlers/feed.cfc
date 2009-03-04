@@ -33,12 +33,9 @@ $Build ID:	@@build_id@@
 			var rc = arguments.event.getCollection();
 	
 			rc.rss = getRssManager().getRSS(rc.source, rc.feed, rc);
-	
-			setDebugMode(false);
-	
-			arguments.event.setLayout("Layout.xml");
-	
-			arguments.event.setView("rss/rss");
+			
+			/* Just render, no need for layout or view. */
+			event.renderData(data=rc.rss,contentType="text/xml;UTF-8");
 		</cfscript>
 	</cffunction>
 
