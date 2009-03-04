@@ -51,6 +51,12 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
+	<!--- Get Full Name --->
+	<!--- getFullName --->
+	<cffunction name="getFullName" output="false" access="public" returntype="string" hint="Get the full Name">
+		<cfreturn getfname() & " " & getLname()>
+	</cffunction>
+	
 	<!--- Get set create Date --->
 	<cffunction name="getcreateDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
 		<cfreturn getTransferObject().getcreateDate()>

@@ -48,7 +48,7 @@ the helpcontent.sql
 	</cfquery>
 	<cfif qNamespace.recordcount eq 0>
 		<cfquery name="qNamespace" datasource="#request.dsn#">
-		INSERT INTO "wiki_namespace" ("namespace_id","namespace_name","namespace_description","namespace_isdefault","namespace_createddate") 
+		INSERT INTO `wiki_namespace` (`namespace_id`,`namespace_name`,`namespace_description`,`namespace_isdefault`,`namespace_createddate`) 
 		VALUES ('75D11EE4-8FD9-463C-8892FC02BD905735','Template','Template',0,'2009-02-18 09:18:58')
 		</cfquery>
 	</cfif>

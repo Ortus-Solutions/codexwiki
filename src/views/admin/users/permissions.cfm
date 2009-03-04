@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/user.png" align="absmiddle"> User Management : Edit User Permissions</h2>
+<h2><img src="includes/images/user.png" align="absmiddle"> User Management : User Permissions for '#rc.thisUser.getFullName()#'</h2>
 <p>From here you can manage the user's a-la-carte permissions and view its inherited role permissions</p>
 
 <!--- Render Messagebox. --->

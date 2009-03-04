@@ -28,7 +28,7 @@ $Build ID:	@@build_id@@
 	<!--- Meta Tags --->
 	#renderView('tags/meta')#
 	<!--- Base HREF --->
-	<base href="#getSetting('htmlBaseURL')#">
+	<base href="#getSetting('htmlBaseURL')#/">
 	<!--- Main CSS --->
 	<link rel="stylesheet" type="text/css" href="includes/css/style.css" />
 	<!--- loop around the cssAppendList, to add page specific css --->

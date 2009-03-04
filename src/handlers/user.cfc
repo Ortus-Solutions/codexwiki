@@ -50,7 +50,7 @@ $Build ID:	@@build_id@@
 		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var refRoute = event.getValue("refRoute","");
+			var refRoute = event.getValue("_securedURL","");
 
 			/* Validate */
 			if( not trim(event.getValue('username','')).length() or

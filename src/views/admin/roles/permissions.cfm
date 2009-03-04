@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/vcard.png" align="absmiddle"> Role Management : Edit Role Permissions</h2>
+<h2><img src="includes/images/vcard.png" align="absmiddle"> Role Management : Role Permissions for '#rc.oRole.getRole()#'</h2>
 <p>From here you can manage the role's permissions.</p>
 
 <!--- Render Messagebox. --->
