@@ -129,7 +129,7 @@ $(document).ready(function() {
 	<div class="float-right">
 		<a href="javascript:pageDialog('#rc.onCheatSheet#')">Markup Cheatsheet</a>
 		| 
-		<a href="#event.buildLink(pageShowRoot('Help:Contents'))#">Wiki Help</a>
+		<a class="externallink" href="#event.buildLink(pageShowRoot('Help:Contents'))#">Wiki Help</a>
 	</div>
 	<label for="content"><em>*</em> Wiki Content</label>
 	<textarea name="content" id="content" class="resizable" rows="20" cols="50">#rc.content.getContent()#</textarea>
