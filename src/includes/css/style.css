@@ -179,11 +179,15 @@ label.helptext{
 	font-weight: bold;
 	margin:5px 0;
 }
+label.light{
+	display: inline;
+	font-weight: normal;
+}
 input {
 	padding: 2px;
 	border:1px solid #eee;
 	font: normal 1em Verdana, sans-serif;
-	color:#777;
+	color:#333;
 }
 input[type=button], input[type=submit], input[type=reset] { 
 	margin: 0; 
@@ -229,7 +233,7 @@ textarea{
 }
 input[type=text], input[type=password], input[type=checkbox], select { 
 	font: normal 12px Verdana, sans-serif;
-	color:#777;
+	color:#333;
 	border: 1px solid #d7d7d7;
 	padding: 5px;
 	background: #FFFFFF url(../images/topfade.gif) repeat-x scroll center top;

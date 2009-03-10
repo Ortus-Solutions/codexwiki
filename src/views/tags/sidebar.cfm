@@ -87,8 +87,8 @@ function toggleItems(it){
 	<h1 onClick="toggleItems('sb_settings')"> <img src="includes/images/process.png" align="absmiddle"/> Settings</h1>
 	<div class="left-box#isItemVisible('sb_settings')#" id="sb_settings">
 		<ul class="sidemenu">
-			<li><a href="#event.buildLink(rc.xehAdminOptions)#">General Options</a></li>
-			<li><a href="#event.buildLink(rc.xehAdminCommentOptions)#">Comments Options</a></li>
+			<li><a href="#event.buildLink(rc.xehAdminOptions)#">General</a></li>
+			<li><a href="#event.buildLink(rc.xehAdminCommentOptions)#">Comments</a></li>
 			<li><a href="#event.buildLink(rc.xehAdminCustomHTML)#">Custom HTML</a></li>
 			<li><a href="#event.buildLink(rc.xehadminlookups)#">System Lookups</a></li>
 		</ul>

@@ -73,16 +73,16 @@ $Build ID:	@@build_id@@
 	<legend><strong>General Options</strong></legend>
 	 	<!--- Wiki Name --->
 		<label for="wiki_name">Wiki Name</label>
-		The global name for this wiki.<br />
+		<em>The global name for this wiki.</em><br />
 		<input type="text"
 			   dName="Wiki Name"
 			   name="wiki_name" id="wiki_name" 
-			   value="#rc.CodexOptions.wiki_name#" size="60" required="true">
-     	<br />
+			   value="#rc.CodexOptions.wiki_name#" size="40" required="true">
+     	<br /><br />
 	
 		<!--- Wiki Metadata --->
 		<label for="wiki_metadata">Wiki Metadata Description</label>
-		The global metadata description content to place in the metadata tag.<br />
+		<em>The global metadata description content to place in the metadata tag.</em><br />
 		<textarea dName="Wiki Metadata"
 			      name="wiki_metadata" id="wiki_metadata"
 			   	  rows="2"  required="true">#rc.CodexOptions.wiki_metadata#</textarea>
@@ -90,7 +90,7 @@ $Build ID:	@@build_id@@
 	
 		<!--- Wiki Keywords --->
 		<label for="wiki_metadata">Wiki Metadata Keywords</label>
-		The global metadata keywords to place in the metadata tag.<br />
+		<em>The global metadata keywords to place in the metadata tag.</em><br />
 		<textarea dName="Wiki Metadata Keywords"
 			      name="wiki_metadata_keywords" id="wiki_metadata_keywords"
 			   	  rows="2" required="true">#rc.CodexOptions.wiki_metadata_keywords#</textarea>
@@ -98,30 +98,30 @@ $Build ID:	@@build_id@@
 		
 		<!--- Wiki Outgoing Email --->
 		<label for="wiki_outgoing_email">Wiki Administrator Email</label>
-		The email to use to send out email and also receive email notifications from.<br />
+		<em>The email to use to send out email and also receive email notifications from.</em><br />
 		<input type="text"
 			   dName="Wiki Outgoing Email"
 			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
 			   value="#rc.CodexOptions.wiki_outgoing_email#" 
-			   size="60" required="true" mask="email">
+			   size="40" required="true" mask="email">
 
-		<br />
+		<br /><br />
 		
 		<!--- Default Page --->
 		<label for="wiki_defaultpage_label">Wiki Default Page Label</label>
-     	The label for the menu item for the default wiki page.<br />
+     	<em>The label for the menu item for the default wiki page.</em><br />
 		<input type="text" 
 		 	   dName="Default Page Label"
 		 	   name="wiki_defaultpage_label" id="wiki_defaultpage_label" 
-		 	   value="#rc.CodexOptions.wiki_defaultpage_label#" size="60" required="true"> 
-		<br />
+		 	   value="#rc.CodexOptions.wiki_defaultpage_label#" size="40" required="true"> 
+		<br /><br />
 		
 		<label for="wiki_defaultpage">Wiki Default Page</label>
-     	The actual wiki page name to link to.<br />
+     	<em>The actual wiki page name to link to.</em><br />
 		<input type="text" 
 		 	   dName="Default Page"
 		 	   name="wiki_defaultpage" id="wiki_defaultpage" 
-		 	   value="#rc.CodexOptions.wiki_defaultpage#" size="60" required="true"> 
+		 	   value="#rc.CodexOptions.wiki_defaultpage#" size="40" required="true"> 
 		<input type="button" name="pageChooser" id="pageChooser" 
 			   onClick="$('##wikiPageListing').slideToggle()" value="Choose Page">
 		<div id="wikiPageListing" class="wikiChooser">
@@ -147,10 +147,11 @@ $Build ID:	@@build_id@@
 			</table>
 		</div>
 		
-		<br />
+		<br /><br />
+		
 		<!--- Comments  --->
 		<label for="wiki_comments_mandatory">Mandatory Page Comments</label> 
-		Whether edit comments for pages should be mandatory or not.<br />
+		<em>Whether edit comments for pages should be mandatory or not.</em><br />
 		<input type="radio" 
 			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
 			   <cfif rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
@@ -162,7 +163,6 @@ $Build ID:	@@build_id@@
 		
 	</fieldset>
 	
-	<br />
 	
 	<fieldset>
 	<legend><strong>User Avatars</strong></legend>
@@ -170,7 +170,7 @@ $Build ID:	@@build_id@@
 			avatar enabled sites.
 		<!--- Gravatars  --->
 		<label for="wiki_gravatar_display">Show User Avatar</label> 
-		Whether to display a user's <a href="http://en.gravatar.com/">gravatar</a> or not.<br />
+		<em>Whether to display a user's <a href="http://en.gravatar.com/">gravatar</a> on edits, comments, etc.</em><br />
 		<input type="radio" 
 			   name="wiki_gravatar_display" id="wiki_gravatar_display"
 			   <cfif rc.CodexOptions.wiki_gravatar_display>checked="checked"</cfif>
@@ -181,7 +181,7 @@ $Build ID:	@@build_id@@
 			   value="0">No
 		<br /><br />
 		<label for="wiki_gravatar_rating">Avatar Rating</label>
-		The maximum avatar display rating.<br />
+		<em>The maximum avatar display rating.</em><br />
 		<select name="wiki_gravatar_rating" id="wiki_gravatar_rating">
 			<option value="G"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "G">selected="selected"</cfif>>G - Suitable for all audiences</option>
 			<option value="PG" <cfif rc.CodeXOptions.wiki_gravatar_rating eq "PG">selected="selected"</cfif>>PG - Possibly offensive, usually for audiences 13 and above</option>
@@ -189,8 +189,6 @@ $Build ID:	@@build_id@@
 			<option value="X"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "X">selected="selected"</cfif>>X - Even more mature than above</option>
 		</select>
 	</fieldset>
-	
-	<br />
 	
 	<fieldset>
 	<legend><strong>Search Engine Options</strong></legend>
@@ -213,14 +211,12 @@ $Build ID:	@@build_id@@
 	
 	</fieldset>
 	
-	<br />
-	
 	<fieldset>
 		<legend>Wiki Registration</legend>
 		
 		<!--- Wiki Registration --->
 		<label for="wiki_registration">Enable/Disable Wiki Registration</label> 
-		Activate wiki user registration or not.<br />
+		<em>Activate wiki user registration or not.</em><br />
 		<input type="radio" 
 			   name="wiki_registration" id="wiki_registration"
 			   <cfif rc.CodexOptions.wiki_registration>checked="checked"</cfif>
@@ -229,10 +225,10 @@ $Build ID:	@@build_id@@
 			   name="wiki_registration" id="wiki_registration"
 			   <cfif not rc.CodexOptions.wiki_registration>checked="checked"</cfif>
 			   value="0">No
-
+		<br /><br />
 		<!--- Wiki Default Role --->
 		<label for="wiki_defaultrole_id">Default Role</label>
-		The default role assigned to users when they register for this wiki.<br />
+		<em>The default role assigned to users when they register for this wiki.</em><br />
 		<select name="wiki_defaultrole_id" id="wiki_defaultrole_id" required="true" dName="Default Role" style="width:200px">
 			<cfloop query="rc.qRoles">
 				<option value="#roleid#" <cfif roleid eq rc.CodexOptions.wiki_defaultrole_id>selected="selected"</cfif>>#role#</option>
@@ -245,7 +241,7 @@ $Build ID:	@@build_id@@
 		<legend>Paging Options</legend>
 		<!--- Max Rows --->
 		<label for="wiki_paging_maxrows">Paging Max Rows</label>
-		The maximum number of rows for paging.<br />
+		<em>The maximum number of rows for paging.</em><br />
 		<select dName="Paging Max Rows" 
 				name="wiki_paging_maxrows" id="wiki_paging_maxrows" 
 				required="true">
@@ -257,7 +253,7 @@ $Build ID:	@@build_id@@
 		<br /><br />
 		<!--- Max Band Gap --->
 		<label for="wiki_paging_bandgap">Paging Band Gap</label>
-		The number of pages to have in the paging carrousel.<br />
+		<em>The number of pages to have in the paging carrousel.</em><br />
 		<select dName="Paging Band Gap"
 				name="wiki_paging_bandgap" id="wiki_paging_bandgap" 
 				required="true">

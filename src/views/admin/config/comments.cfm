@@ -47,7 +47,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <h2><img src="includes/images/comments.png" align="absmiddle"> Codex Comment Options</h2>
 <p>
-	The options below have to deal with the Codex Commenting System.
+	The options below are used to configure the Codex Commenting System.
 </p>
 
 <!--- Messagebox --->
@@ -58,66 +58,61 @@ $Build ID:	@@build_id@@
 	<fieldset>
 	<legend><strong>Comment Options</strong></legend>
 	 	<!--- Activate Comments  --->
-		<label for="commenting_active">Activate Comments</label> 
-		This setting will enable site-wide commenting.<br />
-		<input type="radio" 
-			   name="commenting_active" id="commenting_active"
-			   <cfif rc.CodexOptions.commenting_active>checked="checked"</cfif>
-			   value="1">Yes
-		<input type="radio" 
-			   name="commenting_active" id="commenting_active"
-			   <cfif not rc.CodexOptions.commenting_active>checked="checked"</cfif>
-			   value="0">No
+		<input type="checkbox" 
+			   name="comments_enabled" id="comments_enabled"
+			   <cfif rc.CodexOptions.comments_enabled>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_enabled" class="light">Enable Site Wide Comments</label><br />
+		
+		<!--- User Registration --->
+		<input type="checkbox" 
+			   name="comments_registration" id="comments_registration"
+			   <cfif rc.CodexOptions.comments_registration>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_registration" class="light">Users must be logged in and registered in order to comment.</label> 
 		<br />
 		
-		<!--- Wiki Outgoing Email --->
-		<label for="wiki_outgoing_email">Wiki Administrator Email</label>
-		The email to use to send out email and also receive email notifications from.<br />
-		<input type="text"
-			   dName="Wiki Outgoing Email"
-			   name="wiki_outgoing_email" id="wiki_outgoing_email" 
-			   value="#rc.CodexOptions.wiki_outgoing_email#" 
-			   size="60" required="true" mask="email">
-		<br />
-		
+		<!--- URL Translations --->
+		<input type="checkbox" 
+			   name="comments_urltranslations" id="comments_urltranslations"
+			   <cfif rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_urltranslations" class="light">Translate URL's to links</label> <br />
 	</fieldset>
 	
 	<fieldset>
-	<legend><strong>Comment Notifications</strong></legend>
-	 	<!--- Notification Emails  --->
-		<label for="commenting_notifification_emails">Notification Email(s)</label> 
-		Please enter the email addresse(s) in comma-delimitted format that will receive email notifications from new or moderated comments.<br />
-		<input type="text"
-			   dName="Notification Email"
-			   name="commenting_notifification_emails" id="commenting_notifification_emails" 
-			   value="#rc.CodexOptions.commenting_notifification_emails#" 
-			   size="60" required="true" mask="email">
-		<br />
+	<legend><strong>Before A Comment Appears</strong></legend>
+	 	<!--- Enable Moderation --->
+		<input type="checkbox" 
+			   name="comments_moderation" id="comments_moderation"
+			   <cfif rc.CodexOptions.comments_moderation>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_moderation" class="light">An administrator must moderate the comment</label> <br />
+		
+		<!--- Comment Previous History --->
+		<input type="checkbox" 
+			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
+			   <cfif rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_moderation_whitelist" class="light">Comment author must have a previously approved comment</label>
+	</fieldset>
+	
+	
+	<fieldset>
+	<legend><strong>Notifications</strong></legend>
 		<!--- Notification on Comment --->
-		<label for="commenting_notification_onpost">Notification on Post</label> 
-		Send a notification that a comment has been made.<br />
-		<input type="radio" 
-			   name="commenting_notification_onpost" id="commenting_notification_onpost"
-			   <cfif rc.CodexOptions.commenting_notification_onpost>checked="checked"</cfif>
-			   value="1">Yes
-		<input type="radio" 
-			   name="commenting_notification_onpost" id="commenting_notification_onpost"
-			   <cfif not rc.CodexOptions.commenting_notification_onpost>checked="checked"</cfif>
-			   value="0">No
-		<br />
+		<input type="checkbox" 
+			   name="comments_notify" id="comments_notify"
+			   <cfif rc.CodexOptions.comments_notify>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_notify" class="light">Send a notification that a comment has been made.</label><br />
 		
 		<!--- Notification on Moderation --->
-		<label for="commenting_notification_onmoderation">Notification for Moderation</label> 
-		Send a notification that a comment needs moderation.<br />
-		<input type="radio" 
-			   name="commenting_notification_onmoderation" id="commenting_notification_onmoderation"
-			   <cfif rc.CodexOptions.commenting_notification_onmoderation>checked="checked"</cfif>
-			   value="1">Yes
-		<input type="radio" 
-			   name="commenting_notification_onmoderation" id="commenting_notification_onmoderation"
-			   <cfif not rc.CodexOptions.commenting_notification_onmoderation>checked="checked"</cfif>
-			   value="0">No
-		<br />
+		<input type="checkbox" 
+			   name="comments_moderation_notify" id="comments_moderation_notify"
+			   <cfif rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
+			   value="1">
+		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</label> 
 	</fieldset>
 	
 	<!--- Loader --->

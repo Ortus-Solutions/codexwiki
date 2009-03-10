@@ -31,7 +31,7 @@ the helpcontent.sql
 	</cfcatch>
 </cftry>
 
-<!--- BETA 2 --->
+<!--- BETA 2- Set 1 Migrations --->
 <cftry>
 	<!--- Append To Namespaces The Create Date--->
 	<cfquery name="qNamespace" datasource="#request.dsn#">
@@ -62,7 +62,41 @@ the helpcontent.sql
 	</cfquery>
 	<cfcatch type="database">
 		<p>
-			Beta 2 changes already done. Continuing Migration
+			Beta 2-Set 1 changes already done. Continuing Migration
+		</p>
+	</cfcatch>
+</cftry>
+
+<!--- BETA 2- Set 2 Migrations --->
+<cftry>
+	<cfquery name="qInsert" datasource="#request.dsn#">
+	ALTER TABLE `codex`.`wiki_page` ADD COLUMN `page_allowcomments` boolean NOT NULL DEFAULT true AFTER `page_keywords`
+	</cfquery>
+	<cfquery name="qInsert" datasource="#request.dsn#">
+	CREATE TABLE `wiki_comments` (
+	  `comment_id` varchar(36) NOT NULL,
+	  `FKpage_id` varchar(36) NOT NULL,
+	  `comment_content` text NOT NULL,
+	  `comment_author` varchar(255) default NULL,
+	  `comment_author_email` varchar(255) default NULL,
+	  `comment_author_url` varchar(255) default NULL,
+	  `comment_author_ip` varchar(100) default NULL,
+	  `comment_createdate` datetime NOT NULL,
+	  `comment_isActive` tinyint(1) NOT NULL default '1',
+	  `comment_isApproved` tinyint(1) NOT NULL default '0',
+	  `FKuser_id` varchar(36) default NULL,
+	  PRIMARY KEY  (`comment_id`),
+	  KEY `idx_createdate` (`comment_createdate`),
+	  KEY `idx_pagecomments` (`FKpage_id`,`comment_isActive`,`comment_isApproved`),
+	  KEY `FKpage_id` (`FKpage_id`),
+	  KEY `FKuser_id` (`FKuser_id`),
+	  CONSTRAINT `wiki_comments_ibfk_1` FOREIGN KEY (`FKpage_id`) REFERENCES `wiki_page` (`page_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  CONSTRAINT `wiki_comments_ibfk_2` FOREIGN KEY (`FKuser_id`) REFERENCES `wiki_users` (`user_id`) ON DELETE SET NULL ON UPDATE SET NULL
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</cfquery>
+	<cfcatch type="database">
+		<p>
+			Beta 2-Set 2 already done. Continuing Migration
 		</p>
 	</cfcatch>
 </cftry>
@@ -148,8 +182,8 @@ INSERT INTO wiki_page ( page_id, page_name, FKnamespace_id ) VALUES ('58F2F999-F
 </cfquery>
 
 <!--- let's try and import the help scripts --->
-<cffile action="read" file="#expandPath('assets/helpcontent.sql')#" variable="helpsql">
 <cfscript>
+	helpsql = fileRead(expandPath('assets/helpcontent.sql'));
 	split = "INSERT INTO";
 	helpstatements = helpsql.split(split);
 </cfscript>

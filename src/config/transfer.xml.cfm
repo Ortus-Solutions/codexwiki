@@ -19,6 +19,7 @@
 				<link column="FKnamespace_id" to="wiki.Namespace"/>
 			</manytoone>
 		</object>
+		
 
 		<object name="Namespace" table="wiki_namespace" decorator="codex.model.wiki.Namespace">
 			<id name="namespace_id" type="UUID" generate="true"/>
@@ -73,6 +74,24 @@
 			<property name="value"  type="string" column="option_value" />
 		</object>
 		
+  		<object name="Comment" table="wiki_comment" decorator="codex.model.wiki.Comment">
+  			<id name="commentID" column="comment_id" type="UUID" generate="true"/>
+  			<property name="content" 		column="comment_content" 		type="string"/>
+  			<property name="author" 		column="comment_author" 		type="string" nullable="true"/>
+  			<property name="authorEmail" 	column="comment_author_email" 	type="string" nullable="true"/>
+  			<property name="authorURL" 		column="comment_author_url"	 	type="string" nullable="true"/>
+  			<property name="authorIP" 		column="comment_author_ip" 		type="string" nullable="true"/>
+  			<property name="createdDate" 	column="comment_createdate" 	type="date"/>
+  			<property name="isActive" 		column="comment_isActive" 		type="boolean"/>
+  			<property name="isApproved" 	column="comment_isApproved"		type="boolean"/>
+  			<manytoone name="Page">
+  				<link column="FKpage_id" to="wiki.Page"/>
+  			</manytoone>
+  			<manytoone name="User" lazy="true">
+  				<link column="FKuser_id" to="security.User"/>
+  			</manytoone>
+  		</object>
+  		
   	</package>
 
 	<!--Security Package -->

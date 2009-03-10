@@ -33,7 +33,7 @@ CREATE TABLE `wiki_category` (
   `category_createddate` datetime default NULL,
   PRIMARY KEY  (`category_id`),
   KEY `idx_wiki_category_name` (`category_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -58,7 +58,7 @@ CREATE TABLE `wiki_customhtml` (
   `customHTML_afterSideBar` text,
   `customHTML_beforeSideBar` text,
   PRIMARY KEY  (`customHTML_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -86,7 +86,7 @@ CREATE TABLE `wiki_namespace` (
   `namespace_createddate` datetime default NULL,
   PRIMARY KEY  (`namespace_id`),
   KEY `idx_wiki_namespace_name` (`namespace_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -160,7 +160,7 @@ CREATE TABLE `wiki_page` (
   KEY `FKnamespace_id_2` (`FKnamespace_id`),
   KEY `idx_wiki_page_name` (`page_name`),
   CONSTRAINT `FKnamespace_id` FOREIGN KEY (`FKnamespace_id`) REFERENCES `wiki_namespace` (`namespace_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -205,7 +205,7 @@ CREATE TABLE `wiki_pagecontent` (
   KEY `idx_wiki_pagecontent_isActive` (`pagecontent_isActive`),
   CONSTRAINT `FK_wiki_pagecontent_wiki_page` FOREIGN KEY (`FKpage_id`) REFERENCES `wiki_page` (`page_id`),
   CONSTRAINT `FK_wiki_pagecontent_wiki_users` FOREIGN KEY (`FKuser_id`) REFERENCES `wiki_users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -1988,7 +1988,7 @@ CREATE TABLE `wiki_pagecontent_category` (
   KEY `FKpagecontent_id_2` (`FKpagecontent_id`),
   CONSTRAINT `FKcategory_id` FOREIGN KEY (`FKcategory_id`) REFERENCES `wiki_category` (`category_id`),
   CONSTRAINT `FKpagecontent_id` FOREIGN KEY (`FKpagecontent_id`) REFERENCES `wiki_pagecontent` (`pagecontent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2010,7 +2010,7 @@ CREATE TABLE `wiki_permissions` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY  (`permission_id`),
   UNIQUE KEY `permission` (`permission`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2047,7 +2047,7 @@ CREATE TABLE `wiki_role_permissions` (
   KEY `FKrole_id_2` (`FKrole_id`),
   CONSTRAINT `FKrole_id` FOREIGN KEY (`FKrole_id`) REFERENCES `wiki_roles` (`role_id`),
   CONSTRAINT `FK_permissionid` FOREIGN KEY (`FKpermission_id`) REFERENCES `wiki_permissions` (`permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2087,7 +2087,7 @@ CREATE TABLE `wiki_roles` (
   `role` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY  (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2119,7 +2119,7 @@ CREATE TABLE `wiki_securityrules` (
   `redirect` varchar(255) default NULL,
   PRIMARY KEY  (`securityrule_id`),
   UNIQUE KEY `securityrule_id` (`securityrule_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2167,7 +2167,7 @@ CREATE TABLE `wiki_users` (
   KEY `idx_byEmail` (`user_isActive`,`user_isConfirmed`,`user_email`),
   KEY `idx_default` (`user_isDefault`),
   CONSTRAINT `FK_wiki_users_wiki_roles` FOREIGN KEY (`FKrole_id`) REFERENCES `wiki_roles` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -2198,7 +2198,7 @@ CREATE TABLE `wiki_users_permissions` (
   KEY `FKuser_id_2` (`FKuser_id`),
   CONSTRAINT `FKpermission_id` FOREIGN KEY (`FKpermission_id`) REFERENCES `wiki_permissions` (`permission_id`),
   CONSTRAINT `FKusers_id` FOREIGN KEY (`FKuser_id`) REFERENCES `wiki_users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
