@@ -21,7 +21,11 @@
 		<Setting name="UDFLibraryFile" 				value="includes/helpers/ApplicationHelper.cfm" />
 		<Setting name="ExceptionHandler"			value="main.onException" />
 		<Setting name="onInvalidEvent" 				value="" />
+		<Setting name="CustomErrorTemplate"			value="" />
+		<!--
+		Uncomment and remove the setting above in order to have a custom error template 
 		<Setting name="CustomErrorTemplate"			value="includes/templates/error.cfm" />
+		 -->
 		<Setting name="MessageboxStyleOverride"		value="true" />
 		<Setting name="HandlersIndexAutoReload"   	value="false" />
 		<Setting name="ConfigAutoReload"          	value="false" />
