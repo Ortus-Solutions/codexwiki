@@ -58,7 +58,8 @@
 	<bean id="MessageBox" class="codex.model.wiki.parser.MessageBox" />
 	<!-- rss -->
 	<bean id="RSSManager" class="codex.model.rss.RSSManager" />
-
+	<!-- Import/Exporters -->
+	<bean id="DataManager" class="codex.model.data.DataManager" />
 	<!-- Security -->
 	<bean id="SecurityService" class="codex.model.security.SecurityService">
 		<property name="sessionstorage">

@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="Base Data Tool Component" output="false" hint="All exporters and importers will inherit from this base data tool class">
+<cfcomponent name="BaseDataTool" output="false" hint="All exporters and importers will inherit from this base data tool class">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------>
 

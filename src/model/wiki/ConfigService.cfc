@@ -21,7 +21,7 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfcomponent name="ConfigService"
-			 hint="The Config Service layer" 
+			 hint="The Config Service layer for all configuration related options" 
 			 output="false" 
 			 extends="codex.model.baseobjects.BaseService">
 
@@ -31,9 +31,12 @@ $Build ID:	@@build_id@@
 	<cffunction name="init" hint="Constructor" access="public" returntype="ConfigService" output="false">
 		<cfargument name="transfer"    hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+		<cfargument name="configBean"  hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
 		<cfscript>
 			/* Init */
 			super.init(argumentCollection=arguments);
+			/* Save config Bea */
+			instance.configBean = arguments.configBean;
 			
 			return this;
 		</cfscript>
@@ -97,9 +100,9 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- Get Option --->
-	<cffunction name="getOption" output="false" access="public" returntype="codex.model.wiki.Option" hint="Returns a role by ID or a new user object.">
+	<cffunction name="getOption" output="false" access="public" returntype="codex.model.wiki.Option" hint="Returns to you a specific wiki option.">
 		<!--- ************************************************************* --->
-		<cfargument name="option_id" type="string" required="false" default=""/>
+		<cfargument name="option_id" type="string" required="false" default="" hint="Option id"/>
 		<cfargument name="name" 	 type="string" required="false" default="" hint="Option name"/>
 		<!--- ************************************************************* --->
 		<cfscript>
@@ -121,6 +124,27 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
+	<!--- Get the application's config Bean --->
+	<cffunction name="getConfigBean" access="public" output="false" returntype="coldbox.system.beans.configBean" hint="Get configBean">
+		<cfreturn instance.configBean/>
+	</cffunction>
+	
+	<!--- Get Setting --->
+	<cffunction name="getSetting" access="public" returntype="any" hint="Get an application setting from the config bean. If the setting does not exists, then _NONE_ will be returned." output="false" >
+		<!--- ************************************************************* --->
+		<cfargument name="key"	 			type="string" required="true" hint="The named key to return.">
+		<cfargument name="defaultValue" 	type="any" required="false" default="_NONE_" hint="A default value to return"/>
+		<!--- ************************************************************* --->
+		<cfreturn getConfigBean().getKey(argumentcollection=arguments)>
+	</cffunction>
+	
+	<!--- Setting Exists --->
+	<cffunction name="settingExists" access="public" returntype="any" output="false" hint="Check if a setting exists in the structure.">
+		<!--- ************************************************************* --->
+		<cfargument name="key" type="string" required="true">
+		<!--- ************************************************************* --->
+		<cfreturn getConfigBean().keyExists(argumentCollection=arguments)>
+	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
