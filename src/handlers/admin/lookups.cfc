@@ -29,6 +29,9 @@ $Build ID:	@@build_id@@
 	<!--- Dependencies --->
 	<cfproperty name="LookupService" type="ioc" scope="instance">
 
+	<!--- HANDLER PROPERTIES --->
+	<cfset this.prehandler_exception = "display,dspCreate,dspEdit">
+
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------>
 
 	<!--- This init is mandatory, including the super.init(). ---> 
@@ -37,6 +40,13 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var qFiles = 0;
 			super.init(arguments.controller);
+			
+			/* Init Instance Variables */
+			instance.cssList = "";
+			instance.jsList = "";
+			instance.handlerPackage = "";
+			instance.viewPackage = "";
+			instance.dsn = getSetting('lookups_dsn');
 			
 			/* Get CSS Files */
 			qFiles = getFiles(getSetting('ApplicationPath') & getSetting('lookups_cssPath'),"*.css");
@@ -59,7 +69,7 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 
-<!------------------------------------------- PUBLIC ------------------------------------------->
+<!------------------------------------------- IMPLICIT EVENTS ------------------------------------------->
 
 	<!--- preHandler --->
 	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="">
@@ -70,23 +80,18 @@ $Build ID:	@@build_id@@
 			var exceptList = "display,dspCreate,dspEdit";
 			var cssPath = getSetting('lookups_cssPath') & "/";
 			var jsPath = getSetting('lookups_jsPath') & "/";
-			
-			/* Images  */
+			/* Get Image Path  */
 			rc.imgPath = getSetting('lookups_imgPath');
-			/* Validations */
-			if( listFindNoCase(exceptList,event.getCurrentAction()) ){
-				/* Global Exit Handler for this handler */
-				rc.xehLookupList 	= "#instance.viewPackage#lookups/display";
-				
-				/* Custom CSS According to settings */
-				for(x=1;x lte listlen(instance.cssList);x=x+1){
-					htmlhead('<link rel="stylesheet" type="text/css" href="' & cssPath & listgetAt(instance.cssList,x) & '" />');
-				}
-				/* Custom JS According to settings */
-				for(x=1;x lte listlen(instance.jsList);x=x+1){
-					htmlhead('<script type="text/javascript" src="' & jsPath & listgetAt(instance.jsList,x) & '"></script>');	
-				}		
+			/* Global Exit Handler for this handler */
+			rc.xehLookupList 	= "#instance.viewPackage#lookups/display";
+			/* Load Custom CSS According to settings */
+			for(x=1;x lte listlen(instance.cssList);x=x+1){
+				htmlhead('<link rel="stylesheet" type="text/css" href="' & cssPath & listgetAt(instance.cssList,x) & '" />');
 			}
+			/* Load Custom JS According to settings */
+			for(x=1;x lte listlen(instance.jsList);x=x+1){
+				htmlhead('<script type="text/javascript" src="' & jsPath & listgetAt(instance.jsList,x) & '"></script>');	
+			}		
 		</cfscript> 
 	</cffunction>
 
@@ -116,21 +121,6 @@ $Build ID:	@@build_id@@
 		
 		//Get Lookup Listing
 		rc.qListing = getLookupService().getListing(rc.lookupClass);
-
-		//Param sort Order
-		if ( event.getValue("sortOrder","") eq "")
-			event.setValue("sortOrder","ASC");
-		else{
-			if ( rc.sortOrder eq "ASC" )
-				rc.sortOrder = "DESC";
-			else
-				rc.sortOrder = "ASC";
-		}
-		//Test for Sorting
-		if ( event.getValue("sortby","") neq "" )
-			rc.qListing = getPlugin("queryHelper").sortQuery(rc.qListing,"[#rc.sortby#]",rc.sortOrder);
-		else
-			event.setValue("sortBy",rc.mdDictionary.sortBy);
 
 		//Set view to render
 		event.setView("#instance.viewPackage#lookups/Listing");

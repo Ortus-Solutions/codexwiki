@@ -71,6 +71,7 @@
 		<Setting name="lookups_cssPath"				value="includes/lookups/styles" />
 		<Setting name="lookups_jsPath"				value="includes/lookups/js" />
 		<Setting name="lookups_packagePath"			value="admin" />
+		<Setting name="lookups_dsn"					value="codex" />
 	</YourSettings>
 
 	<MailServerSettings />
