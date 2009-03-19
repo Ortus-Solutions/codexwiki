@@ -135,56 +135,37 @@ $Build ID:	@@build_id@@
 		<cfargument name="criteria" 	required="true" 	type="string" 	hint="The search criteria: fname,lname,email">
 		<cfargument name="active" 		required="false" 	type="boolean"	default="true"	hint="Active or not user.">
 		<cfargument name="role_id" 		required="false" 	type="string" 	default="0"		hint="The role id to search on.">
-		<cfargument name="startRow" 	required="false" 	type="string"	default="1" 	hint="The row offset">
-		<cfargument name="maxRows" 		required="false" 	type="string"	default="" 		hint="The max rows to retrieve">
 		<cfargument name="confirmed" 	required="false" 	type="numeric"  default="-1"    hint="Check user confirmation. -1 means don't check."/>
 		<!--- ************************************************************* --->
 		<cfset var qUsers = "">
 		<cfset var qFoundRows = "">
 		
-		<!--- Search Users with Paging --->
-		<cftransaction>
-			<cfquery name="qUsers" datasource="#getDatasource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
-				SELECT SQL_CALC_FOUND_ROWS
-					   Users.user_id, Users.user_fname, Users.user_lname, Users.user_email, Users.user_isActive,
-					   Users.user_isConfirmed, Users.user_create_date, Users.user_modify_date, Users.user_isDefault,
-					   Roles.role
-				  FROM wiki_users as Users, wiki_roles as Roles
-				 WHERE Users.FKrole_id = Roles.role_id
-				   AND Users.user_isActive = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.active#">
-				 
-				 <!--- Search Criteria, If Found --->
-				 <cfif arguments.criteria.length() neq 0>
-				   AND ( Users.user_fname like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> OR
-				   		 Users.user_lname like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> OR
-				   		 Users.user_email like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> )
-				 </cfif>
-				 
-				  <!--- Confirmation --->
-				 <cfif arguments.confirmed gte 0>
-				   AND Users.user_isConfirmed = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.confirmed#">
-				 </cfif>
-				 
-				 <!--- Role, If Found --->
-				 <cfif arguments.role_id neq 0>
-				   AND Roles.role_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.role_id#">
-				 </cfif>
-				 
-				 <!--- Paging Limits--->
-				 <cfif isNumeric(arguments.maxRows)>
-				  LIMIT <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.startRow-1#">,
-				  		<cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.maxRows#">
-				 </cfif>
-			</cfquery>
-			<cfquery name="qFoundRows" datasource="#getDatasource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
-				SELECT found_rows() AS foundRows
-			</cfquery>
-		</cftransaction>
-		
-		<!--- Add Found Rows to Paging --->
-		<cfif qUsers.recordcount>
-			<cfset queryAddColumn(qUsers,"foundRows",listToArray(qFoundRows.foundRows))>
-		</cfif>
+		<!--- Search Users --->
+		<cfquery name="qUsers" datasource="#getDatasource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+			SELECT Users.user_id, Users.user_fname, Users.user_lname, Users.user_email, Users.user_isActive,
+				   Users.user_isConfirmed, Users.user_create_date, Users.user_modify_date, Users.user_isDefault,
+				   Roles.role
+			  FROM wiki_users as Users, wiki_roles as Roles
+			 WHERE Users.FKrole_id = Roles.role_id
+			   AND Users.user_isActive = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.active#">
+			 
+			 <!--- Search Criteria, If Found --->
+			 <cfif arguments.criteria.length() neq 0>
+			   AND ( Users.user_fname like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> OR
+			   		 Users.user_lname like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> OR
+			   		 Users.user_email like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.criteria#%"> )
+			 </cfif>
+			 
+			  <!--- Confirmation --->
+			 <cfif arguments.confirmed gte 0>
+			   AND Users.user_isConfirmed = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.confirmed#">
+			 </cfif>
+			 
+			 <!--- Role, If Found --->
+			 <cfif arguments.role_id neq 0>
+			   AND Roles.role_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.role_id#">
+			 </cfif>
+		</cfquery>
 		
 		<cfreturn qUsers>
 	</cffunction>

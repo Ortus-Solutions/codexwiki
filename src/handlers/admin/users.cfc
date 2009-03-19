@@ -37,7 +37,6 @@ $Build ID:	@@build_id@@
 		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var boundaries = structnew();
 
 			/* Exit Handlers */
 			rc.xehUserListing = "admin/users/list";
@@ -51,14 +50,11 @@ $Build ID:	@@build_id@@
 			event.paramValue("search_criteria","");
 			event.paramValue("active",true);
 			event.paramValue("confirmed",-1);
-			event.paramValue("page","1");
 			event.paramValue("role_id","0");
 
 			/* JS Lookups */
-			event.setValue("jsAppendList", "jquery.simplemodal,confirm");
-
-			//Calculate the start row according to page
-			rc.boundaries = getMyPlugin("paging").getboundaries();
+			event.setValue("jsAppendList", "jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min,jquery.uitablefilter");
+			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
 
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
@@ -67,33 +63,7 @@ $Build ID:	@@build_id@@
 			rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,
 												   active=rc.active,
 												   role_id=rc.role_id,
-												   startrow=rc.boundaries.startRow,
-												   maxRows=rc.CodexOptions.wiki_paging_maxrows,
 												   confirmed=rc.confirmed);
-
-			/* Found Rows */
-			if( rc.qUsers.recordcount ){
-				rc.FoundRows = rc.qUsers.foundRows;
-			}
-			else{
-				rc.FoundRows = 0;
-			}
-
-			//Param sort Order
-			if ( event.getValue("sortOrder","") eq "")
-				event.setValue("sortOrder","ASC");
-			else{
-				if ( rc.sortOrder eq "ASC" )
-					rc.sortOrder = "DESC";
-				else
-					rc.sortOrder = "ASC";
-			}
-
-			//Test for Sorting
-			if ( event.getValue("sortby","") neq "" )
-				rc.qUsers = getPlugin("queryHelper").sortQuery(rc.qUsers,"[#rc.sortby#]",rc.sortOrder);
-			else
-				rc.sortby = "";
 
 			/* Set View */
 			event.setView('admin/users/Listing');

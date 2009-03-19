@@ -47,6 +47,15 @@ $Build ID:	@@build_id@@
 	function confirmDelete(recordID){
 		confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!",function(){deleteRecord(recordID)});
 	}
+	$(document).ready(function() {
+		// call the tablesorter plugin
+		$("##usersTable").tablesorter({
+			sortList: [[1,0]]
+		});
+		$("##quickfilter").keyup(function(){
+			$.uiTableFilter( $("##usersTable"), this.value );
+		})
+	});
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -132,61 +141,31 @@ $Build ID:	@@build_id@@
 	
 	<!--- Records Found --->
 	<div>
-		<p>
 		<cfif rc.qusers.recordcount>
-		<em>Records: #rc.boundaries.startrow# - #rc.qUsers.recordcount#</em>
+		<em>Records: #rc.qUsers.recordcount#</em>
 		<cfelse>
 		<em>No Records Found</em>
 		</cfif>
-		</p>
+		<br />
+		<label class="inlineLabel">Quick Filter: </label>
+		<input type="text" size="30" id="quickfilter" value="">
 	</div>
 
-	<!--- Paging --->
-	#getMyPlugin("paging").renderit(FoundRows=rc.FoundRows,link=rc.pagingLink)#
-
 	<!--- Render Results --->
-	<table class="tablelisting" width="100%">
-
+	<table class="tablesorter" width="100%" id="usersTable" cellspacing="1" cellpadding="0" border="0">
+	
 		<!--- Display Fields Found in Query --->
+		<thead>
 		<tr>
-			<th style="width: 20px"></th>
-			<th >
-				<!--- Sort Indicator --->
-				<cfif event.getValue("sortBy","") eq "user_lname">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_lname/' & rc.sortOrder & '/' & rc.page)#">
-				Name
-				</a>
-				<!--- Sort Orders --->
-			   <cfif event.getValue("sortBy","") eq "user_lname">
-			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
-			   </cfif>
-			</th>
-			<th >
-				<!--- Sort Indicator --->
-				<cfif event.getValue("sortBy","") eq "user_email">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_email/' & rc.sortOrder & '/' & rc.page)#">
-				Email
-				</a>
-				<!--- Sort Orders --->
-			   <cfif event.getValue("sortBy","") eq "user_email">
-			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
-			   </cfif>
-			</th>
-			<th class="center" width="95">
-				<!--- Sort Indicator --->
-				<cfif event.getValue("sortBy","") eq "user_isconfirmed">&##8226;</cfif>
-				<a href="#event.buildLink(rc.xehUserListing & '/sort/user_isconfirmed/' & rc.sortOrder & '/' & rc.page)#">
-				Confirmed
-				</a>
-				<!--- Sort Orders --->
-			   <cfif event.getValue("sortBy","") eq "user_isconfirmed">
-			   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
-			   </cfif>
-			</th>
-			<th class="center" width="65">ACTIONS</th>
+			<th id="checkboxHolder" class="{sorter: false}"></th>
+			<th>Name</th>
+			<th>Email</th>
+			<th class="center" width="95">Confirmed</th>
+			<th id="actions" class="{sorter: false}">ACTIONS</th>
 		</tr>
-
+		</thead>
 		<!--- Loop Through Query Results --->
+		<tbody>
 		<cfloop query="rc.qUsers">
 		<tr <cfif CurrentRow MOD(2) eq 1> class="even"</cfif>>
 			<!--- Delete Checkbox with PK--->
@@ -220,6 +199,7 @@ $Build ID:	@@build_id@@
 
 		</tr>
 		</cfloop>
+		</tbody>
 	</table>
 	
 	<p><img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Default User</strong></p>

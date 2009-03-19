@@ -49,6 +49,13 @@ $Build ID:	@@build_id@@
 			deleteRecord(recordID);
 		} 
 	}
+	$(document).ready(function() {
+		// call the tablesorter plugin
+		$("##lookupTable").tablesorter();
+		$("##filter").keyup(function(){
+			$.uiTableFilter( $("##lookupTable"), this.value );
+		})
+	});
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -123,41 +130,31 @@ $Build ID:	@@build_id@@
 	
 	<!--- Records Found --->
 	<div id="recordsfound">
-		<p>
 		<em>Records Found: #rc.qListing.recordcount#</em>
-		</p>
+		<br />
+		<label class="inlineLabel">Table Filter: </label>
+		<input type="text" size="30" id="filter" value="">
 	</div>
 
 	<!--- Render Results --->
 	<cfif rc.qListing.recordcount>
-	<br />
-	<table class="tablelisting" width="100%">
+	<table class="tablesorter" width="100%" id="lookupTable" cellspacing="1" cellpadding="0" border="0">
+		<thead>
 		<!--- Display Fields Found in Query --->
 		<tr>
-			<th id="checkboxHolder"></th>
+			<th id="checkboxHolder" class="{sorter: false}"></th>
 			<!--- All Other Fields --->
 			<cfloop from="1" to="#ArrayLen(rc.mdDictionary.FieldsArray)#" index="i">
 				<!---Don't show display eq false --->
 				<cfif rc.mdDictionary.FieldsArray[i].display and not rc.mdDictionary.FieldsArray[i].primaryKey>
-					<th>
-					<!--- Sort Indicator --->
-					<cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>&##8226;</cfif>
-
-					<!--- Sort Column --->
-					<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupClass',override=true)#/#rc.lookupClass#/sortby/#rc.mdDictionary.FieldsArray[i].alias#/sortOrder/#rc.sortOrder##event.getRewriteExtension()#">
-						#rc.mdDictionary.FieldsArray[i].alias#
-					</a>
-					
-				   <!--- Sort Orders --->
-				   <cfif event.getValue("sortBy","") eq rc.mdDictionary.FieldsArray[i].alias>
-				   		<cfif rc.sortOrder eq "ASC">&raquo;<cfelse>&laquo;</cfif>
-				   </cfif>
-					</th>
+					<th>#rc.mdDictionary.FieldsArray[i].alias#</th>
 				</cfif>
 			</cfloop>
-			<th id="actions">ACTIONS</th>
+			<th id="actions" class="{sorter: false}">ACTIONS</th>
 		</tr>
-
+		</thead>
+		
+		<tbody>
 		<!--- Loop Through Query Results --->
 		<cfloop query="rc.qListing">
 		<tr <cfif rc.qListing.CurrentRow MOD(2) eq 1> class="even"</cfif>>
@@ -196,6 +193,7 @@ $Build ID:	@@build_id@@
 
 		</tr>
 		</cfloop>
+		</tbody>
 	</table>
 	</cfif>
 

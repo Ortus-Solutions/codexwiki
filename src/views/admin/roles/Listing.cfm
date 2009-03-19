@@ -43,6 +43,12 @@ $Build ID:	@@build_id@@
 	function confirmDelete(recordID){
 		confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!",function(){deleteRecord(recordID)});
 	}
+	$(document).ready(function() {
+		// call the tablesorter plugin
+		$("##rolesTable").tablesorter({
+			sortList: [[1,0]]
+		});
+	});
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -77,26 +83,27 @@ $Build ID:	@@build_id@@
 	
 	<!--- Records Found --->
 	<div>
-		<p>
 		<cfif rc.qRoles.recordcount>
 		<em>Records Found: #rc.qRoles.recordcount#</em>
 		<cfelse>
 		<em>No Records Found</em>
 		</cfif>
-		</p>
 	</div>
 	
 	<!--- Render Results --->
-	<table class="tablelisting" width="100%">
-
+	<table class="tablesorter" width="100%" id="rolesTable" cellspacing="1" cellpadding="0" border="0">
+	
+		<thead>
 		<!--- Display Fields Found in Query --->
 		<tr>
-			<th style="width: 20px"></th>
+			<th id="checkboxHolder" class="{sorter:false}"></th>
 			<th >Role</th>
 			<th >Description</th>
-			<th class="center" width="65">ACTIONS</th>
+			<th id="actions" class="{sorter:false}">ACTIONS</th>
 		</tr>
-
+		</thead>
+		
+		<tbody>
 		<!--- Loop Through Query Results --->
 		<cfloop query="rc.qRoles">
 		<tr <cfif CurrentRow MOD(2) eq 1> class="even"</cfif>>
@@ -123,6 +130,7 @@ $Build ID:	@@build_id@@
 
 		</tr>
 		</cfloop>
+		</tbody>
 	</table>
 	
 	<!--- Add / Delete --->

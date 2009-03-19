@@ -46,8 +46,9 @@ $Build ID:	@@build_id@@
 			rc.xehPerms = "admin/roles/permissions";
 
 			/* JS Lookups */
-			event.setValue("jsAppendList", "jquery.simplemodal,confirm");
-
+			event.setValue("jsAppendList", "jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
+			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
+			
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
 
