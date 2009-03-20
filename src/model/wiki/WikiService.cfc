@@ -423,14 +423,11 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
-<cffunction name="deletePage" hint="deletes a whole page, and all it's versions from the system" access="public" returntype="void" output="false">
+<cffunction name="deletePage" hint="deletes a whole page, and all it's versions from the system. Transactioned by AOP" access="public" returntype="void" output="false">
 	<cfargument name="pageid" hint="the id of the page to delete" type="uuid" required="Yes">
-	<cfscript>
-		var qDelete = 0;
-	</cfscript>
+	<cfset var qDelete = 0>
 
-	<!--- TODO: include deletion of security permissions --->
-
+	<!--- Remove ALL pagecontent categories First --->
 	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
 		DELETE FROM
 			wiki_pagecontent_category
@@ -445,33 +442,98 @@ $Build ID:	@@build_id@@
 					FKpage_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">
 			)
 	</cfquery>
-
+	<!--- Remove All wiki page content --->
 	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
 		DELETE FROM
 			wiki_pagecontent
 		WHERE
 			(FKpage_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
 	</cfquery>
-
+	<!--- Remove All wiki page comments --->
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_comments
+		WHERE
+			(FKpage_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
+	</cfquery>
+	<!--- Remove the Actual Page --->
 	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
 		DELETE FROM
 			wiki_page
 		WHERE
 		(page_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
 	</cfquery>
-
-	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
-		DELETE FROM
-			wiki_page
-		WHERE
-		(page_id = <cfqueryparam value="#arguments.pageid#" cfsqltype="cf_sql_varchar">)
-	</cfquery>
-
-	<cfscript>
-		//we shouldn't need to discard more than this, as it will cascade
-		getTransfer().discardByClassAndKey("wiki.Page", arguments.pageid);
-	</cfscript>
+	
+	<!--- we shouldn't need to discard more than this, as it will cascade --->
+	<cfset getTransfer().discardByClassAndKey("wiki.Page", arguments.pageid)>
 </cffunction>
+
+<cffunction name="deleteNamespace" hint="Deletes an entire namespace and its pages. Transactioned by AOP" access="public" returntype="void" output="false">
+	<cfargument name="namespaceid" hint="the id of the namespace to delete" type="uuid" required="Yes">
+	<cfset var qDelete = 0>
+	<cfset var qPages = 0>
+	<cfset var idList = "">
+	
+	<!--- Get all pages to delete --->
+	<cfquery name="qPages" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+	SELECT a.page_id
+	FROM wiki_page a, wiki_namespace b
+	WHERE a.FKnamespace_id = b.namespace_id AND
+		  b.namespace_id = <cfqueryparam value="#arguments.namespaceid#" cfsqltype="cf_sql_varchar">
+	</cfquery>
+	<cfset idList = valueList(qPages.page_id)>
+	
+	<cfif listLen(idList)>
+		<!--- Remove ALL pagecontent categories First --->
+		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+			DELETE FROM
+				wiki_pagecontent_category
+			WHERE
+			FKpagecontent_id IN
+				(
+					SELECT
+						wiki_pagecontent.pagecontent_id
+					FROM
+						wiki_pagecontent
+					WHERE
+						FKpage_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#idList#">)
+				)
+		</cfquery>
+		<!--- Remove All wiki page content --->
+		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+			DELETE FROM
+				wiki_pagecontent
+			WHERE
+				(FKpage_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#idList#">))
+		</cfquery>
+		<!--- Remove All wiki page comments --->
+		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+			DELETE FROM
+				wiki_comments
+			WHERE
+				(FKpage_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#idList#">))
+		</cfquery>
+		<!--- Remove the Actual Pages --->
+		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+			DELETE FROM
+				wiki_page
+			WHERE
+			(page_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#idList#">))
+		</cfquery>
+		<!--- Remove the Namespace --->
+		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">>
+			DELETE FROM
+				wiki_namespace
+			WHERE
+			namespace_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.namespace_id#">
+		</cfquery>
+	
+		<!--- Discard all objects, just in case. Which we had a discard by class --->
+		<cfset getTransfer().discardAll()>
+		
+	</cfif>
+</cffunction>
+
 
 <cffunction name="getrewriteExtension" access="public" output="false" returntype="string" hint="Get rewriteExtension">
 	<cfreturn instance.rewriteExtension/>

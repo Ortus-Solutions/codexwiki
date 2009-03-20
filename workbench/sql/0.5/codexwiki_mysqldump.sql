@@ -1,16 +1,31 @@
-# Sequel Pro dump
-# Version 392
-# http://code.google.com/p/sequel-pro
+Ôªø# HeidiSQL Dump 
 #
-# Host: localhost (MySQL 5.0.45)
-# Database: codex
-# Generation Time: 2009-03-20 09:00:50 -0700
-# ************************************************************
+# --------------------------------------------------------
+# Host:                         127.0.0.1
+# Database:                     codex
+# Server version:               5.0.37-community-nt
+# Server OS:                    Win32
+# Target compatibility:         mysqldump+mysqlcli 5.0
+# Target max_allowed_packet:    33553408
+# HeidiSQL version:             4.0 RC1
+# --------------------------------------------------------
 
-# Dump of table wiki_category
-# ------------------------------------------------------------
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0*/;
 
-DROP TABLE IF EXISTS `wiki_category`;
+
+#
+# Database structure for database 'codex'
+#
+
+DROP DATABASE IF EXISTS `codex`;
+CREATE DATABASE `codex` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `codex`;
+
+
+#
+# Table structure for table 'wiki_category'
+#
 
 CREATE TABLE `wiki_category` (
   `category_id` varchar(36) NOT NULL,
@@ -22,10 +37,17 @@ CREATE TABLE `wiki_category` (
 
 
 
-# Dump of table wiki_comments
-# ------------------------------------------------------------
+#
+# Dumping data for table 'wiki_category'
+#
 
-DROP TABLE IF EXISTS `wiki_comments`;
+# No data found.
+
+
+
+#
+# Table structure for table 'wiki_comments'
+#
 
 CREATE TABLE `wiki_comments` (
   `comment_id` varchar(36) NOT NULL,
@@ -50,10 +72,17 @@ CREATE TABLE `wiki_comments` (
 
 
 
-# Dump of table wiki_customhtml
-# ------------------------------------------------------------
+#
+# Dumping data for table 'wiki_comments'
+#
 
-DROP TABLE IF EXISTS `wiki_customhtml`;
+# No data found.
+
+
+
+#
+# Table structure for table 'wiki_customhtml'
+#
 
 CREATE TABLE `wiki_customhtml` (
   `customHTML_id` varchar(36) NOT NULL,
@@ -66,16 +95,23 @@ CREATE TABLE `wiki_customhtml` (
   PRIMARY KEY  (`customHTML_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_customhtml` (`customHTML_id`,`customHTML_beforeHeadEnd`,`customHTML_afterBodyStart`,`customHTML_beforeBodyEnd`,`customHTML_modify_date`,`customHTML_afterSideBar`,`customHTML_beforeSideBar`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_customhtml'
+#
+
+LOCK TABLES `wiki_customhtml` WRITE;
+/*!40000 ALTER TABLE `wiki_customhtml` DISABLE KEYS*/;
+INSERT INTO `wiki_customhtml` (`customHTML_id`, `customHTML_beforeHeadEnd`, `customHTML_afterBodyStart`, `customHTML_beforeBodyEnd`, `customHTML_modify_date`, `customHTML_afterSideBar`, `customHTML_beforeSideBar`) VALUES
 	('64597197-CF1E-5C1B-91F2B0710FA5B5B3','','','','2008-05-09 13:40:34','','');
+/*!40000 ALTER TABLE `wiki_customhtml` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_namespace
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_namespace`;
+#
+# Table structure for table 'wiki_namespace'
+#
 
 CREATE TABLE `wiki_namespace` (
   `namespace_id` varchar(36) NOT NULL,
@@ -87,19 +123,26 @@ CREATE TABLE `wiki_namespace` (
   KEY `idx_wiki_namespace_name` (`namespace_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_namespace` (`namespace_id`,`namespace_name`,`namespace_description`,`namespace_isdefault`,`namespace_createddate`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_namespace'
+#
+
+LOCK TABLES `wiki_namespace` WRITE;
+/*!40000 ALTER TABLE `wiki_namespace` DISABLE KEYS*/;
+INSERT INTO `wiki_namespace` (`namespace_id`, `namespace_name`, `namespace_description`, `namespace_isdefault`, `namespace_createddate`) VALUES
 	('06AF3D1C-0B00-EAA3-09A138DFA27F7E28','Special','Special',0,'2009-02-18 09:18:58'),
 	('58F2F981-F62A-3124-E886BBF8CE6C5295','Help','Help',0,'2009-02-18 09:18:58'),
 	('75D11EE4-8FD9-463C-8892FC02BD905735','Template','Template',0,'2009-02-18 09:18:58'),
 	('F1C0292E-CB06-FD09-41D904E8550FE734','','Default Namespace',1,'2009-02-18 09:18:58');
+/*!40000 ALTER TABLE `wiki_namespace` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_options
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_options`;
+#
+# Table structure for table 'wiki_options'
+#
 
 CREATE TABLE `wiki_options` (
   `option_id` varchar(36) NOT NULL,
@@ -108,8 +151,15 @@ CREATE TABLE `wiki_options` (
   PRIMARY KEY  (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_options` (`option_id`,`option_name`,`option_value`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_options'
+#
+
+LOCK TABLES `wiki_options` WRITE;
+/*!40000 ALTER TABLE `wiki_options` DISABLE KEYS*/;
+INSERT INTO `wiki_options` (`option_id`, `option_name`, `option_value`) VALUES
 	('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','true'),
 	('3FFE012E-7228-44F7-B4D3FC088892EB45','comments_notify','true'),
 	('704DD976-B03B-441B-A0B7B5C8403034C9','comments_registration','false'),
@@ -131,13 +181,13 @@ VALUES
 	('CBE76066-6635-4FD3-805CE2A3933FEDC5','comments_moderation','true'),
 	('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg'),
 	('F1783B24-1C0E-4214-8616907628A8D9D2','comments_moderation_whitelist','true');
+/*!40000 ALTER TABLE `wiki_options` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_page
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_page`;
+#
+# Table structure for table 'wiki_page'
+#
 
 CREATE TABLE `wiki_page` (
   `page_id` varchar(36) NOT NULL,
@@ -155,8 +205,15 @@ CREATE TABLE `wiki_page` (
   CONSTRAINT `FKnamespace_id` FOREIGN KEY (`FKnamespace_id`) REFERENCES `wiki_namespace` (`namespace_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_page` (`page_id`,`page_name`,`FKnamespace_id`,`page_title`,`page_password`,`page_description`,`page_keywords`,`page_allowcomments`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_page'
+#
+
+LOCK TABLES `wiki_page` WRITE;
+/*!40000 ALTER TABLE `wiki_page` DISABLE KEYS*/;
+INSERT INTO `wiki_page` (`page_id`, `page_name`, `FKnamespace_id`, `page_title`, `page_password`, `page_description`, `page_keywords`, `page_allowcomments`) VALUES
 	('06AF3D6A-0AB3-43E6-EF2D1118F58A1562','Special:Feeds','06AF3D1C-0B00-EAA3-09A138DFA27F7E28',NULL,NULL,NULL,NULL,1),
 	('58F2F999-FC99-125A-DB21FCD7085C44A1','Help:Contents','58F2F981-F62A-3124-E886BBF8CE6C5295',NULL,NULL,NULL,NULL,1),
 	('59014C5F-C1C6-7E91-A38446214A380C7D','Help:Wiki_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295',NULL,NULL,NULL,NULL,1),
@@ -167,13 +224,13 @@ VALUES
 	('C90869A2-090D-50DA-0800C94BB5DB7026','Help:Feed_Markup','58F2F981-F62A-3124-E886BBF8CE6C5295',NULL,NULL,NULL,NULL,1),
 	('E12403BB-F4C1-5F8A-1B20DB3894BAF144','Dashboard','F1C0292E-CB06-FD09-41D904E8550FE734',NULL,NULL,NULL,NULL,1),
 	('E5CC1A90-D36E-9214-33EB0021D817DE59','Special:Categories','06AF3D1C-0B00-EAA3-09A138DFA27F7E28',NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `wiki_page` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_pagecontent
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_pagecontent`;
+#
+# Table structure for table 'wiki_pagecontent'
+#
 
 CREATE TABLE `wiki_pagecontent` (
   `pagecontent_id` varchar(36) NOT NULL,
@@ -193,25 +250,1776 @@ CREATE TABLE `wiki_pagecontent` (
   CONSTRAINT `FK_wiki_pagecontent_wiki_users` FOREIGN KEY (`FKuser_id`) REFERENCES `wiki_users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_pagecontent` (`pagecontent_id`,`FKpage_id`,`FKuser_id`,`pagecontent_content`,`pagecontent_comment`,`pagecontent_version`,`pagecontent_createdate`,`pagecontent_isActive`,`pagecontent_isReadOnly`)
-VALUES
-	('06AF3D9F-F000-34AC-65CBF528D2F4F658','06AF3D6A-0AB3-43E6-EF2D1118F58A1562','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Codex RSS Feed Directory ==\r\n<feed url=\"/feed/directory/list.cfm\" />',NULL,1,'2008-02-11 15:09:50',1,0),
-	('5906B62D-FBD0-6F75-B6B7BF36DCD904C5','59014C5F-C1C6-7E91-A38446214A380C7D','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','==Wiki markup==\r\n\r\nThe \'\'\'wiki markup\'\'\' is the syntax system you can use to format a Wikipedia page; please see [[Help:Editing]] for details on it, and [[Help:Wikitext examples]] for a longer list of the possibilities of Wikitext.\r\n\r\n===Links and URLs===\r\n{| border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\r\n|- valign=\"top\"\r\n! What it looks like\r\n! What you type\r\n|- id=\"emph\" valign=\"top\"\r\n|\r\nLondon has [[public transport]].\r\n\r\n* A link to another Wiki article.\r\n* Internally, the first letter of the target page is automatically capitalized and spaces are represented as underscores (typing an underscore in the link has the same effect as typing a space, but is not recommended).\r\n* Thus the link above is to the [[URL]] en.wikipedia.org/wiki/Public_transport, which is the Wikipedia article with the name \"Public transport\". See also [[Wikipedia:Canonicalization]].\r\n|\r\n<pre><nowiki>\r\nLondon has [[public transport]].\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nSan Francisco also has [[public transport|\r\npublic transportation]].\r\n\r\n* Same target, different name.\r\n* The target (\"piped\") text must be placed \'\'\'first\'\'\', then the text that will be displayed second.\r\n|\r\n<pre><nowiki>\r\nSan Francisco also has\r\n[[public transport| public transportation]].\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nSan Francisco also has\r\n[[public transport]]ation.\r\n\r\nExamples include [[bus]]es, [[taxicab]]s,\r\nand [[streetcar]]s.\r\n\r\n* Endings are blended into the link.\r\n* Preferred style is to use this instead of a piped link, if possible.\r\n* Blending can be suppressed by using <nowiki><nowiki></nowiki></nowiki> tags, which may be desirable in some instances.  Example: a [[micro]]<nowiki>second</nowiki>.\r\n|\r\n<pre><nowiki>\r\nSan Francisco also has\r\n[[public transport]]ation.\r\n\r\nExamples include [[bus]]es,\r\n [[taxicab]]s, and [[streetcar]]s.\r\n\r\na [[micro]]<nowiki>second</nowiki>\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nSee the [[Wikipedia:Manual of Style]].\r\n\r\n* A link to another [[Help:namespace|namespace]].\r\n|\r\n<pre><nowiki>\r\nSee the \r\n[[Wikipedia:Manual of Style]].\r\n</nowiki></pre>\r\n\r\n|- id=\"link-to-section\" valign=\"top\"\r\n|\r\n[[Wikipedia:Manual of Style#Italics]] is a link to a section within another page.\r\n\r\n[[#Links and URLs]] is a link to another section on the current page.\r\n\r\n[[Wikipedia:Manual of Style#Italics|Italics]] is a piped link to a section within another page.\r\n\r\n* The part after the number sign (#) must match a section heading on the page. Matches must be exact in terms of spelling, case, and punctuation.  Links to non-existent sections are not broken; they are treated as links to the top of the page.\r\n* Include \"| link title\" to create a stylish (piped) link title.\r\n\r\n|\r\n<pre><nowiki>\r\n[[Wikipedia:Manual of Style#Italics]] \r\nis a link to a section within another page.\r\n\r\n[[#Links and URLs]] is a link\r\nto another section on the \r\ncurrent page.\r\n\r\n[[Wikipedia:Manual of Style#Italics|Italics]] \r\nis a piped link to a section within \r\nanother page.</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nAutomatically hide stuff in parentheses:\r\n[[kingdom (biology)|kingdom]].\r\n\r\nAutomatically hide namespace:\r\n[[Wikipedia:Village Pump|Village Pump]]. \r\n\r\nOr both:\r\n[[Wikipedia:Manual of Style (headings)|Manual of Style]]\r\n\r\nBut not:\r\n[[Wikipedia:Manual of Style#Links|]]\r\n* The server fills in the part after the pipe character (|) when you save the page. The next time you open the edit box you will see the expanded piped link. When [[Wikipedia:Show preview|preview]]ing your edits, you will not see the expanded form until you press \'\'\'Save\'\'\' and \'\'\'Edit\'\'\' again. The same applies to links to sections within the same page ([[#link-to-section|see previous entry]]).\r\n* See [[Wikipedia:Pipe trick]] for details.\r\n\r\n|\r\n<pre><nowiki>\r\nAutomatically hide stuff\r\nin parentheses:\r\n[[kingdom (biology)|]].\r\n\r\nAutomatically hide namespace: \r\n[[Wikipedia:Village Pump|]].\r\n\r\nOr both:\r\n[[Wikipedia:\r\nManual of Style (headings)|]]\r\n\r\nBut not:\r\n[[Wikipedia:\r\nManual of Style#Links|]]\r\n</nowiki></pre>\r\n\r\n\r\n|- valign=\"top\"\r\n|\r\n<!-- A village pump proposal was made so that users would be allowed to create the article shown here. Pages here would be articles requested for a long time. If you find someone has created the article, please look in requested articles and put one in its place -->\r\n[[National sarcasm society]] is a page\r\nthat does not exist yet.\r\n\r\n* You can create it by clicking on the link.\r\n* To create a new page: \r\n*# Create a link to it on some other (related) page.\r\n*# Save that page.\r\n*# Click on the link you just made. The new page will open for editing.\r\n* For more information, see [[Wikipedia:How to start a page|How to start a page]] and check out Wikipedia\'s [[Wikipedia:Naming conventions|naming conventions]].\r\n* Please do not create a new article without linking to it from at least one other article.\r\n|\r\n<pre><nowiki>\r\n[[National sarcasm society]]\r\nis a page \r\nthat does not exist yet.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\r\n[[Wikipedia:How to edit a page]] is a link to this page.\r\n\r\n* [[Help:Self link|Self link]]s appear as bold text when the article is viewed.\r\n* Do not use this technique to make the article name bold in the first paragraph; see the [[Wikipedia:Manual of Style#Article titles|Manual of Style]].\r\n|\r\n<pre><nowiki>\r\n[[Wikipedia:How to edit a page]]\r\nis a link to this page.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nThe character \'\'\'tilde\'\'\' (~) is used when adding a comment to a Talk page. \r\nYou should sign your comment by appending four tildes (<nowiki>~~~~</nowiki>)\r\nto the comment so as to add your user name plus date/time:\r\n: [[User:Patricia|Patricia Zhang]] 13:40, Jan 14, 2007 (UTC)\r\nAdding three tildes (<nowiki>~~~</nowiki>) will add just your user name:\r\n: [[User:Patricia|Patricia Zhang]]\r\nand adding five tildes (<nowiki>~~~~~</nowiki>) gives the date/time alone:\r\n: 13:40, Jan 14, 2007 (UTC)\r\n\r\n* The first two both provide a link to your [[Wikipedia:user page|user page]].\r\n|\r\n<pre><nowiki>\r\nThe character \'\'\'tilde\'\'\' (~) is used \r\nwhen adding a comment to a Talk page. \r\nYou should sign your comment by \r\nappending four tildes (~~~~)\r\nto the comment so as to add your \r\nuser name plus date/time:\r\n: ~~~~\r\nAdding three tildes (~~~) will add \r\njust your user name:\r\n: ~~~\r\nand adding five tildes (~~~~~) gives \r\nthe date/time alone:\r\n: ~~~~~\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n* [[Wikipedia:Redirect|Redirect]] one article title to another by placing a directive like the one shown to the right on the \'\'first\'\' line of the article (such as at a page titled \"[[USA]]\").\r\n* It is possible to redirect to a section. For example, a redirect to [[United States#History|United States History]] will redirect to the [[United States]] page, to the History section if it exists.\r\n|\r\n<pre><nowiki>\r\n#REDIRECT [[United States]]\r\n\r\n#REDIRECT [[United States#History|United \r\nStates History]] will redirect to the \r\n[[United States]] page, to the History \r\nsection if it exists \r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\r\n* Link to a page on the same subject in another language by placing a link of the form: <nowiki>[[language code:Title]]</nowiki> in the wiki text of the article.\r\nFor example in the article on [[Plankton]], which is available on a lot of other wikis, the interlanguage links would look like so:\r\n:<tt><nowiki>[[de:Plankton]] [[es:Plancton]] [[ru:????????]] [[simple:Plankton]]</nowiki></tt>\r\n* While it does not matter where you put these links while editing, it is recommended that these links be placed at the very end of the edit box. \r\n* These will not be visible in the main text of the article on which they are placed but appear as links in the extreme left margin column of Wikipedia page as part of a separate box under the \'toolbox\' titled \'in other languages\'. You can check out the links to the corresponding page in wikipedias of other languages for this Wikipedia MOS help page itself.\r\n* Please see [[Wikipedia:Interlanguage links]] and the [[Wikipedia:Complete list of language wikis available|list of languages and codes]].\r\n|\r\n<pre><nowiki>\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'What links here\'\'\' and \'\'\'Related changes\'\'\'\r\npages can be linked as:\r\n[[Special:Whatlinkshere/Wikipedia:How to edit a page]]\r\nand\r\n[[Special:Recentchangeslinked/Wikipedia:How to edit a page]]\r\n\r\n|\r\n<pre><nowiki>\r\n\'\'\'What links here\'\'\' and\r\n\'\'\'Related changes\'\'\'\r\npages can be linked as:\r\n[[Special:Whatlinkshere/\r\nWikipedia:How to edit a page]]\r\nand\r\n[[Special:Recentchangeslinked/\r\nWikipedia:How to edit a page]]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nA user\'s \'\'\'Contributions\'\'\' page can be linked as:\r\n[[Special:Contributions/UserName]]\r\nor\r\n[[Special:Contributions/192.0.2.0]]\r\n|\r\n<pre><nowiki>\r\nA user\'s \'\'\'Contributions\'\'\' page\r\ncan be linked as:\r\n[[Special:Contributions/UserName]]\r\nor\r\n[[Special:Contributions/192.0.2.0]]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n* To put an article in a [[Wikipedia:Category]], place a link like the one to the right anywhere in the article. As with interlanguage links, it does not matter where you put these links while editing as they will always show up in the same place when you save the page, but placement at the end of the edit box is recommended.\r\n|\r\n<pre><nowiki>\r\n[[Category:Character sets]]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n* To \'\'link\'\' to a [[Wikipedia:Category]] page without putting the article into the category, use an initial colon (:) in the link.\r\n|\r\n<pre><nowiki>\r\n[[:Category:Character sets]]\r\n</nowiki></pre>\r\n|- id=\"link-external\" valign=\"top\"\r\n|\r\nThree ways to link to external (non-wiki) sources:\r\n# Bare URL: http://www.wikipedia.com/ (bad style)\r\n# Unnamed link: [http://www.wikipedia.com/] (only used within article body for footnotes)\r\n# Named link: [http://www.wikipedia.com Wikipedia]\r\n\r\n:See [[MetaWikiPedia:Interwiki_map]] for the list of shortcuts.\r\n\r\n* Square brackets indicate an external link. Note the use of a \'\'space\'\' (not a pipe) to separate the URL from the link text in the \"named\" version.\r\n* In the [[URL]], all symbols must be among:<br/>\'\'\'A-Z a-z 0-9 . _  / ~ % - + & # ? ! = ( ) @\'\'\'\r\n* If a URL contains a character not in this list, it should be encoded by using a percent sign (%) followed by the [[hexadecimal|hex]] code of the character, which can be found in the table of [[ASCII#ASCII printable characters|ASCII printable characters]]. For example, the caret character (^) would be encoded in a URL as \'\'\'%5E\'\'\'.\r\n* If the \"named\" version contains a closing square bracket \"]\", then you must use the [[HTML]] special character syntax, i.e. \'\'\']\'\'\' otherwise the [[MediaWiki]] software will prematurely interpret this as the end of the external link.\r\n* There is a class that can be used to remove the arrow image from the external link. It is used in [[Template:Ref]] to stop the URL from expanding during printing. It should \'\'\'never\'\'\' be used in the main body of an article. However, there is an exception: wikilinks in Image markup. An example of the markup is as follows:\r\n** Markup: <nowiki><span\r\nclass=\"plainlinksneverexpand\">\r\n[http://www.sysinternals.com/\r\nntw2k/freeware/winobj.shtml WinObj]</span></nowiki>\r\n** Display: <span class=\"plainlinksneverexpand\"> [http://www.sysinternals.com/ntw2k/freeware/winobj.shtml WinObj]</span>\r\n* See [[Wikipedia:External links]] for style issues.\r\n|\r\n<pre><nowiki>\r\nThree ways to link to\r\nexternal (non-wiki) sources:\r\n# Bare URL:\r\nhttp://en.wikipedia.org/\r\n(bad style)\r\n# Unnamed link:\r\n[http://en.wikipedia.org/]\r\n(only used within article\r\nbody for footnotes)\r\n# Named link:\r\n[http://en.wikipedia.org Wikipedia]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nLinking to other wikis:\r\n# [[Interwiki]] link: [[Wiktionary:Hello]]\r\n# Interwiki link without prefix: [[Wiktionary:Hello|Hello]]\r\n# Named interwiki link: [[Wiktionary:Hello|Wiktionary definition of \'Hello\']]\r\n\r\n* All of these forms lead to the URL http://en.wiktionary.org/wiki/Hello\r\n* Note that interwiki links use the \'\'internal\'\' link style.\r\n* See [[MetaWikiPedia:Interwiki_map]] for the list of shortcuts; if the site you want to link to is not on the list, use an external link ([[#link-external|see above]]).\r\n* See also [[Wikipedia:Wikimedia sister projects]].\r\n\r\nLinking to another language\'s wiktionary:\r\n# [[Wiktionary:fr:bonjour]]\r\n# [[Wiktionary:fr:bonjour|bonjour]]\r\n# [[Wiktionary:fr:bonjour|fr:bonjour]]\r\n\r\n* All of these forms lead to the URL http://fr.wiktionary.org/wiki/bonjour\r\n|\r\n<pre><nowiki>\r\nLinking to other wikis:\r\n# [[Interwiki]] link:\r\n[[Wiktionary:Hello]]\r\n# Interwiki link without prefix:\r\n[[Wiktionary:Hello|]]\r\n# Named interwiki link:\r\n[[Wiktionary:Hello|\r\nWiktionary definition \r\nof \'Hello\']]\r\n\r\nLinking to another\r\nlanguage\'s wiktionary:\r\n# [[Wiktionary:fr:bonjour]]\r\n# [[Wiktionary:fr:bonjour|bonjour]]\r\n# [[Wiktionary:fr:bonjour|]]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nISBN 012345678X\r\n\r\nISBN 0-12-345678-X\r\n\r\n* Link to books using their [[Wikipedia:ISBN|ISBN]]. This is preferred to linking to a specific online bookstore, because it gives the reader a choice of vendors. However, if one bookstore or online service provides additional free information, such as table of contents or excerpts from the text, then a link to that source will aid the user and is recommended.\r\n* ISBN links do not need any extra markup, provided you use one of the indicated formats.\r\n|\r\n<pre><nowiki>\r\nISBN 012345678X\r\n\r\nISBN 0-12-345678-X\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nText mentioning RFC 4321 anywhere\r\n\r\n* Link to [[Internet Engineering Task Force]] [[Request for Comments|RFC]]s.\r\n|\r\n<pre><nowiki>\r\nText mentioning RFC 4321 \r\nanywhere\r\n</nowiki></pre>\r\n\r\n|- valign=top\r\n|\r\nDate formats:\r\n# [[July 20]], [[1969]]\r\n# [[20 July]] [[1969]]\r\n# [[1969]]-[[07-20]]\r\n# [[1969-07-20]]\r\n\r\n* Link dates in one of the above formats, so that everyone can set their own display order. If [[Special:Userlogin|logged in]], you can use [[Special:Preferences]] to change your own date display setting.\r\n* All of the above dates will appear as \"[[20 July|20 July]] [[1969|1969]]\" if you set your date display preference to \"15 January 2001\", but as \"[[20 July|July 20]], [[1969|1969]]\" if you set it to \"January 15, 2001\", or as \"[[1969|1969]]-[[July 20|07-20]]\" if you set it to \"2001-01-15\".\r\n|\r\n<pre><nowiki>\r\nDate formats:\r\n# [[July 20]], [[1969]]\r\n# [[20 July]] [[1969]]\r\n# [[1969]]-[[07-20]]\r\n# [[1969-07-20]]\r\n\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nSpecial [[WP:AO|as-of]] links like [[As of 2006|this year]]\r\nneeding future maintenance\r\n|\r\n<pre><nowiki>\r\nSpecial [[WP:AO|as-of]] links \r\nlike [[As of 2006|this year]]\r\nneeding future maintenance\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n[[media:Classical guitar scale.ogg|Sound]]\r\n\r\n*To include links to non image uploads such as sounds, use a \"media\" link. For images, [[#Images|see next section]].\r\n\r\nSome uploaded sounds are listed at [[Wikipedia:Sound]].\r\n|\r\n<pre><nowiki>\r\n[[media:Classical guitar scale.ogg|Sound]]\r\n</nowiki></pre>\r\n\r\n|- valign=\"top\"\r\n|\r\nLink directly to \'\'\'edit\'\'\' for an existing page, or apply other link attributes. \r\n* use <nowiki>{{fullurl:}}</nowiki>  \r\n* or use [[template:edit|<nowiki>{{template:edit}}</nowiki>]] which conceals the edit label for page printing \r\n|\r\n<pre><nowiki>{{fullurl:page name|action=edit}}</nowiki></pre>\r\n|}\r\n\r\n===Images===\r\nOnly images that have been uploaded to Wikipedia can be used. To upload images, use the [[Special:Upload|upload page]]. You can find the uploaded image on the [[Special:Imagelist|image list]].\r\n\r\n{| border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\r\n|-\r\n! What it looks like\r\n! What you type\r\n|- valign=\"top\"\r\n|A picture: \r\n[[Image:wiki.png]]\r\n|<pre>A picture: \r\n<nowiki>[[Image:wiki.png]]</nowiki></pre>\r\n\r\n|- valign=\"top\"\r\n|With alternative text:\r\n[[Image:wiki.png|Wikipedia, The Free Encyclopedia.]]\r\n|<pre>With alternative text:\r\n<nowiki>[[Image:wiki.png|Wikipedia, The Free Encyclopedia.]]</nowiki></pre>\r\n* Alternative text, used when the image is unavailable or when the image is loaded in a text-only browser, or when spoken aloud, is \'\'\'strongly\'\'\' encouraged. See [[Wikipedia:Alternate text for images|Alternate text for images]] for help on choosing it.\r\n\r\n|- valign=\"top\"\r\n|Floating to the right side of the page using the \'\'frame\'\' attribute and a caption:\r\n[[Image:wiki.png|frame|Wikipedia Encyclopedia]]<br clear=all>\r\n|<pre>Floating to the right side of the page \r\nusing the \'\'frame\'\' attribute and a caption:\r\n<nowiki>[[Image:wiki.png|frame|Wikipedia Encyclopedia]]</nowiki></pre>\r\n* The frame tag automatically floats the image right.\r\n* The caption is also used as alternate text.\r\n\r\n|- valign=\"top\"\r\n|Floating to the right side of the page using the \'\'thumb\'\' attribute and a caption:\r\n[[Image:wiki.png|thumb|Wikipedia Encyclopedia]]<br clear=all>\r\n|<pre>Floating to the right side of the page \r\nusing the \'\'thumb\'\' attribute and a caption:\r\n<nowiki>[[Image:wiki.png|thumb|Wikipedia Encyclopedia]]</nowiki></pre>\r\n* The thumb tag automatically floats the image right.\r\n* The caption is also used as alternate text.\r\n* An enlarge icon is placed in the lower right corner.\r\n\r\n|- valign=\"top\"\r\n|Floating to the right side of the page \'\'without\'\' a caption:\r\n[[Image:wiki.png|right|Wikipedia Encyclopedia]]\r\n|<pre>Floating to the right side of the page\r\n\'\'without\'\' a caption:\r\n<nowiki>[[Image:wiki.png|right|Wikipedia Encyclopedia]]</nowiki></pre>\r\n* The help topic on [[Wikipedia:Extended image syntax|extended image syntax]] explains more options.\r\n\r\n|- valign=\"top\"\r\n|A picture resized to 30 pixels...\r\n[[Image:wiki.png|30 px]]\r\n|<pre>A picture resized to 30 pixels...\r\n<nowiki>[[Image:wiki.png|30 px]]</nowiki></pre>\r\n* The help topic on [[Wikipedia:Extended image syntax|extended image syntax]] explains more options.\r\n\r\n|- valign=\"top\"\r\n|Linking directly to the description page of an image:\r\n[[:Image:wiki.png]]\r\n|<pre>Linking directly to the description page\r\nof an image:\r\n<nowiki>[[:Image:wiki.png]]</nowiki></pre>\r\n* Clicking on an image displayed on a page\r\n(such as any of the ones above)\r\nalso leads to the description page\r\n\r\n|- valign=\"top\"\r\n|Linking directly to an image without displaying it:\r\n[[:Image:wiki.png|Image of the jigsaw globe logo]]\r\n|<pre>Linking directly to an image\r\nwithout displaying it:\r\n<nowiki>[[:media:wiki.png|Image of the jigsaw globe logo]]</nowiki></pre>\r\n* To include links to images shown as links instead of drawn on the page, use a \"media\" link.\r\n\r\n|- valign=\"top\" \r\n|Using the [[div tag]] to separate images from text (note that this may allow images to cover text):\r\n|<pre><nowiki>Example:\r\n<div style=\"display:inline;\r\nwidth:220px; float:right;\">\r\nPlace images here </div></nowiki></pre>\r\n\r\n|- valign=\"top\" \r\n|Using wiki markup to make a table in which to place a vertical column of images (this helps edit links match headers, especially in Firefox browsers): \r\n|<pre><nowiki>Example: {| align=right\r\n|-\r\n| \r\nPlace images here\r\n|}\r\n</nowiki></pre>\r\n\r\n|}\r\n\r\nSee the Wikipedia\'s [[Wikipedia:Image use policy|image use policy]] as a guideline used on Wikipedia.\r\n\r\nFor further help on images, including some more versatile abilities, see the topic on [[Wikipedia:Extended image syntax|Extended image syntax]].\r\n\r\n===Headings===\r\n\r\nFor a top-level heading, put it on a separate line surrounded by \'==\'. For example:\r\n\r\n   ==Introduction==\r\n\r\nSubheadings use \'===\', \'====\', and so on.\r\n\r\n===Character formatting===\r\n{| border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\r\n|- valign=\"top\"\r\n! What it looks like\r\n! What you type\r\n|- id=\"emph\" valign=\"top\"\r\n|\r\n\'\'Italicized text\'\'<br />\'\'\'Bold text\'\'\'<br />\'\'\'\'\'Italicized & Bold text\'\'\'\'\'\r\n|\r\n<pre><nowiki>\r\n\'\'Italicized text\'\'\r\n\'\'\'Bold text\'\'\'\r\n\'\'\'\'\'Italicized & Bold text\'\'\'\'\'\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nA typewriter font for <tt>monospace text</tt>\r\nor for computer code: <code>int main()</code>\r\n\r\n* For semantic reasons, using <code><code></code> where applicable is preferable to using <code><tt></code>.\r\n|\r\n<pre><nowiki>\r\nA typewriter font for <tt>monospace text</tt>\r\nor for computer code: <code>int main()</code>\r\n</nowiki></pre>\r\n|- valign=top\r\n|\r\nCreate codeblocks<code><pre>\r\n#include <iostream.h>\r\nint main ()\r\n{\r\ncout << \"Hello World!\";\r\nreturn 0;\r\n}\r\n</pre></code> that are printed as entered\r\n|\r\n<pre>Use <code><pre> Block of Code </pre></code> \r\naround the block of code.\r\n\r\n* The <pre> tags within the code block \r\nwill create formatting issues. To solve, \r\ndisplay the tags literally with \r\n<pre>  and  </pre></pre>\r\n|- valign=\"top\"\r\n|\r\nYou can use <small>small text</small> for captions.\r\n|\r\n<pre><nowiki>\r\nYou can use <small>small text</small> for captions.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nBetter stay away from <big>big text</big>, unless\r\n<small> it\'s <big>within</big> small</small> text. \r\n|\r\n<pre><nowiki>\r\nBetter stay away from <big>big text</big>, unless\r\n<small> it\'s <big>within</big> small</small> text.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\nYou can <s>strike out deleted material</s>\r\nand <u>underline new material</u>.\r\n\r\nYou can also mark <del>deleted material</del> and\r\n<ins>inserted material</ins> using logical markup.\r\nFor backwards compatibility better combine this\r\npotentially ignored new <del>logical</del> with \r\nthe old <s><del>physical</del></s> markup.\r\n\r\n* When editing regular Wikipedia articles, just make your changes and do not mark them up in any special way.\r\n* When editing your own previous remarks in talk pages, it is sometimes appropriate to mark up deleted or inserted material.\r\n|\r\n<pre><nowiki>\r\nYou can <s>strike out deleted material</s>\r\nand <u>underline new material</u>.\r\n\r\nYou can also mark <del>deleted material</del> and\r\n<ins>inserted material</ins> using logical markup.\r\nFor backwards compatibility better combine this\r\npotentially ignored new <del>logical</del> with\r\nthe old <s><del>physical</del></s> markup.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Suppressing interpretation of markup:\'\'\'\r\n<br/>\r\n<nowiki>Link ? (\'\'to\'\') the [[Wikipedia FAQ]]</nowiki>\r\n* Used to show literal data that would otherwise have special meaning.\r\n* Escape all wiki markup, including that which looks like HTML tags.\r\n* Does not escape HTML character references.\r\n* To escape HTML character references such as <tt>?</tt> use <tt>&rarr;</tt>\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n<nowiki>Link ? (\'\'to\'\') \r\nthe [[Wikipedia FAQ]]</nowiki>\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Commenting page source:\'\'\'\r\n<br/>\r\n\'\'not shown when viewing page\'\'\r\n* Used to leave comments in a page for future editors.\r\n* Note that most comments should go on the appropriate [[Wikipedia:Talk page|Talk page]].\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n<!-- comment here -->\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'<span id=\"diacritics\">Diacritical marks:</span>\'\'\'\r\n<br/>\r\n¿ ¡ ¬ √ ƒ ≈ <br/>\r\n∆ « » …   À <br/>\r\nÃ Õ\r\nŒ œ — “ <br/>\r\n” ‘ ’\r\n÷ ÿ Ÿ <br/>\r\n⁄ € ‹ ﬂ\r\n‡ · <br/>\r\n‚ „ ‰ Â Ê\r\nÁ <br/>\r\nË È Í Î Ï Ì<br/>\r\nÓ Ô Ò Ú Û Ù <br/>\r\nú ı\r\nˆ ¯ ˘ ˙ <br/>\r\n˚ ¸ ˇ\r\n\r\n* See [[meta:Help:Special characters|special characters]].\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n¿ ¡ ¬ √ ƒ ≈ \r\n∆ « » …   À \r\nÃ Õ Œ œ — “ \r\n” ‘ ’ ÷ ÿ Ÿ \r\n⁄ € ‹ ﬂ ‡ · \r\n‚ „ ‰ Â Ê Á \r\nË È Í Î Ï Ì\r\nÓ Ô Ò Ú Û Ù \r\nú ı ˆ ¯ ˘ ˙ \r\n˚ ¸ ˇ\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Punctuation:\'\'\'\r\n<br/>\r\nø ° ß ∂<br/>\r\nÜ á ï ñ ó<br/>\r\nã õ ´ ª<br/>\r\në í ì î\r\n|\r\n<br/>\r\n<pre><nowiki>\r\nø ° ß ∂\r\nÜ á ï ñ ó\r\nã õ ´ ª\r\në í ì î\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Commercial symbols:\'\'\'\r\n<br/>\r\nô © Æ ¢ Ä •<br/>\r\n£ §\r\n|\r\n<br/>\r\n<pre><nowiki>\r\nô © Æ ¢ Ä • \r\n£ §\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Subscripts:\'\'\'\r\n<br/>\r\nx<sub>1</sub> x<sub>2</sub> x<sub>3</sub> or\r\n<br/>\r\nx? x? x? x? x?\r\n<br/>\r\nx? x? x? x? x?\r\n\r\n\'\'\'Superscripts:\'\'\'\r\n<br/>\r\nx<sup>1</sup> x≤ x≥ or\r\n<br/>\r\nx? xπ x≤ x≥ x?\r\n<br/>\r\nx? x? x? x? x?\r\n\r\n*The latter methods of sub/superscripting cannot be used in the most general context, as they rely on Unicode support which may not be present on all users\' machines. For the 1-2-3 superscripts, it is nevertheless preferred when possible (as with units of measurement) because most browsers have an easier time formatting lines with it.\r\n\r\n?<sub>0</sub> =\r\n8.85 ◊ 10<sup>?12</sup>\r\nC≤ / J m.\r\n\r\n1 [[hectare]] = [[1 E4 m≤]]\r\n|\r\n<br/>\r\n<pre><nowiki>\r\nx<sub>1</sub> x<sub>2</sub> x<sub>3</sub> or\r\n<br/>\r\nx? x? x? x? x?\r\n<br/>\r\nx? x? x? x? x?\r\n</nowiki></pre>\r\n\r\n<pre><nowiki>\r\nx<sup>1</sup> x<sup>2</sup> x<sup>3</sup> or\r\n<br/>\r\nx? xπ x≤ x≥ x?\r\n<br/>\r\nx? x? x? x? x?\r\n\r\n?<sub>0</sub> =\r\n8.85 ◊ 10<sup>?12</sup>\r\nC≤ / J m.\r\n\r\n1 [[hectare]] = [[1 E4 m≤]]\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Greek characters:\'\'\'\r\n<br/>\r\n? ? ? ? ? ? <br/>\r\n? ? ? ? ? ? ? <br/>\r\n? ? ? ? ? ?<br/>\r\n? ? ? ? ? ?<br/>\r\n? ? ? ? ? ? <br/>\r\n? ? ? ?\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n? ? ? ? ? ? \r\n? ? ? ? ? ? ? \r\n? ? ? ? ? ?\r\n? ? ? ? ? ?\r\n? ? ? ? ? ? \r\n? ? ? ?\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Mathematical characters:\'\'\'\r\n<br/>\r\n? ? ? ? ? ± ?<br/>\r\n? ? ? ? ? ?<br/>\r\n◊ ∑ ˜ ? ? ?<br/>\r\n? â ∞ ? ? ¯<br/>\r\n? ? ? ? ? ? ? ?<br/>\r\n¨ ? ? ? ? <br/>\r\n? ? ? ? ?<br/>\r\n? ? ? ? ?<br/>\r\n* See also [[Wikipedia:WikiProject Mathematics|WikiProject Mathematics]] and [[TeX]].\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n? ? ? ? ? ± ?\r\n? ? ? ? ? ?\r\n◊ ∑ ˜ ? ? ?\r\n? â ∞ ? ? ¯\r\n? ? ? ? ? ? ? ?\r\n¨ ? ? ? ? \r\n? ? ? ? ?\r\n? ? ? ? ?\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n<math>,! sin x + ln y</math><br>\r\nsin\'\'x\'\' + ln\'\'y\'\'\r\n<!-- no space between roman \"sin\" and italic \"x\" -->\r\n\r\n<math>mathbf{x} = 0</math><br>\r\n\'\'\'x\'\'\' = 0\r\n\r\nOrdinary text should use [[#emph|wiki markup for emphasis]], and should not use <code><i></code> or <code><b></code>.  However, mathematical formulae often use italics, and sometimes use bold, for reasons unrelated to emphasis.  Complex formulae should use [[Help:Formula|<code><math></code> markup]], and simple formulae may use <code><math></code>; or <code><i></code> and <code><b></code>; or <code><nowiki>\'\'</nowiki></code> and <code><nowiki>\'\'\'</nowiki></code>.  According to [[Wikipedia:WikiProject Mathematics#Italicization and bolding|WikiProject Mathematics]], wiki markup is preferred over HTML markup like <code><i></code> and <code><b></code>.\r\n|\r\n<pre><nowiki>\r\n<math>,! sin x + ln y</math>\r\nsin\'\'x\'\' + ln\'\'y\'\'\r\n\r\n<math>mathbf{x} = 0</math>\r\n\'\'\'x\'\'\' = 0\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Spacing in simple math formulae:\'\'\'\r\n<br/>\r\nObviously, \'\'x\'\'≤ ? 0 is true when \'\'x\'\' is a real number.\r\n*To space things out without allowing line breaks to interrupt the formula, use non-breaking spaces: <tt> </tt>.\r\n|\r\n<br/>\r\n<pre><nowiki>\r\nObviously, \'\'x\'\'≤ ? 0 is true \r\nwhen \'\'x\'\' is a real number.\r\n</nowiki></pre>\r\n|- valign=\"top\"\r\n|\r\n\'\'\'Complicated formulae:\'\'\'\r\n<br/>\r\n: <math>sum_{n=0}^infty frac{x^n}{n!}</math>\r\n* See [[Help:Formula]] for how to use <tt><math></tt>.\r\n* A formula displayed on a line by itself should probably be indented by using the colon (:) character.\r\n|\r\n<br/>\r\n<pre><nowiki>\r\n: <math>sum_{n=0}^infty frac{x^n}{n!}</math>\r\n</nowiki></pre>\r\n|}\r\n\'\'(see also: [[Chess symbols in Unicode]])\'\'\r\n\r\n===No or limited formattingóshowing exactly what is being typed===\r\n\r\nA few different kinds of formatting will tell the Wiki to display things as you typed themówhat you see, is what you get!\r\n\r\n{| border=\"1\" cellpadding=\"2\" cellspacing=\"0\"\r\n|-\r\n!What it looks like\r\n!What you type\r\n|-\r\n|\'\'\'<nowiki> tag:\'\'\'<br/>\r\n<nowiki>\r\nThe nowiki tag ignores [[Wiki]] \'\'markup\'\'.\r\nIt reformats text by removing newlines    and multiple spaces.\r\nIt still interprets special characters: ?\r\n</nowiki>\r\n|<pre><nowiki>\r\n<nowiki>\r\nThe nowiki tag ignores [[Wiki]] \'\'markup\'\'.\r\nIt reformats text by removing newlines \r\nand multiple spaces.\r\nIt still interprets special\r\ncharacters: ?\r\n</nowiki>\r\n</nowiki></pre>\r\n|-\r\n|\'\'\'<pre> tag:\'\'\'</br>\r\n<pre>\r\nThe pre tag ignores [[Wiki]] \'\'markup\'\'.\r\nIt also doesn\'t     reformat text.\r\nIt still interprets special characters: ?\r\n</pre>\r\n|<pre><pre><nowiki>\r\nThe pre tag ignores [[Wiki]] \'\'markup\'\'.\r\nIt also doesn\'t     reformat text.\r\nIt still interprets special characters:\r\n ?\r\n</nowiki></pre></pre>\r\n|-\r\n|\'\'\'Leading space:\'\'\'<br/>\r\nLeading spaces are another way \r\nto preserve formatting. \'\'However, it will make the whole page fail to render properly in some browsers, such as IE7, thus making the page unreadable.\'\'\r\n\r\n\r\n Putting a space at the beginning of each line\r\n stops the text   from being reformatted. \r\n It still interprets [[Wiki]] \'\'markup\'\' and\r\n special characters: ?\r\n|<pre><nowiki>\r\nLeading spaces are another way \r\nto preserve formatting.\r\n Putting a space at the beginning of each line\r\n stops the text   from being reformatted. \r\n It still interprets [[Wiki]] \'\'markup\'\' and\r\n special characters: ?\r\n</nowiki></pre>\r\n|}\r\n\r\n===Invisible text (comments)===\r\n{{main|Wikipedia:Manual of Style#Invisible comments}}\r\nIt\'s uncommon, but on occasion acceptable, to add a hidden comment within the text of an article.  <!-- This is an example of text that won\'t normally be visible except in \"edit\" mode. --> The format is this:\r\n <nowiki><!-- This is an example of text that won\'t normally be visible except in \"edit\" mode. --></nowiki>\r\n\r\n=== Table of contents===\r\n<!-- ==== Placement of the Table of Contents (TOC) ==== -->\r\nAt the current status of the wiki markup language, having at least four headers on a page triggers the table of contents (TOC) to appear in front of the first header (or after introductory sections).  Putting <nowiki>__TOC__</nowiki> anywhere forces the TOC to appear at that point (instead of just before the first header).  Putting <nowiki>__NOTOC__</nowiki> anywhere forces the TOC to disappear.  See also [[Wikipedia:Section#Compact_TOC|compact TOC]] for alphabet and year headings.\r\n<!--\r\nTHE TEXT BELOW IS COMMENTED OUT SINCE THE DESCRIBED TECHNIQUE \r\nDOESN\'T WORK AFTER UPGRADING TO MEDIAWIKI 1.5\r\n\r\n====Keeping headings out of the Table of Contents====\r\nIf you want some subheadings to not appear in the Table of Contents, then make the following replacements.\r\n\r\nReplace  <nowiki> == Header 2 == with <h2> Header 2 </h2> </nowiki>\r\n\r\nReplace  <nowiki> === Header 3 === with <h3> Header 3 </h3> </nowiki>\r\n\r\nAnd so forth.\r\n\r\nFor example, notice that the following header has the same font as the other subheaders to this \"Tables\" section, but the following header does not appear in the Table of Contents for this page.\r\n\r\n<h4> This header has the h4 font, but is NOT in the Table of Contents (actually, it is)</h4>\r\n\r\nThis effect is obtained by the following line of code.\r\n\r\n<code><nowiki><h4> This header has the h4 font, but is not in the Table of Contents </h4></nowiki></code>\r\n\r\nNote that when editing by section, this approach places the text between the tags in the subsequent section, not the previous section. To edit this text, click the edit link next to \"Tables\", not the one above.\r\n-->\r\n\r\n===Tables===\r\nThere are two ways to build tables: \r\n*in special Wiki-markup (see [[Help:Table]])\r\n*with the usual HTML elements: <table>, <tr>, <td> or <th>.\r\n\r\nFor the latter, and a discussion on when tables are appropriate, see [[Wikipedia:When to use tables]].\r\n\r\n===Variables===\r\n\'\'(See also [[Help:Variable]])\'\'\r\n{| style=\"text-align:center\"\r\n|-\r\n! Code\r\n! Effect\r\n|-\r\n| <nowiki>{{CURRENTWEEK}}</nowiki> || {{CURRENTWEEK}}\r\n|-\r\n| <nowiki>{{CURRENTDOW}}</nowiki> || {{CURRENTDOW}}\r\n|-\r\n| <nowiki>{{CURRENTMONTH}}</nowiki> || {{CURRENTMONTH}}\r\n|-\r\n| <nowiki>{{CURRENTMONTHNAME}}</nowiki>\r\n| {{CURRENTMONTHNAME}}\r\n|-\r\n| <nowiki>{{CURRENTMONTHNAMEGEN}}</nowiki>\r\n| {{CURRENTMONTHNAMEGEN}}\r\n|-\r\n| <nowiki>{{CURRENTDAY}}</nowiki> || {{CURRENTDAY}}\r\n|-\r\n| <nowiki>{{CURRENTDAYNAME}}</nowiki> || {{CURRENTDAYNAME}}\r\n|-\r\n| <nowiki>{{CURRENTYEAR}}</nowiki> || {{CURRENTYEAR}}\r\n|-\r\n| <nowiki>{{CURRENTTIME}}</nowiki> || {{CURRENTTIME}}\r\n|-\r\n| <nowiki>{{NUMBEROFARTICLES}}</nowiki>\r\n| {{NUMBEROFARTICLES}}\r\n|-\r\n| <nowiki>{{NUMBEROFUSERS}}</nowiki>\r\n| {{NUMBEROFUSERS}}\r\n|-\r\n| <nowiki>{{PAGENAME}}</nowiki> || {{PAGENAME}}\r\n|-\r\n| <nowiki>{{NAMESPACE}}</nowiki> || {{NAMESPACE}}\r\n|-\r\n| <nowiki>{{REVISIONID}}</nowiki> || {{REVISIONID}}\r\n|-\r\n| <nowiki>{{localurl:pagename}}</nowiki>\r\n| {{localurl:pagename}}\r\n|-\r\n| <nowiki>{{localurl:</nowiki>\'\'Wikipedia:Sandbox\'\'<nowiki>|action=edit}}</nowiki>\r\n| {{localurl:Wikipedia:Sandbox|action=edit}}\r\n|-\r\n| <nowiki>{{fullurl:pagename}}</nowiki>\r\n| {{fullurl:pagename}} \r\n|- \r\n| <nowiki>{{fullurl:pagename|</nowiki>\'\'query_string\'\'<nowiki>}}</nowiki>\r\n| {{fullurl:pagename|query_string}} \r\n|- \r\n| <nowiki>{{SERVER}}</nowiki> || {{SERVER}}\r\n|-\r\n| <nowiki>{{ns:1}}</nowiki> || {{ns:1}}\r\n|-\r\n| <nowiki>{{ns:2}}</nowiki> || {{ns:2}}\r\n|-\r\n| <nowiki>{{ns:3}}</nowiki> || {{ns:3}}\r\n|-\r\n| <nowiki>{{ns:4}}</nowiki> || {{ns:4}}\r\n|-\r\n| <nowiki>{{ns:5}}</nowiki> || {{ns:5}}\r\n|-\r\n| <nowiki>{{ns:6}}</nowiki> || {{ns:6}}\r\n|-\r\n| <nowiki>{{ns:7}}</nowiki> || {{ns:7}}\r\n|-\r\n| <nowiki>{{ns:8}}</nowiki> || {{ns:8}}\r\n|-\r\n| <nowiki>{{ns:9}}</nowiki> || {{ns:9}}\r\n|-\r\n| <nowiki>{{ns:10}}</nowiki> || {{ns:10}}\r\n|-\r\n| <nowiki>{{ns:11}}</nowiki> || {{ns:11}}\r\n|-\r\n| <nowiki>{{ns:12}}</nowiki> || {{ns:12}}\r\n|-\r\n| <nowiki>{{ns:13}}</nowiki> || {{ns:13}}\r\n|-\r\n| <nowiki>{{ns:14}}</nowiki> || {{ns:14}}\r\n|-\r\n| <nowiki>{{ns:15}}</nowiki> || {{ns:15}}\r\n|-\r\n| <nowiki>{{SITENAME}}</nowiki> || {{SITENAME}}\r\n|}\r\n\r\n\'\'\'NUMBEROFARTICLES\'\'\' is the number of pages in the main namespace which contain a link and are not a redirect, in other words number of articles, stubs containing a link, and disambiguation pages.\r\n\r\n\'\'\'CURRENTMONTHNAMEGEN\'\'\' is the genitive (possessive) grammatical form of the month name, as used in some languages; \'\'\'CURRENTMONTHNAME\'\'\' is the nominative (subject) form, as usually seen in English.\r\n\r\nIn languages where it makes a difference, you can use constructs like <nowiki>{{grammar:case|word}}</nowiki> to convert a word from the nominative case to some other case.  For example, <nowiki>{{grammar:genitive|{{CURRENTMONTHNAME}}}}</nowiki> means the same as <nowiki>{{CURRENTMONTHNAMEGEN}}</nowiki>. <!-- Is there a reference for this, other than the source code (for example, phase3/languages/Lnaguage*.php) ? -->\r\n\r\n\r\nThis page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,1,'2008-02-27 14:54:14',1,1),
-	('59121859-EB3F-023C-703B2FFFF21FBAE3','59104F5A-9555-E540-6BCAA65D9AE6F448','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== List basics ==\r\n\r\nCodexWiki offers three types of lists. \'\'\'Ordered lists\'\'\', \'\'\'unordered lists\'\'\', and \'\'\'definition lists\'\'\'. In the following sections, ordered lists are used for examples. Unordered lists would give corresponding results.\r\n\r\n{|border=1 width=\"79%\"\r\n!wikitext!!rendering\r\n|-\r\n|\r\n * Lists are easy to do:\r\n ** start every line\r\n * with a star\r\n ** more stars mean\r\n *** deeper levels\r\n||\r\n* Lists are easy to do:\r\n** start every line\r\n* with a star\r\n** more stars mean \r\n*** deeper levels\r\n|-\r\n|\r\n *A newline\r\n *in a list  \r\n marks the end of the list.\r\n Of course\r\n *you can\r\n *start again.\r\n|\r\n*A newline\r\n*in a list  \r\nmarks the end of the list.\r\nOf course\r\n*you can\r\n*start again.\r\n|-\r\n|\r\n # Numbered lists are good\r\n ## very organized\r\n ## easy to follow\r\n|\r\n# Numbered lists are good\r\n## very organized\r\n## easy to follow\r\n|-\r\n|\r\n * You can also\r\n **break lines\r\n **like this\r\n|\r\n* You can also\r\n**break lines\r\n**like this\r\n|-\r\n|\r\n ; Definition lists\r\n ; item : definition\r\n ; semicolon plus term\r\n : colon plus definition\r\n|\r\n; Definition lists\r\n; item : definition\r\n; semicolon plus term\r\n: colon plus definition\r\n|-\r\n|\r\n * Or create mixed lists\r\n *# and nest them\r\n *#* like this\r\n *#*; definitions\r\n *#*: work:\r\n *#*; apple\r\n *#*; banana\r\n *#*: fruits\r\n|\r\n* Or create mixed lists\r\n*# and nest them\r\n*#* like this\r\n*#*; definitions\r\n*#*: work: \r\n*#*; apple\r\n*#*; banana\r\n*#*: fruits\r\n|}\r\n\r\n== Paragraphs in lists ==\r\n\r\nFor simplicity, list items in wiki markup cannot be longer than a paragraph. A following blank line will end the list and reset the counter on ordered lists. Separating unordered list items usually has no noticable effects.\r\n\r\nParagraphs can be forced in lists by using HTML tags. Two line break symbols, <code><nowiki><br><br></nowiki></code>, will create the desired effect. So will enclosing all but the first paragraph with <code><nowiki><p>...</p></nowiki></code>\r\n\r\nFor a list with items of more than one paragraph long, adding a blank line between items may be necessary to avoid confusion.\r\n\r\n==Continuing a list item after a sub-item==\r\n\r\nIn HTML, a list item may contain several sublists, not necessarily adjacent; thus there may be parts of the list item not only before the first sublist, but also between sublists, and after the last one; however, in wiki-syntax, sublists follow the same rules as sections of a page: the only possible part of the list item not in sublists is before the first sublist.\r\n\r\nIn the case of an unnumbered first-level list in wikitext code this limitation can be overcome by splitting the list into multiple lists; indented text between the partial lists may visually serve as part of a list item after a sublist; however, this may give, depending on CSS, a blank line before and after each list, in which case, for uniformity, every first-level list item could be made a separate list.\r\n\r\nNumbered lists illustrate that what should look like one list may, for the software, consist of multiple lists; unnumbered lists give a corresponding result, except that the problem of restarting with 1 is not applicable.\r\n\r\n{| style=\"border:1px;border-spacing:1px;background-color:black;\" cellpadding=\"5\"\r\n|- style=\"background-color:white;\"\r\n|\r\n <nowiki>\r\n<ol>\r\n  <li>list item A1\r\n    <ol>\r\n      <li>list item B1</li>\r\n      <li>list item B2</li>\r\n    </ol>continuing list item A1\r\n  </li>\r\n  <li>list item A2</li>\r\n</ol></nowiki>\r\n| <ol>\r\n  <li>list item A1\r\n    <ol>\r\n      <li>list item B1</li>\r\n      <li>list item B2</li>\r\n    </ol>continuing list item A1\r\n  </li>\r\n  <li>list item A2</li>\r\n</ol>\r\n|- style=\"background-color:#E0E0E0;font-weight:bold;text-align:center;\"\r\n| colspan=\"2\" | vs.\r\n|- style=\"background-color:white;\"\r\n|\r\n #list item A1\r\n ##list item B1\r\n ##list item B2\r\n #:continuing list item A1\r\n #list item A2\r\n|\r\n#list item A1\r\n##list item B1\r\n##list item B2\r\n#:continuing list item A1\r\n#list item A2\r\n|}\r\n\r\nOne level deeper, with a sublist item continuing after a sub-sublist, one gets even more blank lines; however, the continuation of the first-level list is not affected:\r\n<pre>\r\n#list item A1\r\n##list item B1\r\n###list item C1\r\n##:continuing list item B1\r\n##list item B2\r\n#list item A2\r\n</pre>\r\ngives\r\n#list item A1\r\n##list item B1\r\n###list item C1\r\n##:continuing list item B1\r\n##list item B2\r\n#list item A2\r\n\r\nSee also [[Help:Section#Subdivisions in general|subdivisions]].\r\n\r\n== Changing the list type ==\r\n\r\nThe list type (which type of marker appears before the list item) can be changed in CSS by setting the [http://www.w3.org/TR/REC-CSS2/generate.html#lists list-style-type] property:\r\n\r\n{|border=1 width=\"79%\"\r\n!wikitext!!rendering\r\n|-\r\n|\r\n <nowiki>\r\n<ol style=\"list-style-type:lower-roman\">\r\n  <li>About the author</li>\r\n  <li>Foreword to the first edition</li>\r\n  <li>Foreword to the second edition</li>\r\n</ol></nowiki>\r\n|<ol style=\"list-style-type:lower-roman\">\r\n  <li>About the author</li>\r\n  <li>Foreword to the first edition</li>\r\n  <li>Foreword to the second edition</li>\r\n</ol>\r\n|-\r\n|}\r\n\r\n==Extra indentation of lists==\r\nIn a numbered list in a large font, some browsers do not show more than two digits, unless extra indentation is applied (if there are multiple columns: for each column). This can be done with CSS:\r\n ol { margin-left: 2cm}\r\nor alternatively, like below.\r\n\r\n{|border=1\r\n!wikitext!!rendering \r\n! style=\"width: 40%\" | comments\r\n|-\r\n|\r\n <nowiki>\r\n:#abc\r\n:#def\r\n:#ghi\r\n </nowiki>\r\n|\r\n:#abc\r\n:#def\r\n:#ghi\r\n| A list of one or more lines starting with a colon creates a [http://www.w3.org/TR/html4/struct/lists.html#edef-DL definition list] without definition terms, and with the items as definition descriptions, hence indented. However, if the colons are in front of the codes \"*\" or \"#\" of an unordered or ordered list, the list is treated as one definition description, so the whole list is indented.\r\n|-\r\n|\r\n <nowiki>\r\n<ul>\r\n  <ol>\r\n    <li>abc</li>\r\n    <li>def</li>\r\n    <li>ghi</li>\r\n  </ol>\r\n</ul>\r\n</nowiki>\r\n|\r\n<ul>\r\n  <ol>\r\n    <li>abc</li>\r\n    <li>def</li>\r\n    <li>ghi</li>\r\n  </ol>\r\n</ul>\r\n| MediaWiki translates an unordered list (ul) without any list items (li) into a div with a <code>style=\"margin-left: 2em\"</code>, causing  indentation of the contents. This is \'\'\'the most versatile method\'\'\', as it allows starting with a number other than 1, see below.\r\n\r\n|-\r\n|\r\n <nowiki>\r\n<ul>\r\n#abc\r\n#def\r\n#ghi\r\n</ul>\r\n</nowiki>\r\n|\r\n<ul>\r\n#abc\r\n#def\r\n#ghi\r\n</ul>\r\n|Like above, with the content of the \"unordered list without any list items\", which itself is an ordered list, expressed with # codes. The HTML produced, and hence the rendering, is the same. This is the \'\'\'recommended\'\'\' method when not starting with a number other than 1.\r\n\r\n|}\r\n\r\nTo demonstrate that all three methods show all digits of 3-digit numbers, see [[m:Help:List demo|List demo]].\r\n\r\n==Specifying a starting value==\r\nSpecifying a starting value is only possible with HTML syntax.\r\n(W3C has deprecated the <code>start</code> and <code>value</code> attributes as used below in HTML 4.01 and XHTML 1.0. But as of 2007, no popular web browsers implement CSS counters, which were to replace these attributes. Wikimedia projects use XHTML Transitional, which contains the deprecated attributes.)\r\n\r\n<pre>\r\n<ol start=\"9\">\r\n<li>Amsterdam</li>\r\n<li>Rotterdam</li>\r\n<li>The Hague</li>\r\n</ol>\r\n</pre>\r\ngives\r\n<ol start=\"9\">\r\n<li>Amsterdam</li>\r\n<li>Rotterdam</li>\r\n<li>The Hague</li>\r\n</ol>\r\n\r\nOr:\r\n<pre>\r\n<ol>\r\n<li value=\"9\">Amsterdam</li>\r\n<li value=\"8\">Rotterdam</li>\r\n<li value=\"7\">The Hague</li>\r\n</ol>\r\n</pre>\r\ngives\r\n<ol>\r\n<li value=\"9\">Amsterdam</li>\r\n<li value=\"8\">Rotterdam</li>\r\n<li value=\"7\">The Hague</li>\r\n</ol>\r\n\r\n==Comparison with a table==\r\nApart from providing automatic numbering, the numbered list also aligns the contents of the items, comparable with using table syntax:\r\n<pre>\r\n{|\r\n|-\r\n| align=right |  9.||Amsterdam\r\n|-\r\n| align=right | 10.||Rotterdam\r\n|-\r\n| align=right | 11.||The Hague\r\n|}\r\n</pre>\r\ngives\r\n{|\r\n|-\r\n| align=right |  9.||Amsterdam\r\n|-\r\n| align=right | 10.||Rotterdam\r\n|-\r\n| align=right | 11.||The Hague\r\n|}\r\n\r\nThis non-automatic numbering has the advantage that if a text refers to the numbers, insertion or deletion of an item does not disturb the correspondence.\r\n\r\n==Multi-column bulleted list==\r\n<pre>\r\n{| \r\n| \r\n*1\r\n*2 \r\n| \r\n*3\r\n*4\r\n|}\r\n</pre>\r\ngives:\r\n{| \r\n| \r\n*1\r\n*2 \r\n| \r\n*3\r\n*4\r\n|}\r\n\r\n==Multi-column numbered list==\r\nSpecifying a starting value is useful for a numbered list with multiple columns, to avoid restarting from one in each column. As mentioned above, this is only possible with HTML-syntax (for the first column either wiki-syntax or HTML-syntax can be used).\r\n\r\nIn combination with the extra indentation explained in the previous section:\r\n<pre>\r\n{| valign=\"top\"\r\n|-\r\n|<ul><ol start=\"125\"><li>a<li>bb<li>ccc</ol></ul>\r\n|<ul><ol start=\"128\"><li>ddd<li>ee<li>f</ol></ul>\r\n|}\r\n</pre>\r\n\r\ngives\r\n\r\n{| valign=\"top\"\r\n|-\r\n|<ul><ol start=\"125\"><li>a<li>bb<li>ccc</ol></ul>\r\n|<ul><ol start=\"128\"><li>ddd<li>ee<li>f</ol></ul>\r\n|}\r\n\r\nUsing {{tim|multi-column numbered list}} the computation of the starting values can be automated, and only the first starting value and the number of items in each column except the last has to be specified. Adding an item to, or removing an item from a column requires adjusting only one number, the number of items in that column, instead of changing the starting numbers for all subsequent columns.\r\n\r\n<pre>{{Multi-column numbered list|125|a<li>bb<li>ccc|3|<li>ddd<li>ee<li>f}}</pre>\r\n\r\ngives\r\n\r\n{{Multi-column numbered list|125|a<li>bb<li>ccc|3|<li>ddd<li>ee<li>f}}\r\n\r\n<pre>{{Multi-column numbered list|lst=lower-alpha|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}</pre>\r\n\r\ngives\r\n\r\n{{Multi-column numbered list|lst=lower-alpha|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}\r\n\r\n<pre>{{Multi-column numbered list|lst=lower-roman|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}</pre>\r\n\r\ngives\r\n\r\n{{Multi-column numbered list|lst=lower-roman|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}\r\n\r\n<pre>{{Multi-column numbered list|lst=disc||a<li>bb<li>ccc||<li>ddd<li>ee|-|<li>f}}</pre>\r\n\r\ngives\r\n\r\n{{Multi-column numbered list|lst=disc||a<li>bb<li>ccc||<li>ddd<li>ee|-|<li>f}}\r\n\r\n==Streamlined style or horizontal style==\r\nIt is also possible to present short lists using very basic formatting, such as:\r\n\r\n <nowiki>\'\'Title of list:\'\'</nowiki> example 1, example 2, example 3\r\n\r\n\'\'Title of list:\'\' example 1, example 2, example 3\r\n\r\nThis style requires less space on the page, and is preferred if there are only a few entries in the list, it can be read easily, and a direct edit point is not required. The list items should start with a lowercase letter unless they are proper nouns.\r\n\r\n==Tables==\r\nA one-column table is very similar to a list, but it allows sorting. If the wikitext itself is already sorted with the same sortkey, this advantage does not apply.\r\nA multiple-column table allows sorting on any column.\r\n\r\nSee also [[en:Wikipedia:When to use tables]].\r\n\r\n==Changing unordered lists to ordered ones==\r\nWith the CSS\r\n ul { list-style: decimal }\r\nunordered lists are changed to ordered ones. This applies (as far as the CSS selector does not restrict this) to all ul-lists in the HTML source code:\r\n*those produced with *\r\n*those with <nowiki><ul></nowiki> in the wikitext\r\n*those produced by the system\r\n\r\nSince each special page, like other pages, has a class based on the pagename, one can separately specify for each type whether the lists should be ordered, see [[Help:User contributions#User styles]] and [[Help:What links here#User styles]].\r\n\r\nHowever, it does not seem possible to make all page history lists ordered (unless one makes \'\'all\'\' lists ordered), because the class name is based on the page for which the history is viewed. \r\n\r\n\r\n\r\n\r\nThis page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,1,'2008-02-27 15:06:40',1,1),
-	('A873628C-0187-145E-574309C8195CA646','A8736248-DCE2-A123-A6DA083754C59203','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','<div align=\"center\">\r\n<!--COMMENT MARKUP. Displays:Edit mode only.-->\r\n{|align=\"center\" style=\"width:100%; border:2px #a3b1bf solid; background:#f5faff; text-align:left;\"\r\n|colspan=\"3\" align=\"center\" style=\"background:#cee0f2; text-align:center;\" |\r\n<h2 style=\"margin:.5em; margin-top:.1em; margin-bottom:.1em; border-bottom:0; font-weight:bold;\">Wikipedia Cheatsheet</h2>\r\n|-<!--COLUMN HEADINGS-->\r\n| width=\"25%\" style=\"background:#cee0f2; padding:0.3em; text-align:center;\"|\'\'\'Description\'\'\'\r\n| style=\"background:#cee0f2; padding:0.3em; text-align:center;\"|\'\'\'You type\'\'\' \r\n| width=\"25%\" style=\"background:#cee0f2; padding:0.3em; text-align:center;\"|\'\'\'You get\'\'\'\r\n|-<!--1ST ROW 1ST COLUMN-->\r\n|[[Wikipedia:How_to_edit_a_page#Character_formatting|Italic text]]\r\n|<!--2ND COLUMN-->\r\n<tt><nowiki>\'\'italic\'\'</nowiki></tt>\r\n|<!--3RD COLUMN-->\r\n\'\'italic\'\'\r\n|-<!--HORIZONTAL LINE-->\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-<!--2ND ROW 1ST COLUMN-->\r\n|[[Wikipedia:How_to_edit_a_page#Character_formatting|Bold text]]\r\n|\r\n<tt><nowiki>\'\'\'bold\'\'\'</nowiki></tt>\r\n|\r\n\'\'\'bold\'\'\'\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Wikipedia:How_to_edit_a_page#Character_formatting|Bold and italic]]\r\n|\r\n<tt><nowiki>\'\'\'\'\'bold & italic\'\'\'\'\'</nowiki></tt>\r\n|\r\n\'\'\'\'\'bold & italic\'\'\'\'\'\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n||[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Internal link]]<br />\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'(within Wikipedia)\'\'</div>\r\n|\r\n<tt><nowiki>[[Name of page]]</nowiki></tt><br />\r\n<tt><nowiki>[[Name of page|Text to display]]</nowiki></tt>\r\n|\r\n[[Name of page]]<br />\r\n[[Name of page|Text to display]]\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|External link]]<br />\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'(to other websites)\'\'</div>\r\n|\r\n<tt><nowiki>[http://www.example.org Text to display]</nowiki></tt><br />\r\n<tt><nowiki>[http://www.example.org]</nowiki></tt><br />\r\n<tt><nowiki>http://www.example.org</nowiki></tt>\r\n|\r\n[http://www.example.org Text to display]<br />\r\n[http://www.example.org]<br />\r\nhttp://www.example.org\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Redirect to another page]]\r\n|\r\n<tt><nowiki>#REDIRECT [[Target page]]</nowiki></tt>\r\n|\r\n[[Image:Redirect arrow without text.svg|30px]][[Target page]]\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|rowspan=\"3\"|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Footnotes/References]]\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'Numbering is generated automatically.\'\'</div>\r\n|<div style=\"margin-left:2em; font-size:0.9em;\">\'\'To create a footnote or reference, use this format:\'\'</div>\r\n<tt><nowiki>Article text.<ref name=\"test\">[http://www.example.org Link text], additional text.</ref></nowiki></tt>\r\n|rowspan=\"2\"|Article text.<ref name=\"test\">[http://www.example.org Link text], additional text.</ref>\r\n|-\r\n|<div style=\"margin-left:2em; font-size:0.9em;\">\'\'To reuse the same note, reuse the name with a trailing slash:\'\'</div>\r\n<tt><nowiki>Article text.<ref name=\"test\" /></nowiki></tt>\r\n|-\r\n|<div style=\"margin-left:2em; font-size:0.9em;\">\'\'To display notes, add \'\'\'either\'\'\' of these lines to the References section\'\'</div>\r\n<tt><nowiki><references/></nowiki></tt><br/>\r\n<tt>{{tl|Reflist}}</tt>\r\n|<br/><references /><br/>\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Wikipedia:How_to_edit_a_page#Headings|Section headings]]<ref name=\"firstline\">\'\'Applies only at the very beginning of lines.\'\'</ref><br />\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'A Table of Contents will automatically be generated when four headings are added to an article.\'\'</div>\r\n|\r\n<tt><nowiki>== Level 1 ==</nowiki></tt><br />\r\n<tt><nowiki>=== Level 2 ===</nowiki></tt><br />\r\n<tt><nowiki>==== Level 3 ====</nowiki></tt><br />\r\n<tt><nowiki>===== Level 4 =====</nowiki></tt><br />\r\n<tt><nowiki>====== Level 5 ======</nowiki></tt>\r\n|\r\n== Level 1 ==\r\n=== Level 2 ===\r\n==== Level 3 ====\r\n===== Level 4 =====\r\n====== Level 5 ======\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Help:List|Bulleted list]]<ref name=\"firstline\" />\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'Empty lines between list items discouraged, (see numbered lists).\'\'</div>\r\n|\r\n<tt>* One</tt><br />\r\n<tt>* Two</tt><br />\r\n<tt>** Two point one</tt><br />\r\n<tt>* Three</tt>\r\n|\r\n* One\r\n* Two\r\n** Two point one\r\n* Three\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Help:List|Numbered list]]<ref name=\"firstline\" />\r\n<div style=\"padding: 0em .5em; font-size:0.9em;\">\'\'Empty lines between list items restarts numbering at 1.\'\'</div>\r\n|\r\n<tt># One</tt><br />\r\n<tt># Two</tt><br />\r\n<tt>## Two point one</tt><br />\r\n<tt># Three</tt><br />\r\n|\r\n# One\r\n# Two\r\n## Two point one\r\n# Three\r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|[[Wikipedia:Extended_image_syntax|Thumbnail image]]\r\n|\r\n<tt><nowiki>[[Image:Wiki.png|thumb|Caption text]]</nowiki></tt>\r\n|\r\n[[Image:Wiki.png|thumb|Caption text]]\r\n|-\r\n\r\n|-<!--TALKPAGES-->\r\n| colspan=\"3\" style=\"background:#E6F2FF; padding: 0.2em; font-family: sans-serif; font-size: 0.9em; text-align:center;\" | For [[Wikipedia:Tutorial_%28Talk_pages%29|Talk Pages]]\r\n|-\r\n|Signature\r\n|\r\n<tt><nowiki>~~~~</nowiki></tt>\r\n|\r\n[[Special:Mypage|Your username]] {{CURRENTTIME}}, <br />\r\n{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} (UTC) \r\n|-\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2;\"|\r\n|-\r\n|Indenting Text<ref name=\"firstline\" />\r\n|\r\n<tt><nowiki>no indent (normal)</nowiki></tt><br/>\r\n<tt><nowiki>:first indent</nowiki></tt><br/>\r\n<tt><nowiki>::second indent</nowiki></tt><br/>\r\n<tt><nowiki>:::third indent</nowiki></tt>\r\n|\r\nno indent (normal)<br/>\r\n:first indent\r\n::second indent\r\n:::third indent\r\n|-\r\n\r\n|colspan=\"3\" style=\"border-top:1px solid #cee0f2; font-size:0.9em;\"|<references/>\r\n|}\r\n</div>','First Import',1,'2008-11-16 19:16:53',1,1),
-	('A8743C30-A526-DA45-970FB0A65A8F917D','58F2F999-FC99-125A-DB21FCD7085C44A1','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Help Contents ==\r\n\r\nWelcome to the Codex Wiki.  Here you will find the documentation to edit and create pages on this wiki.\r\n\r\n=== Editing ===\r\n\r\n* [[Help:Wiki Markup|Wiki Markup]] - The most common wiki markups.\r\n* [[Help:List Markup|Lists Markup]] - Creating and using lists.\r\n* [[Help:Cheatsheet|Wiki Markup Cheatsheet]] - Wiki Markup Cheatsheet\r\n* [[Help:Feed Markup|Feed Markup]] - Using feed tags.\r\n* [[Help:Messagebox Markup|Messagebox Markup]] - Using messagebox tags.\r\n* [[Help:Codex Wiki Plugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.\r\n\r\n=== More Information ===\r\n\r\nMore information can be found via the Wikipedia site [http://en.wikipedia.org/wiki/Help:Contents Wikipedia Help] as this wiki follows many of its markup guidelines.','Messagebox tags.',1,'2008-11-16 19:17:49',1,1),
-	('A89594E7-970D-BE3D-C32A3395AD685354','A895949D-B7C5-34B5-0E32B0CE52BC3FA0','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Messagebox Markup ==\r\nThe <nowiki><messagebox></nowiki> tag is available to integrate the [http://www.coldboxframework.com ColdBox] Messagebox Plugin into your wiki pages.\r\n\r\nThe following attributes are available to be used with the <nowiki><messagebox></nowiki> tag\r\n<br /><br />\r\n{|border=1 width=\"80%\" cellpadding=\"5\" cellspacing=\"0\"\r\n!Attribute!!Required!!Values!!Description\r\n|-\r\n||\r\n\'\'\'type\'\'\'\r\n||\r\nNo\r\n||\r\ninfo,warning,error\r\n||\r\nThe type of messagebox to generate: info, warning or error.\r\n\r\nExample:\r\n<code><pre><messagebox type=\"error\">My Message</messagebox></pre></code>\r\n','First Import',1,'2008-11-16 19:54:14',1,1),
-	('B5C20C69-CF1E-5C1B-97430D6BDABBF4B6','E12403BB-F4C1-5F8A-1B20DB3894BAF144','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align=\"right\"\r\n|-\r\n| __TOC__\r\n|}\r\n\r\n= Welcome To Codex =\r\nThis is your Wiki landing page.  You can customize this page at anytime by clicking on the \'\'\'Edit\'\'\' button below.\r\n\r\n== Navigation ==\r\nTo your left you can see the wiki sidebar.  From here you can comeback to this page, go to our help section, view the wiki\'s rss feeds, get a wiki category listing and even see the entire wiki page directory.  Come on, try it out!!\r\n\r\n== Search ==\r\nThe top header bar includes our incredible search engine, search for anything in a wiki page or title.  Try it out!\r\n\r\n== Top Navigation ==\r\nIf you have the correct  or are a registered user, you can view your user profile and manage this wiki.  Just click on the \'\'\'Admin\'\'\' tab to start managing Codex.\r\n\r\n{{{Messagebox message=\"Hello Everybody\" type=\"info\"}}}','Updates',1,'2008-11-19 09:17:48',1,0),
-	('B5C4FA6B-CF1E-5C1B-9830AE891E48FCD2','B5C4FA1D-CF1E-5C1B-950B4A04E276B736','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align=\"right\"\r\n|-\r\n| __TOC__\r\n|}\r\n\r\n= Codex Wiki Plugins =\r\n\r\n== Introduction ==\r\nCodex comes bundled with a set of custom wiki plugins that can be used in any wiki page by following the following syntax:\r\n\r\n<source lang=\"xml\">\r\n{{{PluginName arg1=\"\" arg2=\"\" ...}}}\r\n</source>\r\n\r\nBasically, you create a tag with the name of the plugin to use and then just create arguments of name-value pairs of whatever arguments the plugin\'s \'\'\'renderit()\'\'\' method takes in.\r\n\r\n== A Wiki Plugin ==\r\nCreating wiki plugins are very easy. Just drop them in the \'\'\'/App/plugins/wiki\'\'\' folder and you are ready to start using them in your wiki pages.\r\n\r\nA wiki plugin is exactly just like any other ColdBox plugin. [http://ortus.svnrepository.com/coldbox/trac.cgi/wiki/cbPluginsGuide ColdBox Plugin Guide].\r\n\r\n=== Rules ===\r\n\r\n# Plugin component must extend \'\'coldbox.system.plugin\'\' and implement the coldbox plugin init() method.\r\n# Plugin can just implement the ColdBox init() method with no inheritance, but will not be able to tap into the framework\'s supertype\'s methods.  It will have to do everything via the injected controller.\r\n# Plugin must implement a method called \'\'\'renderit()\'\'\'.\r\n## This method can have 1 or more arguments.\r\n\r\n== Example ==\r\n\r\nSo if we have a plugin called \'\'\'DateTime\'\'\', it\'s source code can look like this:\r\n\r\n<source lang=\"coldfusion\">\r\n<cfcomponent name=\"DateTime\" \r\n			 hint=\"A datetime wiki plugin\" \r\n			 extends=\"coldbox.system.plugin\" \r\n			 output=\"false\" \r\n			 cache=\"true\">\r\n  \r\n<!------------------------------------------- CONSTRUCTOR ------------------------------------------->	\r\n   \r\n    <cffunction name=\"init\" access=\"public\" returntype=\"DateTime\" output=\"false\">\r\n		<cfargument name=\"controller\" type=\"any\" required=\"true\">\r\n		<cfscript>\r\n  		super.Init(arguments.controller);\r\n  		setpluginName(\"DateTime\");\r\n  		setpluginVersion(\"1.0\");\r\n  		setpluginDescription(\"A date time wiki plugin\");\r\n  		//My own Constructor code here\r\n  		\r\n  		//Return instance\r\n  		return this;\r\n		</cfscript>\r\n	</cffunction>\r\n\r\n<!------------------------------------------- PUBLIC ------------------------------------------->	\r\n\r\n    <!--- today --->\r\n	<cffunction name=\"renderit\" output=\"false\" access=\"public\" returntype=\"string\" hint=\"print today\">\r\n		<cfargument name=\"format\" type=\"string\" required=\"true\" default=\"full\" hint=\"Full,Short, Medium\"/>\r\n		<cfreturn dateformat(now(),arguments.format)>\r\n	</cffunction>\r\n	\r\n<!------------------------------------------- PRIVATE ------------------------------------------->	\r\n	\r\n</cfcomponent>\r\n</source>\r\n\r\nAnd we can use it in our wiki pages like so:\r\n\r\n<source lang=\"xml\">\r\n//Initial space is left so wiki doesn\'t match and you can see the source\r\n{{{ Messagebox message=\"Hello World!\"}}}\r\n</source>\r\n\r\nThat\'s it. Welcome to the world of Codex Wiki Plugins.  Now go out and start coding your very own plugins. Below you can see a plugin at work:\r\n\r\n{{{WikiPlugins}}}','First Import',1,'2008-11-19 09:21:03',1,1),
-	('C90869BF-F321-E64A-26D668F8EE8988B5','C90869A2-090D-50DA-0800C94BB5DB7026','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Feed Markup ==\r\nThe <nowiki><feed></nowiki> tag is available to integrate RSS and ATOM feeds to provide dynamic information into your wiki pages.\r\n\r\nThe following attributes are available to be used with the <nowiki><feed></nowiki> tag\r\n{|border=1 width=\"80%\" cellpadding=\"5\" cellspacing=\"0\"\r\n!Attribute!!Required!!Values!!Description\r\n|-\r\n||\r\n\'\'\'url\'\'\'\r\n||\r\nYes\r\n||\r\nA URL\r\n||\r\nEither a absolute, or root relative link to the RSS or ATOM feed.\r\nA root relative link points directly back to the codeX wiki RSS feeds.\r\n\r\nExample of an absolute link:\r\n<code><pre><feed url=\"http://www.compoundtheory.com/?action=feed.rss\" /></pre></code>\r\n\r\nExample of a relative link:\r\n<code><pre><feed url=\"/feed/directory/list.cfm\" /></pre></code>\r\n|-\r\n||\r\n\'\'\'display\'\'\'\r\n||\r\nNo\r\n||\r\nbullet, numbered\r\n||\r\nRSS Feed data can either be displayed as regular bullet points, or by numbered bullet points.\r\n\r\nExample of display by bullet points:\r\n<code><pre><feed url=\"/feed/directory/list.cfm\" display=\"bullet\" /></pre></code>\r\n\r\nExample of display by numbered bullet points:\r\n<code><pre><feed url=\"/feed/directory/list.cfm\" display=\"numbered\" /></pre></code>\r\n\r\nBy default it is displayed by \'bullet\'\r\n|-\r\n||\r\n\'\'\'cache\'\'\'\r\n||\r\nNo\r\n||\r\nnumber of minutes\r\n||\r\nThe number of minutes in which the results of this RSS feed are cached.\r\n\r\nExample of a RSS feed cached for 5 minutes\r\n<code><pre><feed url=\"/feed/directory/list.cfm\" cahe=\"5\" /></pre></code>\r\n\r\nBy default, the default cache time out of the installed ColdBox.\r\n|-\r\n|}','Initial creation',1,'2008-03-20 08:53:34',1,1),
-	('E5CC1AC5-C484-565C-19E5F34B3712AD02','E5CC1A90-D36E-9214-33EB0021D817DE59','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Category Listing ==\r\n\r\n<feed url=\"/feed/category/list.cfm\" display=\"numbered\" />','Initial Creation',1,'2008-05-14 14:59:28',1,0);
+
+
+#
+# Dumping data for table 'wiki_pagecontent'
+#
+
+LOCK TABLES `wiki_pagecontent` WRITE;
+/*!40000 ALTER TABLE `wiki_pagecontent` DISABLE KEYS*/;
+INSERT INTO `wiki_pagecontent` (`pagecontent_id`, `FKpage_id`, `FKuser_id`, `pagecontent_content`, `pagecontent_comment`, `pagecontent_version`, `pagecontent_createdate`, `pagecontent_isActive`, `pagecontent_isReadOnly`) VALUES
+	('06AF3D9F-F000-34AC-65CBF528D2F4F658','06AF3D6A-0AB3-43E6-EF2D1118F58A1562','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Codex RSS Feed Directory ==
+<feed url="/feed/directory/list.cfm" />',NULL,'1','2008-02-11 15:09:50',1,0),
+	('5906B62D-FBD0-6F75-B6B7BF36DCD904C5','59014C5F-C1C6-7E91-A38446214A380C7D','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','==Wiki markup==
+
+The \'\'\'wiki markup\'\'\' is the syntax system you can use to format a Wikipedia page; please see [[Help:Editing]] for details on it, and [[Help:Wikitext examples]] for a longer list of the possibilities of Wikitext.
+
+===Links and URLs===
+{| border="1" cellpadding="2" cellspacing="0"
+|- valign="top"
+! What it looks like
+! What you type
+|- id="emph" valign="top"
+|
+London has [[public transport]].
+
+* A link to another Wiki article.
+* Internally, the first letter of the target page is automatically capitalized and spaces are represented as underscores (typing an underscore in the link has the same effect as typing a space, but is not recommended).
+* Thus the link above is to the [[URL]] en.wikipedia.org/wiki/Public_transport, which is the Wikipedia article with the name "Public transport". See also [[Wikipedia:Canonicalization]].
+|
+<pre><nowiki>
+London has [[public transport]].
+</nowiki></pre>
+|- valign="top"
+|
+San Francisco also has [[public transport|
+public transportation]].
+
+* Same target, different name.
+* The target ("piped") text must be placed \'\'\'first\'\'\', then the text that will be displayed second.
+|
+<pre><nowiki>
+San Francisco also has
+[[public transport| public transportation]].
+</nowiki></pre>
+|- valign="top"
+|
+San Francisco also has
+[[public transport]]ation.
+
+Examples include [[bus]]es, [[taxicab]]s,
+and [[streetcar]]s.
+
+* Endings are blended into the link.
+* Preferred style is to use this instead of a piped link, if possible.
+* Blending can be suppressed by using <nowiki><nowiki></nowiki></nowiki> tags, which may be desirable in some instances.  Example: a [[micro]]<nowiki>second</nowiki>.
+|
+<pre><nowiki>
+San Francisco also has
+[[public transport]]ation.
+
+Examples include [[bus]]es,
+ [[taxicab]]s, and [[streetcar]]s.
+
+a [[micro]]<nowiki>second</nowiki>
+</nowiki></pre>
+|- valign="top"
+|
+See the [[Wikipedia:Manual of Style]].
+
+* A link to another [[Help:namespace|namespace]].
+|
+<pre><nowiki>
+See the 
+[[Wikipedia:Manual of Style]].
+</nowiki></pre>
+
+|- id="link-to-section" valign="top"
+|
+[[Wikipedia:Manual of Style#Italics]] is a link to a section within another page.
+
+[[#Links and URLs]] is a link to another section on the current page.
+
+[[Wikipedia:Manual of Style#Italics|Italics]] is a piped link to a section within another page.
+
+* The part after the number sign (#) must match a section heading on the page. Matches must be exact in terms of spelling, case, and punctuation.  Links to non-existent sections are not broken; they are treated as links to the top of the page.
+* Include "| link title" to create a stylish (piped) link title.
+
+|
+<pre><nowiki>
+[[Wikipedia:Manual of Style#Italics]] 
+is a link to a section within another page.
+
+[[#Links and URLs]] is a link
+to another section on the 
+current page.
+
+[[Wikipedia:Manual of Style#Italics|Italics]] 
+is a piped link to a section within 
+another page.</nowiki></pre>
+|- valign="top"
+|
+Automatically hide stuff in parentheses:
+[[kingdom (biology)|kingdom]].
+
+Automatically hide namespace:
+[[Wikipedia:Village Pump|Village Pump]]. 
+
+Or both:
+[[Wikipedia:Manual of Style (headings)|Manual of Style]]
+
+But not:
+[[Wikipedia:Manual of Style#Links|]]
+* The server fills in the part after the pipe character (|) when you save the page. The next time you open the edit box you will see the expanded piped link. When [[Wikipedia:Show preview|preview]]ing your edits, you will not see the expanded form until you press \'\'\'Save\'\'\' and \'\'\'Edit\'\'\' again. The same applies to links to sections within the same page ([[#link-to-section|see previous entry]]).
+* See [[Wikipedia:Pipe trick]] for details.
+
+|
+<pre><nowiki>
+Automatically hide stuff
+in parentheses:
+[[kingdom (biology)|]].
+
+Automatically hide namespace: 
+[[Wikipedia:Village Pump|]].
+
+Or both:
+[[Wikipedia:
+Manual of Style (headings)|]]
+
+But not:
+[[Wikipedia:
+Manual of Style#Links|]]
+</nowiki></pre>
+
+
+|- valign="top"
+|
+<!-- A village pump proposal was made so that users would be allowed to create the article shown here. Pages here would be articles requested for a long time. If you find someone has created the article, please look in requested articles and put one in its place -->
+[[National sarcasm society]] is a page
+that does not exist yet.
+
+* You can create it by clicking on the link.
+* To create a new page: 
+*# Create a link to it on some other (related) page.
+*# Save that page.
+*# Click on the link you just made. The new page will open for editing.
+* For more information, see [[Wikipedia:How to start a page|How to start a page]] and check out Wikipedia\'s [[Wikipedia:Naming conventions|naming conventions]].
+* Please do not create a new article without linking to it from at least one other article.
+|
+<pre><nowiki>
+[[National sarcasm society]]
+is a page 
+that does not exist yet.
+</nowiki></pre>
+|- valign="top"
+|
+
+[[Wikipedia:How to edit a page]] is a link to this page.
+
+* [[Help:Self link|Self link]]s appear as bold text when the article is viewed.
+* Do not use this technique to make the article name bold in the first paragraph; see the [[Wikipedia:Manual of Style#Article titles|Manual of Style]].
+|
+<pre><nowiki>
+[[Wikipedia:How to edit a page]]
+is a link to this page.
+</nowiki></pre>
+|- valign="top"
+|
+The character \'\'\'tilde\'\'\' (~) is used when adding a comment to a Talk page. 
+You should sign your comment by appending four tildes (<nowiki>~~~~</nowiki>)
+to the comment so as to add your user name plus date/time:
+: [[User:Patricia|Patricia Zhang]] 13:40, Jan 14, 2007 (UTC)
+Adding three tildes (<nowiki>~~~</nowiki>) will add just your user name:
+: [[User:Patricia|Patricia Zhang]]
+and adding five tildes (<nowiki>~~~~~</nowiki>) gives the date/time alone:
+: 13:40, Jan 14, 2007 (UTC)
+
+* The first two both provide a link to your [[Wikipedia:user page|user page]].
+|
+<pre><nowiki>
+The character \'\'\'tilde\'\'\' (~) is used 
+when adding a comment to a Talk page. 
+You should sign your comment by 
+appending four tildes (~~~~)
+to the comment so as to add your 
+user name plus date/time:
+: ~~~~
+Adding three tildes (~~~) will add 
+just your user name:
+: ~~~
+and adding five tildes (~~~~~) gives 
+the date/time alone:
+: ~~~~~
+</nowiki></pre>
+|- valign="top"
+|
+* [[Wikipedia:Redirect|Redirect]] one article title to another by placing a directive like the one shown to the right on the \'\'first\'\' line of the article (such as at a page titled "[[USA]]").
+* It is possible to redirect to a section. For example, a redirect to [[United States#History|United States History]] will redirect to the [[United States]] page, to the History section if it exists.
+|
+<pre><nowiki>
+#REDIRECT [[United States]]
+
+#REDIRECT [[United States#History|United 
+States History]] will redirect to the 
+[[United States]] page, to the History 
+section if it exists 
+</nowiki></pre>
+|- valign="top"
+|
+
+* Link to a page on the same subject in another language by placing a link of the form: <nowiki>[[language code:Title]]</nowiki> in the wiki text of the article.
+For example in the article on [[Plankton]], which is available on a lot of other wikis, the interlanguage links would look like so:
+:<tt><nowiki>[[de:Plankton]] [[es:Plancton]] [[ru:????????]] [[simple:Plankton]]</nowiki></tt>
+* While it does not matter where you put these links while editing, it is recommended that these links be placed at the very end of the edit box. 
+* These will not be visible in the main text of the article on which they are placed but appear as links in the extreme left margin column of Wikipedia page as part of a separate box under the \'toolbox\' titled \'in other languages\'. You can check out the links to the corresponding page in wikipedias of other languages for this Wikipedia MOS help page itself.
+* Please see [[Wikipedia:Interlanguage links]] and the [[Wikipedia:Complete list of language wikis available|list of languages and codes]].
+|
+<pre><nowiki>
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'What links here\'\'\' and \'\'\'Related changes\'\'\'
+pages can be linked as:
+[[Special:Whatlinkshere/Wikipedia:How to edit a page]]
+and
+[[Special:Recentchangeslinked/Wikipedia:How to edit a page]]
+
+|
+<pre><nowiki>
+\'\'\'What links here\'\'\' and
+\'\'\'Related changes\'\'\'
+pages can be linked as:
+[[Special:Whatlinkshere/
+Wikipedia:How to edit a page]]
+and
+[[Special:Recentchangeslinked/
+Wikipedia:How to edit a page]]
+</nowiki></pre>
+|- valign="top"
+|
+A user\'s \'\'\'Contributions\'\'\' page can be linked as:
+[[Special:Contributions/UserName]]
+or
+[[Special:Contributions/192.0.2.0]]
+|
+<pre><nowiki>
+A user\'s \'\'\'Contributions\'\'\' page
+can be linked as:
+[[Special:Contributions/UserName]]
+or
+[[Special:Contributions/192.0.2.0]]
+</nowiki></pre>
+|- valign="top"
+|
+* To put an article in a [[Wikipedia:Category]], place a link like the one to the right anywhere in the article. As with interlanguage links, it does not matter where you put these links while editing as they will always show up in the same place when you save the page, but placement at the end of the edit box is recommended.
+|
+<pre><nowiki>
+[[Category:Character sets]]
+</nowiki></pre>
+|- valign="top"
+|
+* To \'\'link\'\' to a [[Wikipedia:Category]] page without putting the article into the category, use an initial colon (:) in the link.
+|
+<pre><nowiki>
+[[:Category:Character sets]]
+</nowiki></pre>
+|- id="link-external" valign="top"
+|
+Three ways to link to external (non-wiki) sources:
+# Bare URL: http://www.wikipedia.com/ (bad style)
+# Unnamed link: [http://www.wikipedia.com/] (only used within article body for footnotes)
+# Named link: [http://www.wikipedia.com Wikipedia]
+
+:See [[MetaWikiPedia:Interwiki_map]] for the list of shortcuts.
+
+* Square brackets indicate an external link. Note the use of a \'\'space\'\' (not a pipe) to separate the URL from the link text in the "named" version.
+* In the [[URL]], all symbols must be among:<br/>\'\'\'A-Z a-z 0-9 . _  / ~ % - + & # ? ! = ( ) @\'\'\'
+* If a URL contains a character not in this list, it should be encoded by using a percent sign (%) followed by the [[hexadecimal|hex]] code of the character, which can be found in the table of [[ASCII#ASCII printable characters|ASCII printable characters]]. For example, the caret character (^) would be encoded in a URL as \'\'\'%5E\'\'\'.
+* If the "named" version contains a closing square bracket "]", then you must use the [[HTML]] special character syntax, i.e. \'\'\']\'\'\' otherwise the [[MediaWiki]] software will prematurely interpret this as the end of the external link.
+* There is a class that can be used to remove the arrow image from the external link. It is used in [[Template:Ref]] to stop the URL from expanding during printing. It should \'\'\'never\'\'\' be used in the main body of an article. However, there is an exception: wikilinks in Image markup. An example of the markup is as follows:
+** Markup: <nowiki><span
+class="plainlinksneverexpand">
+[http://www.sysinternals.com/
+ntw2k/freeware/winobj.shtml WinObj]</span></nowiki>
+** Display: <span class="plainlinksneverexpand"> [http://www.sysinternals.com/ntw2k/freeware/winobj.shtml WinObj]</span>
+* See [[Wikipedia:External links]] for style issues.
+|
+<pre><nowiki>
+Three ways to link to
+external (non-wiki) sources:
+# Bare URL:
+http://en.wikipedia.org/
+(bad style)
+# Unnamed link:
+[http://en.wikipedia.org/]
+(only used within article
+body for footnotes)
+# Named link:
+[http://en.wikipedia.org Wikipedia]
+</nowiki></pre>
+|- valign="top"
+|
+Linking to other wikis:
+# [[Interwiki]] link: [[Wiktionary:Hello]]
+# Interwiki link without prefix: [[Wiktionary:Hello|Hello]]
+# Named interwiki link: [[Wiktionary:Hello|Wiktionary definition of \'Hello\']]
+
+* All of these forms lead to the URL http://en.wiktionary.org/wiki/Hello
+* Note that interwiki links use the \'\'internal\'\' link style.
+* See [[MetaWikiPedia:Interwiki_map]] for the list of shortcuts; if the site you want to link to is not on the list, use an external link ([[#link-external|see above]]).
+* See also [[Wikipedia:Wikimedia sister projects]].
+
+Linking to another language\'s wiktionary:
+# [[Wiktionary:fr:bonjour]]
+# [[Wiktionary:fr:bonjour|bonjour]]
+# [[Wiktionary:fr:bonjour|fr:bonjour]]
+
+* All of these forms lead to the URL http://fr.wiktionary.org/wiki/bonjour
+|
+<pre><nowiki>
+Linking to other wikis:
+# [[Interwiki]] link:
+[[Wiktionary:Hello]]
+# Interwiki link without prefix:
+[[Wiktionary:Hello|]]
+# Named interwiki link:
+[[Wiktionary:Hello|
+Wiktionary definition 
+of \'Hello\']]
+
+Linking to another
+language\'s wiktionary:
+# [[Wiktionary:fr:bonjour]]
+# [[Wiktionary:fr:bonjour|bonjour]]
+# [[Wiktionary:fr:bonjour|]]
+</nowiki></pre>
+|- valign="top"
+|
+ISBN 012345678X
+
+ISBN 0-12-345678-X
+
+* Link to books using their [[Wikipedia:ISBN|ISBN]]. This is preferred to linking to a specific online bookstore, because it gives the reader a choice of vendors. However, if one bookstore or online service provides additional free information, such as table of contents or excerpts from the text, then a link to that source will aid the user and is recommended.
+* ISBN links do not need any extra markup, provided you use one of the indicated formats.
+|
+<pre><nowiki>
+ISBN 012345678X
+
+ISBN 0-12-345678-X
+</nowiki></pre>
+|- valign="top"
+|
+Text mentioning RFC 4321 anywhere
+
+* Link to [[Internet Engineering Task Force]] [[Request for Comments|RFC]]s.
+|
+<pre><nowiki>
+Text mentioning RFC 4321 
+anywhere
+</nowiki></pre>
+
+|- valign=top
+|
+Date formats:
+# [[July 20]], [[1969]]
+# [[20 July]] [[1969]]
+# [[1969]]-[[07-20]]
+# [[1969-07-20]]
+
+* Link dates in one of the above formats, so that everyone can set their own display order. If [[Special:Userlogin|logged in]], you can use [[Special:Preferences]] to change your own date display setting.
+* All of the above dates will appear as "[[20 July|20 July]] [[1969|1969]]" if you set your date display preference to "15 January 2001", but as "[[20 July|July 20]], [[1969|1969]]" if you set it to "January 15, 2001", or as "[[1969|1969]]-[[July 20|07-20]]" if you set it to "2001-01-15".
+|
+<pre><nowiki>
+Date formats:
+# [[July 20]], [[1969]]
+# [[20 July]] [[1969]]
+# [[1969]]-[[07-20]]
+# [[1969-07-20]]
+
+</nowiki></pre>
+|- valign="top"
+|
+Special [[WP:AO|as-of]] links like [[As of 2006|this year]]
+needing future maintenance
+|
+<pre><nowiki>
+Special [[WP:AO|as-of]] links 
+like [[As of 2006|this year]]
+needing future maintenance
+</nowiki></pre>
+|- valign="top"
+|
+[[media:Classical guitar scale.ogg|Sound]]
+
+*To include links to non image uploads such as sounds, use a "media" link. For images, [[#Images|see next section]].
+
+Some uploaded sounds are listed at [[Wikipedia:Sound]].
+|
+<pre><nowiki>
+[[media:Classical guitar scale.ogg|Sound]]
+</nowiki></pre>
+
+|- valign="top"
+|
+Link directly to \'\'\'edit\'\'\' for an existing page, or apply other link attributes. 
+* use <nowiki>{{fullurl:}}</nowiki>  
+* or use [[template:edit|<nowiki>{{template:edit}}</nowiki>]] which conceals the edit label for page printing 
+|
+<pre><nowiki>{{fullurl:page name|action=edit}}</nowiki></pre>
+|}
+
+===Images===
+Only images that have been uploaded to Wikipedia can be used. To upload images, use the [[Special:Upload|upload page]]. You can find the uploaded image on the [[Special:Imagelist|image list]].
+
+{| border="1" cellpadding="2" cellspacing="0"
+|-
+! What it looks like
+! What you type
+|- valign="top"
+|A picture: 
+[[Image:wiki.png]]
+|<pre>A picture: 
+<nowiki>[[Image:wiki.png]]</nowiki></pre>
+
+|- valign="top"
+|With alternative text:
+[[Image:wiki.png|Wikipedia, The Free Encyclopedia.]]
+|<pre>With alternative text:
+<nowiki>[[Image:wiki.png|Wikipedia, The Free Encyclopedia.]]</nowiki></pre>
+* Alternative text, used when the image is unavailable or when the image is loaded in a text-only browser, or when spoken aloud, is \'\'\'strongly\'\'\' encouraged. See [[Wikipedia:Alternate text for images|Alternate text for images]] for help on choosing it.
+
+|- valign="top"
+|Floating to the right side of the page using the \'\'frame\'\' attribute and a caption:
+[[Image:wiki.png|frame|Wikipedia Encyclopedia]]<br clear=all>
+|<pre>Floating to the right side of the page 
+using the \'\'frame\'\' attribute and a caption:
+<nowiki>[[Image:wiki.png|frame|Wikipedia Encyclopedia]]</nowiki></pre>
+* The frame tag automatically floats the image right.
+* The caption is also used as alternate text.
+
+|- valign="top"
+|Floating to the right side of the page using the \'\'thumb\'\' attribute and a caption:
+[[Image:wiki.png|thumb|Wikipedia Encyclopedia]]<br clear=all>
+|<pre>Floating to the right side of the page 
+using the \'\'thumb\'\' attribute and a caption:
+<nowiki>[[Image:wiki.png|thumb|Wikipedia Encyclopedia]]</nowiki></pre>
+* The thumb tag automatically floats the image right.
+* The caption is also used as alternate text.
+* An enlarge icon is placed in the lower right corner.
+
+|- valign="top"
+|Floating to the right side of the page \'\'without\'\' a caption:
+[[Image:wiki.png|right|Wikipedia Encyclopedia]]
+|<pre>Floating to the right side of the page
+\'\'without\'\' a caption:
+<nowiki>[[Image:wiki.png|right|Wikipedia Encyclopedia]]</nowiki></pre>
+* The help topic on [[Wikipedia:Extended image syntax|extended image syntax]] explains more options.
+
+|- valign="top"
+|A picture resized to 30 pixels...
+[[Image:wiki.png|30 px]]
+|<pre>A picture resized to 30 pixels...
+<nowiki>[[Image:wiki.png|30 px]]</nowiki></pre>
+* The help topic on [[Wikipedia:Extended image syntax|extended image syntax]] explains more options.
+
+|- valign="top"
+|Linking directly to the description page of an image:
+[[:Image:wiki.png]]
+|<pre>Linking directly to the description page
+of an image:
+<nowiki>[[:Image:wiki.png]]</nowiki></pre>
+* Clicking on an image displayed on a page
+(such as any of the ones above)
+also leads to the description page
+
+|- valign="top"
+|Linking directly to an image without displaying it:
+[[:Image:wiki.png|Image of the jigsaw globe logo]]
+|<pre>Linking directly to an image
+without displaying it:
+<nowiki>[[:media:wiki.png|Image of the jigsaw globe logo]]</nowiki></pre>
+* To include links to images shown as links instead of drawn on the page, use a "media" link.
+
+|- valign="top" 
+|Using the [[div tag]] to separate images from text (note that this may allow images to cover text):
+|<pre><nowiki>Example:
+<div style="display:inline;
+width:220px; float:right;">
+Place images here </div></nowiki></pre>
+
+|- valign="top" 
+|Using wiki markup to make a table in which to place a vertical column of images (this helps edit links match headers, especially in Firefox browsers): 
+|<pre><nowiki>Example: {| align=right
+|-
+| 
+Place images here
+|}
+</nowiki></pre>
+
+|}
+
+See the Wikipedia\'s [[Wikipedia:Image use policy|image use policy]] as a guideline used on Wikipedia.
+
+For further help on images, including some more versatile abilities, see the topic on [[Wikipedia:Extended image syntax|Extended image syntax]].
+
+===Headings===
+
+For a top-level heading, put it on a separate line surrounded by \'==\'. For example:
+
+   ==Introduction==
+
+Subheadings use \'===\', \'====\', and so on.
+
+===Character formatting===
+{| border="1" cellpadding="2" cellspacing="0"
+|- valign="top"
+! What it looks like
+! What you type
+|- id="emph" valign="top"
+|
+\'\'Italicized text\'\'<br />\'\'\'Bold text\'\'\'<br />\'\'\'\'\'Italicized & Bold text\'\'\'\'\'
+|
+<pre><nowiki>
+\'\'Italicized text\'\'
+\'\'\'Bold text\'\'\'
+\'\'\'\'\'Italicized & Bold text\'\'\'\'\'
+</nowiki></pre>
+|- valign="top"
+|
+A typewriter font for <tt>monospace text</tt>
+or for computer code: <code>int main()</code>
+
+* For semantic reasons, using <code><code></code> where applicable is preferable to using <code><tt></code>.
+|
+<pre><nowiki>
+A typewriter font for <tt>monospace text</tt>
+or for computer code: <code>int main()</code>
+</nowiki></pre>
+|- valign=top
+|
+Create codeblocks<code><pre>
+#include <iostream.h>
+int main ()
+{
+cout << "Hello World!";
+return 0;
+}
+</pre></code> that are printed as entered
+|
+<pre>Use <code><pre> Block of Code </pre></code> 
+around the block of code.
+
+* The <pre> tags within the code block 
+will create formatting issues. To solve, 
+display the tags literally with 
+<pre>  and  </pre></pre>
+|- valign="top"
+|
+You can use <small>small text</small> for captions.
+|
+<pre><nowiki>
+You can use <small>small text</small> for captions.
+</nowiki></pre>
+|- valign="top"
+|
+Better stay away from <big>big text</big>, unless
+<small> it\'s <big>within</big> small</small> text. 
+|
+<pre><nowiki>
+Better stay away from <big>big text</big>, unless
+<small> it\'s <big>within</big> small</small> text.
+</nowiki></pre>
+|- valign="top"
+|
+You can <s>strike out deleted material</s>
+and <u>underline new material</u>.
+
+You can also mark <del>deleted material</del> and
+<ins>inserted material</ins> using logical markup.
+For backwards compatibility better combine this
+potentially ignored new <del>logical</del> with 
+the old <s><del>physical</del></s> markup.
+
+* When editing regular Wikipedia articles, just make your changes and do not mark them up in any special way.
+* When editing your own previous remarks in talk pages, it is sometimes appropriate to mark up deleted or inserted material.
+|
+<pre><nowiki>
+You can <s>strike out deleted material</s>
+and <u>underline new material</u>.
+
+You can also mark <del>deleted material</del> and
+<ins>inserted material</ins> using logical markup.
+For backwards compatibility better combine this
+potentially ignored new <del>logical</del> with
+the old <s><del>physical</del></s> markup.
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Suppressing interpretation of markup:\'\'\'
+<br/>
+<nowiki>Link ? (\'\'to\'\') the [[Wikipedia FAQ]]</nowiki>
+* Used to show literal data that would otherwise have special meaning.
+* Escape all wiki markup, including that which looks like HTML tags.
+* Does not escape HTML character references.
+* To escape HTML character references such as <tt>?</tt> use <tt>&rarr;</tt>
+|
+<br/>
+<pre><nowiki>
+<nowiki>Link ? (\'\'to\'\') 
+the [[Wikipedia FAQ]]</nowiki>
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Commenting page source:\'\'\'
+<br/>
+\'\'not shown when viewing page\'\'
+* Used to leave comments in a page for future editors.
+* Note that most comments should go on the appropriate [[Wikipedia:Talk page|Talk page]].
+|
+<br/>
+<pre><nowiki>
+<!-- comment here -->
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'<span id="diacritics">Diacritical marks:</span>\'\'\'
+<br/>
+√Ä √Å √Ç √É √Ñ √Ö <br/>
+√Ü √á √à √â √ä √ã <br/>
+√å √ç
+√é √è √ë √í <br/>
+√ì √î √ï
+√ñ √ò √ô <br/>
+√ö √õ √ú √ü
+√† √° <br/>
+√¢ √£ √§ √• √¶
+√ß <br/>
+√® √© √™ √´ √¨ √≠<br/>
+√Æ √Ø √± √≤ √≥ √¥ <br/>
+≈ì √µ
+√∂ √∏ √π √∫ <br/>
+√ª √º √ø
+
+* See [[meta:Help:Special characters|special characters]].
+|
+<br/>
+<pre><nowiki>
+√Ä √Å √Ç √É √Ñ √Ö 
+√Ü √á √à √â √ä √ã 
+√å √ç √é √è √ë √í 
+√ì √î √ï √ñ √ò √ô 
+√ö √õ √ú √ü √† √° 
+√¢ √£ √§ √• √¶ √ß 
+√® √© √™ √´ √¨ √≠
+√Æ √Ø √± √≤ √≥ √¥ 
+≈ì √µ √∂ √∏ √π √∫ 
+√ª √º √ø
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Punctuation:\'\'\'
+<br/>
+¬ø ¬° ¬ß ¬∂<br/>
+‚Ä† ‚Ä° ‚Ä¢ ‚Äì ‚Äî<br/>
+‚Äπ ‚Ä∫ ¬´ ¬ª<br/>
+‚Äò ‚Äô ‚Äú ‚Äù
+|
+<br/>
+<pre><nowiki>
+¬ø ¬° ¬ß ¬∂
+‚Ä† ‚Ä° ‚Ä¢ ‚Äì ‚Äî
+‚Äπ ‚Ä∫ ¬´ ¬ª
+‚Äò ‚Äô ‚Äú ‚Äù
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Commercial symbols:\'\'\'
+<br/>
+‚Ñ¢ ¬© ¬Æ ¬¢ ‚Ç¨ ¬•<br/>
+¬£ ¬§
+|
+<br/>
+<pre><nowiki>
+‚Ñ¢ ¬© ¬Æ ¬¢ ‚Ç¨ ¬• 
+¬£ ¬§
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Subscripts:\'\'\'
+<br/>
+x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> or
+<br/>
+x? x? x? x? x?
+<br/>
+x? x? x? x? x?
+
+\'\'\'Superscripts:\'\'\'
+<br/>
+x<sup>1</sup> x¬≤ x¬≥ or
+<br/>
+x? x¬π x¬≤ x¬≥ x?
+<br/>
+x? x? x? x? x?
+
+*The latter methods of sub/superscripting cannot be used in the most general context, as they rely on Unicode support which may not be present on all users\' machines. For the 1-2-3 superscripts, it is nevertheless preferred when possible (as with units of measurement) because most browsers have an easier time formatting lines with it.
+
+?<sub>0</sub> =
+8.85 √ó 10<sup>?12</sup>
+C¬≤ / J m.
+
+1 [[hectare]] = [[1 E4 m¬≤]]
+|
+<br/>
+<pre><nowiki>
+x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> or
+<br/>
+x? x? x? x? x?
+<br/>
+x? x? x? x? x?
+</nowiki></pre>
+
+<pre><nowiki>
+x<sup>1</sup> x<sup>2</sup> x<sup>3</sup> or
+<br/>
+x? x¬π x¬≤ x¬≥ x?
+<br/>
+x? x? x? x? x?
+
+?<sub>0</sub> =
+8.85 √ó 10<sup>?12</sup>
+C¬≤ / J m.
+
+1 [[hectare]] = [[1 E4 m¬≤]]
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Greek characters:\'\'\'
+<br/>
+? ? ? ? ? ? <br/>
+? ? ? ? ? ? ? <br/>
+? ? ? ? ? ?<br/>
+? ? ? ? ? ?<br/>
+? ? ? ? ? ? <br/>
+? ? ? ?
+|
+<br/>
+<pre><nowiki>
+? ? ? ? ? ? 
+? ? ? ? ? ? ? 
+? ? ? ? ? ?
+? ? ? ? ? ?
+? ? ? ? ? ? 
+? ? ? ?
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Mathematical characters:\'\'\'
+<br/>
+? ? ? ? ? ¬± ?<br/>
+? ? ? ? ? ?<br/>
+√ó ¬∑ √∑ ? ? ?<br/>
+? ‚Ä∞ ¬∞ ? ? √∏<br/>
+? ? ? ? ? ? ? ?<br/>
+¬¨ ? ? ? ? <br/>
+? ? ? ? ?<br/>
+? ? ? ? ?<br/>
+* See also [[Wikipedia:WikiProject Mathematics|WikiProject Mathematics]] and [[TeX]].
+|
+<br/>
+<pre><nowiki>
+? ? ? ? ? ¬± ?
+? ? ? ? ? ?
+√ó ¬∑ √∑ ? ? ?
+? ‚Ä∞ ¬∞ ? ? √∏
+? ? ? ? ? ? ? ?
+¬¨ ? ? ? ? 
+? ? ? ? ?
+? ? ? ? ?
+</nowiki></pre>
+|- valign="top"
+|
+<math>,! sin x + ln y</math><br>
+sin\'\'x\'\' + ln\'\'y\'\'
+<!-- no space between roman "sin" and italic "x" -->
+
+<math>mathbf{x} = 0</math><br>
+\'\'\'x\'\'\' = 0
+
+Ordinary text should use [[#emph|wiki markup for emphasis]], and should not use <code><i></code> or <code><b></code>.  However, mathematical formulae often use italics, and sometimes use bold, for reasons unrelated to emphasis.  Complex formulae should use [[Help:Formula|<code><math></code> markup]], and simple formulae may use <code><math></code>; or <code><i></code> and <code><b></code>; or <code><nowiki>\'\'</nowiki></code> and <code><nowiki>\'\'\'</nowiki></code>.  According to [[Wikipedia:WikiProject Mathematics#Italicization and bolding|WikiProject Mathematics]], wiki markup is preferred over HTML markup like <code><i></code> and <code><b></code>.
+|
+<pre><nowiki>
+<math>,! sin x + ln y</math>
+sin\'\'x\'\' + ln\'\'y\'\'
+
+<math>mathbf{x} = 0</math>
+\'\'\'x\'\'\' = 0
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Spacing in simple math formulae:\'\'\'
+<br/>
+Obviously, \'\'x\'\'¬≤ ? 0 is true when \'\'x\'\' is a real number.
+*To space things out without allowing line breaks to interrupt the formula, use non-breaking spaces: <tt> </tt>.
+|
+<br/>
+<pre><nowiki>
+Obviously, \'\'x\'\'¬≤ ? 0 is true 
+when \'\'x\'\' is a real number.
+</nowiki></pre>
+|- valign="top"
+|
+\'\'\'Complicated formulae:\'\'\'
+<br/>
+: <math>sum_{n=0}^infty frac{x^n}{n!}</math>
+* See [[Help:Formula]] for how to use <tt><math></tt>.
+* A formula displayed on a line by itself should probably be indented by using the colon (:) character.
+|
+<br/>
+<pre><nowiki>
+: <math>sum_{n=0}^infty frac{x^n}{n!}</math>
+</nowiki></pre>
+|}
+\'\'(see also: [[Chess symbols in Unicode]])\'\'
+
+===No or limited formatting‚Äîshowing exactly what is being typed===
+
+A few different kinds of formatting will tell the Wiki to display things as you typed them‚Äîwhat you see, is what you get!
+
+{| border="1" cellpadding="2" cellspacing="0"
+|-
+!What it looks like
+!What you type
+|-
+|\'\'\'<nowiki> tag:\'\'\'<br/>
+<nowiki>
+The nowiki tag ignores [[Wiki]] \'\'markup\'\'.
+It reformats text by removing newlines    and multiple spaces.
+It still interprets special characters: ?
+</nowiki>
+|<pre><nowiki>
+<nowiki>
+The nowiki tag ignores [[Wiki]] \'\'markup\'\'.
+It reformats text by removing newlines 
+and multiple spaces.
+It still interprets special
+characters: ?
+</nowiki>
+</nowiki></pre>
+|-
+|\'\'\'<pre> tag:\'\'\'</br>
+<pre>
+The pre tag ignores [[Wiki]] \'\'markup\'\'.
+It also doesn\'t     reformat text.
+It still interprets special characters: ?
+</pre>
+|<pre><pre><nowiki>
+The pre tag ignores [[Wiki]] \'\'markup\'\'.
+It also doesn\'t     reformat text.
+It still interprets special characters:
+ ?
+</nowiki></pre></pre>
+|-
+|\'\'\'Leading space:\'\'\'<br/>
+Leading spaces are another way 
+to preserve formatting. \'\'However, it will make the whole page fail to render properly in some browsers, such as IE7, thus making the page unreadable.\'\'
+
+
+ Putting a space at the beginning of each line
+ stops the text   from being reformatted. 
+ It still interprets [[Wiki]] \'\'markup\'\' and
+ special characters: ?
+|<pre><nowiki>
+Leading spaces are another way 
+to preserve formatting.
+ Putting a space at the beginning of each line
+ stops the text   from being reformatted. 
+ It still interprets [[Wiki]] \'\'markup\'\' and
+ special characters: ?
+</nowiki></pre>
+|}
+
+===Invisible text (comments)===
+{{main|Wikipedia:Manual of Style#Invisible comments}}
+It\'s uncommon, but on occasion acceptable, to add a hidden comment within the text of an article.  <!-- This is an example of text that won\'t normally be visible except in "edit" mode. --> The format is this:
+ <nowiki><!-- This is an example of text that won\'t normally be visible except in "edit" mode. --></nowiki>
+
+=== Table of contents===
+<!-- ==== Placement of the Table of Contents (TOC) ==== -->
+At the current status of the wiki markup language, having at least four headers on a page triggers the table of contents (TOC) to appear in front of the first header (or after introductory sections).  Putting <nowiki>__TOC__</nowiki> anywhere forces the TOC to appear at that point (instead of just before the first header).  Putting <nowiki>__NOTOC__</nowiki> anywhere forces the TOC to disappear.  See also [[Wikipedia:Section#Compact_TOC|compact TOC]] for alphabet and year headings.
+<!--
+THE TEXT BELOW IS COMMENTED OUT SINCE THE DESCRIBED TECHNIQUE 
+DOESN\'T WORK AFTER UPGRADING TO MEDIAWIKI 1.5
+
+====Keeping headings out of the Table of Contents====
+If you want some subheadings to not appear in the Table of Contents, then make the following replacements.
+
+Replace  <nowiki> == Header 2 == with <h2> Header 2 </h2> </nowiki>
+
+Replace  <nowiki> === Header 3 === with <h3> Header 3 </h3> </nowiki>
+
+And so forth.
+
+For example, notice that the following header has the same font as the other subheaders to this "Tables" section, but the following header does not appear in the Table of Contents for this page.
+
+<h4> This header has the h4 font, but is NOT in the Table of Contents (actually, it is)</h4>
+
+This effect is obtained by the following line of code.
+
+<code><nowiki><h4> This header has the h4 font, but is not in the Table of Contents </h4></nowiki></code>
+
+Note that when editing by section, this approach places the text between the tags in the subsequent section, not the previous section. To edit this text, click the edit link next to "Tables", not the one above.
+-->
+
+===Tables===
+There are two ways to build tables: 
+*in special Wiki-markup (see [[Help:Table]])
+*with the usual HTML elements: <table>, <tr>, <td> or <th>.
+
+For the latter, and a discussion on when tables are appropriate, see [[Wikipedia:When to use tables]].
+
+===Variables===
+\'\'(See also [[Help:Variable]])\'\'
+{| style="text-align:center"
+|-
+! Code
+! Effect
+|-
+| <nowiki>{{CURRENTWEEK}}</nowiki> || {{CURRENTWEEK}}
+|-
+| <nowiki>{{CURRENTDOW}}</nowiki> || {{CURRENTDOW}}
+|-
+| <nowiki>{{CURRENTMONTH}}</nowiki> || {{CURRENTMONTH}}
+|-
+| <nowiki>{{CURRENTMONTHNAME}}</nowiki>
+| {{CURRENTMONTHNAME}}
+|-
+| <nowiki>{{CURRENTMONTHNAMEGEN}}</nowiki>
+| {{CURRENTMONTHNAMEGEN}}
+|-
+| <nowiki>{{CURRENTDAY}}</nowiki> || {{CURRENTDAY}}
+|-
+| <nowiki>{{CURRENTDAYNAME}}</nowiki> || {{CURRENTDAYNAME}}
+|-
+| <nowiki>{{CURRENTYEAR}}</nowiki> || {{CURRENTYEAR}}
+|-
+| <nowiki>{{CURRENTTIME}}</nowiki> || {{CURRENTTIME}}
+|-
+| <nowiki>{{NUMBEROFARTICLES}}</nowiki>
+| {{NUMBEROFARTICLES}}
+|-
+| <nowiki>{{NUMBEROFUSERS}}</nowiki>
+| {{NUMBEROFUSERS}}
+|-
+| <nowiki>{{PAGENAME}}</nowiki> || {{PAGENAME}}
+|-
+| <nowiki>{{NAMESPACE}}</nowiki> || {{NAMESPACE}}
+|-
+| <nowiki>{{REVISIONID}}</nowiki> || {{REVISIONID}}
+|-
+| <nowiki>{{localurl:pagename}}</nowiki>
+| {{localurl:pagename}}
+|-
+| <nowiki>{{localurl:</nowiki>\'\'Wikipedia:Sandbox\'\'<nowiki>|action=edit}}</nowiki>
+| {{localurl:Wikipedia:Sandbox|action=edit}}
+|-
+| <nowiki>{{fullurl:pagename}}</nowiki>
+| {{fullurl:pagename}} 
+|- 
+| <nowiki>{{fullurl:pagename|</nowiki>\'\'query_string\'\'<nowiki>}}</nowiki>
+| {{fullurl:pagename|query_string}} 
+|- 
+| <nowiki>{{SERVER}}</nowiki> || {{SERVER}}
+|-
+| <nowiki>{{ns:1}}</nowiki> || {{ns:1}}
+|-
+| <nowiki>{{ns:2}}</nowiki> || {{ns:2}}
+|-
+| <nowiki>{{ns:3}}</nowiki> || {{ns:3}}
+|-
+| <nowiki>{{ns:4}}</nowiki> || {{ns:4}}
+|-
+| <nowiki>{{ns:5}}</nowiki> || {{ns:5}}
+|-
+| <nowiki>{{ns:6}}</nowiki> || {{ns:6}}
+|-
+| <nowiki>{{ns:7}}</nowiki> || {{ns:7}}
+|-
+| <nowiki>{{ns:8}}</nowiki> || {{ns:8}}
+|-
+| <nowiki>{{ns:9}}</nowiki> || {{ns:9}}
+|-
+| <nowiki>{{ns:10}}</nowiki> || {{ns:10}}
+|-
+| <nowiki>{{ns:11}}</nowiki> || {{ns:11}}
+|-
+| <nowiki>{{ns:12}}</nowiki> || {{ns:12}}
+|-
+| <nowiki>{{ns:13}}</nowiki> || {{ns:13}}
+|-
+| <nowiki>{{ns:14}}</nowiki> || {{ns:14}}
+|-
+| <nowiki>{{ns:15}}</nowiki> || {{ns:15}}
+|-
+| <nowiki>{{SITENAME}}</nowiki> || {{SITENAME}}
+|}
+
+\'\'\'NUMBEROFARTICLES\'\'\' is the number of pages in the main namespace which contain a link and are not a redirect, in other words number of articles, stubs containing a link, and disambiguation pages.
+
+\'\'\'CURRENTMONTHNAMEGEN\'\'\' is the genitive (possessive) grammatical form of the month name, as used in some languages; \'\'\'CURRENTMONTHNAME\'\'\' is the nominative (subject) form, as usually seen in English.
+
+In languages where it makes a difference, you can use constructs like <nowiki>{{grammar:case|word}}</nowiki> to convert a word from the nominative case to some other case.  For example, <nowiki>{{grammar:genitive|{{CURRENTMONTHNAME}}}}</nowiki> means the same as <nowiki>{{CURRENTMONTHNAMEGEN}}</nowiki>. <!-- Is there a reference for this, other than the source code (for example, phase3/languages/Lnaguage*.php) ? -->
+
+
+This page is covered by [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 14:54:14',1,1),
+	('59121859-EB3F-023C-703B2FFFF21FBAE3','59104F5A-9555-E540-6BCAA65D9AE6F448','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== List basics ==
+
+CodexWiki offers three types of lists. \'\'\'Ordered lists\'\'\', \'\'\'unordered lists\'\'\', and \'\'\'definition lists\'\'\'. In the following sections, ordered lists are used for examples. Unordered lists would give corresponding results.
+
+{|border=1 width="79%"
+!wikitext!!rendering
+|-
+|
+ * Lists are easy to do:
+ ** start every line
+ * with a star
+ ** more stars mean
+ *** deeper levels
+||
+* Lists are easy to do:
+** start every line
+* with a star
+** more stars mean 
+*** deeper levels
+|-
+|
+ *A newline
+ *in a list  
+ marks the end of the list.
+ Of course
+ *you can
+ *start again.
+|
+*A newline
+*in a list  
+marks the end of the list.
+Of course
+*you can
+*start again.
+|-
+|
+ # Numbered lists are good
+ ## very organized
+ ## easy to follow
+|
+# Numbered lists are good
+## very organized
+## easy to follow
+|-
+|
+ * You can also
+ **break lines
+ **like this
+|
+* You can also
+**break lines
+**like this
+|-
+|
+ ; Definition lists
+ ; item : definition
+ ; semicolon plus term
+ : colon plus definition
+|
+; Definition lists
+; item : definition
+; semicolon plus term
+: colon plus definition
+|-
+|
+ * Or create mixed lists
+ *# and nest them
+ *#* like this
+ *#*; definitions
+ *#*: work:
+ *#*; apple
+ *#*; banana
+ *#*: fruits
+|
+* Or create mixed lists
+*# and nest them
+*#* like this
+*#*; definitions
+*#*: work: 
+*#*; apple
+*#*; banana
+*#*: fruits
+|}
+
+== Paragraphs in lists ==
+
+For simplicity, list items in wiki markup cannot be longer than a paragraph. A following blank line will end the list and reset the counter on ordered lists. Separating unordered list items usually has no noticable effects.
+
+Paragraphs can be forced in lists by using HTML tags. Two line break symbols, <code><nowiki><br><br></nowiki></code>, will create the desired effect. So will enclosing all but the first paragraph with <code><nowiki><p>...</p></nowiki></code>
+
+For a list with items of more than one paragraph long, adding a blank line between items may be necessary to avoid confusion.
+
+==Continuing a list item after a sub-item==
+
+In HTML, a list item may contain several sublists, not necessarily adjacent; thus there may be parts of the list item not only before the first sublist, but also between sublists, and after the last one; however, in wiki-syntax, sublists follow the same rules as sections of a page: the only possible part of the list item not in sublists is before the first sublist.
+
+In the case of an unnumbered first-level list in wikitext code this limitation can be overcome by splitting the list into multiple lists; indented text between the partial lists may visually serve as part of a list item after a sublist; however, this may give, depending on CSS, a blank line before and after each list, in which case, for uniformity, every first-level list item could be made a separate list.
+
+Numbered lists illustrate that what should look like one list may, for the software, consist of multiple lists; unnumbered lists give a corresponding result, except that the problem of restarting with 1 is not applicable.
+
+{| style="border:1px;border-spacing:1px;background-color:black;" cellpadding="5"
+|- style="background-color:white;"
+|
+ <nowiki>
+<ol>
+  <li>list item A1
+    <ol>
+      <li>list item B1</li>
+      <li>list item B2</li>
+    </ol>continuing list item A1
+  </li>
+  <li>list item A2</li>
+</ol></nowiki>
+| <ol>
+  <li>list item A1
+    <ol>
+      <li>list item B1</li>
+      <li>list item B2</li>
+    </ol>continuing list item A1
+  </li>
+  <li>list item A2</li>
+</ol>
+|- style="background-color:#E0E0E0;font-weight:bold;text-align:center;"
+| colspan="2" | vs.
+|- style="background-color:white;"
+|
+ #list item A1
+ ##list item B1
+ ##list item B2
+ #:continuing list item A1
+ #list item A2
+|
+#list item A1
+##list item B1
+##list item B2
+#:continuing list item A1
+#list item A2
+|}
+
+One level deeper, with a sublist item continuing after a sub-sublist, one gets even more blank lines; however, the continuation of the first-level list is not affected:
+<pre>
+#list item A1
+##list item B1
+###list item C1
+##:continuing list item B1
+##list item B2
+#list item A2
+</pre>
+gives
+#list item A1
+##list item B1
+###list item C1
+##:continuing list item B1
+##list item B2
+#list item A2
+
+See also [[Help:Section#Subdivisions in general|subdivisions]].
+
+== Changing the list type ==
+
+The list type (which type of marker appears before the list item) can be changed in CSS by setting the [http://www.w3.org/TR/REC-CSS2/generate.html#lists list-style-type] property:
+
+{|border=1 width="79%"
+!wikitext!!rendering
+|-
+|
+ <nowiki>
+<ol style="list-style-type:lower-roman">
+  <li>About the author</li>
+  <li>Foreword to the first edition</li>
+  <li>Foreword to the second edition</li>
+</ol></nowiki>
+|<ol style="list-style-type:lower-roman">
+  <li>About the author</li>
+  <li>Foreword to the first edition</li>
+  <li>Foreword to the second edition</li>
+</ol>
+|-
+|}
+
+==Extra indentation of lists==
+In a numbered list in a large font, some browsers do not show more than two digits, unless extra indentation is applied (if there are multiple columns: for each column). This can be done with CSS:
+ ol { margin-left: 2cm}
+or alternatively, like below.
+
+{|border=1
+!wikitext!!rendering 
+! style="width: 40%" | comments
+|-
+|
+ <nowiki>
+:#abc
+:#def
+:#ghi
+ </nowiki>
+|
+:#abc
+:#def
+:#ghi
+| A list of one or more lines starting with a colon creates a [http://www.w3.org/TR/html4/struct/lists.html#edef-DL definition list] without definition terms, and with the items as definition descriptions, hence indented. However, if the colons are in front of the codes "*" or "#" of an unordered or ordered list, the list is treated as one definition description, so the whole list is indented.
+|-
+|
+ <nowiki>
+<ul>
+  <ol>
+    <li>abc</li>
+    <li>def</li>
+    <li>ghi</li>
+  </ol>
+</ul>
+</nowiki>
+|
+<ul>
+  <ol>
+    <li>abc</li>
+    <li>def</li>
+    <li>ghi</li>
+  </ol>
+</ul>
+| MediaWiki translates an unordered list (ul) without any list items (li) into a div with a <code>style="margin-left: 2em"</code>, causing  indentation of the contents. This is \'\'\'the most versatile method\'\'\', as it allows starting with a number other than 1, see below.
+
+|-
+|
+ <nowiki>
+<ul>
+#abc
+#def
+#ghi
+</ul>
+</nowiki>
+|
+<ul>
+#abc
+#def
+#ghi
+</ul>
+|Like above, with the content of the "unordered list without any list items", which itself is an ordered list, expressed with # codes. The HTML produced, and hence the rendering, is the same. This is the \'\'\'recommended\'\'\' method when not starting with a number other than 1.
+
+|}
+
+To demonstrate that all three methods show all digits of 3-digit numbers, see [[m:Help:List demo|List demo]].
+
+==Specifying a starting value==
+Specifying a starting value is only possible with HTML syntax.
+(W3C has deprecated the <code>start</code> and <code>value</code> attributes as used below in HTML 4.01 and XHTML 1.0. But as of 2007, no popular web browsers implement CSS counters, which were to replace these attributes. Wikimedia projects use XHTML Transitional, which contains the deprecated attributes.)
+
+<pre>
+<ol start="9">
+<li>Amsterdam</li>
+<li>Rotterdam</li>
+<li>The Hague</li>
+</ol>
+</pre>
+gives
+<ol start="9">
+<li>Amsterdam</li>
+<li>Rotterdam</li>
+<li>The Hague</li>
+</ol>
+
+Or:
+<pre>
+<ol>
+<li value="9">Amsterdam</li>
+<li value="8">Rotterdam</li>
+<li value="7">The Hague</li>
+</ol>
+</pre>
+gives
+<ol>
+<li value="9">Amsterdam</li>
+<li value="8">Rotterdam</li>
+<li value="7">The Hague</li>
+</ol>
+
+==Comparison with a table==
+Apart from providing automatic numbering, the numbered list also aligns the contents of the items, comparable with using table syntax:
+<pre>
+{|
+|-
+| align=right |  9.||Amsterdam
+|-
+| align=right | 10.||Rotterdam
+|-
+| align=right | 11.||The Hague
+|}
+</pre>
+gives
+{|
+|-
+| align=right |  9.||Amsterdam
+|-
+| align=right | 10.||Rotterdam
+|-
+| align=right | 11.||The Hague
+|}
+
+This non-automatic numbering has the advantage that if a text refers to the numbers, insertion or deletion of an item does not disturb the correspondence.
+
+==Multi-column bulleted list==
+<pre>
+{| 
+| 
+*1
+*2 
+| 
+*3
+*4
+|}
+</pre>
+gives:
+{| 
+| 
+*1
+*2 
+| 
+*3
+*4
+|}
+
+==Multi-column numbered list==
+Specifying a starting value is useful for a numbered list with multiple columns, to avoid restarting from one in each column. As mentioned above, this is only possible with HTML-syntax (for the first column either wiki-syntax or HTML-syntax can be used).
+
+In combination with the extra indentation explained in the previous section:
+<pre>
+{| valign="top"
+|-
+|<ul><ol start="125"><li>a<li>bb<li>ccc</ol></ul>
+|<ul><ol start="128"><li>ddd<li>ee<li>f</ol></ul>
+|}
+</pre>
+
+gives
+
+{| valign="top"
+|-
+|<ul><ol start="125"><li>a<li>bb<li>ccc</ol></ul>
+|<ul><ol start="128"><li>ddd<li>ee<li>f</ol></ul>
+|}
+
+Using {{tim|multi-column numbered list}} the computation of the starting values can be automated, and only the first starting value and the number of items in each column except the last has to be specified. Adding an item to, or removing an item from a column requires adjusting only one number, the number of items in that column, instead of changing the starting numbers for all subsequent columns.
+
+<pre>{{Multi-column numbered list|125|a<li>bb<li>ccc|3|<li>ddd<li>ee<li>f}}</pre>
+
+gives
+
+{{Multi-column numbered list|125|a<li>bb<li>ccc|3|<li>ddd<li>ee<li>f}}
+
+<pre>{{Multi-column numbered list|lst=lower-alpha|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}</pre>
+
+gives
+
+{{Multi-column numbered list|lst=lower-alpha|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}
+
+<pre>{{Multi-column numbered list|lst=lower-roman|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}</pre>
+
+gives
+
+{{Multi-column numbered list|lst=lower-roman|125|a<li>bb<li>ccc|3|<li>ddd<li>ee|2|<li>f}}
+
+<pre>{{Multi-column numbered list|lst=disc||a<li>bb<li>ccc||<li>ddd<li>ee|-|<li>f}}</pre>
+
+gives
+
+{{Multi-column numbered list|lst=disc||a<li>bb<li>ccc||<li>ddd<li>ee|-|<li>f}}
+
+==Streamlined style or horizontal style==
+It is also possible to present short lists using very basic formatting, such as:
+
+ <nowiki>\'\'Title of list:\'\'</nowiki> example 1, example 2, example 3
+
+\'\'Title of list:\'\' example 1, example 2, example 3
+
+This style requires less space on the page, and is preferred if there are only a few entries in the list, it can be read easily, and a direct edit point is not required. The list items should start with a lowercase letter unless they are proper nouns.
+
+==Tables==
+A one-column table is very similar to a list, but it allows sorting. If the wikitext itself is already sorted with the same sortkey, this advantage does not apply.
+A multiple-column table allows sorting on any column.
+
+See also [[en:Wikipedia:When to use tables]].
+
+==Changing unordered lists to ordered ones==
+With the CSS
+ ul { list-style: decimal }
+unordered lists are changed to ordered ones. This applies (as far as the CSS selector does not restrict this) to all ul-lists in the HTML source code:
+*those produced with *
+*those with <nowiki><ul></nowiki> in the wikitext
+*those produced by the system
+
+Since each special page, like other pages, has a class based on the pagename, one can separately specify for each type whether the lists should be ordered, see [[Help:User contributions#User styles]] and [[Help:What links here#User styles]].
+
+However, it does not seem possible to make all page history lists ordered (unless one makes \'\'all\'\' lists ordered), because the class name is based on the page for which the history is viewed. 
 
 
 
-# Dump of table wiki_pagecontent_category
-# ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `wiki_pagecontent_category`;
+This page is covered under [http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License GNU Free Documentation License]',NULL,'1','2008-02-27 15:06:40',1,1),
+	('A873628C-0187-145E-574309C8195CA646','A8736248-DCE2-A123-A6DA083754C59203','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','<div align="center">
+<!--COMMENT MARKUP. Displays:Edit mode only.-->
+{|align="center" style="width:100%; border:2px #a3b1bf solid; background:#f5faff; text-align:left;"
+|colspan="3" align="center" style="background:#cee0f2; text-align:center;" |
+<h2 style="margin:.5em; margin-top:.1em; margin-bottom:.1em; border-bottom:0; font-weight:bold;">Wikipedia Cheatsheet</h2>
+|-<!--COLUMN HEADINGS-->
+| width="25%" style="background:#cee0f2; padding:0.3em; text-align:center;"|\'\'\'Description\'\'\'
+| style="background:#cee0f2; padding:0.3em; text-align:center;"|\'\'\'You type\'\'\' 
+| width="25%" style="background:#cee0f2; padding:0.3em; text-align:center;"|\'\'\'You get\'\'\'
+|-<!--1ST ROW 1ST COLUMN-->
+|[[Wikipedia:How_to_edit_a_page#Character_formatting|Italic text]]
+|<!--2ND COLUMN-->
+<tt><nowiki>\'\'italic\'\'</nowiki></tt>
+|<!--3RD COLUMN-->
+\'\'italic\'\'
+|-<!--HORIZONTAL LINE-->
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-<!--2ND ROW 1ST COLUMN-->
+|[[Wikipedia:How_to_edit_a_page#Character_formatting|Bold text]]
+|
+<tt><nowiki>\'\'\'bold\'\'\'</nowiki></tt>
+|
+\'\'\'bold\'\'\'
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Wikipedia:How_to_edit_a_page#Character_formatting|Bold and italic]]
+|
+<tt><nowiki>\'\'\'\'\'bold & italic\'\'\'\'\'</nowiki></tt>
+|
+\'\'\'\'\'bold & italic\'\'\'\'\'
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+||[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Internal link]]<br />
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'(within Wikipedia)\'\'</div>
+|
+<tt><nowiki>[[Name of page]]</nowiki></tt><br />
+<tt><nowiki>[[Name of page|Text to display]]</nowiki></tt>
+|
+[[Name of page]]<br />
+[[Name of page|Text to display]]
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|External link]]<br />
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'(to other websites)\'\'</div>
+|
+<tt><nowiki>[http://www.example.org Text to display]</nowiki></tt><br />
+<tt><nowiki>[http://www.example.org]</nowiki></tt><br />
+<tt><nowiki>http://www.example.org</nowiki></tt>
+|
+[http://www.example.org Text to display]<br />
+[http://www.example.org]<br />
+http://www.example.org
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Redirect to another page]]
+|
+<tt><nowiki>#REDIRECT [[Target page]]</nowiki></tt>
+|
+[[Image:Redirect arrow without text.svg|30px]][[Target page]]
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|rowspan="3"|[[Wikipedia:How_to_edit_a_page#Links_and_URLs|Footnotes/References]]
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'Numbering is generated automatically.\'\'</div>
+|<div style="margin-left:2em; font-size:0.9em;">\'\'To create a footnote or reference, use this format:\'\'</div>
+<tt><nowiki>Article text.<ref name="test">[http://www.example.org Link text], additional text.</ref></nowiki></tt>
+|rowspan="2"|Article text.<ref name="test">[http://www.example.org Link text], additional text.</ref>
+|-
+|<div style="margin-left:2em; font-size:0.9em;">\'\'To reuse the same note, reuse the name with a trailing slash:\'\'</div>
+<tt><nowiki>Article text.<ref name="test" /></nowiki></tt>
+|-
+|<div style="margin-left:2em; font-size:0.9em;">\'\'To display notes, add \'\'\'either\'\'\' of these lines to the References section\'\'</div>
+<tt><nowiki><references/></nowiki></tt><br/>
+<tt>{{tl|Reflist}}</tt>
+|<br/><references /><br/>
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Wikipedia:How_to_edit_a_page#Headings|Section headings]]<ref name="firstline">\'\'Applies only at the very beginning of lines.\'\'</ref><br />
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'A Table of Contents will automatically be generated when four headings are added to an article.\'\'</div>
+|
+<tt><nowiki>== Level 1 ==</nowiki></tt><br />
+<tt><nowiki>=== Level 2 ===</nowiki></tt><br />
+<tt><nowiki>==== Level 3 ====</nowiki></tt><br />
+<tt><nowiki>===== Level 4 =====</nowiki></tt><br />
+<tt><nowiki>====== Level 5 ======</nowiki></tt>
+|
+== Level 1 ==
+=== Level 2 ===
+==== Level 3 ====
+===== Level 4 =====
+====== Level 5 ======
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Help:List|Bulleted list]]<ref name="firstline" />
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'Empty lines between list items discouraged, (see numbered lists).\'\'</div>
+|
+<tt>* One</tt><br />
+<tt>* Two</tt><br />
+<tt>** Two point one</tt><br />
+<tt>* Three</tt>
+|
+* One
+* Two
+** Two point one
+* Three
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Help:List|Numbered list]]<ref name="firstline" />
+<div style="padding: 0em .5em; font-size:0.9em;">\'\'Empty lines between list items restarts numbering at 1.\'\'</div>
+|
+<tt># One</tt><br />
+<tt># Two</tt><br />
+<tt>## Two point one</tt><br />
+<tt># Three</tt><br />
+|
+# One
+# Two
+## Two point one
+# Three
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|[[Wikipedia:Extended_image_syntax|Thumbnail image]]
+|
+<tt><nowiki>[[Image:Wiki.png|thumb|Caption text]]</nowiki></tt>
+|
+[[Image:Wiki.png|thumb|Caption text]]
+|-
+
+|-<!--TALKPAGES-->
+| colspan="3" style="background:#E6F2FF; padding: 0.2em; font-family: sans-serif; font-size: 0.9em; text-align:center;" | For [[Wikipedia:Tutorial_%28Talk_pages%29|Talk Pages]]
+|-
+|Signature
+|
+<tt><nowiki>~~~~</nowiki></tt>
+|
+[[Special:Mypage|Your username]] {{CURRENTTIME}}, <br />
+{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} (UTC) 
+|-
+|colspan="3" style="border-top:1px solid #cee0f2;"|
+|-
+|Indenting Text<ref name="firstline" />
+|
+<tt><nowiki>no indent (normal)</nowiki></tt><br/>
+<tt><nowiki>:first indent</nowiki></tt><br/>
+<tt><nowiki>::second indent</nowiki></tt><br/>
+<tt><nowiki>:::third indent</nowiki></tt>
+|
+no indent (normal)<br/>
+:first indent
+::second indent
+:::third indent
+|-
+
+|colspan="3" style="border-top:1px solid #cee0f2; font-size:0.9em;"|<references/>
+|}
+</div>','First Import','1','2008-11-16 19:16:53',1,1),
+	('A8743C30-A526-DA45-970FB0A65A8F917D','58F2F999-FC99-125A-DB21FCD7085C44A1','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Help Contents ==
+
+Welcome to the Codex Wiki.  Here you will find the documentation to edit and create pages on this wiki.
+
+=== Editing ===
+
+* [[Help:Wiki Markup|Wiki Markup]] - The most common wiki markups.
+* [[Help:List Markup|Lists Markup]] - Creating and using lists.
+* [[Help:Cheatsheet|Wiki Markup Cheatsheet]] - Wiki Markup Cheatsheet
+* [[Help:Feed Markup|Feed Markup]] - Using feed tags.
+* [[Help:Messagebox Markup|Messagebox Markup]] - Using messagebox tags.
+* [[Help:Codex Wiki Plugins|Codex Wiki Plugins]] - How to create your own wiki plugins and extend the wiki parser.
+
+=== More Information ===
+
+More information can be found via the Wikipedia site [http://en.wikipedia.org/wiki/Help:Contents Wikipedia Help] as this wiki follows many of its markup guidelines.','Messagebox tags.','1','2008-11-16 19:17:49',1,1),
+	('A89594E7-970D-BE3D-C32A3395AD685354','A895949D-B7C5-34B5-0E32B0CE52BC3FA0','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Messagebox Markup ==
+The <nowiki><messagebox></nowiki> tag is available to integrate the [http://www.coldboxframework.com ColdBox] Messagebox Plugin into your wiki pages.
+
+The following attributes are available to be used with the <nowiki><messagebox></nowiki> tag
+<br /><br />
+{|border=1 width="80%" cellpadding="5" cellspacing="0"
+!Attribute!!Required!!Values!!Description
+|-
+||
+\'\'\'type\'\'\'
+||
+No
+||
+info,warning,error
+||
+The type of messagebox to generate: info, warning or error.
+
+Example:
+<code><pre><messagebox type="error">My Message</messagebox></pre></code>
+','First Import','1','2008-11-16 19:54:14',1,1),
+	('B5C20C69-CF1E-5C1B-97430D6BDABBF4B6','E12403BB-F4C1-5F8A-1B20DB3894BAF144','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align="right"
+|-
+| __TOC__
+|}
+
+= Welcome To Codex =
+This is your Wiki landing page.  You can customize this page at anytime by clicking on the \'\'\'Edit\'\'\' button below.
+
+== Navigation ==
+To your left you can see the wiki sidebar.  From here you can comeback to this page, go to our help section, view the wiki\'s rss feeds, get a wiki category listing and even see the entire wiki page directory.  Come on, try it out!!
+
+== Search ==
+The top header bar includes our incredible search engine, search for anything in a wiki page or title.  Try it out!
+
+== Top Navigation ==
+If you have the correct  or are a registered user, you can view your user profile and manage this wiki.  Just click on the \'\'\'Admin\'\'\' tab to start managing Codex.
+
+{{{Messagebox message="Hello Everybody" type="info"}}}','Updates','1','2008-11-19 09:17:48',1,0),
+	('B5C4FA6B-CF1E-5C1B-9830AE891E48FCD2','B5C4FA1D-CF1E-5C1B-950B4A04E276B736','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','{|align="right"
+|-
+| __TOC__
+|}
+
+= Codex Wiki Plugins =
+
+== Introduction ==
+Codex comes bundled with a set of custom wiki plugins that can be used in any wiki page by following the following syntax:
+
+<source lang="xml">
+{{{PluginName arg1="" arg2="" ...}}}
+</source>
+
+Basically, you create a tag with the name of the plugin to use and then just create arguments of name-value pairs of whatever arguments the plugin\'s \'\'\'renderit()\'\'\' method takes in.
+
+== A Wiki Plugin ==
+Creating wiki plugins are very easy. Just drop them in the \'\'\'/App/plugins/wiki\'\'\' folder and you are ready to start using them in your wiki pages.
+
+A wiki plugin is exactly just like any other ColdBox plugin. [http://ortus.svnrepository.com/coldbox/trac.cgi/wiki/cbPluginsGuide ColdBox Plugin Guide].
+
+=== Rules ===
+
+# Plugin component must extend \'\'coldbox.system.plugin\'\' and implement the coldbox plugin init() method.
+# Plugin can just implement the ColdBox init() method with no inheritance, but will not be able to tap into the framework\'s supertype\'s methods.  It will have to do everything via the injected controller.
+# Plugin must implement a method called \'\'\'renderit()\'\'\'.
+## This method can have 1 or more arguments.
+
+== Example ==
+
+So if we have a plugin called \'\'\'DateTime\'\'\', it\'s source code can look like this:
+
+<source lang="coldfusion">
+<cfcomponent name="DateTime" 
+			 hint="A datetime wiki plugin" 
+			 extends="coldbox.system.plugin" 
+			 output="false" 
+			 cache="true">
+  
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
+   
+    <cffunction name="init" access="public" returntype="DateTime" output="false">
+		<cfargument name="controller" type="any" required="true">
+		<cfscript>
+  		super.Init(arguments.controller);
+  		setpluginName("DateTime");
+  		setpluginVersion("1.0");
+  		setpluginDescription("A date time wiki plugin");
+  		//My own Constructor code here
+  		
+  		//Return instance
+  		return this;
+		</cfscript>
+	</cffunction>
+
+<!------------------------------------------- PUBLIC ------------------------------------------->	
+
+    <!--- today --->
+	<cffunction name="renderit" output="false" access="public" returntype="string" hint="print today">
+		<cfargument name="format" type="string" required="true" default="full" hint="Full,Short, Medium"/>
+		<cfreturn dateformat(now(),arguments.format)>
+	</cffunction>
+	
+<!------------------------------------------- PRIVATE ------------------------------------------->	
+	
+</cfcomponent>
+</source>
+
+And we can use it in our wiki pages like so:
+
+<source lang="xml">
+//Initial space is left so wiki doesn\'t match and you can see the source
+{{{ Messagebox message="Hello World!"}}}
+</source>
+
+That\'s it. Welcome to the world of Codex Wiki Plugins.  Now go out and start coding your very own plugins. Below you can see a plugin at work:
+
+{{{WikiPlugins}}}','First Import','1','2008-11-19 09:21:03',1,1),
+	('C90869BF-F321-E64A-26D668F8EE8988B5','C90869A2-090D-50DA-0800C94BB5DB7026','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Feed Markup ==
+The <nowiki><feed></nowiki> tag is available to integrate RSS and ATOM feeds to provide dynamic information into your wiki pages.
+
+The following attributes are available to be used with the <nowiki><feed></nowiki> tag
+{|border=1 width="80%" cellpadding="5" cellspacing="0"
+!Attribute!!Required!!Values!!Description
+|-
+||
+\'\'\'url\'\'\'
+||
+Yes
+||
+A URL
+||
+Either a absolute, or root relative link to the RSS or ATOM feed.
+A root relative link points directly back to the codeX wiki RSS feeds.
+
+Example of an absolute link:
+<code><pre><feed url="http://www.compoundtheory.com/?action=feed.rss" /></pre></code>
+
+Example of a relative link:
+<code><pre><feed url="/feed/directory/list.cfm" /></pre></code>
+|-
+||
+\'\'\'display\'\'\'
+||
+No
+||
+bullet, numbered
+||
+RSS Feed data can either be displayed as regular bullet points, or by numbered bullet points.
+
+Example of display by bullet points:
+<code><pre><feed url="/feed/directory/list.cfm" display="bullet" /></pre></code>
+
+Example of display by numbered bullet points:
+<code><pre><feed url="/feed/directory/list.cfm" display="numbered" /></pre></code>
+
+By default it is displayed by \'bullet\'
+|-
+||
+\'\'\'cache\'\'\'
+||
+No
+||
+number of minutes
+||
+The number of minutes in which the results of this RSS feed are cached.
+
+Example of a RSS feed cached for 5 minutes
+<code><pre><feed url="/feed/directory/list.cfm" cahe="5" /></pre></code>
+
+By default, the default cache time out of the installed ColdBox.
+|-
+|}','Initial creation','1','2008-03-20 08:53:34',1,1),
+	('E5CC1AC5-C484-565C-19E5F34B3712AD02','E5CC1A90-D36E-9214-33EB0021D817DE59','A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','== Category Listing ==
+
+<feed url="/feed/category/list.cfm" display="numbered" />','Initial Creation','1','2008-05-14 14:59:28',1,0);
+/*!40000 ALTER TABLE `wiki_pagecontent` ENABLE KEYS*/;
+UNLOCK TABLES;
+
+
+#
+# Table structure for table 'wiki_pagecontent_category'
+#
 
 CREATE TABLE `wiki_pagecontent_category` (
   `FKpagecontent_id` varchar(36) NOT NULL,
@@ -227,10 +2035,17 @@ CREATE TABLE `wiki_pagecontent_category` (
 
 
 
-# Dump of table wiki_permissions
-# ------------------------------------------------------------
+#
+# Dumping data for table 'wiki_pagecontent_category'
+#
 
-DROP TABLE IF EXISTS `wiki_permissions`;
+# No data found.
+
+
+
+#
+# Table structure for table 'wiki_permissions'
+#
 
 CREATE TABLE `wiki_permissions` (
   `permission_id` varchar(36) NOT NULL,
@@ -240,8 +2055,15 @@ CREATE TABLE `wiki_permissions` (
   UNIQUE KEY `permission` (`permission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_permissions` (`permission_id`,`permission`,`description`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_permissions'
+#
+
+LOCK TABLES `wiki_permissions` WRITE;
+/*!40000 ALTER TABLE `wiki_permissions` DISABLE KEYS*/;
+INSERT INTO `wiki_permissions` (`permission_id`, `permission`, `description`) VALUES
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','WIKI_VIEW','Ability to view any wiki page'),
 	('8840B7C9-E693-D54B-6A69F07AA5265839','WIKI_CREATE','Ability to create wiki pages'),
 	('8840D553-F9D9-59F9-90B05EF765403F90','WIKI_EDIT','Ability to edit wiki pages'),
@@ -250,13 +2072,13 @@ VALUES
 	('88415476-D0F8-32A5-7E7D3340828C0E6B','WIKI_ROLLBACK_VERSION','Ability to rollback to previous versions'),
 	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','WIKI_VIEW_HISTORY','Ability to view a page\'s history'),
 	('A9D04702-CF1E-5C1B-94C2965619E301C8','WIKI_ADMIN','Access to all the administrator panels');
+/*!40000 ALTER TABLE `wiki_permissions` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_role_permissions
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_role_permissions`;
+#
+# Table structure for table 'wiki_role_permissions'
+#
 
 CREATE TABLE `wiki_role_permissions` (
   `FKpermission_id` varchar(36) NOT NULL,
@@ -270,8 +2092,15 @@ CREATE TABLE `wiki_role_permissions` (
   CONSTRAINT `FK_permissionid` FOREIGN KEY (`FKpermission_id`) REFERENCES `wiki_permissions` (`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_role_permissions` (`FKpermission_id`,`FKrole_id`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_role_permissions'
+#
+
+LOCK TABLES `wiki_role_permissions` WRITE;
+/*!40000 ALTER TABLE `wiki_role_permissions` DISABLE KEYS*/;
+INSERT INTO `wiki_role_permissions` (`FKpermission_id`, `FKrole_id`) VALUES
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','883C4730-ACC9-1AF4-93737DB4E2E368EF'),
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','883C6A58-05CA-D886-22F7940C19F792BD'),
 	('88409695-AB9F-3AF7-CF1F8CF7FDCBE3D1','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
@@ -288,13 +2117,13 @@ VALUES
 	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','883C6A58-05CA-D886-22F7940C19F792BD'),
 	('88417F6E-CA8B-53C9-59DEF4C4888CDE82','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
 	('A9D04702-CF1E-5C1B-94C2965619E301C8','883C4730-ACC9-1AF4-93737DB4E2E368EF');
+/*!40000 ALTER TABLE `wiki_role_permissions` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_roles
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_roles`;
+#
+# Table structure for table 'wiki_roles'
+#
 
 CREATE TABLE `wiki_roles` (
   `role_id` varchar(36) NOT NULL,
@@ -303,19 +2132,26 @@ CREATE TABLE `wiki_roles` (
   PRIMARY KEY  (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_roles` (`role_id`,`role`,`description`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_roles'
+#
+
+LOCK TABLES `wiki_roles` WRITE;
+/*!40000 ALTER TABLE `wiki_roles` DISABLE KEYS*/;
+INSERT INTO `wiki_roles` (`role_id`, `role`, `description`) VALUES
 	('883C4730-ACC9-1AF4-93737DB4E2E368EF','ADMIN','The wiki administrator'),
 	('883C6A58-05CA-D886-22F7940C19F792BD','USER','A basic wiki user'),
 	('883C8533-DC73-C1F0-521E41EC19FD6E78','MODERATOR','A wiki moderator or editor'),
 	('A9D370CD-CF1E-5C1B-9B9B75680AB49DE4','ANONYMOUS','Anonymous access role');
+/*!40000 ALTER TABLE `wiki_roles` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_securityrules
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_securityrules`;
+#
+# Table structure for table 'wiki_securityrules'
+#
 
 CREATE TABLE `wiki_securityrules` (
   `securityrule_id` varchar(36) NOT NULL,
@@ -328,8 +2164,15 @@ CREATE TABLE `wiki_securityrules` (
   UNIQUE KEY `securityrule_id` (`securityrule_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_securityrules` (`securityrule_id`,`whitelist`,`securelist`,`permissions`,`authorize_check`,`redirect`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_securityrules'
+#
+
+LOCK TABLES `wiki_securityrules` WRITE;
+/*!40000 ALTER TABLE `wiki_securityrules` DISABLE KEYS*/;
+INSERT INTO `wiki_securityrules` (`securityrule_id`, `whitelist`, `securelist`, `permissions`, `authorize_check`, `redirect`) VALUES
 	('88572359-B40D-B373-DE9E3DA49F37ABE5',NULL,'^admin','WIKI_ADMIN',1,'user/login.cfm'),
 	('C3CA560A-CF1E-5C1B-954981333B6ECA46',NULL,'^profile',NULL,1,'user/login.cfm'),
 	('C42598A5-CF1E-5C1B-98C39B0B163E7A98',NULL,'^page\\.show$,^page\\.search,^page\\.render','WIKI_VIEW',0,'user/login.cfm'),
@@ -339,13 +2182,13 @@ VALUES
 	('C42DE4B2-CF1E-5C1B-9780791CABD241E8',NULL,'^page\\.replace','WIKI_ROLLBACK_VERSION',0,'user/login.cfm'),
 	('C4317156-CF1E-5C1B-917C1C422FF1B6D7',NULL,'^page\\.(create|doCreate)$','WIKI_CREATE',0,'user/login.cfm'),
 	('CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F',NULL,'^page\\.(edit|doEdit)$','WIKI_EDIT',0,'user/login.cfm');
+/*!40000 ALTER TABLE `wiki_securityrules` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_users
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_users`;
+#
+# Table structure for table 'wiki_users'
+#
 
 CREATE TABLE `wiki_users` (
   `user_id` varchar(36) NOT NULL,
@@ -369,17 +2212,24 @@ CREATE TABLE `wiki_users` (
   CONSTRAINT `FK_wiki_users_wiki_roles` FOREIGN KEY (`FKrole_id`) REFERENCES `wiki_roles` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `wiki_users` (`user_id`,`user_fname`,`user_lname`,`user_email`,`user_isActive`,`user_isConfirmed`,`user_create_date`,`user_modify_date`,`user_isDefault`,`user_username`,`user_password`,`FKrole_id`)
-VALUES
+
+
+#
+# Dumping data for table 'wiki_users'
+#
+
+LOCK TABLES `wiki_users` WRITE;
+/*!40000 ALTER TABLE `wiki_users` DISABLE KEYS*/;
+INSERT INTO `wiki_users` (`user_id`, `user_fname`, `user_lname`, `user_email`, `user_isActive`, `user_isConfirmed`, `user_create_date`, `user_modify_date`, `user_isDefault`, `user_username`, `user_password`, `FKrole_id`) VALUES
 	('A9CF56CA-CF1E-5C1B-91F2AEF8FBD03AA4','ANONYMOUS','ANONYMOUS','ANONYMOUS@CODEXWIKI.COM',1,1,'2008-03-18 15:12:22','0100-01-01 00:00:00',1,'ANONYMOUS','A2AD7D448321F4D974D468E0B251030E5BED9F128BC760FA3DBA299756E9B31A4D6F8504EA4F10DC2665834E5FFA93CB978FD2FD075C53322C58CD6FE7A7A878','A9D370CD-CF1E-5C1B-9B9B75680AB49DE4'),
 	('A9D7F9E5-CF1E-5C1B-935B04502EB6B9A1','admin','admin','admin@codexwiki.com',1,1,'2009-01-23 16:36:47','2009-01-23 16:36:47',0,'admin','0CD487D652F3139D5E01E3263B3B37995602EB8692D11BB37E4DBE33F40581852C63A9964EBC233E10BEB192B2851AA613E640E5137132CA8C061D3327388E5F','883C4730-ACC9-1AF4-93737DB4E2E368EF');
+/*!40000 ALTER TABLE `wiki_users` ENABLE KEYS*/;
+UNLOCK TABLES;
 
 
-
-# Dump of table wiki_users_permissions
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wiki_users_permissions`;
+#
+# Table structure for table 'wiki_users_permissions'
+#
 
 CREATE TABLE `wiki_users_permissions` (
   `FKuser_id` varchar(36) NOT NULL,
@@ -395,3 +2245,10 @@ CREATE TABLE `wiki_users_permissions` (
 
 
 
+#
+# Dumping data for table 'wiki_users_permissions'
+#
+
+# No data found.
+
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS*/;
