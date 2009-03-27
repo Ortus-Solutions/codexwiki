@@ -92,9 +92,16 @@ function createNewPage(){
 <cfif not event.valueExists("print")>
 	
 	<!--- Only edit if not read only --->
-	<cfif rc.content.getisReadOnly() AND 
-		  (rc.content.getUser().getuserid() eq rc.oUser.getUserid()) OR
-		  rc.oUser.checkPermission("WIKI_ADMIN")>
+	<cfif ( 
+			rc.content.getisReadOnly() AND 
+			(
+		    	rc.content.getUser().getuserid() EQ rc.oUser.getUserid() 
+		    	OR
+		    	rc.oUser.checkPermission("WIKI_ADMIN") 
+		    )
+		  ) 
+		  OR
+		  NOT rc.content.getisReadOnly()>
 	<br />
 	<p class="buttons">
 		<cfif rc.oUser.checkPermission("WIKI_EDIT")>
