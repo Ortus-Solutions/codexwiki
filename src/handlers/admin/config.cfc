@@ -105,10 +105,12 @@ $Build ID:	@@build_id@@
 				/* Get Option */
 				oOption = instance.ConfigService.getOption(name=key);
 				/* Populate it */
-				oOption.setValue(rc[key]);
-				newOptions[key] = rc[key];
-				/* Save */
-				instance.ConfigService.save(oOption);	
+				if( structKeyExists(rc,key) ){
+					oOption.setValue(rc[key]);
+					newOptions[key] = rc[key];
+					/* Save */
+					instance.ConfigService.save(oOption);	
+				}
 			}
 			/* Re-Cache */
 			getColdboxOCM().set("CodexOptions",newOptions,0);
