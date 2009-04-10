@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Redirect" 
 			 hint="A plugin to redirect to other pages" 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
 			 cache="true">
   
@@ -35,6 +35,9 @@ $Build ID:	@@build_id@@
   		setpluginName("Redirect");
   		setpluginVersion("1.0");
   		setpluginDescription("A plugin to redirect a page to another page.");
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		//My own Constructor code here
   		
   		//Return instance

@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Flash" 
 			 hint="A Flash Embedder wiki plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
 			 cache="true">
   
@@ -35,6 +35,9 @@ $Build ID:	@@build_id@@
   		setpluginName("Flash");
   		setpluginVersion("1.0");
   		setpluginDescription("A plugin to embedd flash movies in a wiki page");
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		//My own Constructor code here
   		
   		//Return instance

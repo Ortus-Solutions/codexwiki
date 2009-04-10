@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Timestamp" 
 			 hint="A Timestamp wiki plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
 			 cache="true">
   
@@ -35,6 +35,9 @@ $Build ID:	@@build_id@@
   		setpluginName("Timestamp");
   		setpluginVersion("1.0");
   		setpluginDescription("A time stamp wiki plugin");
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		//My own Constructor code here
   		
   		//Return instance

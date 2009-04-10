@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="WikiPlugins" 
 			 hint="A wiki plugin to interact with installed plugins." 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
 			 cache="true">
   
@@ -35,6 +35,9 @@ $Build ID:	@@build_id@@
   		setpluginName("WikiPlugins");
   		setpluginVersion("1.0");
   		setpluginDescription("This plugin will help you document all the installed wiki plugins in the system. It is also used to install and remove wiki plugins.");
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		
   		/* Prepare Properties */
   		instance.wikiPluginsPath = getSetting("MyPluginsPath") & "/wiki";

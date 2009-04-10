@@ -84,7 +84,7 @@
   			<property name="createdDate" 	column="comment_createdate" 	type="date"/>
   			<property name="isActive" 		column="comment_isActive" 		type="boolean"/>
   			<property name="isApproved" 	column="comment_isApproved"		type="boolean"/>
-  			<manytoone name="Page">
+  			<manytoone name="Page" lazy="true">  			
   				<link column="FKpage_id" to="wiki.Page"/>
   			</manytoone>
   			<manytoone name="User" lazy="true">

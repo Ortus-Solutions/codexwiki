@@ -22,10 +22,9 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Include" 
 			 hint="A plugin to include other wiki pages as content" 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
-			 cache="true"
-			 autowire="true">
+			 cache="true">
 
 	<!--- Dependencies --->  
 	<cfproperty name="WikiService" type="ioc" scope="instance" />
@@ -39,6 +38,9 @@ $Build ID:	@@build_id@@
   		setpluginName("Include");
   		setpluginVersion("1.0");
   		setpluginDescription("A plugin to include other wiki pages as content.");
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		//My own Constructor code here
   		
   		//Return instance

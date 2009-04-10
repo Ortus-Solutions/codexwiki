@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Messagebox" 
 			 hint="A messagebox wiki plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
 			 cache="true">
   
@@ -35,7 +35,9 @@ $Build ID:	@@build_id@@
   		setpluginName("Messagebox");
   		setpluginVersion("1.0");
   		setpluginDescription("A messagebox plugin. Valid Types are info, warning, error");
-  		//My own Constructor code here
+  		setPluginAuthor("Luis Majano");
+  		setPluginAuthorURL("http://www.coldbox.org");
+  		setPluginURL("http://www.codexwiki.org");
   		
   		//Return instance
   		return this;
