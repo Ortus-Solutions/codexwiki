@@ -81,7 +81,7 @@ $Build ID:	@@build_id@@
 			/* Page Title */
 			rc.pageTitle = "Namespace Viewer For: #rc.namespace#";
 			/* View */
-			event.setView('wiki/spaceViewer');
+			event.setView(name='wiki/spaceViewer',nolayout=event.getValue("nolayout",false));
 		</cfscript>
 	</cffunction>
 

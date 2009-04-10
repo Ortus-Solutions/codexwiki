@@ -57,7 +57,7 @@ function toggleItems(it){
 	<div class="left-box#isItemVisible('sb_wikiadmin')#" id="sb_wikiadmin">
 		<ul class="sidemenu">
 			<li>Pages</li>
-			<li>Namespaces</li>
+			<li><a href="#event.buildLink(rc.xehAdminNamespace)#">Namespaces</a></li>
 			<li>Categories</li>
 			<li>Comments</li>
 		</ul>

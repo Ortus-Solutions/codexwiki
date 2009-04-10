@@ -39,3 +39,6 @@
 }
 .tablesorter tbody tr:hover { background: #d7eafe; }
 .tablesorter tbody td a{ text-decoration: none; border: none;}
+.tablesorter td.center{
+	text-align: center;
+}

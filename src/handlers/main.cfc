@@ -56,7 +56,7 @@ $Build ID:	@@build_id@@
 				rc.xehAdminUsers = "admin/users/list";
 				rc.xehAdminRoles = "admin/roles/list";
 				/* Wiki Admin */
-				
+				rc.xehAdminNamespace = "admin/namespace/list";
 				/* Plugin Menu */
 				rc.xehAdminPlugins = "admin/plugins/list";
 				rc.xehAdminPluginDocs = "admin/plugins/docs";

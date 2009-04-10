@@ -304,6 +304,10 @@ input.invalidLookupInput, textarea.invalidLookupInput, .invalidLookupInput{
 	color: #CC0001; 
 	background-color: inherit;	
 }
+.tablesorter td.center{
+	text-align: center;
+}
+
 /* search form */
 form.search {
 	position: absolute;

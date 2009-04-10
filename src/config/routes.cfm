@@ -139,7 +139,7 @@ NOTE: The interceptor will create a new setting called: sesBaseURL with this val
 <!--- Namespace Syntax for Pages --->
 <cfset addCourse(pattern="#getSetting('SpaceKey')#/:space/:pagename/:print?",handler="page",action="show")>
 <!--- Namespace visualizer --->
-<cfset addCourse(pattern="#getSetting('SpaceKey')#/:namespace",handler="page",action="showNamespace")>
+<cfset addCourse(pattern="#getSetting('SpaceKey')#/:namespace?",handler="page",action="showNamespace")>
 
 <!--- feed urls --->
 <cfset addCourse(pattern="feed/:source/:feed",handler="feed",action="show")>

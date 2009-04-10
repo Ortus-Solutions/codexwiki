@@ -44,9 +44,9 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 <h2>
 	<img src="includes/images/directory.png" border="0" align="absmiddle">
-	Namespace Directory: #rc.namespace#
+	Namespace Directory: <cfif len(rc.namespace)>#rc.namespace#<cfelse>Default Namespace</cfif>
 </h2>
-<p>Below is the current page directory for the <strong>#rc.namespace#</strong> namespace.  
+<p>Below is the current page directory for the <strong><cfif len(rc.namespace)>#rc.namespace#<cfelse>Default</cfif></strong> namespace.  
 You can filter to find specific pages or click on the page name to visit the page.</p>
 
 <!--- Page Filter --->

@@ -9,7 +9,7 @@
 				else {break;}				
 			}
 			case "sb_wikiadmin":{
-				if( not reFindNoCase("^admin\.(wiki)", ce) ){ return " hidden"; }
+				if( not reFindNoCase("^admin\.(namespace|categories|comments|pages)", ce) ){ return " hidden"; }
 				else {break;}
 			}
 			case "sb_tools" :{

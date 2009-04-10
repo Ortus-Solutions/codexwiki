@@ -24,6 +24,33 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
+	<!--- Validate this bean --->
+	<cffunction name="validate" access="public" returntype="Array" hint="Validate this bean">
+		<cfscript>
+			var errors = Arraynew(1);
+			
+			if( len(getName()) eq 0 ){
+				ArrayAppend(errors,"Please set a valid name");
+			}
+			if( len(getDescription()) eq 0 ){
+				ArrayAppend(errors,"Please set a valid description");
+			}
+			
+			return errors;
+		</cfscript>
+	</cffunction>
+	
+	<!--- Get set create Date --->
+	<cffunction name="getcreateDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
+		<cfreturn getTransferObject().getcreateDate()>
+	</cffunction>
+	<cffunction name="setcreateDate" output="false" access="public" returntype="void" hint="Set the date if found">
+		<cfargument name="myDate" type="string" required="false" default=""/>
+		<cfif isDate(arguments.mydate)>
+			<cfset getTransferObject().setcreateDate(arguments.mydate)>
+		</cfif>
+	</cffunction>
+	
 	<!--- Scaffolding Table Config --->
 	<cffunction name="gettableConfig" access="public" returntype="struct" output="false" hint="Get the table config for scaffolding">
 		<cfreturn instance.tableConfig>

@@ -274,6 +274,7 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		var tql = 0;
 		var query = 0;
+		var oNamespace = 0;
 	</cfscript>
 	<cfsavecontent variable="tql">
 	<cfoutput>
@@ -294,6 +295,9 @@ $Build ID:	@@build_id@@
 		<cfif len(trim(arguments.namespace))>
 			AND
 			Namespace.name = :Namespace
+		<cfelse>
+			AND
+			Namespace.namespace_id = :NamespaceID
 		</cfif>
 		order by
 		page.name
@@ -305,6 +309,11 @@ $Build ID:	@@build_id@@
 		/* Params */
 		if( len(trim(arguments.namespace)) ){
 			query.setParam("Namespace", arguments.namespace);
+		}
+		else{
+			/* get default namespace */
+			oNamespace = getDefaultNamespace();
+			query.setParam("NamespaceID", oNamespace.getNamespace_id());
 		}
 		query.setParam("true", true, "boolean");
 		query.setCacheEvaluation(true);
@@ -520,18 +529,17 @@ $Build ID:	@@build_id@@
 			WHERE
 			(page_id IN (<cfqueryparam cfsqltype="cf_sql_varchar" list="true" value="#idList#">))
 		</cfquery>
-		<!--- Remove the Namespace --->
-		<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">>
-			DELETE FROM
-				wiki_namespace
-			WHERE
-			namespace_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.namespace_id#">
-		</cfquery>
-	
-		<!--- Discard all objects, just in case. Which we had a discard by class --->
-		<cfset getTransfer().discardAll()>
-		
 	</cfif>
+	
+	<!--- Remove the Namespace --->
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_namespace
+		WHERE
+			namespace_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.namespaceid#">
+	</cfquery>
+	<!--- Discard all objects, just in case. wish we had a discard by class? Mark, where is this?? --->
+	<cfset getTransfer().discardAll()>
 </cffunction>
 
 
