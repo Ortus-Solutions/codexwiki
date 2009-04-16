@@ -25,21 +25,22 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiService" output="false">
-	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
-	<cfargument name="datasource" hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
-	<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-	<cfargument name="securityService" hint="the security service" type="codex.model.security.SecurityService" required="Yes">
-	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
+	<cfargument name="transfer" 		hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+	<cfargument name="datasource" 		hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
+	<cfargument name="transaction" 		hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+	<cfargument name="securityService" 	hint="the security service" type="codex.model.security.SecurityService" required="Yes">
+	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfscript>
 		/* Init */
 		super.init(argumentCollection=arguments);
 		
 		/* Properties */
 		setSecurityService(arguments.securityService);
-		setAppName(arguments.configBean.getKey("appName"));
+		setAppName(arguments.configService.getSetting("appName"));
+		setConfigService(arguments.configService);
 		
 		/* Rewrite Extension */
-		if( arguments.configBean.getKey("usingRewrite") ){
+		if( arguments.configService.getSetting("usingRewrite") ){
 			setRewriteExtension("");
 		}
 		else{
@@ -595,19 +596,28 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<!--- Get/Set Security Service --->
 <cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">
 	<cfreturn instance.securityService />
 </cffunction>
-
 <cffunction name="setSecurityService" access="private" returntype="void" output="false">
 	<cfargument name="securityService" type="codex.model.security.SecurityService" required="true">
 	<cfset instance.securityService = arguments.securityService />
 </cffunction>
 
+<!--- Get/Set Config Service --->
+<cffunction name="getconfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">
+	<cfreturn instance.configService>
+</cffunction>
+<cffunction name="setconfigService" access="private" returntype="void" output="false">
+	<cfargument name="configService" type="codex.model.wiki.ConfigService" required="true">
+	<cfset instance.configService = arguments.configService>
+</cffunction>
+
+<!--- Get/Set App Name --->
 <cffunction name="getAppName" access="private" returntype="string" output="false">
 	<cfreturn instance.appName />
 </cffunction>
-
 <cffunction name="setAppName" access="private" returntype="void" output="false">
 	<cfargument name="appName" type="string" required="true">
 	<cfset instance.appName = arguments.appName />

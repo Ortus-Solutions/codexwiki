@@ -74,7 +74,7 @@
 			<property name="value"  type="string" column="option_value" />
 		</object>
 		
-  		<object name="Comment" table="wiki_comment" decorator="codex.model.wiki.Comment">
+  		<object name="Comment" table="wiki_comment" decorator="codex.model.wiki.comments.Comment">
   			<id name="commentID" column="comment_id" type="UUID" generate="true"/>
   			<property name="content" 		column="comment_content" 		type="string"/>
   			<property name="author" 		column="comment_author" 		type="string" nullable="true"/>
