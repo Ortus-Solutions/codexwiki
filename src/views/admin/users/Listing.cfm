@@ -122,8 +122,20 @@ $Build ID:	@@build_id@@
 <!--- Results Form --->
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserDelete)#" method="post">
 	
+	<!--- Records Found --->
+	<div class="float-left">
+		<cfif rc.qusers.recordcount>
+		<em>Records: #rc.qUsers.recordcount#</em>
+		<cfelse>
+		<em>No Records Found</em>
+		</cfif>
+		<br />
+		<label class="inlineLabel">Quick Filter: </label>
+		<input type="text" size="30" id="quickfilter" value="">
+	</div>
+	
 	<!--- Add / Delete --->
-	<div class="buttons float-right">
+	<div class="buttons">
 		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle" />
@@ -137,18 +149,6 @@ $Build ID:	@@build_id@@
 				Delete
 			</span>
 		</a>
-	</div>
-	
-	<!--- Records Found --->
-	<div>
-		<cfif rc.qusers.recordcount>
-		<em>Records: #rc.qUsers.recordcount#</em>
-		<cfelse>
-		<em>No Records Found</em>
-		</cfif>
-		<br />
-		<label class="inlineLabel">Quick Filter: </label>
-		<input type="text" size="30" id="quickfilter" value="">
 	</div>
 
 	<!--- Render Results --->

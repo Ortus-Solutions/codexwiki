@@ -55,7 +55,9 @@ $Build ID:	@@build_id@@
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">
+	<div>
 	<fieldset>
+	<div>
 	<legend><strong>Comment Options</strong></legend>
 	 	<!--- Activate Comments  --->
 		<input type="checkbox" 
@@ -78,9 +80,11 @@ $Build ID:	@@build_id@@
 			   <cfif rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
 			   value="1">
 		<label for="comments_urltranslations" class="light">Translate URL's to links</label> <br />
+	</div>
 	</fieldset>
 	
 	<fieldset>
+	<div>
 	<legend><strong>Before A Comment Appears</strong></legend>
 	 	<!--- Enable Moderation --->
 		<input type="checkbox" 
@@ -95,10 +99,11 @@ $Build ID:	@@build_id@@
 			   <cfif rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
 			   value="1">
 		<label for="comments_moderation_whitelist" class="light">Comment author must have a previously approved comment</label>
+	</div>
 	</fieldset>
 	
-	
 	<fieldset>
+	<div>
 	<legend><strong>Notifications</strong></legend>
 		<!--- Notification on Comment --->
 		<input type="checkbox" 
@@ -113,6 +118,7 @@ $Build ID:	@@build_id@@
 			   <cfif rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
 			   value="1">
 		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</label> 
+	</div>
 	</fieldset>
 	
 	<!--- Loader --->
@@ -128,5 +134,6 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons">
 		<input type="submit" class="submitButton" value="Save Options"></input>
    	</div>
+	</div>
 </form>
 </cfoutput>

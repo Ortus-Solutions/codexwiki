@@ -47,7 +47,8 @@ $Build ID:	@@build_id@@
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">
-    <label for="beforeHeadEnd"> Before Head End</label>
+<div>
+	 <label for="beforeHeadEnd"> Before Head End</label>
     <textarea name="beforeHeadEnd" id="beforeHeadEnd" rows="5" cols="50" class="resizable">#rc.oCustomHTML.getbeforeHeadEnd()#</textarea>
     
 	<label for="afterBodyStart"> After Body Start</label>
@@ -75,5 +76,6 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons">
 		<input type="submit" class="submitButton" value="Save HTML"></input>
    	</div>
+</div>
 </form>
 </cfoutput>

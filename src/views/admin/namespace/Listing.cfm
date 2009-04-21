@@ -91,8 +91,17 @@ $Build ID:	@@build_id@@
 <!--- Results Form --->
 <form name="namespaceForm" id="namespaceForm" action="#event.buildLink(rc.xehDelete)#" method="post">
 	
+	<!--- Records Found --->
+	<div class="float-left">
+		<cfif rc.qNamespaces.recordcount>
+		<em>Records Found: #rc.qNamespaces.recordcount#</em>
+		<cfelse>
+		<em>No Records Found</em>
+		</cfif>
+	</div>
+	
 	<!--- Add / Delete --->
-	<div class="buttons float-right">
+	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
 				<img src="includes/images/add.png" border="0" align="absmiddle" />
@@ -106,16 +115,6 @@ $Build ID:	@@build_id@@
 				Delete
 			</span>
 		</a>
-	</div>
-	<br />
-	
-	<!--- Records Found --->
-	<div>
-		<cfif rc.qNamespaces.recordcount>
-		<em>Records Found: #rc.qNamespaces.recordcount#</em>
-		<cfelse>
-		<em>No Records Found</em>
-		</cfif>
 	</div>
 	
 	<!--- Render Results --->

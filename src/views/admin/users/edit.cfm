@@ -63,31 +63,33 @@ $Build ID:	@@build_id@@
 
 <!--- Table Manager Jumper --->
 <form name="userForm" id="userForm" action="#event.buildlink(rc.xehUserUpdate & '/user_id/' & rc.user_id)#">
-	
+<div>
 	<fieldset>
-	<legend><strong>User Information</strong></legend>
-	
-	<label for="fname">First Name</label>
-	<input type="text" name="fname" id="fname" size="30" 
-			 dName="First Name"
-			 required="true"
-			 value="#rc.thisUser.getfname()#">
-	
-	<label for="lname">Last Name</label>
-	<input type="text" name="lname" id="lname" size="30" 
-			 dName="Last Name"
-			 required="true"
-			 value="#rc.thisUser.getlname()#">
-			 
-	<label for="email">Email Address</label>
-	<input type="text" name="email" id="email" size="30" 
-			 dName="Email" mask="email"
-			 required="true"
-			 value="#rc.thisUser.getemail()#">
-			 
+	<div>
+		<legend><strong>User Information</strong></legend>
+		
+		<label for="fname">First Name</label>
+		<input type="text" name="fname" id="fname" size="30" 
+				 dName="First Name"
+				 required="true"
+				 value="#rc.thisUser.getfname()#">
+		
+		<label for="lname">Last Name</label>
+		<input type="text" name="lname" id="lname" size="30" 
+				 dName="Last Name"
+				 required="true"
+				 value="#rc.thisUser.getlname()#">
+				 
+		<label for="email">Email Address</label>
+		<input type="text" name="email" id="email" size="30" 
+				 dName="Email" mask="email"
+				 required="true"
+				 value="#rc.thisUser.getemail()#">
+	</div>		 
 	</fieldset>
 	
 	<fieldset>
+	<div>
 		<legend >Security information</legend>
 		
 		<!--- Role --->
@@ -123,7 +125,7 @@ $Build ID:	@@build_id@@
 		<label for="newpassword">New Password</label>
 		<p>Only fill this new password if you would like to change the user's password.</p>
 		<input type="password" name="newpassword" id="newpassword" size="30" value="">
-		
+	</div>	
 	</fieldset>
 	
 	<br />
@@ -154,5 +156,6 @@ $Build ID:	@@build_id@@
 		</a>
 	</div>
 	<br />
+</div>
 </form>
 </cfoutput>

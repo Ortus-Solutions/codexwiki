@@ -29,10 +29,8 @@ $Build ID:	@@build_id@@
 function CodexPreview()
 {
 	var content = $("##content");
-	
 	//Preview Content
-	var preview = $('<div class="loadingContainer"><span class="loading">Loading Preview...</a></div>').modal({
-		close: true,
+	var preview = $('<div class="loadingContainer"><span class="loading">Loading Preview...</span></div>').modal({
 		onOpen: function(dialog)
 			{
 			 	dialog.overlay.fadeIn("normal", function()
@@ -58,7 +56,7 @@ function CodexPreview()
 }
 function pageDialog(pagename){
 	//CheatSheet
-	var HelpModal = $('<div class="loadingContainer"><span class="loading">Loading Preview...</a></div>').modal({
+	var HelpModal = $('<div class="loadingContainer"><span class="loading">Loading Preview...</span></div>').modal({
 		close: true,
 		onOpen: function(dialog)
 			{
@@ -120,8 +118,8 @@ $(document).ready(function() {
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
-<form action="#event.buildLink(rc.onSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">
-
+<form action="#event.buildLink(rc.onSubmit)#" method="post" onsubmit="submitForm()">
+<div>
 	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
 	<input type="hidden" name="pageVersion" value="#rc.content.getVersion()#" />
 	
@@ -136,6 +134,7 @@ $(document).ready(function() {
 	
 	<!--- Page Options --->
 	<fieldset title="Page Options">
+	<div>
 		<legend><a href="javascript:togglePageOptions()" title="Click to expand page options">Page Options</a></legend>
 		<div id="PageOptionsInstructions">Click to expand page options</div>
 		<div id="PageOptions" class="hidden">
@@ -168,18 +167,19 @@ $(document).ready(function() {
 		</label> 
 		If checked, only page author <strong>#rc.oUser.getUsername()#</strong> and a user with WIKI_ADMIN privileges can edit a read-only page.
 		</div>
+	</div>
 	</fieldset>
 	
 	<!--- Comment Editing --->
 	<fieldset title="Change Information">
+	<div>
 		<legend>Change Information</legend>
-		
 		<!--- Comments --->
 		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
 		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
-		<textarea name="comment" id="comment" rows="2" cols="50"></textarea>
-		
-		</fieldset>
+		<textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+	</div>
+	</fieldset>
 
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">
@@ -196,5 +196,6 @@ $(document).ready(function() {
    		<input type="button" class="previewButton" onclick="javascript:CodexPreview();" value="preview">
    		<input type="submit" class="submitButton" value="submit"></input>
    	</div>
+</div>
 </form>
 </cfoutput>

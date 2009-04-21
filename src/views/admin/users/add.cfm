@@ -64,25 +64,28 @@ $Build ID:	@@build_id@@
 
 <!--- Table Manager Jumper --->
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserCreate)#" method="post">
-	
+<div>
 	<fieldset>
-	<legend><strong>User Information</strong></legend>
-	
-	<label for="fname">First Name</label>
-	<input type="text" name="fname" id="fname" dName="First Name" size="30" value="#event.getValue("fname","")#" 
-		   required="true">
-	
-	<label for="lname">Last Name</label>
-	<input type="text" name="lname" id="lname" dName="Last Name" size="30" value="#event.getValue("lname","")#" 
-		   required="true">
-			 
-	<label for="email">Email Address</label>
-	<input type="text" name="email" id="email" dName="Email" size="30" mask="email" value="#event.getValue("email","")#" 
-		   required="true">
+	<div>
+		<legend><strong>User Information</strong></legend>
+		
+		<label for="fname">First Name</label>
+		<input type="text" name="fname" id="fname" dName="First Name" size="30" value="#event.getValue("fname","")#" 
+			   required="true">
+		
+		<label for="lname">Last Name</label>
+		<input type="text" name="lname" id="lname" dName="Last Name" size="30" value="#event.getValue("lname","")#" 
+			   required="true">
+				 
+		<label for="email">Email Address</label>
+		<input type="text" name="email" id="email" dName="Email" size="30" mask="email" value="#event.getValue("email","")#" 
+			   required="true">
+	</div>
 	</fieldset>
 	
 	
 	<fieldset>
+	<div>
 		<legend >Security information</legend>
 		<!--- Role --->
 		<label for="role_id">User Role</label>
@@ -115,7 +118,7 @@ $Build ID:	@@build_id@@
 		<label for="password">Password</label>
 		<input type="password" name="password" id="password" dName="Password" size="30" 
 			   required="true">
-		
+	</div>	
 	</fieldset>
 	
 	<br />
@@ -147,5 +150,6 @@ $Build ID:	@@build_id@@
 		</a>
 	</div>
 	<br />
+</div>	
 </form>
 </cfoutput>

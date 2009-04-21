@@ -41,7 +41,7 @@ a.noborder{
 }
 .buttonLinks{
 	margin: 0px; 
-	font-size: 100%; 
+	font-size: 11px; 
 	font-family: Verdana, sans-serif; 
 	border: 1px solid #CCC; 
 	background: #FFFFFF url(../images/headerbg.gif) repeat-x bottom left; 
@@ -58,7 +58,7 @@ a.noborder{
 	border: 1px inset #ccc;
 }
 .buttonLinks span{
-	padding:5px;
+	padding: 3px;
 }
 
 
@@ -159,7 +159,8 @@ blockquote{
 }
 /* form elements */
 form {
-	margin:10px; padding: 0 5px;
+	margin: 10px; 
+	padding: 0 5px;
 	border: 1px solid #f2f2f2; 
 	background-color: #FAFAFA; 
 }
@@ -219,6 +220,7 @@ fieldset{
 	background-color: #f5f5f5;
 	border: 1px solid #ddd;
 	margin: 10px;
+	padding: 5px;
 }
 legend{
 	color: #003366;
@@ -229,7 +231,7 @@ textarea{
 	font: normal 12px Verdana, sans-serif;
 	border: 1px solid #d7d7d7;
 	padding:2px;
-	width: 100%;
+	width: 98%;
 }
 input[type=text], input[type=password], input[type=checkbox], select { 
 	font: normal 12px Verdana, sans-serif;
@@ -361,7 +363,7 @@ div.grippie {
 .resizable-textarea textarea {
 	display:block;
 	margin-bottom:0pt;
-	width:100%;
+	width: 99%;
 	height: 20%;
 }
 
@@ -432,6 +434,7 @@ div.grippie {
    padding:0 0 0 4px;
    text-decoration:none;
    border-bottom: 0px;
+   cursor: pointer;
 }
 #header a span.adminTab {
    color: orange;
@@ -457,6 +460,7 @@ div.grippie {
 }
 #header #current a {
    background-position:0% -42px;
+   cursor: pointer;
 }
 #header #current a span {
    background-position:100% -42px;

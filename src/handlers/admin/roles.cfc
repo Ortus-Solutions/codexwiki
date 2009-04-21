@@ -47,6 +47,7 @@ $Build ID:	@@build_id@@
 
 			/* JS Lookups */
 			event.setValue("jsAppendList", "jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
+			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
 			
 			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
