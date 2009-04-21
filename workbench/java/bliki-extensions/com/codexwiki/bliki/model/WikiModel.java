@@ -2,13 +2,16 @@ package com.codexwiki.bliki.model;
 
 import com.codexwiki.bliki.tags.BaseFriendlyTableOfContentTag;
 
+import info.bliki.wiki.filter.Encoder;
 import info.bliki.wiki.model.Configuration;
+import info.bliki.wiki.model.ImageFormat;
 import info.bliki.wiki.tags.TableOfContentTag;
 
 /**
  * Extension of WikiModel to allow for custom pieces, such as the 
- * baseURL for the TableOfContents tag
- * @author mark, luis
+ * baseURL for the TableOfContents tag, internal and external 
+ * image links
+ * @author mark mandel, luis majano
  *
  */
 public class WikiModel extends info.bliki.wiki.model.WikiModel
@@ -56,12 +59,63 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 		return fTableOfContentTag;
 	}	
 	
+	/* (non-Javadoc)
+	 * @see info.bliki.wiki.model.WikiModel#parseInternalImageLink(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void parseInternalImageLink(String imageNamespace, String rawImageLink) {
+		if (fExternalImageBaseURL != null) {
+			String imageHref = fExternalWikiBaseURL;
+			String imageSrc = fExternalImageBaseURL;
+			ImageFormat imageFormat = ImageFormat.getImageFormat(rawImageLink, imageNamespace);
+
+			String imageName = imageFormat.getFilename();
+			String sizeStr = imageFormat.getSizeStr();
+			
+			//Check for external Images and leave them intact, so you can 
+			//include [[Image:http://image here]]
+			String targetImageURL = imageName.toLowerCase();
+			if( targetImageURL.startsWith("http") || targetImageURL.startsWith("ftp") ){
+				imageHref = targetImageURL;
+				imageSrc = targetImageURL;
+			}
+			else{
+				//Internal Image Link
+				if (sizeStr != null) {
+					imageName = sizeStr + '-' + imageName;
+				}
+				if (imageName.endsWith(".svg")) {
+					imageName += ".png";
+				}
+				imageName = Encoder.encodeUrl(imageName);
+				if (replaceColon()) {
+					imageName = imageName.replaceAll(":", "/");
+				}
+				if (replaceColon()) {
+					imageHref = imageHref.replace("${title}", imageNamespace + '/' + imageName);
+					imageSrc = imageSrc.replace("${image}", imageName);
+				} else {
+					imageHref = imageHref.replace("${title}", imageNamespace + ':' + imageName);
+					imageSrc = imageSrc.replace("${image}", imageName);
+				}
+			}
+			//Append Link
+			appendInternalImageLink(imageHref, imageSrc, imageFormat);
+		}
+	}// end parseInternalImageLink
+	
+	/**
+	 * 
+	 * @return The base URL for the TOC
+	 */
 	private String getTOCBaseURL()
 	{
 		return TOCBaseURL;
 	}
-
 	
+	/**
+	 * @param baseURL The base URL for the TOC
+	 */
 	private void setTOCBaseURL(String baseURL)
 	{
 		TOCBaseURL = baseURL;
