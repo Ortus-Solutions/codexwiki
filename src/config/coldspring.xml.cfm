@@ -49,6 +49,7 @@
 	
 	<!-- wiki -->
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
+	<bean id="HTML2WikiConverter" class="codex.model.wiki.HTML2WikiConverter" />
 	<!-- Config -->
 	<bean id="ConfigService" class="codex.model.wiki.ConfigService" />
 	<!--  Search Factory -->

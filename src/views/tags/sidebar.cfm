@@ -79,7 +79,7 @@ function toggleItems(it){
 			<li><a href="#event.buildLink(rc.xehAdminAPI)#">API Docs</a></li>
 			<li>Export</li>
 			<li>Import</li>
-			<li>Markup Converter</li>
+			<li><a href="#event.buildLink(rc.xehAdminConverter)#">Markup Converter</a></li>
 		</ul>
 	</div>
 	

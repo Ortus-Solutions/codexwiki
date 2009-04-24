@@ -63,6 +63,7 @@ $Build ID:	@@build_id@@
 				
 				/* Tools Menu */
 				rc.xehAdminAPI = "admin/tools/api";
+				rc.xehAdminConverter = "admin/tools/converter";
 				
 				/* Settings Menu */
 				rc.xehAdminOptions = "admin/config/options";

@@ -23,7 +23,11 @@ $Build ID:	@@build_id@@
 <cfcomponent name="tools"
 			 extends="codex.handlers.baseHandler"
 			 output="false"
-			 hint="Our tools handler for the admin.">
+			 hint="Our tools handler for the admin."
+			 autowire="true">
+
+	<!--- dependencies --->
+	<cfproperty name="HTML2WikiConverter" type="ioc" scope="instance" />
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
@@ -45,6 +49,29 @@ $Build ID:	@@build_id@@
 
 			/* Setup the view */
 			event.setView("admin/tools/api");
+		</cfscript>
+	</cffunction>
+
+	<!--- converter --->
+	<cffunction name="converter" output="false" access="public" returntype="void" hint="markup converter">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfset var rc = event.getCollection()>
+	    <cfscript>
+			
+			/* get translators */
+			rc.translators = instance.HTML2WikiConverter.getTranslators();
+			rc.xehonSubmit = "admin.tools.converter";
+			
+			/* JS */
+			rc.jsAppendList = "jquery.textarearesizer.compressed,formvalidation";
+			
+			/* Convert? */
+			if( event.getValue("htmlString","") neq "" ){
+				rc.markup = instance.HTML2WikiConverter.toWiki(rc.translator,rc.htmlString);
+			}
+			
+			/* Setup the view */
+			event.setView("admin/tools/converter");
 		</cfscript>
 	</cffunction>
 
