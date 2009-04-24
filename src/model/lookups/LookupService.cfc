@@ -363,8 +363,8 @@ $Build ID:	@@build_id@@
 <!----------------------------------- PRIVATE ------------------------------>
 
 	<!--- Get the util object --->
-	<cffunction name="getUtil" output="false" access="private" returntype="codex.model.util.utility" hint="Utility Object">
-		<cfreturn CreateObject("component","codex.model.util.utility")>
+	<cffunction name="getUtil" output="false" access="private" returntype="codex.model.util.Utility" hint="Utility Object">
+		<cfreturn CreateObject("component","codex.model.util.Utility")>
 	</cffunction>
 
 </cfcomponent>

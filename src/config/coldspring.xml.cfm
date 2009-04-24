@@ -43,7 +43,10 @@
 	<bean id="Datasource" factory-bean="TransferFactory" factory-method="getDatasource" />
 	<bean id="Transaction" factory-bean="TransferFactory" factory-method="getTransaction" />
 	<bean id="BeanPopulator" class="codex.model.transfer.BeanPopulator"/>
-
+	
+	<!-- JavaLoader: Started at bootup. -->
+	<bean id="JavaLoader" class="codex.model.util.JavaLoader" lazy-init="false" />
+	
 	<!-- wiki -->
 	<bean id="WikiService" class="codex.model.wiki.WikiService" />
 	<!-- Config -->

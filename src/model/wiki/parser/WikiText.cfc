@@ -25,27 +25,23 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiText" output="false">
-	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
+	<cfargument name="configService" hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
+	<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object"/>
 	<cfscript>
+		/* Our scope */
 		variables.instance = StructNew();
-		variables.static = StructNew();
-		
-		/* Set unique server Key */
-		variables.static.SERVER_SCOPE_KEY = hash(arguments.configBean.getKey('ApplicationPath') & "6201BF9B-D46E-52D0-D7023F30A340B7B4");
-		
-		initJavaLoader();
-	
+		/* Set Java Loader */
+		setJavaLoader(arguments.javaLoader);
 		/* Determine Rewrite */
-		if( arguments.configBean.getKey("usingRewrite") ){
+		if( arguments.configService.getSetting("usingRewrite") ){
 			instance.rewriteExtension = "";
 		}
 		else{
 			instance.rewriteExtension = ".cfm";
 		}
-	
-		setWikiBase(arguments.configBean.getKey("ShowKey") & "/");
-		setLinkPattern(arguments.configBean.getKey("ShowKey") & "/${title}#instance.rewriteExtension#");
-
+		/* Setup the parser patterns */
+		setWikiBase(arguments.configService.getSetting("ShowKey") & "/");
+		setLinkPattern(arguments.configService.getSetting("ShowKey") & "/${title}#instance.rewriteExtension#");
 
 		/* this will eventually get replaced when we implement images */
 		setImagePattern("image/${image}#instance.rewriteExtension#");
@@ -58,7 +54,6 @@ $Build ID:	@@build_id@@
 	<cfargument name="ignoreXMLTagList" hint="the list of xml tags to ignore" type="string" required="No" default="">
 	<cfargument name="allowedAttributes" hint="the list of extra attributes that are allowed in html tags" type="string" required="No" default="">
 	<cfscript>
-
 		var config = getJavaLoader().create("info.bliki.wiki.model.Configuration").init();
 		var TagNode = getJavaLoader().create("info.bliki.wiki.tags.HTMLTag");
 		var xmlTag = 0;
@@ -112,40 +107,12 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="initJavaLoader" hint="initialised the java loaded in the server scope" access="private" returntype="void" output="false">
-	<cfscript>
-		var path = getDirectoryFromPath(getMetaData(this).path) & "/lib/bliki/";
-		var qFiles = 0;
-		var paths = ArrayNew(1);
-	</cfscript>
-
-	<cfif NOT StructKeyExists(server, static.SERVER_SCOPE_KEY)>
-		<cflock name="codex.model.wiki.parser.WikiText" throwontimeout="true" timeout="60">
-			<cfif NOT StructKeyExists(server, static.SERVER_SCOPE_KEY)>
-				<cfscript>
-					println("putting wikitext javaloader in server scope...");
-					path = getDirectoryFromPath(getMetaData(this).path) & "/lib/bliki/";
-					paths = ArrayNew(1);
-				</cfscript>
-				<cfdirectory action="list" filter="*.jar" directory="#path#" name="qFiles">
-				<cfloop query="qFiles">
-					<cfset ArrayAppend(paths, directory & "/" & name) />
-					<cfset println("Loading: #name#") />
-				</cfloop>
-				<cfset server[static.SERVER_SCOPE_KEY] = createObject("component", "coldbox.system.extras.javaloader.JavaLoader").init(paths) />
-			</cfif>
-		</cflock>
-	</cfif>
+<cffunction name="getjavaLoader" access="private" returntype="codex.model.util.JavaLoader" output="false">
+	<cfreturn instance.javaLoader>
 </cffunction>
-<cffunction name="println" hint="" access="private" returntype="void" output="false">
-	<cfargument name="str" hint="" type="string" required="Yes">
-	<cfscript>
-		createObject("Java", "java.lang.System").out.println(arguments.str);
-	</cfscript>
-</cffunction>
-
-<cffunction name="getJavaLoader" access="private" returntype="coldbox.system.extras.javaloader.JavaLoader" output="false">
-	<cfreturn server[static.SERVER_SCOPE_KEY] />
+<cffunction name="setjavaLoader" access="private" returntype="void" output="false">
+	<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true">
+	<cfset instance.javaLoader = arguments.javaLoader>
 </cffunction>
 
 <cffunction name="createModel" hint="creates a info.bliki.model.WikiModel" access="private" returntype="any" output="false">
@@ -190,7 +157,5 @@ $Build ID:	@@build_id@@
 	<cfargument name="wikiBase" type="string" required="true">
 	<cfset instance.wikiBase = arguments.wikiBase />
 </cffunction>
-
-
 
 </cfcomponent>

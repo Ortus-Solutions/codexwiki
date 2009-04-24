@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 
 	<!--- Get Utility --->
 	<cffunction name="getUtility" output="false" access="private" returntype="any" hint="Utility Method">
-		<cfreturn CreateObject("component","codex.util.utility")>
+		<cfreturn CreateObject("component","codex.util.Utility")>
 	</cffunction>
 
 </cfcomponent>

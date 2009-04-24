@@ -150,7 +150,7 @@ $Build ID:	@@build_id@@
 
 <!---  Get the Utility Object. --->
 <cffunction name="getUtil" output="false" access="private" returntype="any" hint="Utility Method">
-	<cfreturn CreateObject("component","codex.model.util.utility")>
+	<cfreturn CreateObject("component","codex.model.util.Utility")>
 </cffunction>	
 
 <cffunction name="getrewriteExtension" access="public" output="false" returntype="string" hint="Get rewriteExtension">
