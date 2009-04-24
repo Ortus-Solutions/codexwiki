@@ -453,7 +453,7 @@ $Build ID:	@@build_id@@
 				rc.page.setDescription(event.getTrimValue("Description"));
 				rc.page.setKeywords(event.getTrimValue("Keywords"));
 				/* Save this Page */
-				getWikiService().save(rc.page);
+				getWikiService().savePage(rc.page);
 				
 				/* Re Route */
 				setNextRoute(route=instance.showKey & rc.pageName, persist="page");

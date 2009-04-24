@@ -41,13 +41,13 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- Get set create Date --->
-	<cffunction name="getcreateDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
-		<cfreturn getTransferObject().getcreateDate()>
+	<cffunction name="getcreatedDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
+		<cfreturn getTransferObject().getcreatedDate()>
 	</cffunction>
-	<cffunction name="setcreateDate" output="false" access="public" returntype="void" hint="Set the date if found">
+	<cffunction name="setcreatedDate" output="false" access="public" returntype="void" hint="Set the date if found">
 		<cfargument name="myDate" type="string" required="false" default=""/>
 		<cfif isDate(arguments.mydate)>
-			<cfset getTransferObject().setcreateDate(arguments.mydate)>
+			<cfset getTransferObject().setcreatedDate(arguments.mydate)>
 		</cfif>
 	</cffunction>
 	

@@ -34,6 +34,13 @@ $Build ID:	@@build_id@@
 		if(ListLen(arguments.name, ":") gte 2)
 		{
 			nameSpace = getWikiService().getNamespace(namespaceName=ListGetAt(arguments.name, 1, ":"));
+			/* Check if persisted */
+			if( NOT nameSpace.getIsPersisted() ){
+				/* Not persisted, so populate with data for later saving */
+				nameSpace.setName(ListGetAt(arguments.name, 1, ":"));
+				nameSpace.setDescription(ListGetAt(arguments.name, 1, ":"));
+				nameSpace.setcreatedDate(now());
+			}
 		}
 		else
 		{

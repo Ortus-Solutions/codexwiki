@@ -131,6 +131,20 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<!--- savePage --->
+<cffunction name="savePage" output="false" access="public" returntype="void" hint="Save a page.">
+	<cfargument name="page" type="codex.model.wiki.Page" required="true" hint="The page to save"/>
+	<cfscript>
+		var namespace = arguments.page.getNamespace();
+		/* Check if namespace exists first, else persist it */
+		if( not namespace.getIsPersisted() ){
+			save(namespace);
+		}
+		/* Save Page Now */
+		save(arguments.page);
+	</cfscript>
+</cffunction>
+
 <cffunction name="getCategory" hint="returns a Category Object" access="public" returntype="codex.model.wiki.Category" output="false">
 	<cfargument name="categoryID" hint="the specific category id" type="string" required="no">
 	<cfargument name="categoryName" hint="the category name" type="string" required="no">
