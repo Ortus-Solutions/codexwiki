@@ -45,7 +45,6 @@ $Build ID:	@@build_id@@
 		{
 			arguments.tag = arguments.matcher.group();
 
-
 			if(arguments.tag eq "</#getTagName()#>")
 			{
 				doEndTag(argumentCollection=arguments);
@@ -54,17 +53,18 @@ $Build ID:	@@build_id@@
 			{
 				doStartTag(argumentCollection=arguments);
 			}
-
+			
 			arguments.matcher.reset();
-
+			
+			/*
 			loopCount++;
-
 			if(loopCount > 3)
 			{
 				throw("codexWiki.BuilderTagNotReplacedException",
 					"The builder has to have the tag that it was looking for replaced with other content",
 					"The tag '#getTagName()#', still exists in content '#arguments.builder.toString()#'");
 			}
+			*/
 		}
 
 		return doFinish(argumentCollection=arguments);
