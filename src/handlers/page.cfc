@@ -100,7 +100,6 @@ $Build ID:	@@build_id@@
 			arguments.event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
 
 			/* Appends CSS & JS */
-			rc.cssAppendList = "wiki.show";
 			rc.jsAppendList = "jquery.simplemodal,confirm";
 
 			/* Get Content For Page */
@@ -219,8 +218,8 @@ $Build ID:	@@build_id@@
 	<cffunction name="renderPreview" access="public" returntype="void" output="false" hint="Render Content Previews">
 		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
-		    var oContent = getWikiService().getContent();
-			var page = 0;
+		    var page = 0;
+			var oContent = getWikiService().getContent();
 			
 			/* Check if sending Page */
 			if( event.valueExists("pagename") ){
@@ -231,7 +230,7 @@ $Build ID:	@@build_id@@
 			
 			/* Get Content */
 			oContent.populate(arguments.event.getCollection());
-			
+						
 			/* Render Data */
 			event.renderData(data=oContent.render());
 		</cfscript>

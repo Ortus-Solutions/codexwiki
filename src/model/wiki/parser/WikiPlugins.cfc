@@ -88,6 +88,8 @@ $Build ID:	@@build_id@@
 							pluginDef.args[key] = trim(tagXML[pluginDef.name].XMLAttributes[key]);
 						}
 					}
+					/* Add the content Object to the args */
+					pluginDef.args.content = arguments.visitData.content;
 					/* Render Plugin Call */
 					replace = instance.controller.getPlugin(plugin=instance.WikiPluginsBasePath & pluginDef.name,customPlugin=true).renderit(argumentCollection=pluginDef.args);
 				}

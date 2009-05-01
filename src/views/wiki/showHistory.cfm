@@ -76,8 +76,8 @@ $Build ID:	@@build_id@@
 
 <cfoutput>
 <!--- Title --->
-<h1>
-	<img src="includes/images/history.png" border="0" align="absmiddle">
+<h1 id="wikiTitle">
+	<img src="includes/images/history.png" border="0" align="absmiddle" alt="history" />
 	<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.page.getName())))#">#rc.page.getCleanName()#</a>: Page History
 </h1>
 
@@ -92,7 +92,7 @@ $Build ID:	@@build_id@@
 		<cfif isActive>
 			<cfset activeVersion = version>
 		</cfif>
-		<table width="100%" class="tablelisting" border="0">
+		<table id="wikiPageHistoryTable" width="100%" class="tablelisting" border="0">
 			<tr>
 				<th width="50" class="center">Diff</th>
 				<th width="50" class="center">Version</th>
@@ -108,8 +108,7 @@ $Build ID:	@@build_id@@
 					<input type="radio" value="#version#" name="version" id="version" <cfif isActive>checked="checked"</cfif>>
 				</td>
 				
-				<td class="center">
-					<a href="javascript:doDisplay('#contentid#')">#version#</a></td>
+				<td class="center"><a href="javascript:doDisplay('#contentid#')">#version#</a></td>
 				
 				<td class="center">#printDate(createddate)# #printTime(createddate,"short")#</td>
 				
@@ -120,20 +119,20 @@ $Build ID:	@@build_id@@
 					#username#
 				</td>
 				
-				<td>#Replace(XMLFormat(comment), chr(10), "<br/>", "all")#</td>
+				<td>#cleanupComment(comment)#</td>
 				
 				<td class="center">
 					<cfif isActive>
-						<img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Active Version</strong>
+						<img src="includes/images/asterisk_orange.png" align="absmiddle" alt="active" /><strong>Active Version</strong>
 					</cfif>
 					<cfif not isActive>
 						<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
-						<img src="includes/images/arrow_merge.png" align="absmiddle">
-						  <a href="#event.buildLink(rc.onReplaceActive & '/id/' & contentid)#" class="rollback" version="#version#">rollback</a>
+						<img src="includes/images/arrow_merge.png" align="absmiddle" alt="rollback" />
+						<a href="#event.buildLink(rc.onReplaceActive & '/id/' & contentid)#" class="rollback" version="#version#">rollback</a>
 						</cfif>
 						<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
-						<img src="includes/images/bin_closed.png" align="absmiddle">
-						  <a href="#event.buildLink(rc.onDelete & '/id/' & contentid)#" class="delete" version="#version#">delete</a>
+						<img src="includes/images/bin_closed.png" align="absmiddle" alt="delete" />
+						<a href="#event.buildLink(rc.onDelete & '/id/' & contentid)#" class="delete" version="#version#">delete</a>
 						</cfif>
 					</cfif>
 				</td>
@@ -147,5 +146,4 @@ $Build ID:	@@build_id@@
 	<input type="submit" value="View Changes">
 	
 </form>
-
 </cfoutput>
