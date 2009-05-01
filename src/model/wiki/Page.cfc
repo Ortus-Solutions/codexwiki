@@ -70,6 +70,7 @@ $Build ID:	@@build_id@@
 		var content = getWikiService().getContent();
 			
 		content.setPage(this);
+		content.setUser(arguments.memento.oUser);
 		content.populate(arguments.memento);
 		
 		return content;

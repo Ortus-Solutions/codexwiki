@@ -218,14 +218,17 @@ $Build ID:	@@build_id@@
 	<cffunction name="renderPreview" access="public" returntype="void" output="false" hint="Render Content Previews">
 		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
-		    var page = 0;
+		    var rc = event.getCollection();
 			var oContent = getWikiService().getContent();
+			var tmpContent = 0;
 			
-			/* Check if sending Page */
+			/* Check if sending Page, means page is already persisted */
 			if( event.valueExists("pagename") ){
 				/* Get and set it for preview rendering. */
-				page = getWikiService().getPage(pageName=event.getValue("pageName"));
-				oContent.setPage(page);
+				oContent.setPage(getWikiService().getPage(pageName=rc.pageName));
+				/* Put User also */
+				tmpContent = getWikiService().getContent(pageName=rc.pageName);
+				oContent.setUser(tmpContent.getUser());
 			}
 			
 			/* Get Content */
@@ -438,7 +441,6 @@ $Build ID:	@@build_id@@
 					/* ReRoute */
 					setNextRoute(route=instance.showKey & rc.pageName);
 				}
-				
 				/* Save New Content to page */
 				rc.page.addContentVersion(oContent);
 				/* Check for Page Renaming */

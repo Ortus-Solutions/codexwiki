@@ -59,7 +59,6 @@ $Build ID:	@@build_id@@
 			if( arguments.content.hasUser() ){
 				userInfo = arguments.content.getUser().getFullName();	
 			}			
-			
 			if( arguments.format eq "full" ){
 				return "Last edited by #userInfo# on #dateFormat(content.getCreatedDate(),"full")# at #timeformat(content.getCreatedDate(),"full")#";
 			}
