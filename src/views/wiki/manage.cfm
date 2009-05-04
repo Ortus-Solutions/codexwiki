@@ -171,9 +171,20 @@ $(document).ready(function() {
 	</fieldset>
 	
 	<!--- Comment Editing --->
-	<fieldset title="Change Information">
+	<fieldset title="Content Information">
 	<div>
-		<legend>Change Information</legend>
+		<legend>Content Information</legend>
+		
+		<!--- Categories --->
+		<label for"contentCategories">Content Categories</label>
+		<em>You can add existing categories to this page by choosing from the list below. For new categories, 
+			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" align="absmiddle" alt="category" /> category'</strong> button in the wiki editor.</em><br />
+		<select name="contentCategories" id="contentCategories" multiple="true" size="5">
+			<cfloop query="rc.qCategories">
+				<option value="#rc.qCategories.category_id#" <cfif rc.content.checkCategory(rc.qCategories.category_id)>selected="selected"</cfif> >#rc.qCategories.name#</option>
+			</cfloop>
+		</select>
+		
 		<!--- Comments --->
 		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
 		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>

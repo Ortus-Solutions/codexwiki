@@ -49,7 +49,7 @@ $Build ID:	@@build_id@@
 		var qCFCs = getRSSCFCs();
 		var item = 0;
 
-		rss.title = "Rss Feed list";
+		rss.title = "#getWikiName()# - RSS Feed list";
 		rss.link = getBaseURL() & "directory/list" & getRewriteExtension();
 		rss.description = "A list of all the feeds currently available in this wiki. You can use any of the feed links below in your wiki pages by using the 'feed' tag.";
 		rss.version = "rss_2.0";

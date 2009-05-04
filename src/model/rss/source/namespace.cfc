@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "List of all Namespaces";
+		rss.title = "#getWikiName()# - Namespaces";
 		rss.link = getBaseURL() & "namespace/list" & getRewriteExtension();
 		rss.description = "A list of all the namespaces in this wiki";
 		rss.version = "rss_2.0";
@@ -57,7 +57,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("SpaceKey") & "/" & URLEncodedFormat(name) & getRewriteExtension();
+			item.link = getconfigService().getSetting('sesBaseURL') & "/" & getconfigService().getSetting("SpaceKey") & "/" & URLEncodedFormat(name) & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);

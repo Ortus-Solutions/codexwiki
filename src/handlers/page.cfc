@@ -410,17 +410,20 @@ $Build ID:	@@build_id@@
 			var messages = 0;
 			var oContent = 0;
 			var activeContent = 0;
+			var x =1;
+			var thisCategory = 0;
 			
-			/* Params */
+			/* Param Values */
 			event.paramValue("isReadOnly",false);
 			event.paramValue("RenamePageName","");
 			
-			/* Get Page */
+			/* Get the page we are working with */
 			rc.page = getWikiService().getPage(pageName=rc.pageName);
-			/* Get Content */
+			/* Get new Content object */
 			oContent = rc.page.getNewContentVersion(rc);
-			/* Get Active Content */
+			/* Get the currently active Content if any*/
 			oActiveContent = getWikiService().getContent(pageName=rc.pageName);
+			
 			/* Validate Content */
 			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
 			if(ArrayLen(messages))
@@ -441,18 +444,31 @@ $Build ID:	@@build_id@@
 					/* ReRoute */
 					setNextRoute(route=instance.showKey & rc.pageName);
 				}
+				
+				/* Populate content with Categories from select */
+				if( len(event.getTrimValue("contentCategories","")) ){
+					oContent.clearCategory();
+					for(x=1; x lte listLen(rc.contentCategories); x=x+1){
+						thisCategory = getWikiService().getCategory(categoryID=listGetAt(rc.contentCategories,x));
+						oContent.addCategory(thisCategory);
+					}
+				}
+				
 				/* Save New Content to page */
 				rc.page.addContentVersion(oContent);
+				
 				/* Check for Page Renaming */
 				if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
 					rc.page.setName(rc.RenamePageName);
 					rc.pageName = rc.RenamePageName;
 				}
-				/* Page Extra Properties */
+				
+				/* Set Page Extra Properties */
 				rc.page.setTitle(event.getTrimValue("title"));
 				rc.page.setPassword(event.getTrimValue("PagePassword"));
 				rc.page.setDescription(event.getTrimValue("Description"));
 				rc.page.setKeywords(event.getTrimValue("Keywords"));
+				
 				/* Save this Page */
 				getWikiService().savePage(rc.page);
 				
@@ -489,6 +505,9 @@ $Build ID:	@@build_id@@
 			rc.onPageRender = "page/renderPage";
 			rc.onCancel = "wiki";
 			rc.onCheatSheet = "Help:Cheatsheet";
+			
+			/* Categories */
+			rc.qCategories = getWikiService().listCategories();
 
 			/* View */
 			arguments.event.setView("wiki/manage");

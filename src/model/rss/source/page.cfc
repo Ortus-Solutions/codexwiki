@@ -48,7 +48,7 @@ $Build ID:	@@build_id@@
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "Page By Category List";
+		rss.title = "#getWikiName()# - Pages By Category List";
 		rss.link = getBaseURL() & "page/listByCategory?category=arguments.category" & getRewriteExtension();
 		rss.description = "A list of all the pages, filtered by a category";
 		rss.version = "rss_2.0";
@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/" & name & getRewriteExtension();
+			item.link = getconfigService().getSetting('sesBaseURL') & "/" & getconfigService().getSetting("ShowKey") & "/" & name & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);
@@ -84,7 +84,7 @@ $Build ID:	@@build_id@@
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "Page By Namespace";
+		rss.title = "#getWikiName()# - Pages By Namespace";
 		rss.link = getBaseURL() & "page/listByNamespace?namespace=#arguments.namespace#" & getRewriteExtension();
 		rss.description = "A list of all the pages, filtered by a namespace";
 		rss.version = "rss_2.0";
@@ -96,7 +96,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/" & name & getRewriteExtension();
+			item.link = getconfigService().getSetting('sesBaseURL') & "/" & getconfigService().getSetting("ShowKey") & "/" & name & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);
@@ -120,7 +120,7 @@ $Build ID:	@@build_id@@
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "Wiki Updates";
+		rss.title = "#getWikiName()# Updates";
 		rss.link = getBaseURL() & "page/listUpdates" & getRewriteExtension();
 		rss.description = "A list of all the latest wiki updates";
 		rss.version = "rss_2.0";
@@ -132,7 +132,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(page_name, "_", " ", "all") & " edited by #user_username#";
-			item.link = getConfigbean().getKey('sesBaseURL') & "/" & getConfigbean().getKey("ShowKey") & "/" & page_name & getRewriteExtension();
+			item.link = getconfigService().getSetting('sesBaseURL') & "/" & getconfigService().getSetting("ShowKey") & "/" & page_name & getRewriteExtension();
 			item.pubDate = ParseDateTime(pagecontent_createdate);
 			item.description.value = "Page ";
 

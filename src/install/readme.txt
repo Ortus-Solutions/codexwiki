@@ -28,7 +28,11 @@ The version for this release of Codex is the following:
 
 Releases
 
-- Version 0.5 Beta 2 
+- Version 0.5 Beta 2 (May 2009)
+This version includes new versions of our java libraries, so please if you are 
+upgrading from a previous version, make sure that you delete the ENTIRE
+/codex/model/wiki/parser/lib/bliki/*.jar list of jar files and replace them
+with the new set of *.jar files of the beta 2 release.
 
 - Version 0.5 Beta 1 (Nov 2008)
 An incredible amount of changes and updates, please see bug tracker.

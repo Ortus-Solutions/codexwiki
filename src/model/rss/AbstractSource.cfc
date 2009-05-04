@@ -41,25 +41,29 @@ $Build ID:	@@build_id@@
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 
-<cffunction name="setconfigBean" access="public" returntype="void" output="false">
-	<cfargument name="configBean" type="coldbox.system.beans.configBean" required="true">
-	<cfset instance.configBean = arguments.configBean />
+<cffunction name="setConfigService" access="public" returntype="void" output="false">
+	<cfargument name="configService" type="codex.model.wiki.ConfigService" required="true">
+	<cfset instance.configService = arguments.configService />
 </cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="getConfigBean" access="private" returntype="coldbox.system.beans.configBean" output="false">
-	<cfreturn instance.configBean />
+<cffunction name="getWikiName" access="public" returntype="string" output="false" hint="Get the name used for this wiki.">
+	<cfreturn getConfigService().getOption(name="wiki_name").getValue() />
+</cffunction>
+
+<cffunction name="getconfigService" access="private" returntype="codex.model.wiki.ConfigService" output="false">
+	<cfreturn instance.configService />
 </cffunction>
 
 <cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
 	<cfreturn instance.wikiService />
 </cffunction>
 
-<!--- Get/Set The Base URL --->
 <cffunction name="getBaseURL" access="private" returntype="string" output="false">
 	<cfreturn instance.baseURL />
 </cffunction>
+
 <cffunction name="setBaseURL" access="private" returntype="void" output="false">
 	<cfargument name="baseURL" type="string" required="true">
 	<cfset instance.baseURL = arguments.baseURL />
@@ -67,7 +71,7 @@ $Build ID:	@@build_id@@
 
 <cffunction name="getRewriteExtension" access="public" returntype="string" hint="Get the rewrite extension" output="false" >
 	<cfscript>
-		if( getConfigBean().getKey("UsingRewrite") ){
+		if( getconfigService().getSetting("UsingRewrite") ){
 			return "";
 		}
 		else{

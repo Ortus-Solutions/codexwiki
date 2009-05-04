@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 		var rss = StructNew();
 		var item = 0;
 
-		rss.title = "List of all categories";
+		rss.title = "#getWikiName()# - Categories";
 		rss.link = getBaseURL() & "category/list" & getRewriteExtension();
 		rss.description = "A list of all the categories in this wiki";
 		rss.version = "rss_2.0";
@@ -57,7 +57,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			item = StructNew();
 			item.title = replace(name, "_", " ", "all");
-			item.link = getConfigBean().getKey('sesBaseURL') & "/" & getConfigBean().getKey("ShowKey") & "/Category:" & URLEncodedFormat(name) & getRewriteExtension();
+			item.link = getconfigService().getSetting('sesBaseURL') & "/" & getconfigService().getSetting("ShowKey") & "/Category:" & URLEncodedFormat(name) & getRewriteExtension();
 			item.pubDate = ParseDateTime(createdDate);
 
 			ArrayAppend(rss.item, item);

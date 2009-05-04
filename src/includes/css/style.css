@@ -335,7 +335,7 @@ form.search input.textbox:focus {
 
 .buttons {
 	text-align: right;
-	margin-top: 10px;
+	margin: 10px 5px 0px 0px;
 }
 
 /* loader */
@@ -750,4 +750,7 @@ div#categories ul li {
 	text-align: right;
 	margin-top: 20px;
 	
+}
+#contentCategories{
+	width: 98%;
 }

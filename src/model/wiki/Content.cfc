@@ -20,23 +20,43 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent extends="transfer.com.TransferDecorator" hint="Page Content" output="false">
+<cfcomponent extends="transfer.com.TransferDecorator" hint="Page Content, autowired by bean injector" output="false">
+
+<!------------------------------------------- DEPENDENCIES ------------------------------------------->
+
+<cffunction name="setBeanPopulator" access="public" returntype="void" output="false">
+	<cfargument name="beanPopulator" type="codex.model.transfer.BeanPopulator" required="true">
+	<cfset instance.beanPopulator = arguments.beanPopulator />
+</cffunction>
+
+<cffunction name="setWikiService" access="public" returntype="void" output="false">
+	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
+	<cfset instance.wikiService = arguments.wikiService />
+</cffunction>
+
+<cffunction name="setInterceptorService" access="public" returntype="void" output="false">
+	<cfargument name="interceptorService" type="coldbox.system.services.interceptorService" required="true">
+	<cfset instance.interceptorService = arguments.interceptorService />
+</cffunction>
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-<!--- <cffunction name="setPageName" hint="sets the page name, if a page does not exist, creates it" access="public" returntype="void" output="false">
-	<cfargument name="pageName" hint="the page name" type="string" required="Yes">
+<!--- checkCategory --->
+<cffunction name="checkCategory" output="false" access="public" returntype="boolean" hint="Checks if the sent in category exists in this content object">
+	<cfargument name="categoryID" type="string" required="true" hint="The category id to check"/>
 	<cfscript>
-		var page = 0;
-		if(NOT hasPage())
-		{
-			page = getWikiService().getPage();
-			setPage(page);
-		}
-
-		getPage().setName(arguments.pageName);
+	var iterator = getTransferObject().getCategoryIterator();
+	var category =0;
+	
+	/* Loop over Categories in the Content */
+	while(iterator.hasNext()){
+		category = iterator.next();
+		if( arguments.categoryID eq category.getCategory_id() ){ return true; }
+	}
+	
+	return false;
 	</cfscript>
-</cffunction> --->
+</cffunction>
 
 <cffunction name="populate" hint="processes the form details" access="public" returntype="void" output="false">
 	<cfargument name="memento" hint="takes a memento" type="struct" required="Yes">
@@ -94,21 +114,6 @@ $Build ID:	@@build_id@@
 			translate();
 		}
 	</cfscript>
-</cffunction>
-
-<cffunction name="setBeanPopulator" access="public" returntype="void" output="false">
-	<cfargument name="beanPopulator" type="codex.model.transfer.BeanPopulator" required="true">
-	<cfset instance.beanPopulator = arguments.beanPopulator />
-</cffunction>
-
-<cffunction name="setWikiService" access="public" returntype="void" output="false">
-	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
-	<cfset instance.wikiService = arguments.wikiService />
-</cffunction>
-
-<cffunction name="setInterceptorService" access="public" returntype="void" output="false">
-	<cfargument name="interceptorService" type="coldbox.system.services.interceptorService" required="true">
-	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>
 
 <cffunction name="visitContent" hint="takes a visitor object and calls 'vistContent' on each of the Content items" access="public" returntype="void" output="false">

@@ -144,7 +144,7 @@ $Build ID:	@@build_id@@
 			/* If Different, then re-create */
 			if( oCategory.getName() neq oClonedCategory.getName() ){
 				/* Remove Old Category */
-				instance.wikiService.deleteCategory(oCategory.getCategory_id();
+				instance.wikiService.deleteCategory(oCategory.getCategory_id());
 				/* Create New Category */
 				instance.wikiService.saveCategory(oClonedCategory);
 			}
