@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent extends="transfer.com.TransferDecorator" hint="An category for a wiki page" output="false">
+<cfcomponent extends="transfer.com.TransferDecorator" hint="A category for a wiki page" output="false">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

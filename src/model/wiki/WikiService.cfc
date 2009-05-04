@@ -145,6 +145,19 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<!--- Save Category --->
+<cffunction name="saveCategory" output="false" access="public" returntype="void" hint="Save a category in the system.">
+	<cfargument name="category" type="codex.model.wiki.Category" required="true" hint="The category to save"/>
+	<cfscript>
+		/* Creation Date */
+		arguments.category.setCreatedDate(now());
+		/* Create the catgegory page first */
+		arguments.category.createCategoryPage();
+		/* Then persist category */
+		save(arguments.category);
+	</cfscript>
+</cffunction>
+
 <cffunction name="getCategory" hint="returns a Category Object" access="public" returntype="codex.model.wiki.Category" output="false">
 	<cfargument name="categoryID" hint="the specific category id" type="string" required="no">
 	<cfargument name="categoryName" hint="the category name" type="string" required="no">
@@ -490,6 +503,29 @@ $Build ID:	@@build_id@@
 	
 	<!--- we shouldn't need to discard more than this, as it will cascade --->
 	<cfset getTransfer().discardByClassAndKey("wiki.Page", arguments.pageid)>
+</cffunction>
+
+<cffunction name="deleteCategory" hint="Deletes an entire category and its pages. Transactioned by AOP" access="public" returntype="void" output="false">
+	<cfargument name="categoryID" hint="the id of the category to delete" type="uuid" required="Yes">
+	<cfset var qDelete = 0>
+	<cfset var oCategory = 0>
+	
+	<!--- Get Category --->
+	<cfset oCategory = getTransfer().get('wiki.Category',arguments.categoryID)>
+	
+	<!--- Remove ALL pagecontent categories First --->
+	<cfquery name="qDelete" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+		DELETE FROM
+			wiki_pagecontent_category
+		WHERE
+		FKcategory_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.categoryID#">
+	</cfquery>
+	
+	<!--- Remove the Category Now --->
+	<cfset getTransfer().delete(oCategory)>
+	
+	<!--- Discard all objects, just in case. wish we had a discard by class? Mark, where is this?? --->
+	<cfset getTransfer().discardAll()>
 </cffunction>
 
 <cffunction name="deleteNamespace" hint="Deletes an entire namespace and its pages. Transactioned by AOP" access="public" returntype="void" output="false">

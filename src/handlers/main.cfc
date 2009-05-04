@@ -21,6 +21,7 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfcomponent name="main"			 extends="baseHandler"			 output="false"			 hint="This is our main wiki handler, all of our funky implicit invocations."			 autowire="true"			 cache="true"			 cacheTimeout="0">
+				 
 	<!--- Dependencies --->
 	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
 	<cfproperty name="ConfigService" 	type="ioc" scope="instance" />
@@ -36,13 +37,11 @@ $Build ID:	@@build_id@@
 			
 			return this;
 		</cfscript>
-	</cffunction>
-	
+	</cffunction>	
 
 <!------------------------------------------- Implicit Events ------------------------------------------>
 
-	<cffunction name="onAppInit" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<!--- ON Application Start Here --->
-		<cfscript>
+	<cffunction name="onAppInit" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>
 			/* Get Wiki Options */
 			var Options = getConfigService().getOptions();
 			/* Cache Them */
@@ -55,8 +54,11 @@ $Build ID:	@@build_id@@
 			if( reFindnocase("^admin",event.getCurrentEvent()) ){				/* Admin Menu */
 				rc.xehAdminUsers = "admin/users/list";
 				rc.xehAdminRoles = "admin/roles/list";
+				
 				/* Wiki Admin */
 				rc.xehAdminNamespace = "admin/namespace/list";
+				rc.xehAdminCategories = "admin/categories/list";
+				
 				/* Plugin Menu */
 				rc.xehAdminPlugins = "admin/plugins/list";
 				rc.xehAdminPluginDocs = "admin/plugins/docs";
@@ -77,7 +79,7 @@ $Build ID:	@@build_id@@
 			
 			/* Global User Exit Handlers */			rc.xehUserdoLogin = "user/doLogin";			rc.xehUserLogin = "user/login";			rc.xehUserLogout = "user/logout";			rc.xehUserRegistration = "user/registration";			rc.xehUserReminder = "user/reminder";			/* Get a user from session */			rc.oUser = getSecurityService().getUserSession();			/* Get the wiki's custom HTML */			rc.oCustomHTML = getConfigService().getCustomHTML();			/* Get the wiki's Options */
 			rc.CodexOptions = getColdboxOCM().get('CodexOptions');
-		</cfscript>	</cffunction>	<cffunction name="onRequestEnd" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<!--- ON Request End Here --->	</cffunction>	<cffunction name="onException" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<!--- ON Exception Handler Here --->		<cfscript>
+		</cfscript>	</cffunction>	<cffunction name="onRequestEnd" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">	</cffunction>	<cffunction name="onException" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>
 			var invalidList = "Framework.invalidEventException,Framework.EventHandlerNotRegisteredException";
 						//Grab Exception From request collection, placed by ColdBox			var exceptionBean = event.getValue("ExceptionBean");			/* Log our exception to our logs */			getPlugin("logger").logErrorWithBean(exceptionBean);
 			

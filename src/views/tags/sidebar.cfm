@@ -58,7 +58,7 @@ function toggleItems(it){
 		<ul class="sidemenu">
 			<li>Pages</li>
 			<li><a href="#event.buildLink(rc.xehAdminNamespace)#">Namespaces</a></li>
-			<li>Categories</li>
+			<li><a href="#event.buildLink(rc.xehAdminCategories)#">Categories</a></li>
 			<li>Comments</li>
 		</ul>
 	</div>
