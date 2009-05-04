@@ -20,7 +20,7 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 	private String TOCBaseURL;
 	
 	/**
-	 * Constructor 
+	 * Constructor with a base TOC URL
 	 * @param configuration the configuration bean
 	 * @param imageBaseURL url pattern for images
 	 * @param linkBaseURL url pattern for links
@@ -31,6 +31,19 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 		super(configuration, imageBaseURL, linkBaseURL);
 		
 		setTOCBaseURL(TOCBaseURL);
+	}
+	
+	/**
+	 * Constructor with empty TOC Base URL 
+	 * @param configuration the configuration bean
+	 * @param imageBaseURL url pattern for images
+	 * @param linkBaseURL url pattern for links
+	 */
+	public WikiModel(Configuration configuration, String imageBaseURL, String linkBaseURL)
+	{
+		super(configuration, imageBaseURL, linkBaseURL);
+		
+		setTOCBaseURL("");
 	}
 	
 

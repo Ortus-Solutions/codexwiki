@@ -5,7 +5,11 @@
 	<property name="dist" location="../../../src/model/wiki/parser/lib/bliki"/>	
     
   <target name="compile" depends="cleanALL" description="compile">
-  	<javac srcdir="${src}" destdir="${build}" debug="true" debuglevel="lines,vars,source" target="1.5" source="1.5"/>
+	<javac srcdir="${src}" destdir="${build}" debug="true" debuglevel="lines,vars,source" target="1.5" source="1.5">
+		<classpath>
+			<fileset dir="${dist}" includes="*.jar"/>
+		</classpath>
+	</javac>
   	<antcall target="jarBuild"></antcall>
   </target>
     
