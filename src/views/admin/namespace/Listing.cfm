@@ -25,58 +25,38 @@ $Build ID:	@@build_id@@
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-	function submitForm(){
-		$('##_loader').fadeIn();
-		$('##namespaceForm').submit();
-	}
-	function deleteRecord(recordID){
-		if( recordID != null ){
-			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-			$("input[@name='namespaceID']").each(function(){
-				if( this.value == recordID ){ this.checked = true;}
-				else{ this.checked = false; }
-			});
-		}
-		//Submit Form
-		submitForm();
-	}
-	function confirmDelete(recordID){
-		confirm("Do you wish to remove the selected namespace(s)?<br/>This cannot be undone and ALL pages within that namespace will be deleted!",function(){deleteRecord(recordID)});
-	}
-	$(document).ready(function() {
-		// call the tablesorter plugin
-		$("##namespaceTable").tablesorter({
-			sortList: [[1,0]]
+function submitForm(){
+	$('##_loader').fadeIn();
+	$('##namespaceForm').submit();
+}
+function deleteRecord(recordID){
+	if( recordID != null ){
+		$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
+		$("input[@name='namespaceID']").each(function(){
+			if( this.value == recordID ){ this.checked = true;}
+			else{ this.checked = false; }
 		});
-	});
-	
-	function directoryDialog(namespace){
-		//CheatSheet
-		var HelpModal = $('<div class="loadingContainer"><span class="loading">Loading Preview...</a></div>').modal({
-			close: true,
-			onOpen: function(dialog)
-				{
-				 	dialog.overlay.fadeIn("normal", function()
-					 	{
-					 		dialog.container.fadeIn("fast");
-					 		dialog.data.fadeIn("fast");
-					 	}
-					 )
-				},
-			onShow: function(dialog)
-				{
-					var data = {nolayout:'true'};
-					//Page Preview
-					$.post("#event.BuildLink(rc.xehNamespaceViewer)#/"+namespace, data,
-						function(string, status)
-						{
-							dialog.data.html('<div class="modalContent">' + string + '</div>');
-						}
-					);
-				}
-			}
-		);
 	}
+	//Submit Form
+	submitForm();
+}
+function confirmDelete(recordID){
+	confirm("Do you wish to remove the selected namespace(s)?<br/>This cannot be undone and ALL pages within that namespace will be deleted!",function(){deleteRecord(recordID)});
+}
+function directoryDialog(namespace){
+	var data = {nolayout:'true'};
+	var HelpModal = $(getLoadingText()).modal({
+		onOpen: function(dialog){ openDialog(dialog) },
+		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.xehNamespaceViewer)#/"+namespace,data)},
+		onClose: function(dialog){ closeDialog(dialog) }
+		});
+}
+$(document).ready(function() {
+	// call the tablesorter plugin
+	$("##namespaceTable").tablesorter({
+		sortList: [[1,0]]
+	});
+});
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -148,7 +128,7 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td class="center">
 				<!--- Namespace Viewer --->
-				<a href="javascript:directoryDialog('#name#')" title="Goto Namespace Viewer"><img src="includes/images/directory.png" border="0" align="absmiddle" alt="namespace viewer"></a>
+				<a href="javascript:directoryDialog('#name#')" title="Open Namespace Viewer"><img src="includes/images/directory.png" border="0" align="absmiddle" alt="namespace viewer"></a>
 				
 				<!--- Edit Command --->
 				<a href="#event.buildlink(rc.xehEdit & '/namespaceID/' & namespace_id)#" title="Edit Namespace"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Namespace"></a>

@@ -45,6 +45,9 @@ function createNewPage(){
 	}
 	
 }
+function addComment(){
+
+}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -62,6 +65,10 @@ function createNewPage(){
 		<img src="includes/images/history.png" border="0" align="absmiddle" alt="history" />
 		<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#" title="Page History">Page History</a>
 	</cfif>
+	<!--- Comments --->
+	<img src="includes/images/comments.png" border="0" align="absmiddle" alt="comments" />
+	<a href="#event.buildLink(pageShowRoot(urlDecode(rc.page)))###pageComments" title="Comments">Comments</a>
+	
 </div>
 </cfif>
 
@@ -133,5 +140,10 @@ function createNewPage(){
 		<img src="includes/images/html_16x16.png" border="0" align="absmiddle" alt="html" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a>
 	</div>
+	
+	<!--- Comments --->
+	<cfif rc.codexoptions.comments_enabled>
+	#renderView('wiki/comments')#
+	</cfif>
 </cfif>
 </cfoutput>

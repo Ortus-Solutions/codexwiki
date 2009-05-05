@@ -26,60 +26,23 @@ $Build ID:	@@build_id@@
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-function CodexPreview()
-{
+function CodexPreview(){
 	var content = $("##content");
-	//Preview Content
-	var preview = $('<div class="loadingContainer"><span class="loading">Loading Preview...</span></div>').modal({
-		onOpen: function(dialog)
-			{
-			 	dialog.overlay.fadeIn("normal", function()
-				 	{
-				 		dialog.container.fadeIn("fast");
-				 		dialog.data.fadeIn("fast");
-				 	}
-				 )
-			},
-		onShow: function(dialog)
-			{
-				var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
-				//Post Preview
-				$.post("#event.BuildLink(rc.onPreview)#", data,
-					function(string, status)
-					{
-						dialog.data.html('<div class="modalContent">' + string + '</div>');
-					}
-				);
-			}
-		}
-		);
+	var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
+	var preview = $(getLoadingText()).modal({
+		onOpen: function(dialog){ openDialog(dialog) },
+		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.onPreview)#",data) },
+		onClose: function(dialog){ closeDialog(dialog) }
+		});
 }
 function pageDialog(pagename){
 	//CheatSheet
-	var HelpModal = $('<div class="loadingContainer"><span class="loading">Loading Preview...</span></div>').modal({
-		close: true,
-		onOpen: function(dialog)
-			{
-			 	dialog.overlay.fadeIn("normal", function()
-				 	{
-				 		dialog.container.fadeIn("fast");
-				 		dialog.data.fadeIn("fast");
-				 	}
-				 )
-			},
-		onShow: function(dialog)
-			{
-				var data = {page: pagename};
-				//Page Preview
-				$.post("#event.BuildLink(rc.onPageRender)#", data,
-					function(string, status)
-					{
-						dialog.data.html('<div class="modalContent">' + string + '</div>');
-					}
-				);
-			}
-		}
-	);
+	var data = {page: pagename};
+	var HelpModal = $(getLoadingText()).modal({
+		onOpen: function(dialog){ openDialog(dialog) },
+		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.onPageRender)#",data)},
+		onClose: function(dialog){ closeDialog(dialog) }
+		});
 }
 function submitForm(){
 	needToConfirm=false;
@@ -177,8 +140,9 @@ $(document).ready(function() {
 		
 		<!--- Categories --->
 		<label for"contentCategories">Content Categories</label>
-		<em>You can add existing categories to this page by choosing from the list below. For new categories, 
-			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" align="absmiddle" alt="category" /> category'</strong> button in the wiki editor.</em><br />
+		<em>You can tag this page with existing categories by choosing from the list below. For adding new categories, 
+			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" align="absmiddle" alt="category" /> category'</strong> 
+			button in the wiki editor or the wiki admin.</em><br />
 		<select name="contentCategories" id="contentCategories" multiple="true" size="5">
 			<cfloop query="rc.qCategories">
 				<option value="#rc.qCategories.category_id#" <cfif rc.content.checkCategory(rc.qCategories.category_id)>selected="selected"</cfif> >#rc.qCategories.name#</option>

@@ -115,6 +115,10 @@ $Build ID:	@@build_id@@
 
 			<!--- Display Commands --->
 			<td class="center">
+				
+				<!--- Open Category Page --->
+				<a href="#event.buildLink(linkTo=pageShowRoot('Category:#name#'),translate=false)#" title="Goto Category Page"><img src="includes/images/house_link.png" border="0" align="absmiddle" title="Goto Category Page"></a>
+				
 				<!--- Edit Command --->
 				<a href="#event.buildlink(rc.xehEdit & '/category_id/' & category_id)#" title="Edit Category"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Category"></a>
 				

@@ -29,6 +29,7 @@ $Build ID:	@@build_id@@
 
 	<!--- dependencies --->
 	<cfproperty name="WikiService" 		type="ioc" scope="instance" />
+	<cfproperty name="CommentsService"	type="ioc" scope="instance" />
 	<cfproperty name="SearchEngine" 	type="ioc" scope="instance" />
 	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
 
@@ -76,8 +77,15 @@ $Build ID:	@@build_id@@
 			rc.jsAppendList = 'jquery.uitablefilter';
 			/* Param incoming value, jsut in case */
 			event.paramValue("namespace","");
-			/* Get All Pages for the incoming namespace */
-			rc.qPages = getWikiService().getPages(namespace=rc.namespace);
+			/* Check if Default Namespace or Not? */
+			if( len(rc.namespace) ){
+				/* Get All Pages for the incoming namespace */
+				rc.qPages = getWikiService().getPages(namespace=rc.namespace);
+			}
+			else{
+				/* Get All Pages for the default namespace */
+				rc.qPages = getWikiService().getPages(defaultNamespace=true);
+			}
 			/* Page Title */
 			rc.pageTitle = "Namespace Viewer For: #rc.namespace#";
 			/* View */
@@ -100,14 +108,17 @@ $Build ID:	@@build_id@@
 			arguments.event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
 
 			/* Appends CSS & JS */
-			rc.jsAppendList = "jquery.simplemodal,confirm";
-
+			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm";
+			
 			/* Get Content For Page */
 			rc.content = getWikiService().getContent(pageName=rc.page);
-
 			/* Page */
 			rc.urlPage = URLEncodedFormat(rc.page);
-			
+			/* Get Comments if activated */
+			if( rc.codexoptions.comments_enabled ){
+				rc.qComments = instance.CommentsService.getPageComments(pageName=rc.page,
+																	approved=rc.codexoptions.comments_moderation);
+			}
 			/* Set views according to persistance */
 			if(rc.content.getIsPersisted()){
 				/* Check for page protection */
@@ -374,10 +385,12 @@ $Build ID:	@@build_id@@
 
 			/* Required */
 			rc.jsAppendList = 'jquery.uitablefilter';
+			
 			/* Get All Pages */
 			rc.qPages = getWikiService().getPages();
+			/* Get All Namespaces */
 			rc.qNameSpaces = getWikiService().getNamespaces();
-
+			/* Filter the default Namespace */
 			qDefault = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="isDefault",value=1,cfsqltype="cf_sql_integer");
 
 			/* Filter */
@@ -485,7 +498,7 @@ $Build ID:	@@build_id@@
 			var content = 0;
 
 			/* Custom JS */
-			rc.jsAppendList = "jquery.simplemodal,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
+			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
 			/* Markitup Editor */
 			rc.cssFullAppendList = "includes/scripts/markitup/skins/markitup/style,includes/scripts/markitup/sets/wiki/style";
 

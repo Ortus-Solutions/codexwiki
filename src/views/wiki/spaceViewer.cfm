@@ -20,21 +20,19 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<!--- show the history if a wiki page --->
-<!--- js --->
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-	$(window).ready(function(){
-		attachTableFilter()
+$(window).ready(function(){
+	attachTableFilter()
+});
+function attachTableFilter(){
+	//Page Filter
+	theTable = $('##wikiPagesTable');
+	$("##pageFilter").keyup(function(){
+		$.uiTableFilter(theTable,this.value);
 	});
-	function attachTableFilter(){
-		//Page Filter
-		theTable = $('##wikiPagesTable');
-		$("##pageFilter").keyup(function(){
-			$.uiTableFilter(theTable,this.value);
-		});
-	}
+}
 </script>
 </cfoutput>
 </cfsavecontent>

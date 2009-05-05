@@ -297,8 +297,9 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <!--- getPages --->
-<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki filtered by no or a namespace">
-	<cfargument name="namespace" type="string" required="false" default="" hint="A namespace name to try to match"/>
+<cffunction name="getPages" output="false" access="public" returntype="query" hint="Get a list of all pages in the wiki or filter with a namespace">
+	<cfargument name="namespace" 		type="string" 	required="false" default="" hint="A namespace name to try to match"/>
+	<cfargument name="defaultNamespace" type="boolean" 	required="false" default="false" hint="Get pages for the default namespace only"/>
 	<cfscript>
 		var tql = 0;
 		var query = 0;
@@ -323,7 +324,7 @@ $Build ID:	@@build_id@@
 		<cfif len(trim(arguments.namespace))>
 			AND
 			Namespace.name = :Namespace
-		<cfelse>
+		<cfelseif arguments.defaultNamespace>
 			AND
 			Namespace.namespace_id = :NamespaceID
 		</cfif>
@@ -338,7 +339,7 @@ $Build ID:	@@build_id@@
 		if( len(trim(arguments.namespace)) ){
 			query.setParam("Namespace", arguments.namespace);
 		}
-		else{
+		else if( arguments.defaultNamespace ){
 			/* get default namespace */
 			oNamespace = getDefaultNamespace();
 			query.setParam("NamespaceID", oNamespace.getNamespace_id());

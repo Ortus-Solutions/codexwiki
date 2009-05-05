@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 			rc.xehNamespaceViewer = "#getSetting("spaceKey")#/";
 			
 			/* JS Lookups */
-			event.setValue("jsAppendList", "jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
+			event.setValue("jsAppendList", "simplemodal.helper,jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
 			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
 			
 			/* Get all the namespaces */

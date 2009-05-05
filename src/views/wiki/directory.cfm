@@ -66,12 +66,7 @@ $Build ID:	@@build_id@@
 <p>Below is the current page directory for this wiki.  You can filter to find specific pages or click on
 the page name to visit the page.</p>
 
-<label class="inlineLabel">Page Filter: </label>
-<input name="pageFilter" id="pageFilter" value="Type Here To Filter"
-	   size="50" type="text"
-	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
-<br /><br />
-<label class="inlineLabel">Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
+<label>Show Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
 </label>
 
 <cfloop query="rc.qNamespaces">
@@ -79,6 +74,14 @@ the page name to visit the page.</p>
 		   value="#namespace_id#" onClick="filterPages()"
 		   <cfif isDefault>checked="checked"</cfif>><cfif len(name)>#name#<cfelse>#description#</cfif>
 </cfloop>
+
 <br /><br />
+
+<label class="inlineLabel">Page Filter: </label>
+<input name="pageFilter" id="pageFilter" value="Type Here To Filter"
+	   size="50" type="text"
+	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
+
+
 <div id="wikiPagesDiv">#renderView('wiki/directoryPagesTable')#</div>
 </cfoutput>
