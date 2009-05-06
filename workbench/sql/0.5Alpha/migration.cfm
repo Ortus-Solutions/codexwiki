@@ -72,6 +72,17 @@ the helpcontent.sql
 	<cfquery name="qInsert" datasource="#request.dsn#">
 	ALTER TABLE `codex`.`wiki_page` ADD COLUMN `page_allowcomments` boolean NOT NULL DEFAULT true AFTER `page_keywords`
 	</cfquery>
+	<cfcatch type="database">
+		'wiki_page'.'page_allowcomments' already exists, skipping.
+	</cfcatch>
+</cftry>
+<cftry>
+	<cfquery name="qInsert" datasource="#request.dsn#">
+		ALTER TABLE `wiki_page` MODIFY COLUMN `page_id` VARCHAR(36)  CHARACTER SET utf8 NOT NULL;
+	</cfquery>
+	<cfquery name="qInsert" datasource="#request.dsn#">
+		ALTER TABLE `wiki_users` MODIFY COLUMN `user_id` VARCHAR(36)  CHARACTER SET utf8 NOT NULL;
+	</cfquery>	
 	<cfquery name="qInsert" datasource="#request.dsn#">
 	CREATE TABLE `wiki_comments` (
 	  `comment_id` varchar(36) NOT NULL,
@@ -98,6 +109,7 @@ the helpcontent.sql
 		<p>
 			Beta 2-Set 2 already done. Continuing Migration
 		</p>
+		<cfdump var="#cfcatch#" >
 	</cfcatch>
 </cftry>
 
@@ -115,21 +127,28 @@ CREATE TABLE `wiki_options` (
 </cfquery>
 <!--- Options --->
 <cfquery name="qHelp" datasource="#request.dsn#">
-INSERT IGNORE INTO `wiki_options` (`option_id`,`option_name`,`option_value`) VALUES
-('9F03F883-AFFA-A78C-1A2EDA50675A3B46','wiki_defaultpage','Dashboard'),
-('9F045002-0E99-A690-7C59F405F98A19BE','wiki_search_engine','codex.model.search.adapters.DBSearch'),
-('9F0485D1-F0AB-DF57-DCD68A6AE5F2FF33','wiki_name','A Sweet Wiki'),
-('9F050595-E875-9C19-9978C4F271441867','wiki_paging_maxrows','10'),
-('9F052A79-DA80-9757-F8B952EFF0BF467E','wiki_paging_bandgap','5'),
-('9F05890F-C8D4-A7E1-7C60462D3C7AA437','wiki_defaultpage_label','My Dashboard'),
-('9F0622D3-A20F-60CF-5AE67B68F7294189','wiki_comments_mandatory','1'),
-('9F0716AB-AF0A-8D94-4AEAA59490D24CB2','wiki_outgoing_email','myemail@email.com'),
-('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD'),
-('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki'),
-('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki'),
-('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true'),
-('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','true'),
-('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg');
+INSERT INTO `wiki_options` (`option_id`, `option_name`, `option_value`) VALUES
+	('3331E8AF-F41F-4CF5-A2F519959BF4342B','wiki_gravatar_display','true'),
+	('3FFE012E-7228-44F7-B4D3FC088892EB45','comments_notify','true'),
+	('704DD976-B03B-441B-A0B7B5C8403034C9','comments_registration','false'),
+	('7AB2BC87-9D28-45ED-BDAD2A64BEFBF3A4','comments_enabled','true'),
+	('8D3CA636-2439-4D69-A2724617C8854718','comments_urltranslations','true'),
+	('9F03F883-AFFA-A78C-1A2EDA50675A3B46','wiki_defaultpage','Dashboard'),
+	('9F045002-0E99-A690-7C59F405F98A19BE','wiki_search_engine','codex.model.search.adapters.DBSearch'),
+	('9F0485D1-F0AB-DF57-DCD68A6AE5F2FF33','wiki_name','A Sweet Wiki'),
+	('9F050595-E875-9C19-9978C4F271441867','wiki_paging_maxrows','10'),
+	('9F052A79-DA80-9757-F8B952EFF0BF467E','wiki_paging_bandgap','5'),
+	('9F05890F-C8D4-A7E1-7C60462D3C7AA437','wiki_defaultpage_label','My Dashboard'),
+	('9F0622D3-A20F-60CF-5AE67B68F7294189','wiki_comments_mandatory','1'),
+	('9F0716AB-AF0A-8D94-4AEAA59490D24CB2','wiki_outgoing_email','myemail@email.com'),
+	('A2E52F85-EC94-6F0D-63D54DA07F9054E9','wiki_defaultrole_id','883C6A58-05CA-D886-22F7940C19F792BD'),
+	('B1D80246-CF1E-5C1B-91310C4FA0F78984','wiki_metadata','codex wiki'),
+	('B1DD1CDD-CF1E-5C1B-9106B89C23AB9410','wiki_metadata_keywords','codex coldbox transfer wiki'),
+	('C3E7EC67-6ACE-4BFE-95062D1035F66BEA','comments_moderation_notify','true'),
+	('C5BFE426-F38C-8745-2CA44F6B29D5A19B','wiki_registration','true'),
+	('CBE76066-6635-4FD3-805CE2A3933FEDC5','comments_moderation','true'),
+	('E487E2CE-8BE0-482C-A71249423D4FC757','wiki_gravatar_rating','pg'),
+	('F1783B24-1C0E-4214-8616907628A8D9D2','comments_moderation_whitelist','true');
 </cfquery>
 
 <!--- Wiki Registration permission removal --->
