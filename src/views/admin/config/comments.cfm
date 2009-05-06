@@ -60,26 +60,45 @@ $Build ID:	@@build_id@@
 	<div>
 	<legend><strong>Comment Options</strong></legend>
 	 	<!--- Activate Comments  --->
-		<input type="checkbox" 
+		<label for="comments_enabled" class="light">Enable Site Wide Comments</label><br />
+		<input type="radio" 
 			   name="comments_enabled" id="comments_enabled"
 			   <cfif rc.CodexOptions.comments_enabled>checked="checked"</cfif>
-			   value="1">
-		<label for="comments_enabled" class="light">Enable Site Wide Comments</label><br />
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_enabled" id="comments_enabled"
+			   <cfif not rc.CodexOptions.comments_enabled>checked="checked"</cfif>
+			   value="0">No		
+			   
+		<br />	   
 		
 		<!--- User Registration --->
-		<input type="checkbox" 
+
+		<label for="comments_registration" class="light">Users must be logged in and registered in order to comment.</label>
+		<br />
+		
+		<input type="radio" 
 			   name="comments_registration" id="comments_registration"
 			   <cfif rc.CodexOptions.comments_registration>checked="checked"</cfif>
-			   value="1">
-		<label for="comments_registration" class="light">Users must be logged in and registered in order to comment.</label> 
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_registration" id="comments_registration"
+			   <cfif not rc.CodexOptions.comments_registration>checked="checked"</cfif>
+			   value="0">No		
 		<br />
 		
 		<!--- URL Translations --->
-		<input type="checkbox" 
+		<label for="comments_urltranslations" class="light">Translate URL's to links</label> <br />
+		
+		<input type="radio" 
 			   name="comments_urltranslations" id="comments_urltranslations"
 			   <cfif rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
-			   value="1">
-		<label for="comments_urltranslations" class="light">Translate URL's to links</label> <br />
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_urltranslations" id="comments_urltranslations"
+			   <cfif not rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
+			   value="0">No				
+		
 	</div>
 	</fieldset>
 	
@@ -87,18 +106,32 @@ $Build ID:	@@build_id@@
 	<div>
 	<legend><strong>Before A Comment Appears</strong></legend>
 	 	<!--- Enable Moderation --->
-		<input type="checkbox" 
-			   name="comments_moderation" id="comments_moderation"
-			   <cfif rc.CodexOptions.comments_moderation>checked="checked"</cfif>
-			   value="1">
 		<label for="comments_moderation" class="light">An administrator must moderate the comment</label> <br />
 		
+		<input type="radio" 
+			   name="comments_moderation" id="comments_moderation"
+			   <cfif rc.CodexOptions.comments_moderation>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_moderation" id="comments_moderation"
+			   <cfif not rc.CodexOptions.comments_moderation>checked="checked"</cfif>
+			   value="0">No		
+			   
+		<br />
+		
 		<!--- Comment Previous History --->
-		<input type="checkbox" 
+
+		<label for="comments_moderation_whitelist" class="light">Comment author must have a previously approved comment</label>
+		<br />
+		
+		<input type="radio" 
 			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
 			   <cfif rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
-			   value="1">
-		<label for="comments_moderation_whitelist" class="light">Comment author must have a previously approved comment</label>
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
+			   <cfif not rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
+			   value="0">No
 	</div>
 	</fieldset>
 	
@@ -106,18 +139,32 @@ $Build ID:	@@build_id@@
 	<div>
 	<legend><strong>Notifications</strong></legend>
 		<!--- Notification on Comment --->
-		<input type="checkbox" 
-			   name="comments_notify" id="comments_notify"
-			   <cfif rc.CodexOptions.comments_notify>checked="checked"</cfif>
-			   value="1">
 		<label for="comments_notify" class="light">Send a notification that a comment has been made.</label><br />
 		
+		<input type="radio" 
+			   name="comments_notify" id="comments_notify"
+			   <cfif rc.CodexOptions.comments_notify>checked="checked"</cfif>
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_notify" id="comments_notify"
+			   <cfif not rc.CodexOptions.comments_notify>checked="checked"</cfif>
+			   value="0">No		
+		
+		<br />
+		
 		<!--- Notification on Moderation --->
-		<input type="checkbox" 
+		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</label> 
+		<br />
+		
+ 		<input type="radio" 
 			   name="comments_moderation_notify" id="comments_moderation_notify"
 			   <cfif rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
-			   value="1">
-		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</label> 
+			   value="1">Yes
+		<input type="radio" 
+			   name="comments_moderation_notify" id="comments_notify"
+			   <cfif not rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
+			   value="0">No		
+		
 	</div>
 	</fieldset>
 	

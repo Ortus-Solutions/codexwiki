@@ -111,6 +111,12 @@ $Build ID:	@@build_id@@
 					/* Save */
 					instance.ConfigService.save(oOption);	
 				}
+				else
+				{
+					//need an else, otherwise, settings can go missing
+					newOptions[key] = oOption.getValue();
+				}
+				
 			}
 			/* Re-Cache */
 			getColdboxOCM().set("CodexOptions",newOptions,0);
@@ -147,13 +153,23 @@ $Build ID:	@@build_id@@
 			var newOptions = structnew();
 			
 			/* Loop and Save Options */
-			for(key in rc.CodexOptions){
+			for(key in rc.CodexOptions)
+			{
 				/* Get Option */
 				oOption = instance.ConfigService.getOption(name=key);
+
 				/* Populate it */
-				oOption.setValue(rc[key]);
-				newOptions[key] = rc[key];
-				/* Save */
+				if(StructKeyExists(rc, key))
+				{
+					oOption.setValue(rc[key]);
+					newOptions[key] = rc[key];
+				}
+				else
+				{
+					newOptions[key] = oOption.getValue();
+				}
+				
+					/* Save */
 				instance.ConfigService.save(oOption);	
 			}
 			/* Re-Cache */
@@ -161,7 +177,7 @@ $Build ID:	@@build_id@@
 			/* Mb */
 			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
 			/* Re-Route */
-			setNextRoute(route="admin/config/options");
+			setNextRoute(route="admin/config/comments");
 		</cfscript>
 	</cffunction>
 	
