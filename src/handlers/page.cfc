@@ -233,13 +233,18 @@ $Build ID:	@@build_id@@
 			var oContent = getWikiService().getContent();
 			var tmpContent = 0;
 			
-			/* Check if sending Page, means page is already persisted */
-			if( event.valueExists("pagename") ){
+			if( event.valueExists("pagename") )
+			{
 				/* Get and set it for preview rendering. */
 				oContent.setPage(getWikiService().getPage(pageName=rc.pageName));
 				/* Put User also */
 				tmpContent = getWikiService().getContent(pageName=rc.pageName);
-				oContent.setUser(tmpContent.getUser());
+				
+				/* may not be persisted, so do a check for a user, if it exists */
+				if(tmpContent.hasUser())
+				{
+					oContent.setUser(tmpContent.getUser());
+				}
 			}
 			
 			/* Get Content */
