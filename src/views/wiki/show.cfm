@@ -21,8 +21,6 @@ $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfoutput>
-
-<!--- js --->
 <cfif not event.valueExists("print")>
 <cfsavecontent variable="js">
 <cfoutput>
@@ -81,17 +79,17 @@ function addComment(){
 <!--- Category Displays --->
 <cfset categories = rc.content.getCategoryArray() />
 <cfif NOT ArrayIsEmpty(categories)>
-	<div id="categories">
-		<img src="includes/images/tag_blue.png" align="absmiddle" alt="category" /> 
-		Categories:
-		<ul>
-		<cfloop array="#categories#" index="category">
-			<li>
-				<a href="#event.buildLink(pageShowRoot(URLEncodedFormat("Category:" & category.getName())))#">#category.getName()#</a>
-			</li>
-		</cfloop>
-		</ul>
-	</div>
+<div id="categories">
+	<img src="includes/images/tag_blue.png" align="absmiddle" alt="category" /> 
+	Categories:
+	<ul>
+	<cfloop array="#categories#" index="category">
+		<li>
+			<a href="#event.buildLink(pageShowRoot(URLEncodedFormat("Category:" & category.getName())))#">#category.getName()#</a>
+		</li>
+	</cfloop>
+	</ul>
+</div>
 </cfif>
 
 <!--- Management Tool Bar --->

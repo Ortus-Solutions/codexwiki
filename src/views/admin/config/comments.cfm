@@ -55,9 +55,8 @@ $Build ID:	@@build_id@@
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">
-	<div>
+<div>
 	<fieldset>
-	<div>
 	<legend><strong>Comment Options</strong></legend>
 	 	<!--- Activate Comments  --->
 		<label for="comments_enabled" class="light">Enable Site Wide Comments</label><br />
@@ -98,12 +97,9 @@ $Build ID:	@@build_id@@
 			   name="comments_urltranslations" id="comments_urltranslations"
 			   <cfif not rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
 			   value="0">No				
-		
-	</div>
 	</fieldset>
 	
 	<fieldset>
-	<div>
 	<legend><strong>Before A Comment Appears</strong></legend>
 	 	<!--- Enable Moderation --->
 		<label for="comments_moderation" class="light">An administrator must moderate the comment</label> <br />
@@ -132,11 +128,9 @@ $Build ID:	@@build_id@@
 			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
 			   <cfif not rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
 			   value="0">No
-	</div>
 	</fieldset>
 	
 	<fieldset>
-	<div>
 	<legend><strong>Notifications</strong></legend>
 		<!--- Notification on Comment --->
 		<label for="comments_notify" class="light">Send a notification that a comment has been made.</label><br />
@@ -164,8 +158,6 @@ $Build ID:	@@build_id@@
 			   name="comments_moderation_notify" id="comments_notify"
 			   <cfif not rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
 			   value="0">No		
-		
-	</div>
 	</fieldset>
 	
 	<!--- Loader --->
@@ -181,6 +173,7 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons">
 		<input type="submit" class="submitButton" value="Save Options"></input>
    	</div>
-	</div>
+	
+</div>
 </form>
 </cfoutput>

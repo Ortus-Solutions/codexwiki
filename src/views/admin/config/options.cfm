@@ -37,9 +37,7 @@ $Build ID:	@@build_id@@
 		theTable = $('##wikiPagesTable');
 		$("##pageFilter").keyup(function(){
 			$.uiTableFilter(theTable,this.value);
-		})
-
-				
+		})				
 	});
 	function prepareSubmit(){
 		$('##_buttonbar').slideUp("fast");
@@ -69,10 +67,10 @@ $Build ID:	@@build_id@@
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">
-	<div>
+<div>
 	<fieldset>
-	<div>
 	<legend><strong>General Options</strong></legend>
+	 	<div>
 	 	<!--- Wiki Name --->
 		<label for="wiki_name">Wiki Name</label>
 		<em>The global name for this wiki.</em><br />
@@ -162,12 +160,12 @@ $Build ID:	@@build_id@@
 			   name="wiki_comments_mandatory" id="wiki_comments_mandatory"
 			   <cfif not rc.CodexOptions.wiki_comments_mandatory>checked="checked"</cfif>
 			   value="0">No
-	</div>	
+		
+		</div>
 	</fieldset>
 	
 	
 	<fieldset>
-	<div>
 	<legend><strong>User Avatars</strong></legend>
 		An avatar is an image that follows you from site to site appearing beside your name when you comment on 
 			avatar enabled sites.
@@ -191,12 +189,11 @@ $Build ID:	@@build_id@@
 			<option value="R"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "R">selected="selected"</cfif>>R - Intended for adult audiences above 17</option>
 			<option value="X"  <cfif rc.CodeXOptions.wiki_gravatar_rating eq "X">selected="selected"</cfif>>X - Even more mature than above</option>
 		</select>
-	</div>
 	</fieldset>
 	
 	<fieldset>
-	<div>
 	<legend><strong>Search Engine Options</strong></legend>
+		<div>
 		<!--- Default Page --->
 		<label for="wiki_search_engine">Wiki Search Engine</label>
      	The wiki search engine class to use. You can create your own search engine adapters
@@ -213,12 +210,10 @@ $Build ID:	@@build_id@@
 		 	   dName="Search Engine"
 		 	   name="wiki_search_engine" id="wiki_search_engine" 
 		 	   value="#rc.CodexOptions.wiki_search_engine#" size="60" required="true"> 
-	
-	</div>
+		</div>
 	</fieldset>
 	
 	<fieldset>
-	<div>
 		<legend>Wiki Registration</legend>
 		
 		<!--- Wiki Registration --->
@@ -241,11 +236,9 @@ $Build ID:	@@build_id@@
 				<option value="#roleid#" <cfif roleid eq rc.CodexOptions.wiki_defaultrole_id>selected="selected"</cfif>>#role#</option>
 			</cfloop>
 		</select>
-	</div>	
 	</fieldset>
 	
 	<fieldset>
-	<div>
 		<legend>Paging Options</legend>
 		<!--- Max Rows --->
 		<label for="wiki_paging_maxrows">Paging Max Rows</label>
@@ -269,7 +262,6 @@ $Build ID:	@@build_id@@
 				<option value="#i#" <cfif i eq rc.CodexOptions.wiki_paging_bandgap>selected="selected"</cfif>>#i#</option>
 			</cfloop>
 		</select>
-	</div>	
 	</fieldset>
 	
 	<!--- Loader --->
@@ -285,6 +277,6 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons">
 		<input type="submit" class="submitButton" value="Save Options"></input>
    	</div>
-	</div>
+</div>
 </form>
 </cfoutput>
