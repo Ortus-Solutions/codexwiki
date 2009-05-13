@@ -46,6 +46,19 @@ $Build ID:	@@build_id@@
 			var Options = getConfigService().getOptions();
 			/* Cache Them */
 			getColdboxOCM().set("CodexOptions",Options,0);
+			
+			/* Check ShowKey */
+			if( getSetting("ShowKey") eq "" or getSetting("ShowKey") eq "page"){
+				throw(message="Invalid Show Key Detected",
+					  detail="The ShowKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
+					  type="Codex.InvalidShowKeyException");
+			}
+			/* Check SpaceKEy */
+			if( getSetting("SpaceKey") eq "" or getSetting("SpaceKey") eq "page"){
+				throw(message="Invalid Space Key Detected",
+					  detail="The SpaceKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
+					  type="Codex.InvalidSpaceKeyException");
+			}
 		</cfscript>	</cffunction>	<cffunction name="onRequestStart" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfset var rc = event.getCollection()>		<!--- CF Debug Mode or Not --->
 		<cfsetting showdebugoutput="#getDebugMode()#">
 		<cfscript>

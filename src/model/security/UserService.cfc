@@ -147,7 +147,7 @@ $Build ID:	@@build_id@@
 				   Roles.role
 			  FROM wiki_users as Users, wiki_roles as Roles
 			 WHERE Users.FKrole_id = Roles.role_id
-			   AND Users.user_isActive = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.active#">
+			   AND Users.user_isActive = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.active#">
 			 
 			 <!--- Search Criteria, If Found --->
 			 <cfif arguments.criteria.length() neq 0>
@@ -158,7 +158,7 @@ $Build ID:	@@build_id@@
 			 
 			  <!--- Confirmation --->
 			 <cfif arguments.confirmed gte 0>
-			   AND Users.user_isConfirmed = <cfqueryparam cfsqltype="cf_sql_tinyint" value="#arguments.confirmed#">
+			   AND Users.user_isConfirmed = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.confirmed#">
 			 </cfif>
 			 
 			 <!--- Role, If Found --->
