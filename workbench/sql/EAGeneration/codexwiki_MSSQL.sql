@@ -122,8 +122,8 @@ CREATE TABLE dbo.wiki_comments (
 	comment_author_url varchar(255),
 	comment_author_ip varchar(100),
 	comment_createdate datetime NOT NULL,
-	comment_isActive tinyint DEFAULT '1' NOT NULL,
-	comment_isApproved tinyint DEFAULT '0' NOT NULL,
+	comment_isActive bit DEFAULT '1' NOT NULL,
+	comment_isApproved bit DEFAULT '0' NOT NULL,
 	FKuser_id varchar(36)
 )
 ;
@@ -143,7 +143,7 @@ CREATE TABLE dbo.wiki_namespace (
 	namespace_id varchar(36) NOT NULL,
 	namespace_name varchar(255) NOT NULL,
 	namespace_description varchar(255) NOT NULL,
-	namespace_isdefault tinyint DEFAULT '0' NOT NULL,
+	namespace_isdefault bit DEFAULT '0' NOT NULL,
 	namespace_createddate datetime
 )
 ;
@@ -163,7 +163,7 @@ CREATE TABLE dbo.wiki_page (
 	page_password varchar(255),
 	page_description varchar(255),
 	page_keywords varchar(255),
-	page_allowcomments tinyint DEFAULT '1' NOT NULL
+	page_allowcomments bit DEFAULT '1' NOT NULL
 )
 ;
 
@@ -175,8 +175,8 @@ CREATE TABLE dbo.wiki_pagecontent (
 	pagecontent_comment text,
 	pagecontent_version bigint DEFAULT '1' NOT NULL,
 	pagecontent_createdate datetime NOT NULL,
-	pagecontent_isActive tinyint DEFAULT '1' NOT NULL,
-	pagecontent_isReadOnly tinyint DEFAULT '0' NOT NULL
+	pagecontent_isActive bit DEFAULT '1' NOT NULL,
+	pagecontent_isReadOnly bit DEFAULT '0' NOT NULL
 )
 ;
 
@@ -211,7 +211,7 @@ CREATE TABLE dbo.wiki_securityrules (
 	whitelist varchar(255),
 	securelist varchar(255),
 	permissions varchar(255),
-	authorize_check tinyint DEFAULT '0' NOT NULL,
+	authorize_check bit DEFAULT '0' NOT NULL,
 	redirect varchar(255)
 )
 ;
@@ -221,11 +221,11 @@ CREATE TABLE dbo.wiki_users (
 	user_fname varchar(100) NOT NULL,
 	user_lname varchar(100) NOT NULL,
 	user_email varchar(255) NOT NULL,
-	user_isActive tinyint DEFAULT '1' NOT NULL,
-	user_isConfirmed tinyint DEFAULT '0' NOT NULL,
+	user_isActive bit DEFAULT '1' NOT NULL,
+	user_isConfirmed bit DEFAULT '0' NOT NULL,
 	user_create_date datetime DEFAULT getDate() NOT NULL,
 	user_modify_date datetime,
-	user_isDefault tinyint DEFAULT '0' NOT NULL,
+	user_isDefault bit DEFAULT '0' NOT NULL,
 	user_username varchar(50) NOT NULL,
 	user_password varchar(255) NOT NULL,
 	FKrole_id varchar(36) NOT NULL

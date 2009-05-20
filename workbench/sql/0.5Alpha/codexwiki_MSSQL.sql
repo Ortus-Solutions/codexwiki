@@ -327,8 +327,8 @@ CREATE TABLE [dbo].[wiki_comments] (
   [comment_author_url] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [comment_author_ip] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [comment_createdate] datetime NOT NULL,
-  [comment_isActive] tinyint CONSTRAINT [DF__wiki_comm__comme__7F60ED59] DEFAULT '1' NOT NULL,
-  [comment_isApproved] tinyint CONSTRAINT [DF__wiki_comm__comme__00551192] DEFAULT '0' NOT NULL,
+  [comment_isActive] bit CONSTRAINT [DF__wiki_comm__comme__7F60ED59] DEFAULT '1' NOT NULL,
+  [comment_isApproved] bit CONSTRAINT [DF__wiki_comm__comme__00551192] DEFAULT '0' NOT NULL,
   [FKuser_id] varchar(36) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 )
 ON [PRIMARY]
@@ -360,7 +360,7 @@ CREATE TABLE [dbo].[wiki_namespace] (
   [namespace_id] varchar(36) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [namespace_name] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [namespace_description] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-  [namespace_isdefault] tinyint CONSTRAINT [DF__wiki_name__names__03317E3D] DEFAULT '0' NOT NULL,
+  [namespace_isdefault] bit CONSTRAINT [DF__wiki_name__names__03317E3D] DEFAULT '0' NOT NULL,
   [namespace_createddate] datetime NULL
 )
 ON [PRIMARY]
@@ -391,7 +391,7 @@ CREATE TABLE [dbo].[wiki_page] (
   [page_password] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [page_description] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [page_keywords] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-  [page_allowcomments] tinyint CONSTRAINT [DF__wiki_page__page___060DEAE8] DEFAULT '1' NOT NULL
+  [page_allowcomments] bit CONSTRAINT [DF__wiki_page__page___060DEAE8] DEFAULT '1' NOT NULL
 )
 ON [PRIMARY]
 GO
@@ -408,8 +408,8 @@ CREATE TABLE [dbo].[wiki_pagecontent] (
   [pagecontent_comment] text COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [pagecontent_version] bigint CONSTRAINT [DF__wiki_page__pagec__07F6335A] DEFAULT '1' NOT NULL,
   [pagecontent_createdate] datetime NOT NULL,
-  [pagecontent_isActive] tinyint CONSTRAINT [DF__wiki_page__pagec__08EA5793] DEFAULT '1' NOT NULL,
-  [pagecontent_isReadOnly] tinyint CONSTRAINT [DF__wiki_page__pagec__09DE7BCC] DEFAULT '0' NOT NULL
+  [pagecontent_isActive] bit CONSTRAINT [DF__wiki_page__pagec__08EA5793] DEFAULT '1' NOT NULL,
+  [pagecontent_isReadOnly] bit CONSTRAINT [DF__wiki_page__pagec__09DE7BCC] DEFAULT '0' NOT NULL
 )
 ON [PRIMARY]
 TEXTIMAGE_ON [PRIMARY]
@@ -470,7 +470,7 @@ CREATE TABLE [dbo].[wiki_securityrules] (
   [whitelist] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [securelist] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [permissions] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-  [authorize_check] tinyint CONSTRAINT [DF__wiki_secu__autho__0F975522] DEFAULT '0' NOT NULL,
+  [authorize_check] bit CONSTRAINT [DF__wiki_secu__autho__0F975522] DEFAULT '0' NOT NULL,
   [redirect] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 )
 ON [PRIMARY]
@@ -485,11 +485,11 @@ CREATE TABLE [dbo].[wiki_users] (
   [user_fname] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [user_lname] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [user_email] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-  [user_isActive] tinyint CONSTRAINT [DF__wiki_user__user___117F9D94] DEFAULT '1' NOT NULL,
-  [user_isConfirmed] tinyint CONSTRAINT [DF__wiki_user__user___1273C1CD] DEFAULT '0' NOT NULL,
+  [user_isActive] bit CONSTRAINT [DF__wiki_user__user___117F9D94] DEFAULT '1' NOT NULL,
+  [user_isConfirmed] bit CONSTRAINT [DF__wiki_user__user___1273C1CD] DEFAULT '0' NOT NULL,
   [user_create_date] datetime CONSTRAINT [DF__wiki_user__user___1367E606] DEFAULT getdate() NOT NULL,
   [user_modify_date] datetime NULL,
-  [user_isDefault] tinyint CONSTRAINT [DF__wiki_user__user___145C0A3F] DEFAULT '0' NOT NULL,
+  [user_isDefault] bit CONSTRAINT [DF__wiki_user__user___145C0A3F] DEFAULT '0' NOT NULL,
   [user_username] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [user_password] varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
   [FKrole_id] varchar(36) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
