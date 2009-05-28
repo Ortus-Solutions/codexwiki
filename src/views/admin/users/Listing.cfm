@@ -150,7 +150,9 @@ $Build ID:	@@build_id@@
 			</span>
 		</a>
 	</div>
-
+	
+	<br />
+	
 	<!--- Render Results --->
 	<table class="tablesorter" width="100%" id="usersTable" cellspacing="1" cellpadding="0" border="0">
 	

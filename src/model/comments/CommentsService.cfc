@@ -74,10 +74,11 @@ $Build ID:	@@build_id@@
 		  SELECT Page.pageID,Page.name, Comment.commentID,
 			   Comment.author, Comment.authorEmail, Comment.authorURL, Comment.authorIP,
 			   Comment.createdDate, Comment.isActive, Comment.isApproved,
-			   User.fname as UserFirstName, User.lname as UserLastName, User.username, User.email as UserEmail
+			   CodexUser.fname as UserFirstName, CodexUser.lname as UserLastName, CodexUser.username, 
+			   CodexUser.email as UserEmail
 		  FROM wiki.Comment as Comment
 		  JOIN wiki.Page as Page
-		  OUTER JOIN security.User as User
+		  OUTER JOIN security.User as CodexUser
 		  WHERE Comment.isActive = :isActive AND
 		  	    Comment.isApproved = :isApproved
 		  <cfif structKeyExists(arguments,"pageName")>

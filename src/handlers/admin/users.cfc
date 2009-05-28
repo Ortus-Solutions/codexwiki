@@ -183,7 +183,6 @@ $Build ID:	@@build_id@@
 			else{
 				/* Set/update role */
 				oClonedUser.setRole(oUserService.getRole(rc.role_id));
-				oClonedUser.setmodifyDate(now());
 				/* Set password if sent */
 				if( rc.newpassword.length() neq 0 ){
 					oClonedUser.setPassword(rc.newpassword);

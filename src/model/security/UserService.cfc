@@ -367,6 +367,9 @@ $Build ID:	@@build_id@@
 			if( not arguments.User.getIsPersisted() OR arguments.isPasswordChange){
 				arguments.User.setPassword( hash(arguments.User.getPassword(),arguments.User.getHashType()) );
 			}
+			
+			/* Set Modify Date */
+			arguments.User.setmodifyDate(now());
 						
 			/* Save User */
 			getTransfer().save(arguments.User);
