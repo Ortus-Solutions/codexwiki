@@ -38,6 +38,9 @@ $Build ID:	@@build_id@@
 		<cfscript>
 	  		super.Init(arguments.controller);
 	  		
+	  		/* Codex Plugin Marker */
+	  		this.CodexPlugin = true;
+	  		
 	  		/* Extra Base Plugin Information */
 	  		instance.pluginAuthor = "";
 	  		instance.pluginAuthorURL = "";
@@ -95,7 +98,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- isUsingRewrite --->
-	<cffunction name="isUsingRewrite" output="false" access="public" returntype="boolean" hint="Flag to denote if using the full url rewrite or onMissingTemplate action">
+	<cffunction name="isUsingRewrite" output="false" access="private" returntype="boolean" hint="Flag to denote if using the full url rewrite or onMissingTemplate action">
 		<cfreturn instance.controller.getSetting("usingRewrite")>
 	</cffunction>
 
