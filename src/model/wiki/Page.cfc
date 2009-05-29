@@ -55,6 +55,13 @@ $Build ID:	@@build_id@@
 	<cfreturn replaceNoCase(getName(), "_", " ", "all") />
 </cffunction>
 
+<cffunction name="getFileSafeName" hint="File Safe Name" access="public" returntype="string" output="false">
+	<cfset var filenameRE = "[" & "'" & '"' & "##" & "/\\%&`@~!,:;=<>\+\*\?\[\]\^\$\(\)\{\}\|]" />
+    <cfset var newfilename = reReplace(getName(),filenameRE,"_","all") />
+    <cfset newfilename = replace(newfilename," ","_","all") />
+    <cfreturn newfilename /> 
+</cffunction>
+
 <cffunction name="getCleanTitle" hint="Get a clean page title" access="public" returntype="string" output="false">
 	<!--- If an HTML page title is set, return that. --->
 	<cfif len(getTitle())>

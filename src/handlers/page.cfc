@@ -539,27 +539,35 @@ $Build ID:	@@build_id@@
 	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
 		<cfargument name="Event" type="any">
 		<cfscript>
-		if( not reFindNoCase("^(flashpaper|pdf|HTML|markup)$",event.getValue("print","")) ){
-			return;
-		}
-		else{
-			/* Change Layout */
-			Event.setLayout("Layout.Print");
-			/* Set Extensions */
-			if ( Event.getValue("print") eq "pdf" )
-			{
-				event.setValue("layout_extension","pdf");
-			}
-			else if( event.getValue("print") eq "flashpaper"){
-				event.setValue("layout_extension","swf");
-			}
-			else if( event.getValue("print") eq "markup"){
-				event.setLayout("Layout.MarkupExport");
+			var rc = event.getCollection();
+			
+			if( not reFindNoCase("^(flashpaper|pdf|HTML|markup|word)$",event.getValue("print","")) ){
+				return;
 			}
 			else{
-				Event.setLayout("Layout.html");
+				/* Change Layout Default PDF*/
+				Event.setLayout("Layout.Print");
+				/* PDF? */
+				if ( rc.print eq "pdf" ){
+					event.setValue("layout_extension","pdf");
+				}
+				/* Flash Paper? */
+				else if( rc.print eq "flashpaper"){
+					event.setValue("layout_extension","swf");
+				}
+				/* Markup Language? */
+				else if( rc.print eq "markup"){
+					event.setLayout("Layout.MarkupExport");
+				}
+				/* Word? */
+				else if( rc.print eq "word"){
+					event.setLayout("Layout.word");
+				}
+				/* HTML Language? */
+				else{
+					event.setLayout("Layout.html");
+				}
 			}
-		}
 		</cfscript>
 	</cffunction>
 </cfcomponent>

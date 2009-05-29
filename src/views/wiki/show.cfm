@@ -136,7 +136,10 @@ function addComment(){
 		</cfif>
 		
 		<img src="includes/images/html_16x16.png" border="0" align="absmiddle" alt="html" />
-		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a>
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a> |
+		
+		<img src="includes/images/word.png" border="0" align="absmiddle" alt="word" />
+		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/word'))#" target="_blank">Word</a>
 	</div>
 	
 	<!--- Comments --->

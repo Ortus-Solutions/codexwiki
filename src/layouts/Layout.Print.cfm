@@ -24,7 +24,7 @@ $Build ID:	@@build_id@@
 <cfset docTitle = rc.CodexOptions.wiki_name>
 <!--- Header for download on other browsers --->
 <cfif event.valueExists("content") >
-	<cfset fileTitle = rc.content.getPage().getCleanTitle()>
+	<cfset fileTitle = rc.content.getPage().getFileSafeName()>
 <cfelse>
 	<cfset fileTitle = "webprint">
 </cfif>
