@@ -59,28 +59,36 @@ $Build ID:	@@build_id@@
 		<cfargument name="messagebox" type="coldbox.system.plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
 		<!--- ************************************************************* --->
 		<cfset var oUser = getUserSession()>
-		<cfset var results = false>
+		<cfset var authResults = false>
+		<cfset var permResults = false>
 		<cfset var thisPermission = "">
 				
 		<!--- Authorized Check, if true, then see if user is valid. --->
-		<cfif arguments.rule['authorize_check'] and oUser.getisAuthorized()>
-			<cfset results = true>
+		<cfif arguments.rule['authorize_check']>
+			<cfif oUser.getisAuthorized()>
+				<cfset authResults = true>
+			</cfif>
+		<cfelse>
+			<cfset authResults = true>
+		</cfif>		
+		<!--- Loop Over Permissions --->
+		<cfif len(arguments.rule.permissions)>
+			<cfloop list="#arguments.rule['permissions']#" index="thisPermission">
+				<cfif oUser.checkPermission( thisPermission ) >
+					<cfset permResults = true>
+					<cfbreak>
+				</cfif>
+			</cfloop>
+		<cfelse>
+			<cfset permResults = true>
 		</cfif>
 		
-		<!--- Loop Over Permissions --->
-		<cfloop list="#arguments.rule['permissions']#" index="thisPermission">
-			<cfif oUser.checkPermission( thisPermission ) >
-				<cfset results = true>
-				<cfbreak>
-			</cfif>
-		</cfloop>
-		
 		<!--- Messagebox --->
-		<cfif not results>
+		<cfif permResults EQ FALSE AND authResults EQ FALSE>
 			<cfset arguments.messagebox.setMessage("warning","You are not authorized to view this page.")>
 		</cfif>	
 		
-		<cfreturn results>
+		<cfreturn (permResults AND authResults)>
 	</cffunction>
 					
 	<!--- Authenticate a user in the system --->
