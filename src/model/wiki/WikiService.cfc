@@ -437,14 +437,14 @@ $Build ID:	@@build_id@@
 			content.version,
 			content.createdDate,
 			content.isActive,
-			user.username,
-			user.email
+			CodexUser.username,
+			CodexUser.email
 		from
 			wiki.Page as page
 			join
 			wiki.Content as content
 			join
-			security.User as user
+			security.User as CodexUser
 		where
 			page.name = :name
 		order by
