@@ -107,7 +107,7 @@ $Build ID:	@@build_id@@
 		<cfsavecontent variable="search">
 		<cfoutput>
 			<p>
-				Found #arguments.result.results.recordCount# results in #argument.result.searched# 
+				Found #arguments.result.results.recordCount# results in #arguments.result.searched# 
 				records in #arguments.result.time#ms
 			</p>
 		
