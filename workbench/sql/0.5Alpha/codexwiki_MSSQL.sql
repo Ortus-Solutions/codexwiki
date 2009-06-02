@@ -2660,47 +2660,47 @@ GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'88572359-B40D-B373-DE9E3DA49F37ABE5', NULL, N'^admin', N'WIKI_ADMIN', 1, N'user;login.cfm')
+  (N'88572359-B40D-B373-DE9E3DA49F37ABE5', NULL, N'^admin', N'WIKI_ADMIN', 1, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C3CA560A-CF1E-5C1B-954981333B6ECA46', NULL, N'^profile', NULL, 1, N'user;login.cfm')
+  (N'C3CA560A-CF1E-5C1B-954981333B6ECA46', NULL, N'^profile', NULL, 1, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C42598A5-CF1E-5C1B-98C39B0B163E7A98', NULL, N'^page\.show$,^page\.search,^page\.render', N'WIKI_VIEW', 0, N'user;login.cfm')
+  (N'C42598A5-CF1E-5C1B-98C39B0B163E7A98', NULL, N'^page\.show$,^page\.search,^page\.render', N'WIKI_VIEW', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C426C55E-CF1E-5C1B-9B4DE753A5DEA781', NULL, N'^page\.showHistory', N'WIKI_VIEW_HISTORY', 0, N'user;login.cfm')
+  (N'C426C55E-CF1E-5C1B-9B4DE753A5DEA781', NULL, N'^page\.showHistory', N'WIKI_VIEW_HISTORY', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C42C5C1D-CF1E-5C1B-9776D52AF996EA7E', NULL, N'^page\.deleteContent', N'WIKI_DELETE_VERSION', 0, N'user;login.cfm')
+  (N'C42C5C1D-CF1E-5C1B-9776D52AF996EA7E', NULL, N'^page\.deleteContent', N'WIKI_DELETE_VERSION', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C42D5746-CF1E-5C1B-9D676C9985BA89CC', NULL, N'^page\.delete$', N'WIKI_DELETE_PAGE', 0, N'user;login.cfm')
+  (N'C42D5746-CF1E-5C1B-9D676C9985BA89CC', NULL, N'^page\.delete$', N'WIKI_DELETE_PAGE', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C42DE4B2-CF1E-5C1B-9780791CABD241E8', NULL, N'^page\.replace', N'WIKI_ROLLBACK_VERSION', 0, N'user;login.cfm')
+  (N'C42DE4B2-CF1E-5C1B-9780791CABD241E8', NULL, N'^page\.replace', N'WIKI_ROLLBACK_VERSION', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'C4317156-CF1E-5C1B-917C1C422FF1B6D7', NULL, N'^page\.(create|doCreate)$', N'WIKI_CREATE', 0, N'user;login.cfm')
+  (N'C4317156-CF1E-5C1B-917C1C422FF1B6D7', NULL, N'^page\.(create|doCreate)$', N'WIKI_CREATE', 0, N'user/login.cfm')
 GO
 
 INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
 VALUES 
-  (N'CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F', NULL, N'^page\.(edit|doEdit)$', N'WIKI_EDIT', 0, N'user;login.cfm')
+  (N'CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F', NULL, N'^page\.(edit|doEdit)$', N'WIKI_EDIT', 0, N'user/login.cfm')
 GO
 
 --

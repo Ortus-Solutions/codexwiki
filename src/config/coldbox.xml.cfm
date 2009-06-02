@@ -64,9 +64,7 @@
 		<Setting name="lookups_tables"				value="{'Permissions':'security.Permission', 
 															'Roles':'security.Role', 
 															'Security Rules':'security.SecurityRules',
-															'System Options':'wiki.Option',
-															'Wiki Namespaces':'wiki.Namespace',
-															'Wiki Categories':'wiki.Category'}" />		
+															'System Options':'wiki.Option'}" />		
 		<Setting name="lookups_imgPath"				value="includes/lookups/images" />
 		<Setting name="lookups_cssPath"				value="includes/lookups/styles" />
 		<Setting name="lookups_jsPath"				value="includes/lookups/js" />
