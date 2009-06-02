@@ -70,7 +70,7 @@ $Build ID:	@@build_id@@
 		select *
 		from wiki_page 
 		inner join wiki_pagecontent on wiki_page.page_id = wiki_pagecontent.FKpage_id
-		where pagecontent_isActive = 1 AND
+		where pagecontent_isActive = <cfqueryparam cfsqltype="cf_sql_bit" value="1"> AND
 			 (
 			  wiki_page.page_name like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.search#%"> OR
 			  wiki_pagecontent.pagecontent_content like <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.search#%">
