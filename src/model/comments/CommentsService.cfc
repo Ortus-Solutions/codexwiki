@@ -92,8 +92,8 @@ $Build ID:	@@build_id@@
 		query = getTransfer().createQuery(tql);
 		query.setCacheEvaluation(true);
 
-		query.setParam("isActive", arguments.active);
-		query.setParam("isApproved",arguments.approved);
+		query.setParam("isActive", arguments.active, "boolean");
+		query.setParam("isApproved",arguments.approved, "boolean");
 		
 		if( structKeyExists(arguments,"pageName") ){
 			query.setParam("pageName",arguments.pageName);
