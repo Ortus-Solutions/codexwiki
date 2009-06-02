@@ -393,9 +393,10 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="getPageUpdates" hint="get a list of page updates" access="public" returntype="query" output="false">
-	<cfargument name="limit" hint="the limit of upates" type="numeric" required="Yes">
+	<cfargument name="limit" type="numeric" required="true" hint="The limit of updates. -1 (All records, no cutoff)">
 	<cfset var qUpdates = 0 />
-	<cfquery name="qUpdates" datasource="#getDataSource().getName()#" username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
+	<cfquery name="qUpdates" datasource="#getDataSource().getName()#" maxrows="#arguments.limit#" 
+			 username="#getDataSource().getUsername()#" password="#getDataSource().getPassword()#">
 		SELECT
 			wiki_page.page_name,
 			wiki_pagecontent.pagecontent_comment,
@@ -412,7 +413,6 @@ $Build ID:	@@build_id@@
 				ON wiki_users.user_id = wiki_pagecontent.FKuser_id
 		ORDER BY
 			wiki_pagecontent.pagecontent_createdate desc
-		LIMIT 0,<cfqueryparam value="#arguments.limit#" cfsqltype="cf_sql_numeric">
 	</cfquery>
 	<cfreturn qUpdates />
 </cffunction>
