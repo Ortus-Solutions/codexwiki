@@ -95,7 +95,7 @@ $Build ID:	@@build_id@@
 		query.setCacheEvaluation(true);
 
 		query.setParam("name", arguments.pageName);
-		query.setParam("version",arguments.version);
+		query.setParam("version",arguments.version,"numeric");
 
 		content = getTransfer().readByQuery("wiki.Content", query);
 
