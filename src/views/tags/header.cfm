@@ -54,7 +54,7 @@ $Build ID:	@@build_id@@
 <!--- Sub Header --->
 <div id="header-logo">
 
-	<div id="logo" onClick="window.location='#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#'"><h1><a href="#getSetting('htmlBaseURL')#">#rc.CodexOptions.wiki_name#</a></h1></div>
+	<div id="logo" onclick="window.location='#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#'"><h1><a href="#getSetting('htmlBaseURL')#">#rc.CodexOptions.wiki_name#</a></h1></div>
 
 	<cfif not event.valueExists("print")>
 	<form method="post" class="search" action="#event.buildLink(rc.xehWikiSearch)#">

@@ -23,7 +23,7 @@ $Build ID:	@@build_id@@
 <cfoutput>
 	
 <h2>
-	<img src="includes/images/user.png" align="absmiddle"> My Profile
+	<img src="includes/images/user.png" alt="profile" /> My Profile
 </h2>
 
 <p>
@@ -48,7 +48,7 @@ Below you can see your current profile in the system. You can click on the <stro
 	<div align="center" id="_buttonbar">
 		<a href="#event.buildLink(rc.xehEditProfile)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/page_edit.png" border="0" align="absmiddle" />
+				<img src="includes/images/page_edit.png" border="0" alt="edit" />
 				Edit Profile
 			</span>
 		</a>
@@ -61,7 +61,7 @@ Below you can see your current profile in the system. You can click on the <stro
 	<div>
 		<p>
 			<cfloop collection="#rc.userPerms#" item="key">
-			<img src="includes/images/accept.png" align="absmiddle"> #key#<br />
+			<img src="includes/images/accept.png" alt="accept" /> #key#<br />
 			</cfloop>
 		</p>
 	</div>

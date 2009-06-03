@@ -43,7 +43,7 @@ function toggleItems(it){
 <cfif refindnocase("^admin",event.getCurrentEvent())>
 	
 	<!--- Admin Main Menu --->
-	<h1 onClick="toggleItems('sb_admin')"><img src="includes/images/shield.png" align="absmiddle"/> Admin</h1>
+	<h1 onclick="toggleItems('sb_admin')"><img src="includes/images/shield.png" alt="admin"/> Admin</h1>
 	<div class="left-box#isItemVisible('sb_admin')#" id="sb_admin">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdmin)#">Admin Dashboard</a></li>
@@ -53,7 +53,7 @@ function toggleItems(it){
 	</div>
 	
 	<!--- Pages --->
-	<h1 onClick="toggleItems('sb_wikiadmin')"> <img src="includes/images/home.png" align="absmiddle"/> Wiki Admin</h1>
+	<h1 onclick="toggleItems('sb_wikiadmin')"> <img src="includes/images/home.png" alt="home"/> Wiki Admin</h1>
 	<div class="left-box#isItemVisible('sb_wikiadmin')#" id="sb_wikiadmin">
 		<ul class="sidemenu">
 			<li>Pages</li>
@@ -64,7 +64,7 @@ function toggleItems(it){
 	</div>
 	
 	<!--- Plugins --->
-	<h1 onClick="toggleItems('sb_plugins')"> <img src="includes/images/plugin.png" align="absmiddle"/> Plugins</h1>
+	<h1 onclick="toggleItems('sb_plugins')"> <img src="includes/images/plugin.png" alt="plugins"/> Plugins</h1>
 	<div class="left-box#isItemVisible('sb_plugins')#" id="sb_plugins">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminPlugins)#">Install/Remove</a></li>
@@ -73,7 +73,7 @@ function toggleItems(it){
 	</div>
 	
 	<!--- Tools --->
-	<h1 onClick="toggleItems('sb_tools')"> <img src="includes/images/tools.png" align="absmiddle"/> Tools</h1>
+	<h1 onclick="toggleItems('sb_tools')"> <img src="includes/images/tools.png" alt="tools"/> Tools</h1>
 	<div class="left-box#isItemVisible('sb_tools')#" id="sb_tools">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminAPI)#">API Docs</a></li>
@@ -84,7 +84,7 @@ function toggleItems(it){
 	</div>
 	
 	<!--- Settings --->
-	<h1 onClick="toggleItems('sb_settings')"> <img src="includes/images/process.png" align="absmiddle"/> Settings</h1>
+	<h1 onclick="toggleItems('sb_settings')"> <img src="includes/images/process.png" alt="settings"/> Settings</h1>
 	<div class="left-box#isItemVisible('sb_settings')#" id="sb_settings">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehAdminOptions)#">General</a></li>
@@ -98,7 +98,7 @@ function toggleItems(it){
 <!--- ***************************************************************************************************** --->
 <cfelseif refindnocase("^profile",event.getCurrentEvent())>
 	<!--- User Main Menu --->
-	<h1 onClick="toggleItems('sb_profile')"> <img src="includes/images/shield.png" align="absmiddle"/> User Menu</h1>
+	<h1 onclick="toggleItems('sb_profile')"> <img src="includes/images/shield.png" alt="usermenu"/> User Menu</h1>
 	<div class="left-box" id="sb_profile">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(rc.xehUserProfile)#">My Profile</a></li>
@@ -110,7 +110,7 @@ function toggleItems(it){
 <!--- ***************************************************************************************************** --->
 <cfelse>
 	<!--- Wiki Main Menu --->
-	<h1 onClick="toggleItems('sb_wikimenu')"> <img src="includes/images/home.png" align="absmiddle"/> Wiki Menu</h1>
+	<h1 onclick="toggleItems('sb_wikimenu')"> <img src="includes/images/home.png" alt="home"/> Wiki Menu</h1>
 	<div class="left-box" id="sb_wikimenu">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#">#rc.codexOptions.wiki_defaultpage_label#</a></li>
@@ -128,9 +128,9 @@ function toggleItems(it){
 <!--- User Login Box --->
 <!--- ***************************************************************************************************** --->
 	<cfif not rc.oUser.getisAuthorized()>
-		<h1 onClick="toggleItems('sb_userinfo')"> <img src="includes/images/key.png" align="absmiddle"/> User Login </h1>
+		<h1 onclick="toggleItems('sb_userinfo')"> <img src="includes/images/key.png" alt="login"/> User Login </h1>
 	<cfelse>
-		<h1 onClick="toggleItems('sb_userinfo')"> <img src="includes/images/user.png" align="absmiddle"/> User Info </h1>
+		<h1 onclick="toggleItems('sb_userinfo')"> <img src="includes/images/user.png" alt="info"/> User Info </h1>
 	</cfif>
 	
 	<div class="left-box" id="sb_userinfo">
@@ -155,8 +155,8 @@ function toggleItems(it){
 				<div id="_loader_login" class="align-center formloader">
 					<p>
 						Submitting...<br />
-						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle"/>
-						<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle"/>
+						<img src="includes/images/ajax-loader-horizontal.gif" alt="loader"/>
+						<img src="includes/images/ajax-loader-horizontal.gif" alt="loader"/>
 					</p>
 				</div>
 				
@@ -180,7 +180,7 @@ function toggleItems(it){
 					<cfif rc.CodexOptions.wiki_registration> | <a href="#event.buildLink(rc.xehUserRegistration)#">Register</a></cfif>
 					<br /><br />
 					<input type="button" class="submitButton" value="Log In" name="loginbutton" id="loginbutton" 
-						   onClick="window.location='#event.buildLink(rc.xehUserLogin)#'"/>
+						   onclick="window.location='#event.buildLink(rc.xehUserLogin)#'"/>
 				</div>
 				<br />
 			</cfif>
@@ -195,7 +195,7 @@ function toggleItems(it){
 			<div align="center" id="_buttonbar_login">
 				<a href="#event.buildLink(rc.xehUserLogout)#" class="buttonLinks">
 					<span>
-						<img src="includes/images/door_out.png" border="0" align="absmiddle" />
+						<img src="includes/images/door_out.png" border="0" alt="signout" />
 						Logout
 					</span>
 				</a>

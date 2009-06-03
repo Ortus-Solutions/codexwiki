@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfoutput>
 <h2>
-	<img src="includes/images/user.png" align="absmiddle"> Registration Validation
+	<img src="includes/images/user.png" alt="Registration" /> Registration Validation
 </h2>
 
 <!--- Messagebox --->

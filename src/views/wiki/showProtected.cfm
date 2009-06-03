@@ -45,7 +45,7 @@ $(document).ready(function() {
 <cfoutput>
 <!--- Title --->
 <h1>
-	<img src="includes/images/page_edit.png" align="absmiddle"> Protected:
+	<img src="includes/images/page_edit.png" alt="edit" /> Protected:
 	"<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 <!--- MessageBox --->
@@ -65,8 +65,8 @@ $(document).ready(function() {
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 	

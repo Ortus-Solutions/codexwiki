@@ -45,7 +45,7 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="includes/images/comments.png" align="absmiddle"> Codex Comment Options</h2>
+<h2><img src="includes/images/comments.png" alt="comments" /> Codex Comment Options</h2>
 <p>
 	The options below are used to configure the Codex Commenting System.
 </p>
@@ -164,8 +164,8 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

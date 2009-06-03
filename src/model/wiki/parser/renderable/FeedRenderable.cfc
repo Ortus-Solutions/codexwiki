@@ -267,7 +267,7 @@ $Build ID:	@@build_id@@
 	<div class="rssList">
 		<p>
 			<strong>
-			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" align="absmiddle"></a>
+			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" alt="feed" /></a>
 			<cfif structKeyExists(arguments.data, "link")>
 				<a href="#arguments.data.link#">#arguments.data.title#</a>
 			<cfelse>
@@ -361,7 +361,7 @@ $Build ID:	@@build_id@@
 	<div class="rssList">
 		<p>
 			<strong>
-			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" align="absmiddle"></a>
+			<a href="#arguments.urlString#"><img src="includes/images/feed.png" border="0" alt="feed" /></a>
 			<cfif structKeyExists(arguments.data, "id")>
 				<a href="#arguments.data.id#">#arguments.data.title.value#</a>
 			<cfelse>

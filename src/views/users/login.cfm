@@ -46,7 +46,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h2>
-	<img src="includes/images/key.png" align="absmiddle"> User Login
+	<img src="includes/images/key.png" alt="login" /> User Login
 </h2>
 
 <p>
@@ -76,8 +76,8 @@ Log in to the wiki system by using the form below.
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

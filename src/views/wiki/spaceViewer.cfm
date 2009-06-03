@@ -41,7 +41,7 @@ function attachTableFilter(){
 <cfoutput>
 <!--- Title --->
 <h2>
-	<img src="includes/images/directory.png" border="0" align="absmiddle">
+	<img src="includes/images/directory.png" border="0" alt="directory" />
 	Namespace Directory: <cfif len(rc.namespace)>#rc.namespace#<cfelse>Default Namespace</cfif>
 </h2>
 <p>Below is the current page directory for the <strong><cfif len(rc.namespace)>#rc.namespace#<cfelse>Default</cfif></strong> namespace.  
@@ -51,7 +51,7 @@ You can filter to find specific pages or click on the page name to visit the pag
 <label class="inlineLabel">Page Filter: </label>
 <input name="pageFilter" id="pageFilter" value="Type Here To Filter"
 	   size="50" type="text"
-	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
+	   onclick="if(this.value='Type Here To Filter'){this.value='';}">
 <br /><br />
 <!--- Render Pages --->
 <div id="wikiPagesDiv">#renderView('wiki/directoryPagesTable')#</div>

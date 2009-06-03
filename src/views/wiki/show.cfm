@@ -56,15 +56,15 @@ function addComment(){
 <cfif not event.valueExists("print")>
 <div id="wikiTopToolbar">
 	<cfif rc.oUser.checkPermission("WIKI_CREATE")>
-		<img src="includes/images/add.png" border="0" align="absmiddle" alt="add" />
+		<img src="includes/images/add.png" border="0" alt="add" />
 		<a href="javascript:createNewPage()" title="Create Page">Create Page</a>&nbsp;
 	</cfif>
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
-		<img src="includes/images/history.png" border="0" align="absmiddle" alt="history" />
+		<img src="includes/images/history.png" border="0" alt="history" />
 		<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#" title="Page History">Page History</a>
 	</cfif>
 	<!--- Comments --->
-	<img src="includes/images/comments.png" border="0" align="absmiddle" alt="comments" />
+	<img src="includes/images/comments.png" border="0" alt="comments" />
 	<a href="#event.buildLink(pageShowRoot(urlDecode(rc.page)))###pageComments" title="Comments">Comments</a>
 	
 </div>
@@ -80,7 +80,7 @@ function addComment(){
 <cfset categories = rc.content.getCategoryArray() />
 <cfif NOT ArrayIsEmpty(categories)>
 <div id="categories">
-	<img src="includes/images/tag_blue.png" align="absmiddle" alt="category" /> 
+	<img src="includes/images/tag_blue.png" alt="category" /> 
 	Categories:
 	<ul>
 	<cfloop array="#categories#" index="category">
@@ -124,21 +124,21 @@ function addComment(){
 	<div id="downloadFormatsBar">
 		<strong>Download in other Formats:</strong><br />
 		
-		<img src="includes/images/code.png" border="0" align="absmiddle" alt="markup" />
+		<img src="includes/images/code.png" border="0" alt="markup" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/markup'))#" target="_blank">Markup</a> |
 		
-		<img src="includes/images/pdf_16x16.png" border="0" align="absmiddle" alt="pdf" />
+		<img src="includes/images/pdf_16x16.png" border="0" alt="pdf" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/pdf'))#" target="_blank">PDF</a> |
 		
 		<cfif getSetting("CFMLEngine",1) neq "RAILO">
-		<img src="includes/images/flash_16x16.png" border="0" align="absmiddle" alt="swf" />
+		<img src="includes/images/flash_16x16.png" border="0" alt="swf" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/flashpaper'))#" target="_blank">SWF</a> |
 		</cfif>
 		
-		<img src="includes/images/html_16x16.png" border="0" align="absmiddle" alt="html" />
+		<img src="includes/images/html_16x16.png" border="0" alt="html" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a> |
 		
-		<img src="includes/images/word.png" border="0" align="absmiddle" alt="word" />
+		<img src="includes/images/word.png" border="0" alt="word" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/word'))#" target="_blank">Word</a>
 	</div>
 	

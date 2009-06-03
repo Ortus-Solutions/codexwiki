@@ -51,12 +51,12 @@ $Build ID:	@@build_id@@
 	
 <!--- BACK --->
 <div class="backbutton">
-	<img src="includes/images/arrow_left.png" align="absmiddle">
+	<img src="includes/images/arrow_left.png" alt="back" />
 	<a href="#event.buildLink(rc.xehUserListing)#">Back</a>
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/user.png" align="absmiddle"> User Management : Create User</h2>
+<h2><img src="includes/images/user.png" alt="user" /> User Management : Create User</h2>
 <p>Please fill out all the information below to create a new user. Please note that all passwords are encrypted.</p>
 
 <!--- Render Messagebox. --->
@@ -128,8 +128,8 @@ $Build ID:	@@build_id@@
 		<p>
 			Submitting...<br />
 	
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>	
 	
@@ -137,14 +137,14 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons align-center">
 		<a href="#event.buildLink(rc.xehUserListing)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/cancel.png" border="0" align="absmiddle" />
+				<img src="includes/images/cancel.png" border="0" alt="cancel" />
 				Cancel
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:submitForm()" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Create User
 			</span>
 		</a>

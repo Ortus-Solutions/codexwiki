@@ -74,7 +74,7 @@ $(document).ready(function() {
 <cfoutput>
 <!--- Title --->
 <h1>
-	<img src="includes/images/page_edit.png" align="absmiddle"> Editing:
+	<img src="includes/images/page_edit.png" alt="edit" /> Editing:
 	"<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 <!--- MessageBox --->
@@ -141,7 +141,7 @@ $(document).ready(function() {
 		<!--- Categories --->
 		<label for"contentCategories">Content Categories</label>
 		<em>You can tag this page with existing categories by choosing from the list below. For adding new categories, 
-			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" align="absmiddle" alt="category" /> category'</strong> 
+			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" alt="category" /> category'</strong> 
 			button in the wiki editor or the wiki admin.</em><br />
 		<select name="contentCategories" id="contentCategories" multiple="true" size="5">
 			<cfloop query="rc.qCategories">
@@ -160,8 +160,8 @@ $(document).ready(function() {
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

@@ -41,12 +41,12 @@ $Build ID:	@@build_id@@
 	
 <!--- BACK --->
 <div class="backbutton">
-	<img src="includes/images/arrow_left.png" align="absmiddle">
+	<img src="includes/images/arrow_left.png" alt="back" />
 	<a href="#event.buildLink(rc.xehListing)#">Back</a>
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/vcard.png" align="absmiddle"> Role Management : Role Permissions for '#rc.oRole.getRole()#'</h2>
+<h2><img src="includes/images/vcard.png" alt="perms"/> Role Management : Role Permissions for '#rc.oRole.getRole()#'</h2>
 <p>From here you can manage the role's permissions.</p>
 
 <!--- Render Messagebox. --->
@@ -60,8 +60,8 @@ $Build ID:	@@build_id@@
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
 			<p>
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 			</p>
 		</div>
 		
@@ -76,7 +76,7 @@ $Build ID:	@@build_id@@
 		<!--- Search Button --->
 		<a href="javascript:submitForm()" class="buttonLinks">
 			<span>
-				<img src="includes/images/magnifier.png" border="0" align="absmiddle" />
+				<img src="includes/images/magnifier.png" border="0" alt="add" />
 				Add Permission
 			</span>
 		</a>
@@ -90,9 +90,9 @@ $Build ID:	@@build_id@@
 	<div>
 		<p>
 			<cfloop query="rc.qRolePerms">
-			<img src="includes/images/accept.png" align="absmiddle"> 
+			<img src="includes/images/accept.png" alt="add"/> 
 			
-			<a class="noborder" href="javascript:deleteRecord('#rc.qRolePerms.permissionID#');" title="Remove Permission"><img src="includes/images/stop.png" id="delete_#rc.qRolePerms.permissionID#" align="absmiddle" title="Remove Permission" border="0"></a>
+			<a class="noborder" href="javascript:deleteRecord('#rc.qRolePerms.permissionID#');" title="Remove Permission"><img src="includes/images/stop.png" id="delete_#rc.qRolePerms.permissionID#" alt="remove" title="Remove Permission" border="0"/></a>
 			
 			#rc.qRolePerms.permission#<br />
 			</cfloop>
@@ -107,7 +107,7 @@ $Build ID:	@@build_id@@
 <div id="_buttonbar" class="buttons align-center" style="margin-top:8px;">
 	<a href="#event.buildLink(rc.xehListing)#" class="buttonLinks">
 		<span>
-			<img src="includes/images/cancel.png" border="0" align="absmiddle" />
+			<img src="includes/images/cancel.png" border="0" alt="cancel" />
 			Cancel
 		</span>
 	</a>

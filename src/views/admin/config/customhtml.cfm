@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="includes/images/html_16x16.png" align="absmiddle"> Custom HTML</h2>
+<h2><img src="includes/images/html_16x16.png" alt="html" /> Custom HTML</h2>
 <p>
 	Please enter below the custom HTML that should be placed on the wiki pages.
 </p>
@@ -67,8 +67,8 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

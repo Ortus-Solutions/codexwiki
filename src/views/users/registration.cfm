@@ -76,7 +76,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h2>
-	<img src="includes/images/user.png" align="absmiddle"> New User Registration
+	<img src="includes/images/user.png" alt="registration" /> New User Registration
 </h2>
 
 <p>
@@ -112,11 +112,11 @@ $Build ID:	@@build_id@@
 		This must be unique: for example John Smith could use jsmith. Alternatively you can use your email address as your username.
 		
 		<!--- Username --->
-		<label for="username">Username <input type="checkbox" name="emailcopy" value="true" onClick="copyEmail(this.checked)"> (Same as email)</label>
+		<label for="username">Username <input type="checkbox" name="emailcopy" value="true" onclick="copyEmail(this.checked)"> (Same as email)</label>
 		<input type="text" name="username" id="username" value="#event.getValue("username","")#" required="true" dName="Username" size="30">
 		
-		<input type="button" value="Validate Username" onClick="validateUsername()">
-		<img src="includes/images/ajax-spinner.gif" align="absmiddle" name="username_spinner" id="username_spinner" class="hidden">
+		<input type="button" value="Validate Username" onclick="validateUsername()">
+		<img src="includes/images/ajax-spinner.gif" alt="spinner" name="username_spinner" id="username_spinner" class="hidden"/>
 		
 		<span id="username_validation"></span>
 		
@@ -144,8 +144,8 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

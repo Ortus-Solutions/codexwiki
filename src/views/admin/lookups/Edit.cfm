@@ -65,10 +65,10 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager > Edit Record</h2>
+<h2><img src="#rc.imgPath#/cog.png" alt="edit"/> System Lookup Manager > Edit Record</h2>
 <!--- BACK --->
 <div class="backbutton">
-	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
+	<img src="#rc.imgPath#/arrow_left.png" alt="back"/>
 	<a href="#event.buildLink(LinkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#">Back</a>
 </div>
 <p>Editing <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
@@ -200,8 +200,8 @@ $Build ID:	@@build_id@@
 <div id="_loader" class="formloader">
 	<p>
 		Submitting...<br />
-		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
 	</p>
 </div>
 
@@ -209,14 +209,14 @@ $Build ID:	@@build_id@@
 <div id="_buttonbar">
 	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#" class="buttonLinks">
 		<span>
-		<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle" />
+		<img src="#rc.imgPath#/cancel.png" border="0" alt="cancel" />
 		Cancel
 		</span>
 	</a>
 	&nbsp;
 	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="#rc.imgPath#/accept.png" border="0" align="absmiddle" />
+			<img src="#rc.imgPath#/accept.png" border="0" alt="add" />
 			Update Record
 		</span>
 	</a>
@@ -256,8 +256,8 @@ $Build ID:	@@build_id@@
 				<!--- Loader --->
 				<div id="_loader_#thisArray.alias#" class="formloader">
 					Submitting...<br />
-					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
-					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
+					<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
 				</div>
 				<!--- Control Bar --->
 				<div id="_buttonbar_#thisArray.alias#">
@@ -271,7 +271,7 @@ $Build ID:	@@build_id@@
 					<cfif qListing.recordcount>
 						<a href="javascript:submitM2M('#thisArray.alias#',1)" class="buttonLinks">
 							<span>
-								<img src="#rc.imgPath#/add.png" border="0" align="absmiddle" />
+								<img src="#rc.imgPath#/add.png" border="0" alt="add" />
 								Add Relation
 							</span>
 						</a>
@@ -281,7 +281,7 @@ $Build ID:	@@build_id@@
 					&nbsp;
 					<a href="javascript:submitM2M('#thisArray.alias#',0)" class="buttonLinks">
 						<span>
-							<img src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle" />
+							<img src="#rc.imgPath#/bin_closed.png" border="0" alt="remove" />
 							Remove Relation(s)
 						</span>
 					</a>

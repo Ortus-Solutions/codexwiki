@@ -50,12 +50,12 @@ $Build ID:	@@build_id@@
 	
 <!--- BACK --->
 <div class="backbutton">
-	<img src="includes/images/arrow_left.png" align="absmiddle">
+	<img src="includes/images/arrow_left.png" alt="back" />
 	<a href="#event.buildLink(rc.xehListing)#">Back</a>
 </div>
 
 <!--- Title --->
-<h2><img src="includes/images/namespace.png" align="absmiddle"> Namespace Management : Create Namespace</h2>
+<h2><img src="includes/images/namespace.png" alt="namespace"/> Namespace Management : Create Namespace</h2>
 <p>Create a new namespace in the wiki system.</p>
 
 <!--- Render Messagebox. --->
@@ -85,8 +85,8 @@ $Build ID:	@@build_id@@
 		<p>
 			Submitting...<br />
 	
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>	
 	
@@ -94,14 +94,14 @@ $Build ID:	@@build_id@@
 	<div id="_buttonbar" class="buttons align-center">
 		<a href="#event.buildLink(rc.xehListing)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/cancel.png" border="0" align="absmiddle" />
+				<img src="includes/images/cancel.png" border="0" alt="cancel" />
 				Cancel
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:submitForm()" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Create Namespace
 			</span>
 		</a>

@@ -62,7 +62,7 @@ $(document).ready(function() {
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 <!--- Title --->
-<h2><img src="includes/images/namespace.png" align="absmiddle" alt="Roles" /> Namespace Management</h2>
+<h2><img src="includes/images/namespace.png" alt="Roles" /> Namespace Management</h2>
 <p>From here you can manage all the wiki page namespaces.</p>
 
 <!--- Render Messagebox. --->
@@ -84,14 +84,14 @@ $(document).ready(function() {
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="delete" />
 				Delete
 			</span>
 		</a>
@@ -128,13 +128,13 @@ $(document).ready(function() {
 			<!--- Display Commands --->
 			<td class="center">
 				<!--- Namespace Viewer --->
-				<a href="javascript:directoryDialog('#name#')" title="Open Namespace Viewer"><img src="includes/images/directory.png" border="0" align="absmiddle" alt="namespace viewer"></a>
+				<a href="javascript:directoryDialog('#name#')" title="Open Namespace Viewer"><img src="includes/images/directory.png" border="0" alt="namespace viewer"/></a>
 				
 				<!--- Edit Command --->
-				<a href="#event.buildlink(rc.xehEdit & '/namespaceID/' & namespace_id)#" title="Edit Namespace"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Namespace"></a>
+				<a href="#event.buildlink(rc.xehEdit & '/namespaceID/' & namespace_id)#" title="Edit Namespace"><img src="includes/images/page_edit.png" border="0" alt="edit" title="Edit Namespace"/></a>
 				
 				<!--- Delete Command --->
-				<a href="javascript:confirmDelete('#namespace_id#')" title="Delete Namespace"><img id="delete_#namespace_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Namespace"></a>
+				<a href="javascript:confirmDelete('#namespace_id#')" title="Delete Namespace"><img id="delete_#namespace_id#" src="includes/images/bin_closed.png" border="0" alt="delete" title="Delete Namespace"/></a>
 			</td>
 
 		</tr>
@@ -146,14 +146,14 @@ $(document).ready(function() {
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="delete" />
 				Delete
 			</span>
 		</a>

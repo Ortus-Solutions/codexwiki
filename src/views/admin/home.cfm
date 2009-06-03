@@ -38,7 +38,7 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Welcome --->
-<h2><img src="includes/images/shield.png" align="absmiddle"> Welcome to your CodeX Administrator dashboard</h2>
+<h2><img src="includes/images/shield.png" alt="welcome" /> Welcome to your CodeX Administrator dashboard</h2>
 <p>
 	From this panel, you will be able to manage this CodeX installation. Please read all the instructions whenever
 	making changes to the system settings. As you can see, a new panel has appeared in your sidebar that will let you 
@@ -66,8 +66,8 @@ $Build ID:	@@build_id@@
 		<div id="_loader2" class="align-center formloader">
 			<p>
 				Reloading...<br />
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 			</p>
 		</div>
 		

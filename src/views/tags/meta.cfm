@@ -23,14 +23,14 @@ $Build ID:	@@build_id@@
 <cfoutput>
 	<!--- Global or per Page Metadata --->
 	<cfif event.valueExists("content") AND len(rc.content.getPage().getDescription())>
-		<meta name="description" content="#rc.content.getPage().getDescription()#">
+		<meta name="description" content="#rc.content.getPage().getDescription()#" />
 	<cfelse>
-		<meta name="description" content="#rc.CodexOptions.wiki_metadata#">
+		<meta name="description" content="#rc.CodexOptions.wiki_metadata#" />
 	</cfif>
 	<!--- Global or per Page KeyWords --->
 	<cfif event.valueExists("content") AND len(rc.content.getPage().getKeywords())>
-		<meta name="keywords" content="#rc.content.getPage().getKeywords()#">
+		<meta name="keywords" content="#rc.content.getPage().getKeywords()#" />
 	<cfelse>
-		<meta name="keywords" content="#rc.CodexOptions.wiki_metadata_keywords#">
+		<meta name="keywords" content="#rc.CodexOptions.wiki_metadata_keywords#" />
 	</cfif>
 </cfoutput>

@@ -48,7 +48,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h2>
-	<img src="includes/images/user.png" align="absmiddle"> Update Your Profile
+	<img src="includes/images/user.png" alt="profile" /> Update Your Profile
 </h2>
 
 <p>
@@ -95,8 +95,8 @@ Please enter all the required information to update your profile details
 <div id="_loader" class="align-center formloader">
 	<p>
 		Submitting...<br />
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 	</p>
 </div>
 
@@ -104,14 +104,14 @@ Please enter all the required information to update your profile details
 <div align="center" id="_buttonbar">
 	<a href="#event.buildLink(rc.xehUserProfile)#" class="buttonLinks">
 		<span>
-			<img src="includes/images/cancel.png" border="0" align="absmiddle" />
+			<img src="includes/images/cancel.png" border="0" alt="cancel" />
 			Cancel
 		</span>
 	</a>
 	&nbsp;
 	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="includes/images/accept.png" border="0" align="absmiddle" />
+			<img src="includes/images/accept.png" border="0" alt="accept" />
 			Update Profile
 		</span>
 	</a>

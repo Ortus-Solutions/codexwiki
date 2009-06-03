@@ -45,7 +45,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h2>
-	<img src="includes/images/key.png" align="absmiddle"> Password Reminder
+	<img src="includes/images/key.png" alt="Reminder" /> Password Reminder
 </h2>
 
 <p>
@@ -74,8 +74,8 @@ Please enter your email address below and click the Send Password button. This w
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

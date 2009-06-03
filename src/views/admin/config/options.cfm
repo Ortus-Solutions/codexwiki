@@ -58,7 +58,7 @@ $Build ID:	@@build_id@@
 
 <!--- create a non found wiki page --->
 <cfoutput>
-<h2><img src="includes/images/cog.png" align="absmiddle"> Codex Options</h2>
+<h2><img src="includes/images/cog.png" alt="options" /> Codex Options</h2>
 <p>
 	From here you can manage the overal Codex System Options. Please be careful when editing the main options as it affects the entire wiki installation.
 </p>
@@ -123,7 +123,7 @@ $Build ID:	@@build_id@@
 		 	   name="wiki_defaultpage" id="wiki_defaultpage" 
 		 	   value="#rc.CodexOptions.wiki_defaultpage#" size="40" required="true"> 
 		<input type="button" name="pageChooser" id="pageChooser" 
-			   onClick="$('##wikiPageListing').slideToggle()" value="Choose Page">
+			   onclick="$('##wikiPageListing').slideToggle()" value="Choose Page">
 		<div id="wikiPageListing" class="wikiChooser">
 			<table id="wikiPagesTable" class="tablelisting" width="100%">
 				<thead>
@@ -132,7 +132,7 @@ $Build ID:	@@build_id@@
 						<strong>Wiki Page: </strong>
 						<input name="pageFilter" id="pageFilter" value="Type Here To Filter" 
 							   size="50" type="text"
-							   onClick="if(this.value='Type Here To Filter'){this.value='';}">
+							   onclick="if(this.value='Type Here To Filter'){this.value='';}">
 						</th>
 					</tr>
 				</thead>
@@ -268,8 +268,8 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

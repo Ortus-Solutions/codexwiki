@@ -59,19 +59,19 @@ $Build ID:	@@build_id@@
 <cfoutput>
 <!--- Title --->
 <h2>
-	<img src="includes/images/directory.png" border="0" align="absmiddle">
+	<img src="includes/images/directory.png" border="0" alt="directory" />
 	Wiki Page Directory
 </h2>
 
 <p>Below is the current page directory for this wiki.  You can filter to find specific pages or click on
 the page name to visit the page.</p>
 
-<label>Show Namespace(s): <img src="includes/images/ajax-spinner.gif" align="absmiddle" name="namespace_spinner" id="namespace_spinner" class="hidden">
+<label>Show Namespace(s): <img src="includes/images/ajax-spinner.gif" name="namespace_spinner" id="namespace_spinner" class="hidden" alt="spinner" />
 </label>
 
 <cfloop query="rc.qNamespaces">
 	<input type="checkbox" name="namespace" id="namespace" class="namespaces"
-		   value="#namespace_id#" onClick="filterPages()"
+		   value="#namespace_id#" onclick="filterPages()"
 		   <cfif isDefault>checked="checked"</cfif>><cfif len(name)>#name#<cfelse>#description#</cfif>
 </cfloop>
 
@@ -80,7 +80,7 @@ the page name to visit the page.</p>
 <label class="inlineLabel">Page Filter: </label>
 <input name="pageFilter" id="pageFilter" value="Type Here To Filter"
 	   size="50" type="text"
-	   onClick="if(this.value='Type Here To Filter'){this.value='';}">
+	   onclick="if(this.value='Type Here To Filter'){this.value='';}">
 
 
 <div id="wikiPagesDiv">#renderView('wiki/directoryPagesTable')#</div>

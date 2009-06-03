@@ -43,7 +43,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <cfoutput>
-<h2><img src="includes/images/plugin.png" align="absmiddle"> 
+<h2><img src="includes/images/plugin.png" alt="plugins"/> 
 CodeX Wiki Plugins</h2>
 <p>
 	From this panel you can see the installed Wiki Plugins, reload the plugins index,
@@ -60,8 +60,8 @@ CodeX Wiki Plugins</h2>
 	<p>
 	<div id="_uploadLoader" class="formloader float-right">
 		<p>
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 	<label>Upload/Install Plugin</label>
@@ -81,7 +81,7 @@ CodeX Wiki Plugins</h2>
 			<td>#name#</td>
 			<td class="center">
 				<a href="javascript:confirmDelete('#jsstringFormat(getPlugin('Utilities').ripExtension(name))#','#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('Utilities').ripExtension(name))#')" 
-				   title="Remove Plugin"><img src="includes/images/bin_closed.png" align="absmiddle" border="0"></a>
+				   title="Remove Plugin"><img src="includes/images/bin_closed.png" alt="remove" border="0"/></a>
 			</td>
 		</tr>
 	</cfloop>
@@ -91,9 +91,9 @@ CodeX Wiki Plugins</h2>
 
 <!--- Reload Button --->
 <div class="align-center" id="reloadPluginsDiv">
-	<a href="#event.buildLink(rc.xehReload)#" onClick="return submitReload()" class="buttonLinks">
+	<a href="#event.buildLink(rc.xehReload)#" onclick="return submitReload()" class="buttonLinks">
 		<span>
-			<img src="includes/images/arrow_refresh.png" border="0" align="absmiddle" />
+			<img src="includes/images/arrow_refresh.png" border="0" alt="refresh" />
 			Reload Plugins Index
 		</span>
 	</a>
@@ -101,8 +101,8 @@ CodeX Wiki Plugins</h2>
 <div id="_reloadUploader" class="formloader align-center">
 	<p>
 		Please Wait...<br />
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 	</p>
 </div>
 <br />

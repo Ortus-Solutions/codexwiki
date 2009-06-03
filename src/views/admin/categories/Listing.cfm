@@ -54,7 +54,7 @@ $Build ID:	@@build_id@@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 <!--- Title --->
-<h2><img src="includes/images/tag_blue.png" align="absmiddle" alt="Roles" /> Categories Management</h2>
+<h2><img src="includes/images/tag_blue.png" alt="Roles" /> Categories Management</h2>
 <p>From here you can manage all the wiki categories.</p>
 
 <!--- Render Messagebox. --->
@@ -76,14 +76,14 @@ $Build ID:	@@build_id@@
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="stop" />
 				Delete
 			</span>
 		</a>
@@ -117,13 +117,13 @@ $Build ID:	@@build_id@@
 			<td class="center">
 				
 				<!--- Open Category Page --->
-				<a href="#event.buildLink(linkTo=pageShowRoot('Category:#name#'),translate=false)#" title="Goto Category Page"><img src="includes/images/house_link.png" border="0" align="absmiddle" title="Goto Category Page"></a>
+				<a href="#event.buildLink(linkTo=pageShowRoot('Category:#name#'),translate=false)#" title="Goto Category Page"><img src="includes/images/house_link.png" border="0" title="Goto Category Page" alt="category" /></a>
 				
 				<!--- Edit Command --->
-				<a href="#event.buildlink(rc.xehEdit & '/category_id/' & category_id)#" title="Edit Category"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Category"></a>
+				<a href="#event.buildlink(rc.xehEdit & '/category_id/' & category_id)#" title="Edit Category"><img src="includes/images/page_edit.png" border="0" alt="edit" title="Edit Category"></a>
 				
 				<!--- Delete Command --->
-				<a href="javascript:confirmDelete('#category_id#')" title="Delete Category"><img id="delete_#category_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Category"></a>
+				<a href="javascript:confirmDelete('#category_id#')" title="Delete Category"><img id="delete_#category_id#" src="includes/images/bin_closed.png" border="0" alt="delete" title="Delete Category"></a>
 			</td>
 
 		</tr>
@@ -135,14 +135,14 @@ $Build ID:	@@build_id@@
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="stop" />
 				Delete
 			</span>
 		</a>

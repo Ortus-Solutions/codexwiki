@@ -44,7 +44,7 @@ $Build ID:	@@build_id@@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 <cfoutput>
-<h2><img src="includes/images/code.png" align="absmiddle"> CodexWiki Markup Converter</h2>
+<h2><img src="includes/images/code.png" alt="converter" /> CodexWiki Markup Converter</h2>
 <p>Please use the form below to convert HTML code to a markup language</p>
 
 
@@ -73,8 +73,8 @@ $Build ID:	@@build_id@@
 	<div id="_loader" class="align-center formloader">
 		<p>
 			Submitting...<br />
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+			<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 		</p>
 	</div>
 

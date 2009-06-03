@@ -62,7 +62,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2><img src="includes/images/user.png" align="absmiddle"> User Management</h2>
+<h2><img src="includes/images/user.png" alt="user" /> User Management</h2>
 <p>From here you can manage and search for all the wiki users.</p>
 
 <!--- Render Messagebox. --->
@@ -75,8 +75,8 @@ $Build ID:	@@build_id@@
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
 			<p>
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-				<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+				<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 			</p>
 		</div>
 
@@ -112,7 +112,7 @@ $Build ID:	@@build_id@@
 		<!--- Search Button --->
 		<a href="javascript:searchForm()" class="buttonLinks" title="Search">
 			<span>
-				<img src="includes/images/magnifier.png" border="0" align="absmiddle" alt="Search">
+				<img src="includes/images/magnifier.png" border="0" alt="Search" />
 			</span>
 		</a>
 		</p>
@@ -138,14 +138,14 @@ $Build ID:	@@build_id@@
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="stop" />
 				Delete
 			</span>
 		</a>
@@ -182,7 +182,7 @@ $Build ID:	@@build_id@@
 				<!--- Name --->
 				#user_fname# #user_lname#
 				<!--- Default Image --->
-				<cfif user_isDefault><img src="includes/images/asterisk_orange.png" align="absmiddle"></cfif>
+				<cfif user_isDefault><img src="includes/images/asterisk_orange.png" alt="default" /></cfif>
 			</td>
 			<td><a href="mailto:#user_email#">#user_email#<a/></td>
 			<td class="center">#yesnoformat(user_isconfirmed)#</td>
@@ -190,12 +190,12 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td class="center">
 				<!--- Permissions Command --->
-				<a href="#event.buildLink(rc.xehUserPerms & '/user_id/' & user_id)#" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit User Permissions"></a>
+				<a href="#event.buildLink(rc.xehUserPerms & '/user_id/' & user_id)#" title="Edit User Permissions"><img src="includes/images/shield.png" border="0" alt="shield" title="Edit User Permissions"/></a>
 				<!--- Edit Command --->
-				<a href="#event.buildlink(rc.xehUserEdit & '/user_id/' & user_id)#" title="Edit User"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit User"></a>
+				<a href="#event.buildlink(rc.xehUserEdit & '/user_id/' & user_id)#" title="Edit User"><img src="includes/images/page_edit.png" border="0" alt="edit" title="Edit User"/></a>
 				<cfif not user_isDefault>
 				<!--- Delete Command --->
-				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Record"></a>
+				<a href="javascript:confirmDelete('#user_id#')" title="Delete User"><img id="delete_#user_id#" src="includes/images/bin_closed.png" border="0" alt="delete" title="Delete Record"/></a>
 				</cfif>
 			</td>
 
@@ -204,20 +204,20 @@ $Build ID:	@@build_id@@
 		</tbody>
 	</table>
 	
-	<p><img src="includes/images/asterisk_orange.png" align="absmiddle"> <strong>Default User</strong></p>
+	<p><img src="includes/images/asterisk_orange.png" alt="default" /> <strong>Default User</strong></p>
 
 	<!--- Add / Delete --->
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehUserCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="stop" />
 				Delete
 			</span>
 		</a>

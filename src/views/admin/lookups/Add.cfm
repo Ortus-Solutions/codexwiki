@@ -55,10 +55,10 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <!--- Title --->
-<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager > Add Record</h2>
+<h2><img src="#rc.imgPath#/cog.png" alt="add" /> System Lookup Manager > Add Record</h2>
 <!--- BACK --->
 <div class="backbutton">
-	<img src="#rc.imgPath#/arrow_left.png" align="absmiddle">
+	<img src="#rc.imgPath#/arrow_left.png" alt="back"/>
 	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#">Back</a>
 </div>
 <p>Add a new <strong>#rc.lookupClass#</strong>. Please fill out all the fields.</p>
@@ -181,8 +181,8 @@ $Build ID:	@@build_id@@
 <div id="_loader" class="formloader">
 	<p>
 		Submitting...<br />
-		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader" />
+		<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader" />
 	</p>
 </div>
 
@@ -190,14 +190,14 @@ $Build ID:	@@build_id@@
 <div id="_buttonbar">
 	<a href="#event.buildLink(linkTo=rc.xehLookupList & '/lookupclass/' & rc.lookupclass,translate=false)#" class="buttonLinks">
 		<span>
-			<img src="#rc.imgPath#/cancel.png" border="0" align="absmiddle" />
+			<img src="#rc.imgPath#/cancel.png" border="0" alt="cancel" />
 			Cancel
 		</span>
 	</a>
 	&nbsp;
 	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="#rc.imgPath#/add.png" border="0" align="absmiddle" />
+			<img src="#rc.imgPath#/add.png" border="0" alt="add" />
 			Create Record
 		</span>
 	</a>

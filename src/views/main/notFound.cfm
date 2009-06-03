@@ -26,7 +26,7 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 
 <h1>
-	<img src="includes/images/magnifier.png" align="absmiddle"> Page Not Found
+	<img src="includes/images/magnifier.png" alt="notfound" /> Page Not Found
 </h1>
 
 <div>

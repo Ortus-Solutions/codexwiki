@@ -19,7 +19,9 @@ body {
 	color: #333; 
 	background: #FFF url(../images/bg.gif) repeat-x;	
 }
-
+img{
+	vertical-align: middle;	
+}
 /* links */
 a {
 	color: #0058AF;

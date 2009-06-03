@@ -1,7 +1,7 @@
 <cfoutput>
 <div id="pageComments">
 	<!--- Title --->
-	<h2><a name="pageComments"></a><img src="includes/images/comments.png" align="absmiddle" alt="comments" /> 
+	<h2><a name="pageComments"></a><img src="includes/images/comments.png" alt="comments" /> 
 	Comments (#rc.qComments.recordcount#)</h2>
 	
 	<!--- Add Comments? --->

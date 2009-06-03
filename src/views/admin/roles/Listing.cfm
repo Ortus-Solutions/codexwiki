@@ -54,7 +54,7 @@ $Build ID:	@@build_id@@
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 <!--- Title --->
-<h2><img src="includes/images/vcard.png" align="absmiddle" alt="Roles" /> Role Management</h2>
+<h2><img src="includes/images/vcard.png" alt="Roles" /> Role Management</h2>
 <p>From here you can manage all the wiki roles.</p>
 
 <!--- Render Messagebox. --->
@@ -75,14 +75,14 @@ $Build ID:	@@build_id@@
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="delete" />
 				Delete
 			</span>
 		</a>
@@ -117,13 +117,13 @@ $Build ID:	@@build_id@@
 			<!--- Display Commands --->
 			<td class="center">
 				<!--- Permissions Command --->
-				<a href="#event.buildLink(rc.xehPerms & '/roleID/' & roleID)#" title="Edit Role Permissions"><img src="includes/images/shield.png" border="0" align="absmiddle" title="Edit Role Permissions"></a>
+				<a href="#event.buildLink(rc.xehPerms & '/roleID/' & roleID)#" title="Edit Role Permissions"><img src="includes/images/shield.png" border="0" alt="edit" title="Edit Role Permissions"/></a>
 				
 				<!--- Edit Command --->
-				<a href="#event.buildlink(rc.xehEdit & '/roleID/' & roleID)#" title="Edit Role"><img src="includes/images/page_edit.png" border="0" align="absmiddle" title="Edit Role"></a>
+				<a href="#event.buildlink(rc.xehEdit & '/roleID/' & roleID)#" title="Edit Role"><img src="includes/images/page_edit.png" border="0" alt="edit" title="Edit Role"/></a>
 				
 				<!--- Delete Command --->
-				<a href="javascript:confirmDelete('#roleID#')" title="Delete Role"><img id="delete_#roleID#" src="includes/images/bin_closed.png" border="0" align="absmiddle" title="Delete Role"></a>
+				<a href="javascript:confirmDelete('#roleID#')" title="Delete Role"><img id="delete_#roleID#" src="includes/images/bin_closed.png" border="0" alt="delete" title="Delete Role"/></a>
 			</td>
 
 		</tr>
@@ -135,14 +135,14 @@ $Build ID:	@@build_id@@
 	<div class="buttons">
 		<a href="#event.buildLink(rc.xehCreate)#" class="buttonLinks">
 			<span>
-				<img src="includes/images/add.png" border="0" align="absmiddle" />
+				<img src="includes/images/add.png" border="0" alt="add" />
 				Add
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-				<img src="includes/images/stop.png" border="0" align="absmiddle" />
+				<img src="includes/images/stop.png" border="0" alt="delete" />
 				Delete
 			</span>
 		</a>

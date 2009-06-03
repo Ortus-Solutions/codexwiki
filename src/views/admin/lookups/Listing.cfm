@@ -62,7 +62,7 @@ $Build ID:	@@build_id@@
 
 <div id="content">
 <!--- Title --->
-<h2><img src="#rc.imgPath#/cog.png" align="absmiddle"> System Lookup Manager</h2>
+<h2><img src="#rc.imgPath#/cog.png" alt="manager"/> System Lookup Manager</h2>
 <p>From here you can manage all the lookup tables in the system as defined in your coldbox.xml (lookups_tables)</p>
 
 <!--- Render Messagebox. --->
@@ -73,8 +73,8 @@ $Build ID:	@@build_id@@
 	<!--- Loader --->
 	<div id="_listloader" class="formloader">
 		<p> Submitting...<br />
-			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
-			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" align="absmiddle">
+			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
+			<img src="#rc.imgPath#/ajax-loader-horizontal.gif" alt="loader"/>
 		</p>
 	</div>
 
@@ -90,14 +90,14 @@ $Build ID:	@@build_id@@
 		&nbsp;
 		<a href="#event.buildLink(linkTo=rc.xehLookupList & "/lookupClass/" & rc.lookupclass,translate=false)#" class="buttonLinks">
 			<span>
-				<img src="#rc.imgPath#/arrow_refresh.png" border="0" align="absmiddle" />
+				<img src="#rc.imgPath#/arrow_refresh.png" border="0" alt="refresh" />
 				Reload Listing
 			</span>
 		</a>
 		&nbsp;
 		<a href="#event.buildLink(rc.xehLookupClean)#" class="buttonLinks">
 			<span>
-			<img src="#rc.imgPath#/book_open.png" border="0" align="absmiddle" />
+			<img src="#rc.imgPath#/book_open.png" border="0" alt="reload" />
 			Reload Dictionary
 			</span>
 		</a>
@@ -114,14 +114,14 @@ $Build ID:	@@build_id@@
 	<div id="listButtonBar">
 		<a href="#event.buildLink(linkTo=rc.xehLookupCreate & "/lookupclass/" & rc.lookupclass,translate=false)#" class="buttonLinks">
 			<span>
-				<img src="#rc.imgPath#/add.png" border="0" align="absmiddle">
+				<img src="#rc.imgPath#/add.png" border="0" alt="add"/>
 				Add Record
 			</span>
 		</a>
 		&nbsp;
 		<a href="javascript:confirmDelete()" class="buttonLinks">
 			<span>
-			<img src="#rc.imgPath#/stop.png" border="0" align="absmiddle" />
+			<img src="#rc.imgPath#/stop.png" border="0" alt="remove" />
 			Delete Record(s)
 			</span>
 		</a>
@@ -182,11 +182,11 @@ $Build ID:	@@build_id@@
 			<td align="center">
 				<!--- Edit Record --->
 				<a href="#event.buildLink(linkTo=rc.xehLookupEdit & '/lookupClass',override=true)#/#rc.lookupClass#/id/#rc.qListing[rc.mdDictionary.PK][currentrow]##event.getRewriteExtension()#" title="Edit Record">
-				<img src="#rc.imgPath#/page_edit.png" border="0" align="absmiddle" title="Edit Record">
+				<img src="#rc.imgPath#/page_edit.png" border="0" alt="edit" title="Edit Record"/>
 				</a>
 				<!--- Delete Record --->
 				<a href="javascript:confirmDelete('#rc.qListing[rc.mdDictionary.PK][currentrow]#')" title="Edit Record">
-				<img id="delete_#rc.qListing[rc.mdDictionary.PK][currentrow]#" src="#rc.imgPath#/bin_closed.png" border="0" align="absmiddle" title="Edit Record">
+				<img id="delete_#rc.qListing[rc.mdDictionary.PK][currentrow]#" src="#rc.imgPath#/bin_closed.png" border="0" alt="remove" title="Edit Record"/>
 				</a>
 			</td>
 

@@ -48,7 +48,7 @@ $Build ID:	@@build_id@@
 <cfhtmlhead text="#js#">
 
 <h2>
-	<img src="includes/images/key.png" align="absmiddle"> Change Password
+	<img src="includes/images/key.png" alt="password" /> Change Password
 </h2>
 
 <p>
@@ -92,8 +92,8 @@ Please enter the information below, to change your password
 <div id="_loader" class="align-center formloader">
 	<p>
 		Submitting...<br />
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
-		<img src="includes/images/ajax-loader-horizontal.gif" align="absmiddle">
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
+		<img src="includes/images/ajax-loader-horizontal.gif" alt="loader" />
 	</p>
 </div>
 
@@ -101,7 +101,7 @@ Please enter the information below, to change your password
 <div align="center" id="_buttonbar">
 	<a href="javascript:submitForm()" class="buttonLinks">
 		<span>
-			<img src="includes/images/accept.png" border="0" align="absmiddle" />
+			<img src="includes/images/accept.png" border="0" alt="accept" />
 			Update Password
 		</span>
 	</a>
