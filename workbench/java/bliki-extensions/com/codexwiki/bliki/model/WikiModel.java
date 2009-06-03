@@ -6,6 +6,7 @@ import info.bliki.wiki.filter.Encoder;
 import info.bliki.wiki.model.Configuration;
 import info.bliki.wiki.model.ImageFormat;
 import info.bliki.wiki.tags.TableOfContentTag;
+import java.util.HashSet;
 
 /**
  * Extension of WikiModel to allow for custom pieces, such as the 
@@ -50,13 +51,14 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 	/* (non-Javadoc)
 	 * @see info.bliki.wiki.model.AbstractWikiModel#getTableOfContentTag(boolean)
 	 */
-	public TableOfContentTag getTableOfContentTag(boolean isTOCIdentifier) {
+	public TableOfContentTag createTableOfContent(boolean isTOCIdentifier) {
 		if (fTableOfContentTag == null) {
 			TableOfContentTag tableOfContentTag = new BaseFriendlyTableOfContentTag("div", getTOCBaseURL());
 			tableOfContentTag.addAttribute("id", "tableofcontent", true);
 			tableOfContentTag.setShowToC(false);
 			tableOfContentTag.setTOCIdentifier(isTOCIdentifier);
 			fTableOfContentTag = tableOfContentTag;
+			this.append(fTableOfContentTag);
 		} else {
 			if (isTOCIdentifier) {
 				TableOfContentTag tableOfContentTag = (TableOfContentTag) fTableOfContentTag.clone();
@@ -64,11 +66,18 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 				tableOfContentTag.setShowToC(true);
 				tableOfContentTag.setTOCIdentifier(isTOCIdentifier);
 				fTableOfContentTag = tableOfContentTag;
+				this.append(fTableOfContentTag);
 			} else {
-				return fTableOfContentTag;
 			}
 		}
-		this.append(fTableOfContentTag);
+		if (fTableOfContentTag != null) {
+			if (fTableOfContent == null) {
+				fTableOfContent = fTableOfContentTag.getTableOfContent();
+			}
+		}
+		if (fToCSet == null) {
+			fToCSet = new HashSet<String>();
+		}
 		return fTableOfContentTag;
 	}	
 	
@@ -78,42 +87,19 @@ public class WikiModel extends info.bliki.wiki.model.WikiModel
 	@Override
 	public void parseInternalImageLink(String imageNamespace, String rawImageLink) {
 		if (fExternalImageBaseURL != null) {
-			String imageHref = fExternalWikiBaseURL;
-			String imageSrc = fExternalImageBaseURL;
 			ImageFormat imageFormat = ImageFormat.getImageFormat(rawImageLink, imageNamespace);
-
 			String imageName = imageFormat.getFilename();
-			String sizeStr = imageFormat.getSizeStr();
 			
 			//Check for external Images and leave them intact, so you can 
 			//include [[Image:http://image here]]
 			String targetImageURL = imageName.toLowerCase();
 			if( targetImageURL.startsWith("http") || targetImageURL.startsWith("ftp") ){
-				imageHref = targetImageURL;
-				imageSrc = targetImageURL;
+				//Append Link As IS
+				appendInternalImageLink(imageName, imageName, imageFormat);
 			}
 			else{
-				//Internal Image Link
-				if (sizeStr != null) {
-					imageName = sizeStr + '-' + imageName;
-				}
-				if (imageName.endsWith(".svg")) {
-					imageName += ".png";
-				}
-				imageName = Encoder.encodeUrl(imageName);
-				if (replaceColon()) {
-					imageName = imageName.replaceAll(":", "/");
-				}
-				if (replaceColon()) {
-					imageHref = imageHref.replace("${title}", imageNamespace + '/' + imageName);
-					imageSrc = imageSrc.replace("${image}", imageName);
-				} else {
-					imageHref = imageHref.replace("${title}", imageNamespace + ':' + imageName);
-					imageSrc = imageSrc.replace("${image}", imageName);
-				}
+				super.parseInternalImageLink(imageNamespace, rawImageLink);
 			}
-			//Append Link
-			appendInternalImageLink(imageHref, imageSrc, imageFormat);
 		}
 	}// end parseInternalImageLink
 	

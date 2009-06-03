@@ -42,7 +42,8 @@ $Build ID:	@@build_id@@
 		/* Setup the parser patterns */
 		setWikiBase(arguments.configService.getSetting("ShowKey") & "/");
 		setLinkPattern(arguments.configService.getSetting("ShowKey") & "/${title}#instance.rewriteExtension#");
-
+		setCodexBase(arguments.configService.getSetting('sesBaseURL'));
+		
 		/* this will eventually get replaced when we implement images */
 		setImagePattern("image/${image}#instance.rewriteExtension#");
 
@@ -67,13 +68,16 @@ $Build ID:	@@build_id@@
 	</cfloop>
 	<cfloop list="#arguments.ignoreXMLTagList#" index="xmlTag">
 		<cfscript>
-			config.addTokenTag(xmlTag, getJavaLoader().create("org.htmlcleaner.TagNode").init(xmlTag));
+			config.addTokenTag(xmlTag, getJavaLoader().create("info.bliki.htmlcleaner.TagNode").init(xmlTag));
 		</cfscript>
 	</cfloop>
 	<cfscript>
 		//this tells the parser to ignore these XML tags
 		config.addCodeFormatter("coldfusion", getJavaLoader().create("com.codexwiki.bliki.codeFilter.ColdFusionCodeFilter").init());
-
+		
+		/* Interwiki link to itself */
+		config.addInterwikiLink("codex",getCodexBase() & "/${title}");
+		
 		setConfiguration(config);
 	</cfscript>
 </cffunction>
@@ -156,6 +160,14 @@ $Build ID:	@@build_id@@
 <cffunction name="setWikiBase" access="private" returntype="void" output="false">
 	<cfargument name="wikiBase" type="string" required="true">
 	<cfset instance.wikiBase = arguments.wikiBase />
+</cffunction>
+
+<cffunction name="getCodexBase" access="private" returntype="string" output="false">
+	<cfreturn instance.CodexBase>
+</cffunction>
+<cffunction name="setCodexBase" access="private" returntype="void" output="false">
+	<cfargument name="CodexBase" type="string" required="true">
+	<cfset instance.CodexBase = arguments.CodexBase>
 </cffunction>
 
 </cfcomponent>

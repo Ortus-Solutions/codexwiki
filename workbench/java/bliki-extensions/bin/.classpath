@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="bin/" kind="src" path=""/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-codec-1.3.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-fileupload-1.2.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-lang-2.4.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-logging.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/commons-validator-1.3.1.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/core-renderer.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/itext-paulo-155.jar"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/jakarta-oro.jar"/>
+	<classpathentry excluding="bin/|doc/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/codexWiki/src/model/wiki/parser/lib/bliki/bliki-3.0.9-1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-fileupload-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/commons-validator-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/core-renderer.jar"/>
+	<classpathentry kind="lib" path="C:/Inetpub/wwwroot/applications/codexwiki/src/model/wiki/parser/lib/bliki/itext-paulo-155.jar"/>
+	<classpathentry kind="lib" path="/CodexWiki/src/model/wiki/parser/lib/bliki/bliki-core-3.0.11.jar" sourcepath="C:/Inetpub/wwwroot/testing/bliki/info.bliki.wiki/bliki-core/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
