@@ -285,7 +285,7 @@ $Build ID:	@@build_id@@
 					rel.DisplayColumn = tableConfig[rel.alias].DisplayColumn;
 				}
 				else{
-					throw(message="The display column for the relation: #rel.alias# was not found in the table config.",
+					getUtil().$throw(message="The display column for the relation: #rel.alias# was not found in the table config.",
 						  detail="This method is needed for many to one relations. Please check your code.",
 						  type="LookupService.missingDisplayColumn");
 				}

@@ -60,6 +60,14 @@ $Build ID:	@@build_id@@
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	
+	<!--- Throw Facade --->
+	<cffunction name="$throw" access="private" hint="Facade for cfthrow" output="false">
+		<!--- ************************************************************* --->
+		<cfargument name="message" 	type="string" 	required="yes">
+		<cfargument name="detail" 	type="string" 	required="no" default="">
+		<cfargument name="type"  	type="string" 	required="no" default="Framework">
+		<!--- ************************************************************* --->
+		<cfthrow type="#arguments.type#" message="#arguments.message#"  detail="#arguments.detail#">
+	</cffunction>
 
 </cfcomponent>

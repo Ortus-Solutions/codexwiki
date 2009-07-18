@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 			loopCount++;
 			if(loopCount > 3)
 			{
-				throw("codexWiki.BuilderTagNotReplacedException",
+				getUtil().$throw("codexWiki.BuilderTagNotReplacedException",
 					"The builder has to have the tag that it was looking for replaced with other content",
 					"The tag '#getTagName()#', still exists in content '#arguments.builder.toString()#'");
 			}
@@ -135,13 +135,6 @@ $Build ID:	@@build_id@@
 <cffunction name="setTagName" access="private" returntype="void" output="false">
 	<cfargument name="tagName" type="string" required="true">
 	<cfset instance.tagName = arguments.tagName />
-</cffunction>
-
-<cffunction name="throw" access="private" hint="Throws an Exception" output="false">
-	<cfargument name="type" hint="The type of exception" type="string" required="Yes">
-	<cfargument name="message" hint="The message to accompany the exception" type="string" required="Yes">
-	<cfargument name="detail" type="string" hint="The detail message for the exception" required="No" default="">
-		<cfthrow type="#arguments.type#" message="#arguments.message#" detail="#arguments.detail#">
 </cffunction>
 
 <!---  Get the Utility Object. --->

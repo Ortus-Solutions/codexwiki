@@ -49,13 +49,13 @@ $Build ID:	@@build_id@@
 			
 			/* Check ShowKey */
 			if( getSetting("ShowKey") eq "" or getSetting("ShowKey") eq "page"){
-				throw(message="Invalid Show Key Detected",
+				$throw(message="Invalid Show Key Detected",
 					  detail="The ShowKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
 					  type="Codex.InvalidShowKeyException");
 			}
 			/* Check SpaceKEy */
 			if( getSetting("SpaceKey") eq "" or getSetting("SpaceKey") eq "page"){
-				throw(message="Invalid Space Key Detected",
+				$throw(message="Invalid Space Key Detected",
 					  detail="The SpaceKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
 					  type="Codex.InvalidSpaceKeyException");
 			}

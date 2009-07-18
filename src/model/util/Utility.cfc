@@ -61,7 +61,7 @@ $Build ID:	@@build_id@@
 	
 <!------------------------------------------- UTILITY METHODS ------------------------------------------->
 
-	<cffunction name="throw" access="public" hint="Facade for cfthrow" output="false">
+	<cffunction name="$throw" access="public" hint="Facade for cfthrow" output="false">
 		<!--- ************************************************************* --->
 		<cfargument name="message" 		type="string" 	required="yes">
 		<cfargument name="detail" 		type="string" 	required="no" default="">
@@ -72,7 +72,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- ReThrow --->
-	<cffunction name="rethrow" access="public" hint="Facade for rethrow" output="false">
+	<cffunction name="$rethrow" access="public" hint="Facade for rethrow" output="false">
 		<!--- ************************************************************* --->
 		<cfargument name="exception" type="any" required="true" hint="The exception object"/>
 		<!--- ************************************************************* --->
@@ -80,14 +80,14 @@ $Build ID:	@@build_id@@
 	</cffunction>
 
 	
-	<cffunction name="dump" access="public" hint="Facade for cfmx dump" returntype="void">
+	<cffunction name="$dump" access="public" hint="Facade for cfmx dump" returntype="void">
 		<cfargument name="var" required="yes" type="any">
 		<cfargument name="abort" type="boolean" required="false" default="false"/>
 		<cfdump var="#var#"><cfif arguments.abort><cfabort></cfif>
 	</cffunction>
 
 	
-	<cffunction name="abort" access="public" hint="Facade for cfabort" returntype="void" output="false">
+	<cffunction name="$abort" access="public" hint="Facade for cfabort" returntype="void" output="false">
 		<cfabort>
 	</cffunction>
 

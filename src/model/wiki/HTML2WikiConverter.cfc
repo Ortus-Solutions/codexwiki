@@ -64,7 +64,7 @@ $Build ID:	@@build_id@@
 			
 			/* Validate incoming translator syntax */
 			if( NOT reFindNoCase("^(#translatorRegex#)$",arguments.wikiTranslator) ){
-				getUtil().throw(message="Invalid Wiki Translator",
+				getUtil().$throw(message="Invalid Wiki Translator",
 								detail="The translator you sent in #arguments.wikiTranslator# is not valid.  Valid translators are #getTranslators()#",
 								type="HTML2WikiConverter.InvalidTranslatorException");
 			}
