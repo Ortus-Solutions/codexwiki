@@ -24,7 +24,6 @@ $Build ID:	@@build_id@@
 	
 	<!--- Constructor --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="codex.model.search.adapters.ISearchAdapter" output="false">
-		<cfargument name="configBean" 	 	type="coldbox.system.beans.configBean" 	required="true" 	hint="the configuration beam">
 		<cfargument name="configService" 	type="codex.model.wiki.ConfigService" 	required="true" 	default="" hint="The Config Service"/>
 		<cfargument name="transfer"	 	 	type="transfer.com.Transfer" 			required="true" 	hint="the Transfer ORM">
 		<cfargument name="datasource"    	type="transfer.com.sql.Datasource" 		required="true" 	hint="the datasource bean">
@@ -33,13 +32,11 @@ $Build ID:	@@build_id@@
 	
 	<!--- search --->
 	<cffunction name="search" output="false" access="public" returntype="struct" hint="Search">
-		<cfargument name="search" hint="the search string" type="string" required="Yes">
-		
+		<cfargument name="search" hint="the search string" type="string" required="Yes">	
 	</cffunction>
 
 	<!--- Refresh Search --->
 	<cffunction name="refreshSearch" hint="refreshes the search index" access="public" returntype="void" output="false">
-		
 	</cffunction>
 	
 	<!--- renderSearch --->
@@ -47,7 +44,6 @@ $Build ID:	@@build_id@@
 		<cfargument name="result" 		type="struct" 								required="true" hint="The search results"/>
 		<cfargument name="event" 		type="coldbox.system.beans.requestContext" 	required="true" default="" hint="The ColdBox Event Context"/>
 		<cfargument name="controller" 	type="coldbox.system.controller" 			required="true" default="" hint="The coldbox controller"/>
-		
 	</cffunction>
 	
 </cfinterface>

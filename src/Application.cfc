@@ -20,25 +20,52 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent extends="coldbox.system.coldbox" output="false">	<!--- Modify the Name of the application--->	<cfset this.name = "codeXwiki_" & hash(getCurrentTemplatePath())>	<cfset this.sessionManagement = true>	<cfset this.sessionTimeout = createTimeSpan(0,1,0,0)>	<cfset this.setClientCookies = true>	<!--- codex mapping --->	<cfset this.mappings["/codex"] = getDirectoryFromPath(getCurrentTemplatePath()) />	<!--- COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP --->	<cfset COLDBOX_APP_ROOT_PATH = getDirectoryFromPath(getCurrentTemplatePath())>	<!--- COLDBOX PROPERTIES --->	<cfset COLDBOX_CONFIG_FILE = "">
+<cfcomponent output="false">	<!--- Modify the Name of the application--->	<cfset this.name = "codeXwiki_" & hash(getCurrentTemplatePath())>	<cfset this.sessionManagement = true>	<cfset this.sessionTimeout = createTimeSpan(0,1,0,0)>	<cfset this.setClientCookies = true>	<!--- codex mapping --->	<cfset this.mappings["/codex"] = getDirectoryFromPath(getCurrentTemplatePath()) />	<!--- <cfset this.mappings["/coldbox"] = expandPath("/coldbox")> --->	
+	<!--- COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP --->	<cfset COLDBOX_APP_ROOT_PATH = getDirectoryFromPath(getCurrentTemplatePath())>	<!--- COLDBOX PROPERTIES --->	<cfset COLDBOX_CONFIG_FILE = "">
 	
-	<!--- on Application Start --->	<cffunction name="onApplicationStart" returnType="boolean" output="false">		<cfscript>			//Load ColdBox			loadColdBox();			return true;		</cfscript>	</cffunction>	<!--- on Request Start --->	<cffunction name="onRequestStart" returnType="boolean" output="true">		<!--- ************************************************************* --->		<cfargument name="targetPage" type="string" required="true" />		<!--- ************************************************************* --->		<cfsetting enablecfoutputonly="yes">
-				<!--- Remove onMissingTEmplate for Railo for now --->
+	<!--- on Application Start --->
+	<cffunction name="onApplicationStart" returnType="boolean" output="false">
+		<cfscript>
+			//Load ColdBox
+			application.cbBootstrap = CreateObject("component","coldbox.system.coldbox").init(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH);
+			application.cbBootstrap.loadColdbox();
+			return true;
+		</cfscript>
+	</cffunction>
+		<!--- on Request Start --->
+	<cffunction name="onRequestStart" returnType="boolean" output="true">
+		<!--- ************************************************************* --->
+		<cfargument name="targetPage" type="string" required="true" />
+		<!--- ************************************************************* --->
+		<cfsetting enablecfoutputonly="yes">
+		
+		<!--- Remove onMissingTemplate for Railo for now --->
 		<cfif structKeyExists(server,"railo")>
 			<cfset structDelete(this,"onMissingTemplate")>
 			<cfset structDelete(variables,"onMissingTemplate")>
 		</cfif>
 		
+		<!--- BootStrap Reinit Check --->
+		<cfif not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit()>
+			<cflock name="coldbox.bootstrap_#this.name#" type="exclusive" timeout="5" throwontimeout="true">
+				<cfset structDelete(application,"cbBootStrap")>
+				<cfset application.cbBootstrap = CreateObject("component","coldbox.system.coldbox").init(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH)>
+			</cflock>
+		</cfif>
+		
 		<!--- Reload Checks --->
-		<cfset reloadChecks()>
+		<cfset application.cbBootstrap.reloadChecks()>
 		
 		<!--- Process A ColdBox Request Only --->
 		<cfif findNoCase('index.cfm', listLast(arguments.targetPage, '/'))>
-			<cfset processColdBoxRequest()>
+			<cfset application.cbBootstrap.processColdBoxRequest()>
 		</cfif>
-		
-		<!--- WHATEVER YOU WANT BELOW --->		<cfsetting enablecfoutputonly="no">		<cfreturn true>	</cffunction>	<!--- on Application End --->	<cffunction name="onApplicationEnd" returnType="void"  output="false">		<!--- ************************************************************* --->		<cfargument name="applicationScope" type="struct" required="true">		<!--- ************************************************************* --->		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	<!--- on Session Start --->	<cffunction name="onSessionStart" returnType="void" output="false">		<cfset super.onSessionStart()>		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	<!--- on Session End --->	<cffunction name="onSessionEnd" returnType="void" output="false">		<!--- ************************************************************* --->		<cfargument name="sessionScope" type="struct" required="true">		<cfargument name="appScope" 	type="struct" required="false">		<!--- ************************************************************* --->		<cfset super.onSessionEnd(argumentCollection=arguments)>		<!--- WHATEVER YOU WANT BELOW --->	</cffunction>	
-	<!--- on Missing Template End --->
+			
+		<!--- WHATEVER YOU WANT BELOW --->
+		<cfsetting enablecfoutputonly="no">
+		<cfreturn true>
+	</cffunction>
+		<!--- on Missing Template End --->
 	<cffunction name="onMissingTemplate" returnType="boolean" output="true">
 		<!--- ************************************************************* --->
 		<cfargument name="targetPage" type="string" required="true">

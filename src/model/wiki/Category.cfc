@@ -36,7 +36,7 @@ $Build ID:	@@build_id@@
 == Category: #getName()# ==
 
 All pages under the Category ''#getName()#'':<br/>
-<feed url="/feed/page/listByCategory#getWikiService().getRewriteExtension()#?category=#getName()#" display="numbered" />
+<feed url="/feed/page/listByCategory#getConfigService().getRewriteExtension()#?category=#getName()#" display="numbered" />
 		</cfoutput>
 		</cfsavecontent>
 		<cfscript>
@@ -52,12 +52,22 @@ All pages under the Category ''#getName()#'':<br/>
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 
+<!--- setConfigService --->
+<cffunction name="setConfigService" output="false" access="public" returntype="void" hint="">
+	<cfargument name="configService" type="codex.model.wiki.ConfigService" required="true">
+	<cfset instance.configService = arguments.configService />
+</cffunction>
+
 <!------------------------------------------- PACKAGE ------------------------------------------->
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 <cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
 	<cfreturn instance.wikiService />
+</cffunction>
+
+<cffunction name="getconfigService" access="public" returntype="codex.model.wiki.ConfigService" output="false">
+	<cfreturn instance.configService>
 </cffunction>
 
 </cfcomponent>

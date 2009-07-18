@@ -78,18 +78,14 @@ $Build ID:	@@build_id@@
 
 <cffunction name="init" hint="Constructor" access="private" returntype="AbstractXMLTag" output="false">
 	<cfargument name="tagName" 		hint="the tag this parser is looking for" type="string" required="Yes">
-	<cfargument name="configBean" 	hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
+	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfscript>
-		/* Setup the tag name to parse */
+		// Setup the tag name to parse
 		setTagName(arguments.tagName);
 		
-		/* Rewrite Extension */
-		if( arguments.configBean.getKey("usingRewrite") ){
-			setrewriteExtension('');
-		}
-		else{
-			setrewriteExtension('.cfm');
-		}
+		// Config Service
+		instance.configService = arguments.configService;
+		
 		return this;
 	</cfscript>
 </cffunction>
@@ -153,13 +149,8 @@ $Build ID:	@@build_id@@
 	<cfreturn CreateObject("component","codex.model.util.Utility")>
 </cffunction>	
 
-<cffunction name="getrewriteExtension" access="public" output="false" returntype="string" hint="Get rewriteExtension">
-	<cfreturn instance.rewriteExtension/>
-</cffunction>
-
-<cffunction name="setrewriteExtension" access="public" output="false" returntype="void" hint="Set rewriteExtension">
-	<cfargument name="rewriteExtension" type="string" required="true"/>
-	<cfset instance.rewriteExtension = arguments.rewriteExtension/>
+<cffunction name="getRewriteExtension" access="public" output="false" returntype="string" hint="Get the rewrite extension.">
+	<cfreturn instance.configService.getRewriteExtension()/>
 </cffunction>
 
 </cfcomponent>

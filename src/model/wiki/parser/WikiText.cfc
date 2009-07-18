@@ -28,23 +28,17 @@ $Build ID:	@@build_id@@
 	<cfargument name="configService" hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object"/>
 	<cfscript>
-		/* Our scope */
 		variables.instance = StructNew();
-		/* Set Java Loader */
-		setJavaLoader(arguments.javaLoader);
-		/* Determine Rewrite */
-		if( arguments.configService.getSetting("usingRewrite") ){
-			instance.rewriteExtension = "";
-		}
-		else{
-			instance.rewriteExtension = ".cfm";
-		}
-		/* Setup the parser patterns */
+		instance.configService = arguments.configService;
+		instance.javaLoader = arguments.javaLoader;
+		instance.rewriteExtension = instance.configService.getRewriteExtension();
+		
+		// Setup the parser patterns
 		setWikiBase(arguments.configService.getSetting("ShowKey") & "/");
 		setLinkPattern(arguments.configService.getSetting("ShowKey") & "/${title}#instance.rewriteExtension#");
 		setCodexBase(arguments.configService.getSetting('sesBaseURL'));
 		
-		/* this will eventually get replaced when we implement images */
+		// this will eventually get replaced when we implement images
 		setImagePattern("image/${image}#instance.rewriteExtension#");
 
 		return this;

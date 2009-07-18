@@ -491,6 +491,9 @@ div.grippie {
 	background: #333; 
 	letter-spacing: 1px;	
 	cursor: pointer;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
 }
 #sidebar h1:hover {
 	color: orange;
@@ -499,6 +502,9 @@ div.grippie {
 	border: 1px solid #EBEBEB;
 	margin: 0 0 5px 0;	
 	background: #FFF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
 }
 #sidebar ul.sidemenu {
 	list-style: none;

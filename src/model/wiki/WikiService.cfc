@@ -31,23 +31,15 @@ $Build ID:	@@build_id@@
 	<cfargument name="securityService" 	hint="the security service" type="codex.model.security.SecurityService" required="Yes">
 	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfscript>
-		/* Init */
+	
 		super.init(argumentCollection=arguments);
 		
-		/* Properties */
+		// Properties
 		setSecurityService(arguments.securityService);
 		setAppName(arguments.configService.getSetting("appName"));
 		setConfigService(arguments.configService);
 		
-		/* Rewrite Extension */
-		if( arguments.configService.getSetting("usingRewrite") ){
-			setRewriteExtension("");
-		}
-		else{
-			setRewriteExtension(".cfm");
-		}
 		
-		/* Return */
 		return this;
 	</cfscript>
 </cffunction>
@@ -594,15 +586,6 @@ $Build ID:	@@build_id@@
 	<cfset getTransfer().discardAll()>
 </cffunction>
 
-
-<cffunction name="getrewriteExtension" access="public" output="false" returntype="string" hint="Get rewriteExtension">
-	<cfreturn instance.rewriteExtension/>
-</cffunction>
-
-<cffunction name="setrewriteExtension" access="public" output="false" returntype="void" hint="Set rewriteExtension">
-	<cfargument name="rewriteExtension" type="string" required="true"/>
-	<cfset instance.rewriteExtension = arguments.rewriteExtension/>
-</cffunction>
 
 <!------------------------------------------- PACKAGE ------------------------------------------->
 

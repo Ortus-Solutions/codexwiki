@@ -25,14 +25,14 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="Feed" output="false">
-	<cfargument name="coldboxOCM" hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
-	<cfargument name="configBean" hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
-	<cfargument name="rssManager" hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
+	<cfargument name="coldboxOCM" 		hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
+	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
+	<cfargument name="rssManager" 		hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
 	<cfscript>
-		/* Init Abstraction */
-		super.init("feed",arguments.configBean);
+		// Init Abstraction
+		super.init("feed",arguments.configService);
 
-		setBaseURL(arguments.configBean.getKey("sesBaseURL"));
+		setBaseURL(arguments.configService.getSetting("sesBaseURL"));
 		
 		setCacheManager(arguments.coldboxOCM);
 		setRSSManager(arguments.rssManager);

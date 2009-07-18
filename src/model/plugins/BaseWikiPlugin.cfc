@@ -90,11 +90,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- Get the Rewrite Extension --->
 	<cffunction name="getRewriteExtension" access="private" returntype="string" hint="Get the rewrite extension used" output="false" >
-		<cfif instance.controller.getSetting("usingRewrite")>
-			<cfreturn "">
-		<cfelse>
-			<cfreturn ".cfm">
-		</cfif>
+		<cfreturn instance.ConfigService.getrewriteExtension()>
 	</cffunction>
 	
 	<!--- isUsingRewrite --->

@@ -20,13 +20,11 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="VeritySearch" hint="The Search Interface" output="false" 
-			 implements="codex.model.search.adapters.ISearchAdapter">
+<cfcomponent name="VeritySearch" hint="The Search Interface" output="false" implements="codex.model.search.adapters.ISearchAdapter">
 	
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------>
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="codex.model.search.adapters.ISearchAdapter" output="false">
-		<cfargument name="configBean" 	 	type="coldbox.system.beans.configBean" 	required="true" 	hint="the configuration beam">
 		<cfargument name="configService" 	type="codex.model.wiki.ConfigService" 	required="true" 	default="" hint="The Config Service"/>
 		<cfargument name="transfer"	 	 	type="transfer.com.Transfer" 			required="true" 	hint="the Transfer ORM">
 		<cfargument name="datasource"    	type="transfer.com.sql.Datasource" 		required="true" 	hint="the datasource bean">
@@ -36,10 +34,10 @@ $Build ID:	@@build_id@@
 			/* Properties */
 			instance.appName = arguments.configBean.getKey("appName");
 			/* Properties */
-			instance.configBean = arguments.configBean;
 			instance.transfer = arguments.transfer;
 			instance.datasource = arguments.datasource;
 			instance.wikiService = arguments.wikiService;
+			instance.configService = arguments.configService;
 			
 			/* Return */
 			return this;

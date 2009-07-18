@@ -145,6 +145,20 @@ $Build ID:	@@build_id@@
 		<!--- ************************************************************* --->
 		<cfreturn getConfigBean().keyExists(argumentCollection=arguments)>
 	</cffunction>
+	
+	<!--- isUsingRewrite --->
+	<cffunction name="isUsingRewrite" output="false" access="public" returntype="Boolean" hint="if the application is using rewrite or not">
+		<cfreturn getSetting("usingRewrite")>
+	</cffunction>
+	
+	<!--- getRewriteExtension --->
+	<cffunction name="getRewriteExtension" output="false" access="public" returntype="string" hint="Get the rewrite extension">
+		<cfif isUsingRewrite()>
+			<cfreturn "">
+		<cfelse>
+			<cfreturn ".cfm">
+		</cfif>
+	</cffunction>
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 

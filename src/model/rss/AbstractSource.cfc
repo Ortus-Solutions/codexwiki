@@ -70,14 +70,7 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <cffunction name="getRewriteExtension" access="public" returntype="string" hint="Get the rewrite extension" output="false" >
-	<cfscript>
-		if( getconfigService().getSetting("UsingRewrite") ){
-			return "";
-		}
-		else{
-			return ".cfm";
-		}
-	</cfscript>
+	<cfreturn getConfigService().getrewriteExtension()>
 </cffunction>
 
 </cfcomponent>

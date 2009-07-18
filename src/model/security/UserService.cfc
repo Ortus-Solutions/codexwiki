@@ -32,7 +32,6 @@ $Build ID:	@@build_id@@
 		<cfargument name="transfer" 	 type="transfer.com.Transfer" 				required="Yes" hint="the Transfer ORM">
 		<cfargument name="transaction" 	 type="transfer.com.sql.transaction.Transaction" required="Yes" hint="The Transfer transaction">
 		<cfargument name="Datasource" 	 type="transfer.com.sql.Datasource" 		required="Yes" hint="the Datasource obj">
-		<cfargument name="ConfigBean" 	 type="coldbox.system.beans.configBean" 	required="true" hint="The ColdBox Config Bean">
 		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service">
 		<!--- ************************************************************* --->
 		<cfscript>
@@ -40,7 +39,6 @@ $Build ID:	@@build_id@@
 			super.init(argumentCollection=arguments);
 			
 			/* Config Bean */
-			instance.ConfigBean = arguments.ConfigBean;
 			instance.ConfigService = arguments.configService;
 			
 			/* More Transactions */
@@ -388,7 +386,7 @@ $Build ID:	@@build_id@@
 		<cfset saveUser(arguments.User)>
 		
 		<!--- Create Link --->
-		<cfset link = "#instance.configBean.getKey('sesBaseURL')#/user/validateRegistration/confirm/#arguments.user.getuserid()#.cfm">
+		<cfset link = "#instance.configService.getSetting('sesBaseURL')#/user/validateRegistration/confirm/#arguments.user.getuserid()##instance.configService.getRewriteExtension()#">
 		
 		<!--- Email --->
 		<cfsavecontent variable="email">

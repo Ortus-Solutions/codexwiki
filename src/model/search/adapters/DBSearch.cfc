@@ -20,13 +20,11 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="DBSearch" hint="The Search Interface" output="false" 
-			 implements="codex.model.search.adapters.ISearchAdapter">
+<cfcomponent name="DBSearch" hint="The Search Interface" output="false" implements="codex.model.search.adapters.ISearchAdapter">
 	
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------>
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="codex.model.search.adapters.ISearchAdapter" output="false">
-		<cfargument name="configBean" 	 	type="coldbox.system.beans.configBean" 	required="true" 	hint="the configuration beam">
 		<cfargument name="configService" 	type="codex.model.wiki.ConfigService" 	required="true" 	default="" hint="The Config Service"/>
 		<cfargument name="transfer"	 	 	type="transfer.com.Transfer" 			required="true" 	hint="the Transfer ORM">
 		<cfargument name="datasource"    	type="transfer.com.sql.Datasource" 		required="true" 	hint="the datasource bean">
@@ -34,10 +32,10 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			
 			/* Properties */
-			instance.configBean = arguments.configBean;
 			instance.transfer = arguments.transfer;
 			instance.datasource = arguments.datasource;
 			instance.wikiService = arguments.wikiService;
+			instance.configService = arguments.configService;
 			
 			/* Return */
 			return this;
@@ -95,7 +93,7 @@ $Build ID:	@@build_id@@
 		<cfargument name="event" 		type="coldbox.system.beans.requestContext" required="true" default="" hint="The ColdBox Event Context"/>
 		<cfargument name="controller" 	type="coldbox.system.controller" required="true" default="" hint="The coldbox controller"/>
 		<cfset var search = 0>
-		<cfset var pageRoot = instance.configBean.getKey('sesBaseURL') & "/" & instance.configBean.getKey('showKey') & "/" >
+		<cfset var pageRoot = instance.configService.getSetting('sesBaseURL') & "/" & instance.configService.getSetting('showKey') & "/" >
 		
 		<cfsavecontent variable="search">
 		<cfoutput>
@@ -111,10 +109,10 @@ $Build ID:	@@build_id@@
 			<ol>
 			<cfloop query="arguments.result.results">
 				<li>
-					<a href="#pageRoot & page_name & instance.wikiService.getRewriteExtension()#">#replaceNoCase(page_name, "_", " ", "all")# </a><br/>
+					<a href="#pageRoot & page_name & instance.configService.getRewriteExtension()#">#replaceNoCase(page_name, "_", " ", "all")# </a><br/>
 					#highlightSearchTerm(arguments.event.getValue("search_query",''),pagecontent_content)#
 				</li>
-				<cite>#pageRoot#<strong>#page_name#</strong>#instance.wikiService.getRewriteExtension()#</cite>
+				<cite>#pageRoot#<strong>#page_name#</strong>#instance.configService.getRewriteExtension()#</cite>
 				<br /><br />
 			</cfloop>
 			</ol>
