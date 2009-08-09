@@ -63,11 +63,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_enabled" id="comments_enabled"
 			   <cfif rc.CodexOptions.comments_enabled>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_enabled" id="comments_enabled"
 			   <cfif not rc.CodexOptions.comments_enabled>checked="checked"</cfif>
-			   value="0">No		
+			   value="false">No		
 			   
 		<br />	   
 		
@@ -79,11 +79,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_registration" id="comments_registration"
 			   <cfif rc.CodexOptions.comments_registration>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_registration" id="comments_registration"
 			   <cfif not rc.CodexOptions.comments_registration>checked="checked"</cfif>
-			   value="0">No		
+			   value="false">No		
 		<br />
 		
 		<!--- URL Translations --->
@@ -92,11 +92,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_urltranslations" id="comments_urltranslations"
 			   <cfif rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_urltranslations" id="comments_urltranslations"
 			   <cfif not rc.CodexOptions.comments_urltranslations>checked="checked"</cfif>
-			   value="0">No				
+			   value="false">No				
 	</fieldset>
 	
 	<fieldset>
@@ -107,11 +107,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_moderation" id="comments_moderation"
 			   <cfif rc.CodexOptions.comments_moderation>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_moderation" id="comments_moderation"
 			   <cfif not rc.CodexOptions.comments_moderation>checked="checked"</cfif>
-			   value="0">No		
+			   value="false">No		
 			   
 		<br />
 		
@@ -123,11 +123,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
 			   <cfif rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_moderation_whitelist" id="comments_moderation_whitelist"
 			   <cfif not rc.CodexOptions.comments_moderation_whitelist>checked="checked"</cfif>
-			   value="0">No
+			   value="false">No
 	</fieldset>
 	
 	<fieldset>
@@ -138,11 +138,11 @@ $Build ID:	@@build_id@@
 		<input type="radio" 
 			   name="comments_notify" id="comments_notify"
 			   <cfif rc.CodexOptions.comments_notify>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_notify" id="comments_notify"
 			   <cfif not rc.CodexOptions.comments_notify>checked="checked"</cfif>
-			   value="0">No		
+			   value="false">No		
 		
 		<br />
 		
@@ -153,11 +153,11 @@ $Build ID:	@@build_id@@
  		<input type="radio" 
 			   name="comments_moderation_notify" id="comments_moderation_notify"
 			   <cfif rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
-			   value="1">Yes
+			   value="true">Yes
 		<input type="radio" 
 			   name="comments_moderation_notify" id="comments_notify"
 			   <cfif not rc.CodexOptions.comments_moderation_notify>checked="checked"</cfif>
-			   value="0">No		
+			   value="false">No		
 	</fieldset>
 	
 	<!--- Loader --->

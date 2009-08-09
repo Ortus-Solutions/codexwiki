@@ -86,11 +86,11 @@ $Build ID:	@@build_id@@
 			rc.xehLookupList 	= "#instance.viewPackage#lookups/display";
 			/* Load Custom CSS According to settings */
 			for(x=1;x lte listlen(instance.cssList);x=x+1){
-				htmlhead('<link rel="stylesheet" type="text/css" href="' & cssPath & listgetAt(instance.cssList,x) & '" />');
+				$htmlhead('<link rel="stylesheet" type="text/css" href="' & cssPath & listgetAt(instance.cssList,x) & '" />');
 			}
 			/* Load Custom JS According to settings */
 			for(x=1;x lte listlen(instance.jsList);x=x+1){
-				htmlhead('<script type="text/javascript" src="' & jsPath & listgetAt(instance.jsList,x) & '"></script>');	
+				$htmlhead('<script type="text/javascript" src="' & jsPath & listgetAt(instance.jsList,x) & '"></script>');	
 			}		
 		</cfscript> 
 	</cffunction>

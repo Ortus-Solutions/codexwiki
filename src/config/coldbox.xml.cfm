@@ -72,18 +72,10 @@
 		<Setting name="lookups_dsn"					value="codex" />
 	</YourSettings>
 
-	<MailServerSettings />
-
-	<BugTracerReports />
-
-	<WebServices />
-
 	<Layouts>
 		<!--Declare the default layout, MANDATORY-->
 		<DefaultLayout>Layout.Main.cfm</DefaultLayout>
 	</Layouts>
-
-	<i18N />
 
 	<Datasources>
 		<Datasource alias="codex" name="codex" dbtype="mysql" username="" password=""/>

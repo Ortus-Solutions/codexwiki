@@ -20,8 +20,8 @@ Welcom to Codex
 
 CodeX Wiki requires the following:
 
-Transfer 1.0 or greater
-ColdBox 2.6.2 or greater
+Transfer 1.1 or greater
+ColdBox 2.6.4 or greater
 ColdSpring 1.2 or greater
 
 The version for this release of Codex is the following:
@@ -43,6 +43,7 @@ Database Installation
 
 The supported databases at this moment are:
 	- MySQL 5.0 and above
+	- MSSQL 2000 and above
 	
 To install the database, just use mysql command line tools, HeidiSQL or MySQLAdmin
 to restore the database using the script found on the appropriate version.
@@ -52,7 +53,7 @@ to restore the database using the script found on the appropriate version.
 		/migrations
 			/{Version}
 				/codexwiki_MySQLAdminBackup.sql (The entire codex database backup using MySQL Admin)
-				/codexwiki_mysqldump.sql (The entire codex database backup using MySQL dump utility)
+				/codexwiki_MSSQL.sql (The entire codex database backup using MSSQL)
 				/migration.cfm (The coldfusion migration script if upgrading from a another release)
 				/Application.cfm (Where the datasource declaration is located)
 				/assets (A folder of assets used by the migration scripts)
@@ -85,7 +86,7 @@ If you would like to change it, then open the file and change the name of the da
 	<Datasource alias="codex" name="codex" dbtype="mysql" username="" password=""/>
 </Datasources>
 
-4. Make sure that you have Transfer 1.0 or >, ColdBox 2.6.2 or > and ColdSpring 1.2 installed.
+4. Make sure that you have Transfer 1.1 or >, ColdBox 2.6.4 or > and ColdSpring 1.2 installed.
 
 5. If you will not be using url rewrite tools such as mod_rewrite or ISAPI rewrite, then please remove the .htaccess file in the
 root of the application and open the coldbox.xml.cfm configuration file and set the following setting to FALSE:
