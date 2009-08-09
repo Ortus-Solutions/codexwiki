@@ -48,14 +48,16 @@ $(document).ready(function() {
 	<img src="includes/images/page_edit.png" alt="edit" /> Protected:
 	"<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#">#rc.content.getPage().getCleanName()#</a>"
 </h1>
+
 <!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehPasswordCheck)#" method="post" name="passwordForm" id="passwordForm">
 
-	<input type="hidden" name="pageName" value="#rc.content.getPage().getName()#" />
+	<input type="hidden" name="pageID" value="#rc.content.getPage().getPageID()#" />
 	<p>This page is protected. Please enter the page password below and then click on the submit button.</p>
+	
 	<label for="content"><em>*</em> Password</label>
 	<input type="password" name="PagePassword" id="PagePassword" value="" size="30" required="true" />
 		

@@ -62,15 +62,14 @@ $Build ID:	@@build_id@@
 #getPlugin("messagebox").renderit()#
 
 <!--- Table Manager Jumper --->
-<form name="categoriesForm" id="categoriesForm" action="#event.buildlink(rc.xehUpdate & '/category_id/' & rc.category_id)#">
+<form name="categoriesForm" id="categoriesForm" action="#event.buildlink(rc.xehUpdate & '/category_id/' & rc.category_id)#" method="POST">
 	
 	<fieldset>
 	<legend><strong>Category Information</strong></legend>
 	
 	<label for="role">Name</label>
 	<label class="helptext">The name of the category.</label>
-	<input type="text" name="name" id="name" dName="name" size="30" value="#rc.oCategory.getName()#" 
-		   required="true">
+	<input type="text" name="name" id="name" dName="name" size="30" value="#rc.oCategory.getName()#" required="true">
 	
 	</fieldset>
 	
@@ -95,7 +94,7 @@ $Build ID:	@@build_id@@
 		</a>
 		&nbsp;
 		<a href="javascript:submitForm()" class="buttonLinks">
-			<span><img src="includes/images/add.png" border="0" alt="add" />e" />
+			<span><img src="includes/images/add.png" border="0" alt="add" />
 				Update Category
 			</span>
 		</a>

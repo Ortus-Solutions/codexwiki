@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="main"			 extends="baseHandler"			 output="false"			 hint="This is our main wiki handler, all of our funky implicit invocations."			 autowire="true"			 cache="true"			 cacheTimeout="0">
+<cfcomponent extends="baseHandler"			 output="false"			 hint="This is our main wiki handler, all of our funky implicit invocations."			 autowire="true"			 cache="true"			 cacheTimeout="0">
 				 
 	<!--- Dependencies --->
 	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
@@ -31,7 +31,7 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			super.init(arguments.controller);
 			
-			/* Show Keys */
+			// Show Keys
 			instance.showKey = getSetting('showKey');
 			instance.spaceKey = getSetting('spaceKey');
 			
@@ -42,18 +42,20 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- Implicit Events ------------------------------------------>
 
 	<cffunction name="onAppInit" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>
-			/* Get Wiki Options */
+			// Get Wiki Options
 			var Options = getConfigService().getOptions();
-			/* Cache Them */
+			
+			// Cache Them
 			getColdboxOCM().set("CodexOptions",Options,0);
 			
-			/* Check ShowKey */
+			// Check ShowKey
 			if( getSetting("ShowKey") eq "" or getSetting("ShowKey") eq "page"){
 				$throw(message="Invalid Show Key Detected",
 					  detail="The ShowKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
 					  type="Codex.InvalidShowKeyException");
 			}
-			/* Check SpaceKEy */
+			
+			// Check SpaceKEy
 			if( getSetting("SpaceKey") eq "" or getSetting("SpaceKey") eq "page"){
 				$throw(message="Invalid Space Key Detected",
 					  detail="The SpaceKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
@@ -62,7 +64,7 @@ $Build ID:	@@build_id@@
 		</cfscript>	</cffunction>	<cffunction name="onRequestStart" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfset var rc = event.getCollection()>		<!--- CF Debug Mode or Not --->
 		<cfsetting showdebugoutput="#getDebugMode()#">
 		<cfscript>
-			/* Setup the global exit handlers For the admin*/
+			// Setup the global exit handlers For the admin
 			rc.xehAdmin = "admin/main/home";
 			if( reFindnocase("^admin",event.getCurrentEvent()) ){				/* Admin Menu */
 				rc.xehAdminUsers = "admin/users/list";
@@ -85,10 +87,11 @@ $Build ID:	@@build_id@@
 				rc.xehAdminCommentOptions = "admin/config/comments";
 				rc.xehAdminCustomHTML = "admin/config/customhtml";
 				rc.xehAdminLookups = "admin/lookups/display";
-			}			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile/user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.spacekey#/Help/Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
+			}			/* Setup the global exit handlers for the Profile Section */			rc.xehUserProfile = "profile/user/details";			/* Setup the global exit handlers For the public site*/			rc.xehDashboard = "#instance.showKey#/Dashboard";			rc.xehSpecialHelp = "#instance.showkey#/Help:Contents";			rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
 			rc.xehSpecialCategory = "#instance.showKey#/Special:Categories";
 			rc.xehWikiSearch = "page/search";
 			rc.xehPageDirectory = "page/directory";
+			rc.xehSpaceDirectory = "spaces";
 			
 			/* Global User Exit Handlers */			rc.xehUserdoLogin = "user/doLogin";			rc.xehUserLogin = "user/login";			rc.xehUserLogout = "user/logout";			rc.xehUserRegistration = "user/registration";			rc.xehUserReminder = "user/reminder";			/* Get a user from session */			rc.oUser = getSecurityService().getUserSession();			/* Get the wiki's custom HTML */			rc.oCustomHTML = getConfigService().getCustomHTML();			/* Get the wiki's Options */
 			rc.CodexOptions = getColdboxOCM().get('CodexOptions');

@@ -20,8 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="page"
-			 extends="baseHandler"
+<cfcomponent extends="baseHandler"
 			 output="false"
 			 hint="This is our main page handler"
 			 autowire="true"
@@ -42,7 +41,8 @@ $Build ID:	@@build_id@@
 		<cfargument name="controller" type="any" required="yes">
 		<cfscript>
 			super.init(arguments.controller);
-			/* Show Key */
+			
+			// Show Key
 			instance.showKey = getSetting('showKey') & "/";
 
 			return this;
@@ -54,112 +54,81 @@ $Build ID:	@@build_id@@
 	<!--- preHandler --->
 	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="handler interceptor">
 		<cfargument name="Event" type="any" required="yes">
-		<cfset var rc = event.getCollection()>
 		<cfscript>
-			/* Printable Doctype Check */
-			isPrintFormat(arguments.event);
+			var rc = event.getCollection();
 			
-			/* Test For Space Route, if found, create virtual page. */
-			if( event.valueExists("space") and event.valueExists("pageName") ){
-				rc.page = rc.space & ":" & rc.pagename;
+			//default page comes from the settings
+			event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
+			// Get Content For Page To Try To Display
+			rc.content = getWikiService().getContent(pageName=rc.page);
+			// Page Security Handling
+			if( rc.content.getPage().isProtected() AND NOT instance.securityService.isPageViewable(rc.content.getPage()) ){
+				event.overrideEvent('page.protected');
 			}
+			// Printable Doctype Check
+			isPrintFormat(arguments.event);
 		</cfscript>
 	</cffunction>
 
 <!------------------------------------------- PUBLIC ------------------------------------------>
 	
-	<!--- showNamespace --->
-	<cffunction name="showNamespace" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="any" required="yes">
-		<cfset var rc = event.getCollection()>
-		<cfscript>	
-			/* ui table filter js */
-			rc.jsAppendList = 'jquery.uitablefilter';
-			/* Param incoming value, jsut in case */
-			event.paramValue("namespace","");
-			/* Check if Default Namespace or Not? */
-			if( len(rc.namespace) ){
-				/* Get All Pages for the incoming namespace */
-				rc.qPages = getWikiService().getPages(namespace=rc.namespace);
-			}
-			else{
-				/* Get All Pages for the default namespace */
-				rc.qPages = getWikiService().getPages(defaultNamespace=true);
-			}
-			/* Page Title */
-			rc.pageTitle = "Namespace Viewer For: #rc.namespace#";
-			/* View */
-			event.setView(name='wiki/spaceViewer',nolayout=event.getValue("nolayout",false));
-		</cfscript>
-	</cffunction>
-
 	<cffunction name="show" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="any" required="yes">
 		<cfscript>
 			var rc = arguments.event.getCollection();
 
-			/* Exit Handlers */
+			// Exit Handlers
 			rc.onEditWiki="page/edit";
 			rc.onCreateWiki="page/create";
 			rc.onDeleteWiki="page/delete";
 			rc.onShowHistory="page/showHistory";
 
-			//default page comes from the settings
-			arguments.event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
-
-			/* Appends CSS & JS */
+			// Appends CSS & JS
 			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm";
-			
-			/* Get Content For Page */
-			rc.content = getWikiService().getContent(pageName=rc.page);
-			/* Page */
+			// Decode Page
 			rc.urlPage = URLEncodedFormat(rc.page);
-			/* Get Comments if activated */
+			
+			// Get Comments if activated
 			if( rc.codexoptions.comments_enabled ){
 				rc.qComments = instance.CommentsService.getPageComments(pageName=rc.page,
-																	approved=rc.codexoptions.comments_moderation);
+																	    approved=rc.codexoptions.comments_moderation);
 			}
-			/* Set views according to persistance */
+			
+			// Change view if persisted
 			if(rc.content.getIsPersisted()){
-				/* Check for page protection */
-				if( rc.content.getPage().isProtected() AND NOT instance.securityService.isPageViewable(rc.content.getPage()) ){
-					/* JS */
-					rc.jsAppendList = "formvalidation";
-					/* Exit Handler */
-					rc.xehPasswordCheck = "page/passwordCheck";
-					/* View */
-					arguments.event.setView("wiki/showProtected");
-				}
-				/* Check for printing */
-				else if( event.getValue("print","") eq "markup"){
-					arguments.event.setView("wiki/showMarkup");
-				}
-				/* Normal Display */
-				else{
-					arguments.event.setView("wiki/show");
-				}
+				// Normal Display
+				arguments.event.setView("wiki/show");
 			}
 			else{
-				/* Just creation page */
+				// Just creation page by default
 				arguments.event.setView("wiki/create");
 			}
 		</cfscript>
 	</cffunction>
 	
-	<!--- passwordCheck --->
-	<cffunction name="passwordCheck" access="public" returntype="void" output="false" hint="">
+	<cffunction name="protected" access="public" returntype="void" output="false">
 		<cfargument name="Event" type="any" required="yes">
 		<cfscript>	
 			var rc = event.getCollection();
-			/* Get The Page submitted */
-			var page = getWikiService().getPage(pageName=event.getValue("pageName",""));
-			
-			/* Check page exists */
+			// JS
+			rc.jsAppendList = "formvalidation";
+			// Exit Handler
+			rc.xehPasswordCheck = "page/passwordCheck";
+			// View
+			arguments.event.setView("wiki/showProtected");
+		</cfscript>
+	</cffunction>
+	
+	<cffunction name="passwordCheck" access="public" returntype="void" output="false">
+		<cfargument name="Event" type="any" required="yes">
+		<cfscript>	
+			var rc = event.getCollection();
+			// Get The Page submitted
+			var page = getWikiService().getPage(pageID=event.getValue("pageID",""));
+			// Check page exists 
 			if( page.getIsPersisted() ){
-				/* Check if password is valid? */
-				if( compare(page.getPassword(),event.getValue("PagePassword")) eq 0 ){
-					/* Store protected cookie */
-					instance.securityService.authorizePage(page);
+				// Check if password is valid?
+				if( instance.securityService.authorizePage(page,event.getTrimValue("PagePassword","")) ){
 					setNextRoute(route=instance.showKey & page.getName());
 				}
 				else{
@@ -168,7 +137,7 @@ $Build ID:	@@build_id@@
 				}
 			}
 			else{
-				/* Message and take home */
+				// Message and take home
 				getPlugin("messagebox").setMessage(type="error", message="Page not found in our system");
 				setNextEvent(instance.showKey);
 			}

@@ -20,9 +20,8 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="categories"
-			 output="false"
-			 hint="namespace Controller"
+<cfcomponent output="false"
+			 hint="Categories Controller"
 			 extends="codex.handlers.baseHandler"
 			 autowire="true">
 
@@ -136,20 +135,21 @@ $Build ID:	@@build_id@@
 			var oClonedCategory = "";
 			var errors = ArrayNew(1);
 			
-			/* Get and start checks */
+			// Get and start checks
 			oCategory = instance.wikiService.getCategory(categoryID=rc.category_id);
 			oClonedCategory = oCategory.clone();
 			getPlugin("beanFactory").populateBean(oClonedCategory);
 			
-			/* If Different, then re-create */
+			// If Different, then re-create
 			if( oCategory.getName() neq oClonedCategory.getName() ){
-				/* Remove Old Category */
+				// Remove Old Category
 				instance.wikiService.deleteCategory(oCategory.getCategory_id());
-				/* Create New Category */
+				// Create New Category
 				instance.wikiService.saveCategory(oClonedCategory);
+				getPlugin("messagebox").setMessage("info","Category Updated!");
+				setNextRoute(route="admin/categories/list");
 			}
 			else{
-				/* Message of success */
 				getPlugin("messagebox").setMessage("warning","Category did not change, no updates made!");
 				setNextRoute(route="admin/categories/list");
 			}

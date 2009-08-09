@@ -93,6 +93,7 @@ function toggleItems(it){
 			<li><a href="#event.buildLink(rc.xehadminlookups)#">System Lookups</a></li>
 		</ul>
 	</div>
+	
 <!--- ***************************************************************************************************** --->
 <!--- WIKI PROFILE SIDEBAR --->
 <!--- ***************************************************************************************************** --->
@@ -105,6 +106,7 @@ function toggleItems(it){
 			<li><a href="#event.buildLink(rc.xehUserChangePass)#">Change Password</a></li>
 		</ul>
 	</div>
+	
 <!--- ***************************************************************************************************** --->
 <!--- WIKI MAIN SIDEBAR --->
 <!--- ***************************************************************************************************** --->
@@ -117,8 +119,8 @@ function toggleItems(it){
 			<li><a href="#event.buildLink(rc.xehSpecialHelp)#">Help</a></li>
 			<li><a href="#event.buildLink(rc.xehSpecialFeeds)#">Rss Feeds</a></li>
 			<li><a href="#event.buildLink(rc.xehSpecialCategory)#">Category Listing</a></li>
-			<li><a href="#event.buildLink(rc.xehPageDirectory)#">Wiki Page Directory</a></li>
-			
+			<li><a href="#event.buildLink(rc.xehPageDirectory)#">Page Directory</a></li>
+			<li><a href="#event.buildLink(rc.xehSpaceDirectory)#">Namespace Directory</a></li>
 		</ul>
 	</div>
 </cfif>

@@ -206,11 +206,21 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- Authorize a Protected Page --->
-	<cffunction name="authorizePage" access="public" returntype="void" hint="Authorize a user to view a page" output="false" >
+	<cffunction name="authorizePage" access="public" returntype="boolean" hint="Check Authorize a user to view a page" output="false" >
 		<!--- ************************************************************* --->
 		<cfargument name="page" required="true" type="codex.model.wiki.Page" hint="The page object to check">
+		<cfargument name="password" type="string" required="true" default="" hint="The user password to check for verification"/>
 		<!--- ************************************************************* --->
-		<cfset cookie["protection-#hash(arguments.page.getName())#"] = hash(arguments.page.getName() & arguments.page.getPassword())>
+		<cfscript>
+			// Validate Password
+			if( compare(arguments.page.getPassword(),arguments.password) eq 0 ){
+				// Set cookie
+				cookie["protection-#hash(arguments.page.getName())#"] = hash(arguments.page.getName() & arguments.page.getPassword());
+				return true;
+			}
+			
+			return false;
+		</cfscript>
 	</cffunction>	
 	
 	<!--- Check if a potected page is viewable --->

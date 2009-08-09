@@ -122,14 +122,20 @@ $Build ID:	@@build_id@@
 				<td>#cleanupComment(comment)#</td>
 				
 				<td class="center">
+					
+					<!--- ACTIVE INDICATOR --->
 					<cfif isActive>
-						<img src="includes/images/asterisk_orange.png" alt="active" /><strong>Active Version</strong>
+						<img src="includes/images/asterisk_orange.png" alt="active" /> <strong>Active Version</strong>
 					</cfif>
+					
 					<cfif not isActive>
+						<!--- ROLLBACK BUTTON --->
 						<cfif rc.oUser.checkPermission("WIKI_ROLLBACK_VERSION")>
 						<img src="includes/images/arrow_merge.png" alt="rollback" />
 						<a href="#event.buildLink(rc.onReplaceActive & '/id/' & contentid)#" class="rollback" version="#version#">rollback</a>
 						</cfif>
+						
+						<!--- DELETE VERSION --->
 						<cfif rc.oUser.checkPermission("WIKI_DELETE_VERSION")>
 						<img src="includes/images/bin_closed.png" alt="delete" />
 						<a href="#event.buildLink(rc.onDelete & '/id/' & contentid)#" class="delete" version="#version#">delete</a>
@@ -138,9 +144,12 @@ $Build ID:	@@build_id@@
 				</td>
 			</tr>
 		</table>
+		
+		<!--- Loading Bit --->
 		<div class="historyload" id="contentshow_#contentid#" loaded="0">
-		 <span class="loading">Loading...</span>
+			<span class="loading">Loading...</span>
 		</div>
+		
 	</cfloop>
 	<br />
 	<input type="submit" value="View Changes">

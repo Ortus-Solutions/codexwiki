@@ -30,8 +30,8 @@ $Build ID:	@@build_id@@
 	});
 	function attachTableFilter(){
 		//Page Filter
-		theTable = $('##wikiPagesTable');
-		$("##pageFilter").keyup(function(){
+		theTable = $('##wikiSpaceTable');
+		$("##spaceFilter").keyup(function(){
 			$.uiTableFilter(theTable,this.value);
 		});
 	}
@@ -60,29 +60,49 @@ $Build ID:	@@build_id@@
 <!--- Title --->
 <h2>
 	<img src="includes/images/directory.png" border="0" alt="directory" />
-	Page Directory
+	Namespace Directory
 </h2>
 
-<p>Below is the current page directory for this wiki.  You can filter to find specific pages or click on
-the page name to visit the page.</p>
+<p>Below is the current namespace directory for this wiki.  You can filter to find specific spaces or click on
+the space name to visit the namespace viewer.</p>
 
-<label>Show Namespace(s): 
-<img src="includes/images/ajax-spinner.gif" name="namespace_spinner" id="namespace_spinner" class="hidden" alt="spinner" />
-</label>
-
-<cfloop query="rc.qNamespaces">
-	<input type="checkbox" name="namespace" id="namespace" class="namespaces"
-		   value="#namespace_id#" onclick="filterPages()"
-		   <cfif isDefault>checked="checked"</cfif>><cfif len(name)>#name#<cfelse>#description#</cfif>
-</cfloop>
-
-<br /><br />
-
-<label class="inlineLabel">Page Filter: </label>
-<input name="pageFilter" id="pageFilter" value="Type Here To Filter"
+<label class="inlineLabel">Space Filter: </label>
+<input name="spaceFilter" id="spaceFilter" value="Type Here To Filter"
 	   size="50" type="text"
 	   onclick="if(this.value='Type Here To Filter'){this.value='';}">
 
 
-<div id="wikiPagesDiv">#renderView('wiki/directoryPagesTable')#</div>
+<div id="wikiSpacesDiv">
+	<table id="wikiSpaceTable" class="tablelisting" width="100%">
+		<thead>
+			<tr>
+				<th>Namespace</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		<cfloop query="rc.qNamespaces">
+			<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
+				<td>
+					<a href="#event.buildLink(linkto='#getSetting('spaceKey')#/#rc.qNamespaces.name#',translate=false)#">
+					<cfif len(rc.qNamespaces.name)>
+					#rc.qNamespaces.name#
+					<cfelse>
+					Default
+					</cfif>
+					</a>
+				</td>
+				<td>#rc.qnamespaces.description#</td>
+			</tr>
+		</cfloop>
+		</tbody>	
+		
+		<cfif rc.qNamespaces.recordcount eq 0>
+		<tr>
+			<td colspan="2">No Records Found.</td>
+		</tr>
+		</cfif>
+	</table>
+</div>
 </cfoutput>
