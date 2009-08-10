@@ -69,25 +69,40 @@ $Build ID:	@@build_id@@
 			)
 		}
 	);
+	
+	function diff(){
+		var oldv = $(".rb_oldversion:checked").val();
+		var currentv = $(".rb_version:checked").val();
+		var linkTo = "#event.buildLink(linkto=rc.onDiff & '/' & rc.page.getName(), override=true)#";
+		window.location.href = linkTo + "/old_version/" + oldv + "/version/" + currentv + "#event.getRewriteExtension()#";
+	}
 </script>
 </cfoutput>
 </cfsavecontent>
 <cfhtmlhead text="#js#">
 
 <cfoutput>
+
+
+
 <!--- Title --->
 <h1 id="wikiTitle">
 	<img src="includes/images/history.png" border="0" alt="history" />
 	<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.page.getName())))#">#rc.page.getCleanName()#</a>: Page History
 </h1>
 
+<!--- MessageBox --->
 #getPlugin("messagebox").renderit()#
 
 <p>Below is the current history for this page.  You can preview the version by clicking on the version link.</p>
 
+<!--- History Form --->
 <form name="diffForm" id="diffForm" action="#event.buildLink(rc.onDiff & '/' & rc.page.getName())#" method="get">
 	
-	<input type="submit" value="View Changes"><br /><br />
+	<input type="button" value="View Changes" onclick="diff()">
+	
+	<br /><br />
+	
 	<cfloop query="rc.history">
 		<cfif isActive>
 			<cfset activeVersion = version>
@@ -104,14 +119,12 @@ $Build ID:	@@build_id@@
 			
 			<tr>
 				<td>
-					<input type="radio" value="#version#" name="old_version" id="old_version" <cfif version eq (activeVersion-1)>checked="checked"</cfif>>
-					<input type="radio" value="#version#" name="version" id="version" <cfif isActive>checked="checked"</cfif>>
+					<input type="radio" class="rb_oldversion" value="#version#" name="old_version" id="old_version" <cfif version eq (activeVersion-1)>checked="checked"</cfif>>
+					<input type="radio" class="rb_version" value="#version#" name="version" id="version" <cfif isActive>checked="checked"</cfif>>
 				</td>
 				
 				<td class="center"><a href="javascript:doDisplay('#contentid#')">#version#</a></td>
-				
 				<td class="center">#printDate(createddate)# #printTime(createddate,"short")#</td>
-				
 				<td class="center">
 					<!--- Avatar --->
 					#getMyPlugin("avatar").renderAvatar(email:email,size:32)#
