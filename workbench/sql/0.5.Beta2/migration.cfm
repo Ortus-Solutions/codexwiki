@@ -168,6 +168,20 @@ from wiki_permissions
 where permission = 'WIKI_REGISTRATION'
 </cfquery>
 
+
+
+<!--- New Wiki Permissions --->
+<cfquery name="qInsert" datasource="#request.dsn#">
+INSERT INTO wiki_permissions VALUES ('7B0058D2-78D5-4262-B8CBC221AE179FED','COMMENT_MODERATION','Ability to moderate comments.');
+</cfquery>
+<cfquery name="qInsert" datasource="#request.dsn#">
+INSERT INTO wiki_role_permissions VALUES ('7B0058D2-78D5-4262-B8CBC221AE179FED','883C4730-ACC9-1AF4-93737DB4E2E368EF')
+</cfquery>
+
+
+
+
+
 <!--- Get all Help Namespace pages --->
 <cfquery name="qHelp" datasource="#request.dsn#">
 select a.*

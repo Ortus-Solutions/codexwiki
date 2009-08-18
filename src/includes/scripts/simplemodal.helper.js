@@ -1,5 +1,5 @@
 function getLoadingText(){
-	return '<div class="loadingContainer"><span class="loading">Loading Preview...</span></div>'
+	return '<div class="loadingContainer"><span class="loading">Loading...</span></div>'
 }
 function closeModal(){
 	$.modal.close();

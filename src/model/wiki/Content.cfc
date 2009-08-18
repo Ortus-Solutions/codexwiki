@@ -286,6 +286,7 @@ $Build ID:	@@build_id@@
 	<cfscript>
 		setVersion(1);
 		setIsActive(false);
+		setIsReadOnly(false);
 	</cfscript>
 </cffunction>
 

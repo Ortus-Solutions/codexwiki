@@ -31,14 +31,12 @@ $Build ID:	@@build_id@@
 	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfargument name="wikiService" 		hint="the wiki service" type="codex.model.wiki.WikiService" required="Yes">
 	<cfscript>
-		/* Init */
 		super.init(argumentCollection=arguments);
 		
-		/* Dependencies */
+		// Dependencies
 		setWikiService(arguments.wikiService);
 		setConfigService(arguments.configService);
 		
-		/* Return */
 		return this;
 	</cfscript>
 </cffunction>
@@ -57,13 +55,21 @@ $Build ID:	@@build_id@@
 	</cfscript>
 </cffunction>
 
+<cffunction name="saveComment" access="public" returntype="void" hint="Save Comments" output="false" >
+	<cfargument name="comment" type="codex.model.comments.Comment" required="true" default="" hint="The comment"/>
+	<cfscript>
+	arguments.comment.setAuthorIP(cgi.remote_addr);
+	super.save(arguments.comment);	
+	</cfscript>
+</cffunction>
+
 <cffunction name="getAllComments" access="public" returntype="query" hint="Get All Comments" output="false" >
 </cffunction>
 
 <cffunction name="getPageComments" access="public" returntype="query" hint="Get a page's comments" output="false" >
 	<cfargument name="pageName"  	type="string" 	required="false" hint="The page name to use">
 	<cfargument name="pageID"  		type="string" 	required="false" hint="The page ID to use">
-	<cfargument name="approved"  	type="boolean" 	required="false" default="true" hint="Get all approved comments">
+	<cfargument name="moderation"  	type="boolean" 	required="false" default="false" hint="Moderation permission enabled">
 	<cfargument name="active"  		type="boolean"  required="false" default="true" hint="Get all active comments">
 	
 	<cfset var tql = "">
@@ -73,19 +79,22 @@ $Build ID:	@@build_id@@
 	<cfoutput>
 		  SELECT Page.pageID,Page.name, Comment.commentID,
 			   Comment.author, Comment.authorEmail, Comment.authorURL, Comment.authorIP,
-			   Comment.createdDate, Comment.isActive, Comment.isApproved,
+			   Comment.createdDate, Comment.isActive, Comment.isApproved, Comment.content,
 			   CodexUser.fname as UserFirstName, CodexUser.lname as UserLastName, CodexUser.username, 
 			   CodexUser.email as UserEmail
 		  FROM wiki.Comment as Comment
 		  JOIN wiki.Page as Page
 		  OUTER JOIN security.User as CodexUser
-		  WHERE Comment.isActive = :isActive AND
-		  	    Comment.isApproved = :isApproved
+		  WHERE Comment.isActive = :isActive
+		  <cfif NOT arguments.moderation>
+		  	AND Comment.isApproved = :isApproved
+		  </cfif>
 		  <cfif structKeyExists(arguments,"pageName")>
 		  	AND Page.name = :pageName
 		  <cfelseif structKeyExists(arguments,"pageID")>
 		  	AND Page.pageID = :pageID
 		  </cfif>
+		  ORDER BY Comment.createdDate asc
 	</cfoutput>
 	</cfsavecontent>
 	<cfscript>
@@ -93,8 +102,9 @@ $Build ID:	@@build_id@@
 		query.setCacheEvaluation(true);
 
 		query.setParam("isActive", arguments.active, "boolean");
-		query.setParam("isApproved",arguments.approved, "boolean");
-		
+		if ( NOT arguments.moderation){
+			query.setParam("isApproved",true, "boolean");
+		}
 		if( structKeyExists(arguments,"pageName") ){
 			query.setParam("pageName",arguments.pageName);
 		}

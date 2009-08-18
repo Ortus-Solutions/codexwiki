@@ -2546,6 +2546,11 @@ VALUES
   (N'A9D04702-CF1E-5C1B-94C2965619E301C8', N'WIKI_ADMIN', N'Access to all the administrator panels')
 GO
 
+INSERT INTO [dbo].[wiki_permissions] ([permission_id], [permission], [description])
+VALUES 
+  (N'7B0058D2-78D5-4262-B8CBC221AE179FED', N'COMMENT_MODERATION', N'Ability to moderate comments.')
+GO
+
 --
 -- Data for table dbo.wiki_role_permissions  (LIMIT 0,500)
 --
@@ -2628,6 +2633,11 @@ GO
 INSERT INTO [dbo].[wiki_role_permissions] ([FKpermission_id], [FKrole_id])
 VALUES 
   (N'88417F6E-CA8B-53C9-59DEF4C4888CDE82', N'A9D370CD-CF1E-5C1B-9B9B75680AB49DE4')
+GO
+
+INSERT INTO [dbo].[wiki_role_permissions] ([FKpermission_id], [FKrole_id])
+VALUES 
+  (N'7B0058D2-78D5-4262-B8CBC221AE179FED', N'883C4730-ACC9-1AF4-93737DB4E2E368EF')
 GO
 
 --

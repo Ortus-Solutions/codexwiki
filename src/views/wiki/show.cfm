@@ -27,25 +27,12 @@ $Build ID:	@@build_id@@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("##deletePageButton").click(function(){
-			var _this = this;
-			return confirm("Are you sure you wish to delete the page '<strong>#rc.content.getPage().getName()#</strong>'?<br/>This cannot be undone!", function(){
-				gotoLink(_this)
-			});
+		var _this = this;
+		return confirm("Are you sure you wish to delete the page '<strong>#rc.content.getPage().getName()#</strong>'?<br/>This cannot be undone!", function(){
+			gotoLink(_this)
+		});
 	});
 });
-function createNewPage(){
-	var page = ''
-	page = prompt('Please enter the page name to create. Remember that namespaces are followed by a : \nEx: ISDepartment:MyGreatPage or just MyGreatPage?');
-	
-	if( page != undefined && page != ''){
-		page = page.replace(/ /g,"_");
-		window.location='#event.buildLink(linkto=rc.onCreateWiki,override=true)#/'+page+"#event.getRewriteExtension()#";
-	}
-	
-}
-function addComment(){
-
-}
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -54,10 +41,24 @@ function addComment(){
 
 <!--- Print & Floating Top Bar --->
 <cfif not event.valueExists("print")>
+
+<!--- Page Title --->
+<h1 class="wikiPageTitle">#rc.page# 
+<cfif rc.content.getPage().isProtected()><img src="includes/images/lock.png" alt="protected" title="Page is protected!" /></cfif> 
+</h1>
+
+<!--- Top Bar --->	
 <div id="wikiTopToolbar">
+	<!--- Last Edit By --->
+	<div id="wikiLastEditby">
+	last edited by<img src="includes/images/user_icon.gif" alt="usericon"/><strong>#rc.content.getUser().getUsername()#</strong> 
+	on #printDate(rc.content.getcreatedDate())#
+	</div>
+	
+	<div id="wikiTopToolbarActions">
 	<cfif rc.oUser.checkPermission("WIKI_CREATE")>
 		<img src="includes/images/add.png" border="0" alt="add" />
-		<a href="javascript:createNewPage()" title="Create Page">Create Page</a>&nbsp;
+		<a href="#event.buildLink(rc.onCreateWiki)#" title="Create Page">Create Page</a>&nbsp;
 	</cfif>
 	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
 		<img src="includes/images/history.png" border="0" alt="history" />
@@ -66,7 +67,7 @@ function addComment(){
 	<!--- Comments --->
 	<img src="includes/images/comments.png" border="0" alt="comments" />
 	<a href="#event.buildLink(pageShowRoot(urlDecode(rc.page)))###pageComments" title="Comments">Comments</a>
-	
+	</div>
 </div>
 </cfif>
 
@@ -105,19 +106,21 @@ function addComment(){
 		  ) 
 		  OR
 		  NOT rc.content.getisReadOnly()>
-	<div id="wikiPageActionBar">
-		<cfif rc.oUser.checkPermission("WIKI_EDIT")>
-		<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" class="buttonLinks">
-			<span>Edit Page</span>
-		</a>
-		</cfif>
-		&nbsp;
-		<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
-		<a id="deletePageButton" href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="buttonLinks">
-			<span>Delete Page</span>
-		</a>
-		</cfif>
-	</div>
+		<div id="wikiPageActionBar">
+			<cfif rc.oUser.checkPermission("WIKI_EDIT")>
+			<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" class="buttonLinks">
+				<img src="includes/images/page_edit.png" alt="edit" border="0"  />
+				<span>Edit Page</span>
+			</a>
+			</cfif>
+			&nbsp;
+			<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
+			<a id="deletePageButton" href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="buttonLinks">
+				<img src="includes/images/bin_closed.png" alt="edit" border="0" />
+				<span>Delete Page</span>
+			</a>
+			</cfif>
+		</div>
 	</cfif>
 	
 	<!--- Format Bar --->
@@ -142,7 +145,7 @@ function addComment(){
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/word'))#" target="_blank">Word</a>
 	</div>
 	
-	<!--- Comments --->
+	<!--- Comments, if Enabled? --->
 	<cfif rc.codexoptions.comments_enabled>
 	#renderView('wiki/comments')#
 	</cfif>

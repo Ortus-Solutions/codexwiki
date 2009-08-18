@@ -79,19 +79,22 @@ $Build ID:	@@build_id@@
 
 			// Exit Handlers
 			rc.onEditWiki="page/edit";
-			rc.onCreateWiki="page/create";
+			rc.onCreateWiki="page/new";
 			rc.onDeleteWiki="page/delete";
 			rc.onShowHistory="page/showHistory";
+			rc.xehComments = "comments.add";
+			rc.xehCommentRemove = "comments.delete";
+			rc.xehCommentStatus = "comments.approve";
 
 			// Appends CSS & JS
-			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm";
+			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm,formvalidation";
+			
 			// Decode Page
 			rc.urlPage = URLEncodedFormat(rc.page);
 			
 			// Get Comments if activated
 			if( rc.codexoptions.comments_enabled ){
-				rc.qComments = instance.CommentsService.getPageComments(pageName=rc.page,
-																	    approved=rc.codexoptions.comments_moderation);
+				rc.qComments = instance.CommentsService.getPageComments(pageID=rc.content.getPage().getPageID(),moderation=rc.oUser.checkPermission("COMMENT_MODERATION"));
 			}
 			
 			// Change view if persisted
@@ -142,6 +145,25 @@ $Build ID:	@@build_id@@
 				setNextEvent(instance.showKey);
 			}
 			
+		</cfscript>
+	</cffunction>
+	
+	<cffunction name="new" access="public" returntype="void" output="false" hint="New Page">
+		<cfargument name="Event" type="any" required="yes">
+	    <cfscript>
+	    	var rc = event.getCollection();
+			
+			rc.xehCreate = "page.create";
+			
+			if( NOT rc.oUser.checkPermission("WIKI_CREATE") ){
+				getPlugin("MessageBox").setMessage(type="warning", message="You do not have permission to create new pages");
+				setNextRoute(route=instance.showKey);
+				return;
+			}
+			
+			rc.qNameSpaces = getWikiService().getNamespaces();
+			
+			event.setView("wiki/newpage");
 		</cfscript>
 	</cffunction>
 

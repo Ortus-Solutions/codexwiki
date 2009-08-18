@@ -751,14 +751,62 @@ div#categories ul li {
 	text-align:center;
 }
 #wikiTopToolbar{
+	font-size: 10px;
+	color: #666666;
 	text-align: right;
-	margin: 5px 0px 15px 0px;
+	padding: 5px 10px 5px 10px;
+	border-bottom: 1px solid #9b9b9b;;
+	border-top: 1px solid #9b9b9b;
+	background-color: #E0F1BA;
+}
+.wikiPageTitle{
+	color: #32576B;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 1em;
+	text-align: left;
+	margin-bottom: 10px;
+}
+#wikiTopToolbar #wikiLastEditby{
+	float:left;
 }
 #wikiPageActionBar{
-	text-align: right;
 	margin-top: 20px;
-	
+	font-size: 10px;
+	color: #666666;
+	text-align: right;
+	padding: 10px 10px 10px 10px;
 }
 #contentCategories{
 	width: 98%;
+}
+.pageComment{
+	border-bottom: 1px solid #E5E5E5;
+	color: #222222;
+	margin-bottom: 18px;
+	margin-left: 5px;
+}
+.pageCommentUnapproved{
+	border: 1px dotted #F00000;
+	background: #fffff0;
+}
+.pageComment h4{
+	font-weight: bold;
+}
+.pageComment p{
+	color: #666666;
+	font-size: 10px;
+}
+.pageCommentContent{
+	clear:both;
+	margin: 5px 0px 15px 5px;
+	font-size: 12px;
+}
+.pageCommentPicture{
+	float: left;
+	padding: 5px;
+	height: 60px;
+}
+#commentButtonBar{
+	margin:10px 0px 10px 5px;	
 }

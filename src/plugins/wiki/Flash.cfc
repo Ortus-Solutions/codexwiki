@@ -74,14 +74,14 @@ $Build ID:	@@build_id@@
 				height="#arguments.height#"
 				data="#arguments.data#">
 			
-			<param name="movie" 			value="#arguments.movie#">
+			<param name="movie" 			value="#arguments.movie#" />
 			<param name="quality" 			value="#arguments.quality#" />
-			<param name="bgColor"			value="#arguments.bgColor#">
-			<param name="allowFullScreen"	value="#arguments.allowFullScreen#">
+			<param name="bgColor"			value="#arguments.bgColor#" />
+			<param name="allowFullScreen"	value="#arguments.allowFullScreen#" />
 			<param name="scale" 			value="#arguments.scale#" />	
-			<param name="movie"				value="#arguments.movie#">
-			<param name="FlashVars"			value="#arguments.FlashVars#">
-			<param name="allowScriptAccess" value="#arguments.allowScriptAccess#">
+			<param name="movie"				value="#arguments.movie#" />
+			<param name="FlashVars"			value="#arguments.FlashVars#" />
+			<param name="allowScriptAccess" value="#arguments.allowScriptAccess#" />
 			<embed height="#arguments.height#"
 				   width="#arguments.width#" 
 				   allowscriptaccess="#arguments.allowScriptAccess#" 
