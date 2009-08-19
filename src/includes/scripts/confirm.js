@@ -34,8 +34,7 @@ function confirm(msg, callback)
 			close: true,
 			containerId: "modalConfirmContainer",
 			onShow: function(dialog)
-				{
-					
+				{	
                     dialog.data.find("#message").append(msg);
 					var yes = dialog.data.find("#yes");
 					var no = dialog.data.find("#no");

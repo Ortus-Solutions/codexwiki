@@ -177,6 +177,9 @@ INSERT INTO wiki_permissions VALUES ('7B0058D2-78D5-4262-B8CBC221AE179FED','COMM
 <cfquery name="qInsert" datasource="#request.dsn#">
 INSERT INTO wiki_role_permissions VALUES ('7B0058D2-78D5-4262-B8CBC221AE179FED','883C4730-ACC9-1AF4-93737DB4E2E368EF')
 </cfquery>
+<cfquery name="qInsert" datasource="#request.dsn#">
+INSERT INTO wiki_securityrules VALUES ('C20DF4C9-9656-4A57-AC53529B7A3F33A9',NULL,'^comments\\.(delete|approve)$','COMMENT_MODERATION',0,'user/login.cfm')
+</cfquery>
 
 
 

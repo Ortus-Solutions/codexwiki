@@ -45,11 +45,7 @@ function confirmDelete(recordID){
 }
 function directoryDialog(namespace){
 	var data = {nolayout:'true'};
-	var HelpModal = $(getLoadingText()).modal({
-		onOpen: function(dialog){ openDialog(dialog) },
-		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.xehNamespaceViewer)#/"+namespace,data)},
-		onClose: function(dialog){ closeDialog(dialog) }
-		});
+	openModal("#event.BuildLink(rc.xehNamespaceViewer)#/"+namespace,data);
 }
 $(document).ready(function() {
 	// call the tablesorter plugin

@@ -2713,6 +2713,11 @@ VALUES
   (N'CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F', NULL, N'^page\.(edit|doEdit)$', N'WIKI_EDIT', 0, N'user/login.cfm')
 GO
 
+INSERT INTO [dbo].[wiki_securityrules] ([securityrule_id], [whitelist], [securelist], [permissions], [authorize_check], [redirect])
+VALUES 
+  (N'C20DF4C9-9656-4A57-AC53529B7A3F33A9', NULL, N'^comments\.(delete|approve)$', N'COMMENT_MODERATION', 0, N'user/login.cfm')
+GO
+
 --
 -- Data for table dbo.wiki_users  (LIMIT 0,500)
 --

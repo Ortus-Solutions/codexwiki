@@ -15,6 +15,7 @@
 			<property name="password" 	type="string" column="page_password" nullable="true"/>
 			<property name="description" 	type="string" column="page_description" nullable="true"/>
 			<property name="keywords" 	type="string" column="page_keywords" nullable="true"/>
+			<property name="allowComments" 	type="boolean" column="page_allowcomments"/>
 			<manytoone name="Namespace">
 				<link column="FKnamespace_id" to="wiki.Namespace"/>
 			</manytoone>

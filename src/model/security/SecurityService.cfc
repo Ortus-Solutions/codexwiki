@@ -71,6 +71,7 @@ $Build ID:	@@build_id@@
 		<cfelse>
 			<cfset authResults = true>
 		</cfif>		
+		
 		<!--- Loop Over Permissions --->
 		<cfif len(arguments.rule.permissions)>
 			<cfloop list="#arguments.rule['permissions']#" index="thisPermission">

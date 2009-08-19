@@ -257,7 +257,8 @@ INSERT INTO "codex"."wiki_securityrules" VALUES  ('88572359-B40D-B373-DE9E3DA49F
  ('C42D5746-CF1E-5C1B-9D676C9985BA89CC',NULL,'^page\\.delete$','WIKI_DELETE_PAGE',0,'user/login.cfm'),
  ('C42DE4B2-CF1E-5C1B-9780791CABD241E8',NULL,'^page\\.replace','WIKI_ROLLBACK_VERSION',0,'user/login.cfm'),
  ('C4317156-CF1E-5C1B-917C1C422FF1B6D7',NULL,'^page\\.(create|doCreate)$','WIKI_CREATE',0,'user/login.cfm'),
- ('CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F',NULL,'^page\\.(edit|doEdit)$','WIKI_EDIT',0,'user/login.cfm');
+ ('CE69AF93-CF1E-5C1B-9E984A4FE2CECE6F',NULL,'^page\\.(edit|doEdit)$','WIKI_EDIT',0,'user/login.cfm'),
+ ('C20DF4C9-9656-4A57-AC53529B7A3F33A9',NULL,'^comments\\.(delete|approve)$','COMMENT_MODERATION',0,'user/login.cfm');
 
 DROP TABLE IF EXISTS "codex"."wiki_users";
 CREATE TABLE  "codex"."wiki_users" (

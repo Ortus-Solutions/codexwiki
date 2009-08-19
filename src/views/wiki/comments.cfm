@@ -3,11 +3,7 @@
 <script type="text/javascript">
 function addComment(){
 	var data = {pageID: '#rc.content.getPage().getPageID()#'};
-	var HelpModal = $(getLoadingText()).modal({
-		onOpen: function(dialog){ openDialog(dialog) },
-		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.xehComments)#",data)},
-		onClose: function(dialog){ closeDialog(dialog) }
-		});
+	openModal("#event.BuildLink(rc.xehComments)#",data,550,600);
 }
 function deleteComment(commentID){
 	var data = {commentID:commentID, ajax:true}

@@ -29,20 +29,12 @@ $Build ID:	@@build_id@@
 function CodexPreview(){
 	var content = $("##content");
 	var data = {content: content.val(), pagename: "#rc.content.getPage().getName()#"};
-	var preview = $(getLoadingText()).modal({
-		onOpen: function(dialog){ openDialog(dialog) },
-		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.onPreview)#",data) },
-		onClose: function(dialog){ closeDialog(dialog) }
-		});
+	openModal("#event.BuildLink(rc.onPreview)#",data);
 }
 function pageDialog(pagename){
 	//CheatSheet
 	var data = {page: pagename};
-	var HelpModal = $(getLoadingText()).modal({
-		onOpen: function(dialog){ openDialog(dialog) },
-		onShow: function(dialog){ showDialog(dialog,"#event.BuildLink(rc.onPageRender)#",data)},
-		onClose: function(dialog){ closeDialog(dialog) }
-		});
+	openModal("#event.BuildLink(rc.onPageRender)#",data);
 }
 function submitForm(){
 	needToConfirm=false;
@@ -88,6 +80,7 @@ $(document).ready(function() {
 	
 	<!--- Control Holder & Text Area --->
 	<div class="float-right">
+		<img src="includes/images/star.png" alt="cheatsheet" border="0" />
 		<a href="javascript:pageDialog('#rc.onCheatSheet#')">Markup Cheatsheet</a>
 		| 
 		<a class="externallink" href="#event.buildLink(pageShowRoot('Help:Contents'))#">Wiki Help</a>
@@ -124,25 +117,36 @@ $(document).ready(function() {
 		You can password protect this page from viewing by providing a password below.<br />
 		<input type="text" name="PagePassword" id="PagePassword" value="#rc.content.getpage().getPassword()#" size="50">
 		
+		</div>
+		
+	</div>
+	</fieldset>
+	
+	<!--- Comment Editing --->
+	<fieldset title="Publishing Information">
+	<div>
+		<legend>Publishing Information</legend>
+		
+		<!--- Comments Allow? --->
+		<label>
+		<input value="true" id="allowComments" type="checkbox" name="allowComments" <cfif rc.content.getPage().getAllowComments()>checked="checked"</cfif>/>
+		Allow Comments
+		</label> 
+		Allow comments on this page or not.
+		
+		<!--- Page Read Only --->
 		<label>
 		<input value="true" id="isReadOnly" type="checkbox" name="isReadOnly" <cfif rc.content.getIsReadOnly()>checked="checked"</cfif>/>
 		Page is read-only
 		</label> 
 		If checked, only page author <strong>#rc.oUser.getUsername()#</strong> and a user with WIKI_ADMIN privileges can edit a read-only page.
-		</div>
-	</div>
-	</fieldset>
-	
-	<!--- Comment Editing --->
-	<fieldset title="Content Information">
-	<div>
-		<legend>Content Information</legend>
+		
 		
 		<!--- Categories --->
 		<label for"contentCategories">Content Categories</label>
 		<em>You can tag this page with existing categories by choosing from the list below. For adding new categories, 
 			use the <strong>'<img src="includes/scripts/markitup/sets/wiki/images/categories.gif" alt="category" /> category'</strong> 
-			button in the wiki editor or the wiki admin.</em><br />
+			button in the wiki editor.</em><br />
 		<select name="contentCategories" id="contentCategories" multiple="true" size="5">
 			<cfloop query="rc.qCategories">
 				<option value="#rc.qCategories.category_id#" <cfif rc.content.checkCategory(rc.qCategories.category_id)>selected="selected"</cfif> >#rc.qCategories.name#</option>
@@ -150,12 +154,14 @@ $(document).ready(function() {
 		</select>
 		
 		<!--- Comments --->
-		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Comment about this change
+		<label for="comment"><cfif rc.CodexOptions.wiki_comments_mandatory><em>*</em></cfif> Commit Comment
 		<cfif not rc.codexOptions.wiki_comments_mandatory>(Optional)</cfif></label>
 		<textarea name="comment" id="comment" rows="3" cols="50"></textarea>
 	</div>
 	</fieldset>
-
+	
+	<div>* Required </div>
+	
 	<!--- Loader --->
 	<div id="_loader" class="align-center formloader">
 		<p>

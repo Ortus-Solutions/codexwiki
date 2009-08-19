@@ -435,8 +435,7 @@ $Build ID:	@@build_id@@
 			
 			/* Validate Content */
 			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
-			if(ArrayLen(messages))
-			{
+			if(ArrayLen(messages)){
 				/* MB & content set */
 				getPlugin("messagebox").setMessage(type="warning", messageArray=messages);
 				rc.content = oContent;
@@ -445,45 +444,45 @@ $Build ID:	@@build_id@@
 				/* ReRoute with persistence */
 				setNextRoute(route="page/edit/" & rc.pageName, persist="content");
 			}
-			else
-			{
-				/* Check for Version Modifications just before saving */
-				if( oActiveContent.getVersion() neq rc.pageVersion ){
-					getPlugin("messagebox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
-					/* ReRoute */
-					setNextRoute(route=instance.showKey & rc.pageName);
-				}
-				
-				/* Populate content with Categories from select */
-				if( len(event.getTrimValue("contentCategories","")) ){
-					oContent.clearCategory();
-					for(x=1; x lte listLen(rc.contentCategories); x=x+1){
-						thisCategory = getWikiService().getCategory(categoryID=listGetAt(rc.contentCategories,x));
-						oContent.addCategory(thisCategory);
-					}
-				}
-				
-				/* Save New Content to page */
-				rc.page.addContentVersion(oContent);
-				
-				/* Check for Page Renaming */
-				if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
-					rc.page.setName(rc.RenamePageName);
-					rc.pageName = rc.RenamePageName;
-				}
-				
-				/* Set Page Extra Properties */
-				rc.page.setTitle(event.getTrimValue("title"));
-				rc.page.setPassword(event.getTrimValue("PagePassword"));
-				rc.page.setDescription(event.getTrimValue("Description"));
-				rc.page.setKeywords(event.getTrimValue("Keywords"));
-				
-				/* Save this Page */
-				getWikiService().savePage(rc.page);
-				
-				/* Re Route */
-				setNextRoute(route=instance.showKey & rc.pageName, persist="page");
+			
+			
+			/* Check for Version Modifications just before saving */
+			if( oActiveContent.getVersion() neq rc.pageVersion ){
+				getPlugin("messagebox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
+				/* ReRoute */
+				setNextRoute(route=instance.showKey & rc.pageName);
 			}
+			
+			/* Populate content with Categories from select */
+			if( len(event.getTrimValue("contentCategories","")) ){
+				oContent.clearCategory();
+				for(x=1; x lte listLen(rc.contentCategories); x=x+1){
+					thisCategory = getWikiService().getCategory(categoryID=listGetAt(rc.contentCategories,x));
+					oContent.addCategory(thisCategory);
+				}
+			}
+			
+			/* Save New Content to page */
+			rc.page.addContentVersion(oContent);
+			
+			/* Check for Page Renaming */
+			if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
+				rc.page.setName(rc.RenamePageName);
+				rc.pageName = rc.RenamePageName;
+			}
+			
+			/* Set Page Extra Properties */
+			rc.page.setTitle(event.getTrimValue("title"));
+			rc.page.setPassword(event.getTrimValue("PagePassword"));
+			rc.page.setDescription(event.getTrimValue("Description"));
+			rc.page.setKeywords(event.getTrimValue("Keywords"));
+			rc.page.setAllowComments(event.getValue("allowComments","false"));
+			
+			/* Save this Page */
+			getWikiService().savePage(rc.page);
+			
+			/* Re Route */
+			setNextRoute(route=instance.showKey & rc.pageName, persist="page");
 		</cfscript>
 	</cffunction>
 

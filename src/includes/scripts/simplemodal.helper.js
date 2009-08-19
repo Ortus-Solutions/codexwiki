@@ -4,6 +4,16 @@ function getLoadingText(){
 function closeModal(){
 	$.modal.close();
 }
+function openModal(link,data,w,h){
+	if( h ){ var props = {width: w, height:h}	}
+	else{ var props = {width: w} }
+	var preview = $(getLoadingText()).modal({
+		containerCss: props,
+		onOpen: function(dialog){ openDialog(dialog) },
+		onShow: function(dialog){ showDialog(dialog,link,data) },
+		onClose: function(dialog){ closeDialog(dialog) }
+		})
+}
 function openDialog(dialog){
 	dialog.overlay.fadeIn("normal", function()
 	 	{

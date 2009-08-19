@@ -146,7 +146,7 @@ $(document).ready(function() {
 	</div>
 	
 	<!--- Comments, if Enabled? --->
-	<cfif rc.codexoptions.comments_enabled>
+	<cfif rc.codexoptions.comments_enabled AND rc.content.getPage().getAllowComments()>
 	#renderView('wiki/comments')#
 	</cfif>
 </cfif>
