@@ -49,24 +49,25 @@ $(document).ready(function() {
 
 <!--- Top Bar --->	
 <div id="wikiTopToolbar">
+
 	<!--- Last Edit By --->
 	<div id="wikiLastEditby">
 	last edited by<img src="includes/images/user_icon.gif" alt="usericon"/><strong>#rc.content.getUser().getUsername()#</strong> 
 	on #printDate(rc.content.getcreatedDate())#
 	</div>
 	
+	<!--- Page Toolbar --->
 	<div id="wikiTopToolbarActions">
-	<cfif rc.oUser.checkPermission("WIKI_CREATE")>
-		<img src="includes/images/add.png" border="0" alt="add" />
-		<a href="#event.buildLink(rc.onCreateWiki)#" title="Create Page">Create Page</a>&nbsp;
-	</cfif>
-	<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
-		<img src="includes/images/history.png" border="0" alt="history" />
-		<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#" title="Page History">Page History</a>
-	</cfif>
-	<!--- Comments --->
-	<img src="includes/images/comments.png" border="0" alt="comments" />
-	<a href="#event.buildLink(pageShowRoot(urlDecode(rc.page)))###pageComments" title="Comments">Comments</a>
+		<!--- Create Button --->
+		<cfif rc.oUser.checkPermission("WIKI_CREATE")>
+			<img src="includes/images/add.png" border="0" alt="add" />
+			<a href="#event.buildLink(rc.onCreateWiki)#" title="Create Page">Create Page</a>&nbsp;
+		</cfif>
+		<!--- Page History Button --->
+		<cfif rc.oUser.checkPermission("WIKI_VIEW_HISTORY")>
+			<img src="includes/images/history.png" border="0" alt="history" />
+			<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#" title="Page History">Page History</a>
+		</cfif>
 	</div>
 </div>
 </cfif>
