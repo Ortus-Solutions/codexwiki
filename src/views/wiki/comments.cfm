@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function addComment(){
 	var data = {pageID: '#rc.content.getPage().getPageID()#'};
-	openModal("#event.BuildLink(rc.xehComments)#",data,550,600);
+	openModal("#event.BuildLink(rc.xehComments)#",data,550,650);
 }
 function deleteComment(commentID){
 	var data = {commentID:commentID, ajax:true}
@@ -13,6 +13,7 @@ function deleteComment(commentID){
 			if( results ){
 				$("##pageComment_"+commentID).fadeOut();
 				$("##pageComment_"+commentID).remove();
+				$("##pageCommentCount").text($("##pageCommentCount").text()-1);
 			}
 			else{
 				$("##pageCommentMessages_"+commentID).html('<strong>Oops! Something went wrong</strong><br/>' + results);
@@ -45,12 +46,17 @@ function approveComment(commentID){
 <cfoutput>
 <div id="pageComments">
 
-	<!--- Title --->
-	<h2><a name="pageComments"></a><img src="includes/images/comments.png" alt="comments" /> 
-	Comments (#rc.qComments.recordcount#)</h2>
+	<!---  Comment Header --->
+	<div id="pageCommentHeader">
+		<a name="pageComments"></a>
+		<p>
+			<img src="includes/images/comments.png" alt="comments" /> 
+			Comments (<span id="pageCommentCount">#rc.qComments.recordcount#</span>)
+		</p>
+	</div>
 	
 	<!--- Add Comments? --->
-	<div id="commentButtonBar">
+	<div id="pageCommentButtonBar">
 	<cfif ( rc.codexOptions.comments_registration and rc.oUser.getIsAuthorized() ) 
 		  OR
 		  rc.codexOptions.comments_registration eq false>
@@ -78,8 +84,12 @@ function approveComment(commentID){
 			<div class="pageCommentPicture">
 			#getMyPlugin("avatar").renderAvatar(email=rc.qComments.authorEmail,size=60)#
 			</div>
+			
+			<!--- Comment Author --->
 			<h4>
-				<cfif len(rc.qComments.authorURL)><a href="#rc.qComments.AuthorURL#" title="Open #rc.qComments.AuthorURL#"><img src="includes/images/link.png" alt="url" border="0" /></a></cfif>
+				<cfif len(rc.qComments.authorURL)>
+					<a href="<cfif NOT findnocase("http",rc.qComments.AuthorURL)>http://</cfif>#rc.qComments.AuthorURL#" title="Open #rc.qComments.AuthorURL#"><img src="includes/images/link.png" alt="url" border="0" /></a>
+				</cfif>
 				<strong>#rc.qComments.author#</strong> said
 			</h4>
 			<p>at #printTime(rc.qComments.createdDate)# #printDate(rc.qComments.createdDate)#</p>

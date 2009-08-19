@@ -35,6 +35,9 @@ function prepareCommentSubmit(){
 <h2><img src="includes/images/comments.png" border="0" alt="comments" /> Add A Comment</h2>
 <p>Please use the form below to enter a new comment into the system</p>
 
+<!--- Messagebox --->
+#getPlugin("messagebox").renderit()#
+
 <form name="addNewCommentForm" id="addNewCommentForm" action="#event.buildLink(rc.xehSave)#" method="POST">
 	
 	<input type="hidden" name="pageID" id="pageID" value="#rc.pageID#" />
@@ -64,10 +67,9 @@ function prepareCommentSubmit(){
 		<!--- Display CAPTCHA image --->  
    		#getMyPlugin('captcha').display()#<br />  
 		
+	<div>* Required</div>
 	</div>
 	</fieldset>
-	
-	<div>* Required</div>
 	
 	<!--- Loader Bar --->
 	<div id="_loader" class="align-center formloader">

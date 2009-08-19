@@ -80,6 +80,10 @@ $Build ID:	@@build_id@@
 				rc.authorEmail = rc.oUser.getEmail();
 			}
 			
+			if( rc.codexoptions.comments_moderation ){ 
+				getPlugin("MessageBox").setMessage(type="warning", message="Comment moderation is enabled!");				
+			}
+			
 			event.setView("wiki/addComments");
 		</cfscript>
 	</cffunction>

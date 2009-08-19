@@ -807,6 +807,17 @@ div#categories ul li {
 	padding: 5px;
 	height: 60px;
 }
-#commentButtonBar{
+#pageCommentButtonBar{
 	margin:10px 0px 10px 5px;	
+}
+#pageCommentHeader{
+	background: #EFEACB;
+	line-height: 25px;
+	margin-bottom: 15px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+}
+#pageCommentHeader p{
+	font-weight: bold;
 }

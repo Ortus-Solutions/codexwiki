@@ -112,7 +112,7 @@ function toggleItems(it){
 <!--- ***************************************************************************************************** --->
 <cfelse>
 	<!--- Wiki Main Menu --->
-	<h1 onclick="toggleItems('sb_wikimenu')"> <img src="includes/images/home.png" alt="home"/> Wiki Menu</h1>
+	<h1 onclick="toggleItems('sb_wikimenu')"> <img src="includes/images/home.png" alt="home"/> SideBar</h1>
 	<div class="left-box" id="sb_wikimenu">
 		<ul class="sidemenu">
 			<li><a href="#event.buildLink(pageShowRoot(rc.CodexOptions.wiki_defaultpage))#">#rc.codexOptions.wiki_defaultpage_label#</a></li>
