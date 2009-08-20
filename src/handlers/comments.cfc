@@ -124,31 +124,21 @@ $Build ID:	@@build_id@@
 				setNextRoute(route=getSetting('showKey') & "/" & rc.page.getName());
 			}
 			
-			// Get New Comment
+			// Get New Comment To Save
 			rc.oComment = instance.CommentsService.getComment();
 			
 			// Cleanup Comment COntent
 			rc.content = xmlFormat(trim(rc.content));
-			// Check if activating URL's
-			if( rc.codexOptions.comments_urltranslations ){
-				rc.content = getMyPlugin("util").activateURL(rc.content);
-			}
 			
-			// Are we Moderating?
-			if( NOT rc.codexOptions.comments_moderation ){ rc.oComment.setIsApproved(true); }
-			
-			// Populate it
+			// Populate The comment with the data.
 			getPlugin("beanFactory").populateBean(rc.oComment);
+			// Link it to the page.
 			rc.oComment.setPage(rc.page);
-			
-			// User Logged In?
-			if( rc.oUser.getIsAuthorized() ){
-				rc.oComment.setUser(rc.oUser);
-			}
 			
 			// Save it
 			instance.commentsService.saveComment(rc.oComment);
 			
+			// Message to show.
 			rc.message = "Comment added!";
 			if( rc.codexoptions.comments_moderation ){
 				rc.message = rc.message & " Comment moderation is enabled, so your comment will appear when it is approved.";

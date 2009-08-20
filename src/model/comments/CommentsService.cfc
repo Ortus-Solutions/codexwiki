@@ -30,12 +30,16 @@ $Build ID:	@@build_id@@
 	<cfargument name="datasource" 		hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
 	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfargument name="wikiService" 		hint="the wiki service" type="codex.model.wiki.WikiService" required="Yes">
+	<cfargument name="securityService" 	hint="the security service" type="codex.model.security.SecurityService" required="Yes">
 	<cfscript>
 		super.init(argumentCollection=arguments);
 		
 		// Dependencies
 		setWikiService(arguments.wikiService);
 		setConfigService(arguments.configService);
+		setSecurityService(arguments.securityService);
+		
+		instance.codexOptions = getConfigService().getOptions();
 		
 		return this;
 	</cfscript>
@@ -58,8 +62,37 @@ $Build ID:	@@build_id@@
 <cffunction name="saveComment" access="public" returntype="void" hint="Save Comments" output="false" >
 	<cfargument name="comment" type="codex.model.comments.Comment" required="true" default="" hint="The comment"/>
 	<cfscript>
-	arguments.comment.setAuthorIP(cgi.remote_addr);
-	super.save(arguments.comment);	
+		var oUser = getSecurityService().getUserSession();
+		var content = arguments.comment.getContent();
+		
+		// Log the IP Address
+		arguments.comment.setAuthorIP(cgi.remote_addr);
+		
+		// Link Comment To User if not anonymous user
+		if( oUser.getIsAuthorized() ){
+			arguments.comment.setUser(oUser);
+		}
+		
+		// Check if activating URL's on Comment Content
+		if( instance.codexOptions.comments_urltranslations ){
+			arguments.comment.setContent( getUtil().activateURL(content) );
+		}
+		
+		// Are we moderating? Else set approved already
+		if( NOT instance.codexOptions.comments_moderation ){ 
+			arguments.comment.setIsApproved(true); 
+		}
+		else{
+			// Check if user has already an approved comment. If they do, then approve them
+			// Else, send email notification of comment that needs moderation.
+			
+			// send comment moderation email
+		}
+		
+		// send a comment made notification.
+		
+		// send for saving.
+		super.save(arguments.comment);	
 	</cfscript>
 </cffunction>
 
@@ -118,6 +151,15 @@ $Build ID:	@@build_id@@
 
 
 <!------------------------------------------- Dependencies ------------------------------------------->
+
+<!--- Get/Set Security Service --->
+<cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">
+	<cfreturn instance.securityService />
+</cffunction>
+<cffunction name="setSecurityService" access="private" returntype="void" output="false">
+	<cfargument name="securityService" type="codex.model.security.SecurityService" required="true">
+	<cfset instance.securityService = arguments.securityService />
+</cffunction>
 
 <cffunction name="getwikiService" access="private" output="false" returntype="codex.model.wiki.WikiService" hint="Get wikiService">
 	<cfreturn instance.wikiService/>

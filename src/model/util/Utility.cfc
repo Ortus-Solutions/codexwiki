@@ -22,6 +22,12 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="utility" hint="A utility component for developer usage." output="false">
 
+	<!--- activateURL --->
+	<cffunction name="activateURL" output="false" access="public" returntype="any" hint="Activate URL's">
+		<cfargument name="text" type="string">
+		<cfreturn REReplaceNoCase(arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL")>
+	</cffunction>
+
 	<cffunction name="sleeper" access="public" returntype="void" output="false" hint="Make the main thread of execution sleep for X amount of seconds.">
 		<!--- ************************************************************* --->
 		<cfargument name="milliseconds" type="numeric" required="yes" hint="Milliseconds to sleep">
