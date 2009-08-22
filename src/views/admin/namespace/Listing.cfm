@@ -99,7 +99,7 @@ $(document).ready(function() {
 		<thead>
 		<!--- Display Fields Found in Query --->
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}"></th>
+			<th id="checkboxHolder" class="{sorter:false}"><input type="checkbox" onClick="checkAll(this.checked,'namespaceID')"/></th>
 			<th >Name</th>
 			<th >Description</th>
 			<th >Created Date</th>

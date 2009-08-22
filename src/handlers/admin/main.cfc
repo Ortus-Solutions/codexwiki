@@ -20,10 +20,15 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="main"
-			 extends="codex.handlers.baseHandler"
+<cfcomponent extends="codex.handlers.baseHandler"
 			 output="false"
-			 hint="Our main handler for the admin.">
+			 hint="Our main handler for the admin."
+			 autowire="true">
+
+	<!--- Dependencies --->
+	<cfproperty name="CommentsService" 	 type="ioc" scope="instance">
+	<cfproperty name="WikiService" 	 type="ioc" scope="instance">
+
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
@@ -40,11 +45,16 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var rc = event.getCollection();
 			
-			/* Exit Handler */
 			rc.xehReinitApp = "admin/main/doReinit";
+			rc.xehCommentStatus = "admin/comments/changeStatus";
+			rc.xehCommentEdit = "admin/comments/edit";
+			rc.xehCommentDelete = "admin/comments/doDelete";
 			
-			/* Sorted Options */
-			rc.sortedOptions = structSort(rc.CodexOptions);
+			event.setValue("jsAppendList", "simplemodal.helper,jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
+			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
+			
+			rc.qPageUpdates = instance.wikiService.getPageUpdates(limit=10);
+			rc.qComments = instance.commentsService.getCommentsInbox(records=10);
 				
 			event.setView('admin/home');
 		</cfscript>

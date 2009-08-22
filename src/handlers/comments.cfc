@@ -89,7 +89,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- validateCaptcha --->
-    <cffunction name="validateCaptcha" access="public" returntype="void" output="false" hint="">
+    <cffunction name="validateCaptcha" access="public" returntype="void" output="false">
     	<cfargument name="Event" type="any" required="yes">
     	<cfscript>	
     		var rc = event.getCollection();
@@ -127,7 +127,7 @@ $Build ID:	@@build_id@@
 			// Get New Comment To Save
 			rc.oComment = instance.CommentsService.getComment();
 			
-			// Cleanup Comment COntent
+			// Cleanup Comment Content
 			rc.content = xmlFormat(trim(rc.content));
 			
 			// Populate The comment with the data.
@@ -135,7 +135,7 @@ $Build ID:	@@build_id@@
 			// Link it to the page.
 			rc.oComment.setPage(rc.page);
 			
-			// Save it
+			// Send for saving
 			instance.commentsService.saveComment(rc.oComment);
 			
 			// Message to show.
@@ -149,30 +149,63 @@ $Build ID:	@@build_id@@
 		</cfscript>
 	</cffunction>
 	
-	<cffunction name="approve" access="public" returntype="void" output="false" hint="">
+	<cffunction name="approve" access="public" returntype="void" output="false">
     	<cfargument name="Event" type="any" required="yes">
     	<cfscript>	
     		var rc = event.getCollection();
 			
-			// Delete Comment
+			event.paramValue("ajax",false);
+			
+			// If no comment ID kick out.
+			if( NOT event.valueExists("commentID") ){ setNextEvent(getSetting("DefaultEvent")); }
+			
+			// Get Comment
 			rc.oComment = instance.commentsService.getComment(rc.commentID);
+			// Aprove it
 			rc.oComment.setIsApproved(true);
 			instance.commentsService.save(rc.oComment);
 			
-			event.renderData(type="json",data=true);
+			// Redirect Accordingly
+			if( rc.ajax ){
+				event.renderData(type="json",data=true);
+			}
+			else{
+				getPlugin("MessageBox").setMessage(type="info", message="Comment approved successfully!");
+				setNextRoute(route=getSetting('showKey') & "/" & rc.oComment.getPage().getName() & "##pageComment_#rc.oComment.getCommentID()#");
+			}
     	</cfscript>
     </cffunction>
 	
-	<cffunction name="delete" access="public" returntype="void" output="false" hint="">
+	<cffunction name="delete" access="public" returntype="void" output="false">
     	<cfargument name="Event" type="any" required="yes">
     	<cfscript>	
     		var rc = event.getCollection();
 			
-			// Delete Comment
+			event.paramValue("ajax",false);
+			
+			// If no comment ID kick out.
+			if( NOT event.valueExists("commentID") ){ setNextEvent(getSetting("DefaultEvent")); }
+			
+			// Get Comment to Delete
 			rc.oComment = instance.CommentsService.getComment(rc.commentID);
+			
+			// Ajax or not?
+			if( NOT rc.ajax ){
+				// Save page to redirect to with message:
+				rc.pageName = rc.oComment.getPage().getName();
+			}
+			
+			// remove Comment.
 			instance.commentsService.delete(rc.oComment);
 			
-			event.renderData(type="json",data=true);
+			// Redirect Accordingly
+			if( rc.ajax ){
+				event.renderData(type="json",data=true);
+			}
+			else{
+				getPlugin("MessageBox").setMessage(type="info", message="Comment deleted successfully!");
+				setNextRoute(route=getSetting('showKey') & "/" & rc.pageName);
+			}
     	</cfscript>
     </cffunction>
 

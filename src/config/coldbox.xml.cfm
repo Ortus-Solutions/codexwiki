@@ -75,6 +75,9 @@
 	<Layouts>
 		<!--Declare the default layout, MANDATORY-->
 		<DefaultLayout>Layout.Main.cfm</DefaultLayout>
+		<Layout file="Layout.Admin.cfm" name="AdminLayout">
+			<Folder>admin</Folder>
+		</Layout>
 	</Layouts>
 
 	<Datasources>

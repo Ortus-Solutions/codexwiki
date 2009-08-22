@@ -153,8 +153,8 @@ $Build ID:	@@build_id@@
 			}
 			else{
 				/* Save it */
-				oNamespace.setCreatedDate(now());
-				instance.wikiService.save(oNamespace);
+				oClonedNamespace.setCreatedDate(now());
+				instance.wikiService.save(oClonedNamespace);
 				/* Message of success */
 				getPlugin("messagebox").setMessage("info","Namespace updated!");
 				setNextRoute(route="admin/namespace/list");

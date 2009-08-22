@@ -20,9 +20,10 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>	<cfoutput>	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />	<meta name="Robots" content="index,follow" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>	<cfoutput>	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />	<meta name="Robots" content="index,no-follow" />
 	<!--- Meta Tags --->
 	#renderView('tags/meta')#
+	
 	<!--- Base HREF --->
 	<base href="#getSetting('htmlBaseURL')#/" />
 		<!--- Main CSS --->	<link rel="stylesheet" type="text/css" href="includes/css/style.css" />	<!--- loop around the cssAppendList, to add page specific css --->	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />	</cfloop>
@@ -31,11 +32,9 @@ $Build ID:	@@build_id@@
 	</cfloop>	<!--- Global JS --->	<script type="text/javascript" src="includes/scripts/jquery-latest.pack.js"></script>	<script type="text/javascript" src="includes/scripts/codex.js"></script>	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">		<script type="text/javascript" src="includes/scripts/#js#.js"></script>	</cfloop>
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<script type="text/javascript" src="#js#.js"></script>
-	</cfloop>	<!--- Render Title --->	#renderView('tags/title')#	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeHeadEnd()#	</cfoutput></head><cfoutput><body>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getafterBodyStart()#	<div id="wrap">		<!--- Header Bar --->
+	</cfloop>
+		<!--- Render Title --->	#renderView('tags/title')#
+	</cfoutput></head><cfoutput><body>	<div id="wrap">		<!--- Header Bar --->
 		#renderView('tags/header')#		<div id="sidebar" >
-			<!--- Render Custom HTML --->
-			#rc.oCustomHTML.getBeforeSideBar()#			<!--- Render SideBar --->
-			#renderView('tags/sidebar')#
-			<!--- Render Custom HTML --->
-			#rc.oCustomHTML.getAfterSideBar()#		</div>				<div id="main">			#renderView()#		</div>		</div>	
-	<div class="footer">		#renderView('tags/footer')#	</div>	<!--- Render Custom HTML --->	#rc.oCustomHTML.getbeforeBodyEnd()#</body></cfoutput></html>
+			#renderView('tags/adminsidebar')#		</div>				<div id="main">			#renderView()#		</div>		</div>	
+	<div class="footer">		#renderView('tags/footer')#	</div></body></cfoutput></html>

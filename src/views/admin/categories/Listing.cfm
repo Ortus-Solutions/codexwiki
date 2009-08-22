@@ -95,7 +95,7 @@ $Build ID:	@@build_id@@
 		<thead>
 		<!--- Display Fields Found in Query --->
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}"></th>
+			<th id="checkboxHolder" class="{sorter:false}"><input type="checkbox" onClick="checkAll(this.checked,'category_id')"/></th>
 			<th >Name</th>
 			<th >Created Date</th>
 			<th id="actions" class="{sorter:false}">ACTIONS</th>

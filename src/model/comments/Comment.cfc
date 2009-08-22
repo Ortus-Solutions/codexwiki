@@ -24,6 +24,25 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
+	<!--- Validate this bean --->
+	<cffunction name="validate" access="public" returntype="Array" hint="Validate this bean">
+		<cfscript>
+			var errors = Arraynew(1);
+			
+			if( len(getAuthor()) eq 0 ){
+				ArrayAppend(errors,"Please set a valid author");
+			}
+			if( len(getAuthorEmail()) eq 0 ){
+				ArrayAppend(errors,"Please set a valid author email");
+			}
+			if( len(getContent()) eq 0 ){
+				ArrayAppend(errors,"Please set a comment content");
+			}
+			
+			return errors;
+		</cfscript>
+	</cffunction>
+	
 	<!--- Get set create Date --->
 	<cffunction name="getcreatedDate" output="false" access="public" returntype="string"	hint="Returns the create date, if null it returns an empty string.">
 		<cfreturn getTransferObject().getcreatedDate()>
