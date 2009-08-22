@@ -132,6 +132,9 @@ $Build ID:	@@build_id@@
 	
 	<fieldset>
 	<legend><strong>Notifications</strong></legend>
+	
+		<label>The email the notifications will be sent to is: <a href="mailto:#rc.codexOptions.wiki_outgoing_email#">#rc.codexOptions.wiki_outgoing_email#</a></label>
+	
 		<!--- Notification on Comment --->
 		<label for="comments_notify" class="light">Send a notification that a comment has been made.</label><br />
 		
@@ -147,7 +150,8 @@ $Build ID:	@@build_id@@
 		<br />
 		
 		<!--- Notification on Moderation --->
-		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</label> 
+		<label for="comments_moderation_notify" class="light">Send a notification when a comment needs moderation.</strong>
+		</label> 
 		<br />
 		
  		<input type="radio" 

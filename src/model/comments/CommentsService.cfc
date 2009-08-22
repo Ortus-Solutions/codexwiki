@@ -82,22 +82,106 @@ $Build ID:	@@build_id@@
 		if( NOT instance.codexOptions.comments_moderation ){ 
 			arguments.comment.setIsApproved(true); 
 		}
-		else{
-			// Check if user has already an approved comment. If they do, then approve them
-			// Else, send email notification of comment that needs moderation.
-			
-			// send comment moderation email
+		// Check if user has already an approved comment. If they do, then approve them
+		// Else, send email notification of comment that needs moderation.
+		else if( userHasPreviousAcceptedComment(oUser) ){
+			arguments.comment.setIsApproved(true);
 		}
 		
-		// send a comment made notification.
-		
-		// send for saving.
+		// send for saving, finally phew!
 		super.save(arguments.comment);	
+		
+		// Send Notification or Moderation Email?
+		if( instance.codexOptions.comments_notify OR instance.codexOptions.comments_moderation_notify ){
+			sendNotificationEmail(arguments.comment,instance.codexOptions.comments_moderation_notify);
+		}
 	</cfscript>
 </cffunction>
 
-<cffunction name="getAllComments" access="public" returntype="query" hint="Get All Comments" output="false" >
+<!--- sendNewCommentEmail --->
+<cffunction name="sendNotificationEmail" output="false" access="public" returntype="void" hint="Send a new comment email">
+	<cfargument name="comment" type="codex.model.comments.Comment" required="true" default="" hint="The comment"/>
+	<cfargument name="moderationDetails" type="boolean" required="false" default="false" hint="Send also moderation emails"/>
+	
+	<cfset var page = arguments.comment.getPage().getName()>
+	<cfset var baseURL = getConfigService().getSetting('sesBaseURL')>
+	<cfset var commentURL = "#baseURL#/#getConfigService().getSetting('showKey')#/#page##getConfigService().getRewriteExtension()###pageComment_#arguments.comment.getCommentID()#">
+	<cfset var deleteURL = "#baseURL#/comments/delete/commentID/#arguments.comment.getCommentID()#">
+	<cfset var approveURL = "#baseURL#/comments/approve/commentID/#arguments.comment.getCommentID()#">
+	<cfset var subject = "New comment posted on page: #page#">
+	<cfset var email = "">
+	<cfset var whoisURL = "http://ws.arin.net/cgi-bin/whois.pl?queryinput=#arguments.comment.getAuthorIP()#">
+	
+	<!--- Moderation Subject --->
+	<cfif arguments.moderationDetails>
+		<cfset subject = "New comment needs moderation on page: #page#">
+	</cfif>
+	
+	<!--- Email --->
+	<cfsavecontent variable="email">
+	<cfoutput>
+	A new comment has been posted on the page: <a href="#commentURL#">#page#<a/> <cfif arguments.moderationDetails>and is awaiting moderation</cfif>. 
+	
+	<br/><br/>
+	
+	Author: #arguments.comment.getAuthor()# <br/>
+	Author Email: #arguments.comment.getAuthorEmail()# <br/>
+	Author URL: <a href="#arguments.comment.getAuthorURL()#">#arguments.comment.getAuthorURL()#</a> <br/>
+	Author IP: #arguments.comment.getAuthorIP()# <br/>
+	Whois  : <a href="#whoisURL#">whoisURL</a> <br/>
+	Comment:<br/>
+	#arguments.comment.getContent()#
+	<br/><br/>
+	
+	Comment URL: <a href="#commentURL#">#commentURL#</a><br/>
+	Delete it: <a href="#deleteURL#">#deleteURL#</a><br/>
+	<cfif arguments.moderationDetails>
+	Approve it: <a href="#approveURL#">#approveURL#</a><br/>
+	</cfif>	
+	</cfoutput>
+	</cfsavecontent>
+	
+	<!--- Mail It --->
+	<cfmail to="#instance.codexOptions.wiki_outgoing_email#"
+		    from="#instance.codexOptions.wiki_outgoing_email#"
+		    subject="#subject#"
+		    type="HTML">
+	<cfoutput>#email#</cfoutput>
+	</cfmail>
+	
 </cffunction>
+
+<!--- userHasPreviousComment --->
+<cffunction name="userHasPreviousAcceptedComment" output="false" access="public" returntype="boolean" hint="Checks if a user has a previous moderated accepted comment">
+	<cfargument name="user" type="any" required="true" hint="The user object to check"/>
+	
+	<cfset var tql = "">
+	<cfset var query = 0>
+	<cfset var results = "">
+	
+	<cfsavecontent variable="tql">
+	<cfoutput>
+		  FROM wiki.Comment as Comment
+		  OUTER JOIN security.User as CodexUser
+		  WHERE Comment.isActive = :true
+		  	AND Comment.isApproved = :true
+		    AND CodexUser.userID = :userID
+	</cfoutput>
+	</cfsavecontent>
+	<cfscript>
+		query = getTransfer().createQuery(tql);
+		query.setCacheEvaluation(true);
+
+		query.setParam("true", true, "boolean");
+		query.setParam("userID",user.getUserID());
+		
+		results = getTransfer().listByQuery(query);
+		
+		if( results.recordcount ){ return true; }
+		return false;		
+	</cfscript>
+</cffunction>
+
 
 <cffunction name="getPageComments" access="public" returntype="query" hint="Get a page's comments" output="false" >
 	<cfargument name="pageName"  	type="string" 	required="false" hint="The page name to use">
