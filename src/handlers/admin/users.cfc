@@ -38,7 +38,6 @@ $Build ID:	@@build_id@@
 		<cfscript>
 			var rc = event.getCollection();
 
-			/* Exit Handlers */
 			rc.xehUserListing = "admin/users/list";
 			rc.pagingLink = "#rc.xehUserListing#/page/@page@";
 			rc.xehUserCreate = "admin/users/new";
@@ -46,26 +45,36 @@ $Build ID:	@@build_id@@
 			rc.xehUserDelete = "admin/users/doDelete";
 			rc.xehUserPerms = "admin/users/permissions";
 
-			/* Search Criteria */
 			event.paramValue("search_criteria","");
 			event.paramValue("active",true);
 			event.paramValue("confirmed",-1);
 			event.paramValue("role_id","0");
 
-			/* JS Lookups */
 			event.setValue("jsAppendList", "jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min,jquery.uitablefilter");
 			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
 
-			/* Get all the roles */
 			rc.qRoles = getUserService().getAllRoles();
 
-			/* Get Users */
-			rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,
-												   active=rc.active,
-												   role_id=rc.role_id,
-												   confirmed=rc.confirmed);
-
-			/* Set View */
+			event.paramValue("filter","all");
+			switch(rc.filter){
+				case "all" : {
+					rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,role_id=rc.role_id);
+					break;
+				}
+				case "pending" : {
+					rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,role_id=rc.role_id,confirmed=false);
+					break;
+				}
+				case "confirmed" : {
+					rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,role_id=rc.role_id,confiremd=true);
+					break;
+				}
+				case "inactive" : {
+					rc.qUsers = getUserService().findUsers(criteria=rc.search_criteria,role_id=rc.role_id,active=false);
+					break;
+				}
+			}
+			
 			event.setView('admin/users/Listing');
 		</cfscript>
 	</cffunction>

@@ -73,6 +73,7 @@ $Build ID:	@@build_id@@
 				/* Wiki Admin */
 				rc.xehAdminNamespace = "admin/namespace/list";
 				rc.xehAdminCategories = "admin/categories/list";
+				rc.xehAdminComments = "admin/comments/list";
 				
 				/* Plugin Menu */
 				rc.xehAdminPlugins = "admin/plugins/list";

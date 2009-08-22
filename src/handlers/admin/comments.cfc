@@ -20,114 +20,95 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="namespace"
+<cfcomponent name="comments"
 			 output="false"
-			 hint="namespace Controller"
+			 hint="comments Controller"
 			 extends="codex.handlers.baseHandler"
 			 autowire="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="LookupService" type="ioc" scope="instance">
-	<cfproperty name="WikiService" 	 type="ioc" scope="instance">
+	<cfproperty name="CommentsService" 	 type="ioc" scope="instance">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
-	<!--- List Namespaces --->
-	<cffunction name="list" output="false" access="public" returntype="void" hint="Namespace listing">
+	<!--- List comments --->
+	<cffunction name="list" output="false" access="public" returntype="void" hint="comments">
 		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 			
-			/* Exit Handlers */
-			rc.xehListing 	= "admin/namespace/list";
-			rc.xehCreate 	= "admin/namespace/new";
-			rc.xehEdit 		= "admin/namespace/edit";
-			rc.xehDelete 	= "admin/namespace/doDelete";
-			rc.xehNamespaceViewer = "#getSetting("spaceKey")#/";
+			rc.xehListing 	= "admin/comments/list";
+			rc.xehCreate 	= "admin/comments/new";
+			rc.xehEdit 		= "admin/comments/edit";
+			rc.xehDelete 	= "admin/comments/doDelete";
+			rc.xehStatus    = "admin/comments/changeStatus";
 			
-			/* JS Lookups */
-			event.setValue("jsAppendList", "simplemodal.helper,jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min");
+			event.setValue("jsAppendList", "simplemodal.helper,jquery.simplemodal,confirm,jquery.metadata,jquery.tablesorter.min,jquery.uitablefilter");
 			event.setValue("cssFullAppendList","includes/lookups/styles/sort");
 			
-			/* Get all the namespaces */
-			rc.qNamespaces = instance.wikiService.getNamespaces();
-
-			/* Set View */
-			event.setView('admin/namespace/Listing');
-		</cfscript>
-	</cffunction>
-
-	<!--- New user panel --->
-	<cffunction name="new" output="false" access="public" returntype="void" hint="new namespace editor">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-
-			/* Exit Handlers */
-			rc.xehListing = "admin/namespace/list";
-			rc.xehCreate = "admin/namespace/doCreate";
+			//Filters
+			event.paramValue("filter","all");
+			switch(rc.filter){
+				case "all" : {
+					rc.qComments = instance.CommentsService.getCommentsInbox();
+					break;
+				}
+				case "pending" : {
+					rc.qComments = instance.CommentsService.getCommentsInbox(approved=false);
+					break;
+				}
+				case "approved" : {
+					rc.qComments = instance.CommentsService.getCommentsInbox(approved=true);
+					break;
+				}
+			}
 			
-			/* JS */
-			rc.jsAppendList = "formvalidation";
-
-			/* Set View */
-			event.setView("admin/namespace/add");
+			event.setView('admin/comments/Listing');
 		</cfscript>
 	</cffunction>
-
-	<!--- Create a new Namespace --->
-	<cffunction name="doCreate" output="false" access="public" returntype="void" hint="Namespace Create">
+	
+	<cffunction name="changeStatus" output="false" access="public" returntype="void" hint="change status">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oNamespace = "";
-			var errors = ArrayNew(1);
-
-			//create new Namespace object.
-			oNamespace = instance.wikiService.getNamespace();
-			//Populate it
-			getPlugin("beanFactory").populateBean(oNamespace);
-			/* Validate it */
-			errors = oNamespace.validate();
-			/* Error Checks */
-			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				new(event);
+			var i=1;
+			var thisID = "";
+			
+			for(i=1; i lte listlen(rc.commentID); i=i+1){
+				thisID = listGetAt(rc.commentID,i);
+				// Get Comment
+				rc.oComment = instance.commentsService.getComment(thisID);
+				// Aprove it
+				if( rc.status eq "approve"){
+					rc.oComment.setIsApproved(true);
+				}
+				else{
+					rc.oComment.setIsApproved(false);
+				}
+				//Save it
+				instance.commentsService.save(rc.oComment);
 			}
-			else{
-				/* Save Namespace */
-				oNamespace.setCreatedDate(now());
-				instance.wikiService.save(oNamespace);
-				getPlugin("messagebox").setMessage("info","Namespace added successfully");
-				setNextRoute(route="admin/namespace/list");
-			}
+			
+			getPlugin("MessageBox").setMessage(type="info", message="Comment(s) Status Modified!");
+			setNextRoute("admin/comments/list");
 		</cfscript>
 	</cffunction>
 
+	
 	<!--- Edit Panel --->
 	<cffunction name="edit" output="false" access="public" returntype="void" hint="Namespace editor">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
 
-			/* Exit Handlers */
-			rc.xehListing = "admin/namespace/list";
-			rc.xehUpdate = "admin/namespace/doEdit";
+			rc.xehListing = "admin/comments/list";
+			rc.xehUpdate = "admin/comments/doEdit";
 			
-			/* JS */
 			rc.jsAppendList = "formvalidation";
 			
-			/* Verify incoming user id */
-			if( not event.valueExists("namespaceID") ){
-				getPlugin("messagebox").setMessage("warning", "namespace id not detected");
-				setNextRoute("admin/namespace/list");
-			}
+			rc.oComment =  instance.commentsService.getComment(rc.commentID);
 
-			/* Get the namespace */
-			rc.oNamespace =  instance.wikiService.getNamespace(namespaceID=rc.namespaceID);
-
-			/* Set View */
-			event.setView("admin/namespace/edit");
+			event.setView("admin/comments/edit");
 		</cfscript>
 	</cffunction>
 
@@ -136,62 +117,49 @@ $Build ID:	@@build_id@@
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oNamespace = "";
-			var oClonedNamespace = "";
+			var oComment = "";
+			var oClonedComment = "";
 			var errors = ArrayNew(1);
 			
-			/* Get and start checks */
-			oNamespace = instance.wikiService.getNamespace(namespaceID=rc.namespaceID);
-			oClonedNamespace = oNamespace.clone();
-			getPlugin("beanFactory").populateBean(oClonedNamespace);
+			oComment = instance.commentsService.getComment(rc.commentID);
+			oClonedComment = oComment.clone();
+			getPlugin("beanFactory").populateBean(oClonedComment);
 			
-			/* Validate it */
-			errors = oClonedNamespace.validate();
+			errors = oClonedComment.validate();
 			if( ArrayLen(errors) ){
 				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
 				edit(event);
 			}
 			else{
-				/* Save it */
-				oNamespace.setCreatedDate(now());
-				instance.wikiService.save(oNamespace);
-				/* Message of success */
-				getPlugin("messagebox").setMessage("info","Namespace updated!");
-				setNextRoute(route="admin/namespace/list");
+				instance.commentsService.save(oClonedComment);
+				getPlugin("messagebox").setMessage("info","Comment updated!");
+				setNextRoute(route="admin/comments/list");
 			}
 		</cfscript>
 	</cffunction>
 
 	<!--- Delete User --->
-	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete a Namespace.">
+	<cffunction name="doDelete" output="false" access="public" returntype="void" hint="Delete comments.">
 		<cfargument name="event" type="any">
 		<cfscript>
 			var rc = event.getCollection();
-			var oNamespace = "";
+			var thisID = "";
 			var i = 1;
-
-			try{
-				/* listing or record sent in? */
-				if( event.getValue("namespaceID","") neq "" ){
-					/* Loop and delete */
-					for(i=1; i lte listlen(rc.namespaceID); i=i+1){
-						//Remove it.
-						instance.wikiService.deleteNamespace(listGetAt(rc.namespaceID,i));
-						//set message box
-						getPlugin("messagebox").setMessage("info","Namespace(s) and all of it's associated pages removed");
-					}
-				}
-				else{
-					/* Messagebox. */
-					getPlugin("messagebox").setMessage("warning", "No Records Selected");
-				}
+			event.paramValue("commentID","");
+			for(i=1; i lte listlen(rc.commentID); i=i+1){
+				thisID = listGetAt(rc.commentID,i);
+				// Get Comment
+				rc.oComment = instance.commentsService.getComment(thisID);
+				// Delete IT
+				instance.commentsService.delete(rc.oComment);
 			}
-			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing Namespace. #e.message# #e.detail#");
+			if( NOT len(rc.commentID) ){
+				getPlugin("MessageBox").setMessage(type="warning", message="Please select a comment(s) to delete!");
 			}
-
-			/* Relocate back to listing */
-			setNextRoute(route="admin/namespace/list");
+			else{
+				getPlugin("MessageBox").setMessage(type="info", message="Comment(s) Delete!");
+			}
+			setNextRoute("admin/comments/list");
 		</cfscript>
 	</cffunction>
 

@@ -38,6 +38,10 @@ a.externallink{
 	background:transparent url(../images/external.png) no-repeat scroll left center;
 	padding-left: 13px;
 }
+a.linkBold{
+	color: black;
+	font-weight: bold;
+}
 a.noborder{
 	border-bottom: 0px;
 }
@@ -282,7 +286,7 @@ input.invalidLookupInput, textarea.invalidLookupInput, .invalidLookupInput{
 	padding: 4px;
 }
 .tablelisting th.center{
-	text-align:center;
+	text-align:center !important;
 }
 .tablelisting th a {
 	color: #000;
@@ -820,4 +824,13 @@ div#categories ul li {
 }
 #pageCommentHeader p{
 	font-weight: bold;
+}
+.commentCreateDate{
+	font-size: 10px;
+	color: #0058AF;	
+	margin-bottom:5px;
+}
+#adminFilterBar{
+	margin:10px;
+	padding-bottom:10px	
 }

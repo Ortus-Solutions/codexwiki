@@ -60,3 +60,8 @@ function global_onComplete(){
 function global_onError(request) {
 	alert('Sorry. An error ocurred while calling a server side component. Please try again.');
 }
+function checkAll(checked,id){
+	$("input[@name='"+id+"']").each(function(){
+		this.checked = checked;
+	});
+}

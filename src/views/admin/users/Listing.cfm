@@ -25,37 +25,37 @@ $Build ID:	@@build_id@@
 <cfsavecontent variable="js">
 <cfoutput>
 <script type="text/javascript">
-	function searchForm(){
-		$('##_loader').fadeIn();
-		$('##searchFilterForm').submit();
-	}
-	function submitForm(){
-		$('##_loader').fadeIn();
-		$('##userForm').submit();
-	}
-	function deleteRecord(recordID){
-		if( recordID != null ){
-			$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
-			$("input[@name='user_id']").each(function(){
-				if( this.value == recordID ){ this.checked = true;}
-				else{ this.checked = false; }
-			});
-		}
-		//Submit Form
-		submitForm();
-	}
-	function confirmDelete(recordID){
-		confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!",function(){deleteRecord(recordID)});
-	}
-	$(document).ready(function() {
-		// call the tablesorter plugin
-		$("##usersTable").tablesorter({
-			sortList: [[1,0]]
+function searchForm(){
+	$('##_loader').fadeIn();
+	$('##searchFilterForm').submit();
+}
+function submitForm(){
+	$('##_loader').fadeIn();
+	$('##userForm').submit();
+}
+function deleteRecord(recordID){
+	if( recordID != null ){
+		$('##delete_'+recordID).attr('src','includes/images/ajax-spinner.gif');
+		$("input[@name='user_id']").each(function(){
+			if( this.value == recordID ){ this.checked = true;}
+			else{ this.checked = false; }
 		});
-		$("##quickfilter").keyup(function(){
-			$.uiTableFilter( $("##usersTable"), this.value );
-		})
+	}
+	//Submit Form
+	submitForm();
+}
+function confirmDelete(recordID){
+	confirm("Do you wish to remove the selected record(s)?<br/>This cannot be undone!",function(){deleteRecord(recordID)});
+}
+$(document).ready(function() {
+	// call the tablesorter plugin
+	$("##usersTable").tablesorter({
+		sortList: [[1,0]]
 	});
+	$("##quickfilter").keyup(function(){
+		$.uiTableFilter( $("##usersTable"), this.value );
+	})
+});
 </script>
 </cfoutput>
 </cfsavecontent>
@@ -71,7 +71,7 @@ $Build ID:	@@build_id@@
 <!--- Table Manager Jumper --->
 <form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#">
 
-	<div style="margin:10px;">
+	<div id="adminFilterBar">
 		<!--- Loader --->
 		<div id="_loader" class="float-right formloader">
 			<p>
@@ -80,10 +80,16 @@ $Build ID:	@@build_id@@
 			</p>
 		</div>
 
+		<a href="#event.buildLink(rc.xehUserListing)#" <cfif rc.filter eq "all">class="linkBold"</cfif>>All <cfif rc.filter eq "all">(#rc.qUsers.recordcount#)</cfif></a> |
+		<a href="#event.buildLink(rc.xehUserListing & '/filter/pending')#" <cfif rc.filter eq "pending">class="linkBold"</cfif>>Pending <cfif rc.filter eq "pending">(#rc.qUsers.recordcount#)</cfif></a> |
+		<a href="#event.buildLink(rc.xehUserListing & '/filter/confirmedsss')#" <cfif rc.filter eq "confirmed">class="linkBold"</cfif>>Confirmed <cfif rc.filter eq "confirmed">(#rc.qUsers.recordcount#)</cfif></a> |	
+		<a href="#event.buildLink(rc.xehUserListing & '/filter/inactive')#" <cfif rc.filter eq "inactive">class="linkBold"</cfif>>Inactive <cfif rc.filter eq "inactive">(#rc.qUsers.recordcount#)</cfif></a>
+		
+		<div class="float-right">
 		<!--- Filter --->
 		<label class="inline" for="search_criteria">Search</label>
 		<input type="text" size="20" name="search_criteria" id="search_criteria" value="#rc.search_criteria#" title="First Name, Last Name and Email">
-
+		&nbsp;
 		<!--- Role --->
 		<label class="inline" for="role_id">Role</label>
 		<select name="role_id" id="role_id">
@@ -93,29 +99,13 @@ $Build ID:	@@build_id@@
 			</cfloop>
 		</select>
 
-		<!--- Active --->
-		&nbsp;
-		<label class="inline" for="active">Active</label>
-		<select name="active" id="active">
-			<option value="1" <cfif rc.active>selected="selected"</cfif>>True</option>
-			<option value="0" <cfif not rc.active>selected="selected"</cfif>>False</option>
-		</select>
-		<!--- Confirmed --->
-		&nbsp;
-		<label class="inline" for="active">Confirmed</label>
-		<select name="confirmed" id="confirmed">
-			<option value="-1" <cfif rc.confirmed eq -1>selected="selected"</cfif>>All</option>
-			<option value="1" <cfif rc.confirmed eq 1>selected="selected"</cfif>>True</option>
-			<option value="0" <cfif rc.confirmed eq 0>selected="selected"</cfif>>False</option>
-		</select>
-
 		<!--- Search Button --->
 		<a href="javascript:searchForm()" class="buttonLinks" title="Search">
 			<span>
 				<img src="includes/images/magnifier.png" border="0" alt="Search" />
 			</span>
 		</a>
-		</p>
+		</div>
 	</div>
 </form>
 
@@ -124,14 +114,8 @@ $Build ID:	@@build_id@@
 	
 	<!--- Records Found --->
 	<div class="float-left">
-		<cfif rc.qusers.recordcount>
-		<em>Records: #rc.qUsers.recordcount#</em>
-		<cfelse>
-		<em>No Records Found</em>
-		</cfif>
-		<br />
 		<label class="inlineLabel">Quick Filter: </label>
-		<input type="text" size="30" id="quickfilter" value="">
+		<input type="text" size="20" id="quickfilter" value="">
 	</div>
 	
 	<!--- Add / Delete --->
@@ -159,7 +143,7 @@ $Build ID:	@@build_id@@
 		<!--- Display Fields Found in Query --->
 		<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter: false}"></th>
+			<th id="checkboxHolder" class="{sorter: false}"><input type="checkbox" onClick="checkAll(this.checked,'user_id')"/></th>
 			<th>Name</th>
 			<th>Email</th>
 			<th class="center" width="95">Confirmed</th>

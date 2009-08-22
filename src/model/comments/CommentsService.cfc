@@ -183,6 +183,64 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 
+<cffunction name="getPendingComments" access="public" returntype="query" hint="Get the pending approval comments" output="false" >
+	<cfset var q = "">
+	
+	<cfquery name="q" datasource="#getDataSource().getName()#">
+		SELECT Page.page_id pageID,Page.page_name pageName, 
+			   Comment.comment_id commentID,
+			   Comment.comment_author author, Comment.comment_author_email authorEmail, 
+			   Comment.comment_author_url authorURL, Comment.comment_author_ip authorIP,
+			   Comment.comment_createdate createdDate, Comment.comment_isActive isActive, 
+			   Comment.comment_isApproved isApproved, Comment.comment_content content,
+			   CodexUser.user_fname UserFirstName, CodexUser.user_lname UserLastName, 
+			   CodexUser.user_username username, CodexUser.user_email UserEmail
+		  FROM wiki_comments as Comment
+		  JOIN wiki_page as Page ON Comment.FKpage_id = Page.page_id
+		  LEFT OUTER JOIN wiki_users as CodexUser ON Comment.FKuser_id = CodexUser.user_id
+		  WHERE Comment.comment_isApproved = <cfqueryparam cfsqltype="cf_sql_bit" value="0">
+		  ORDER BY comment.comment_createdate desc 
+	</cfquery>
+	
+	<cfreturn q>
+</cffunction>
+
+<cffunction name="getCommentsInbox" access="public" returntype="query" hint="Get the latest X comments" output="false" >
+	<cfargument name="records"    type="numeric" required="true" default="50" hint="The records to retrieve in the inbox"/>
+	<cfargument name="approved"   type="boolean" required="false" />
+	<cfargument name="active"     type="boolean" required="false" />
+	<cfargument name="criteria"   type="string" required="false" />
+	
+	<cfset var q = "">
+	
+	<cfquery name="q" datasource="#getDataSource().getName()#" maxrows="#arguments.records#">
+		SELECT Page.page_id pageID,Page.page_name pageName, 
+			   Comment.comment_id commentID,
+			   Comment.comment_author author, Comment.comment_author_email authorEmail, 
+			   Comment.comment_author_url authorURL, Comment.comment_author_ip authorIP,
+			   Comment.comment_createdate createdDate, Comment.comment_isActive isActive, 
+			   Comment.comment_isApproved isApproved, Comment.comment_content content,
+			   CodexUser.user_fname UserFirstName, CodexUser.user_lname UserLastName, 
+			   CodexUser.user_username username, CodexUser.user_email UserEmail
+		  FROM wiki_comments as Comment
+		  JOIN wiki_page as Page ON Comment.FKpage_id = Page.page_id
+		  LEFT OUTER JOIN wiki_users as CodexUser ON Comment.FKuser_id = CodexUser.user_id
+		  WHERE 1 = 1
+		  <cfif structKeyExists(arguments,"approved")>
+		    AND Comment.comment_isApproved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.approved#">
+		  </cfif>
+		  <cfif structKeyExists(arguments,"active")>
+		    AND Comment.comment_isActive = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.active#">
+		  </cfif>
+		  <cfif structKeyExists(arguments,"criteria")>
+		    AND Comment.comment_content = <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.content#%">
+		  </cfif>
+		  ORDER BY comment.comment_createdate desc 
+	</cfquery>
+	
+	<cfreturn q>
+</cffunction>
+
 <cffunction name="getPageComments" access="public" returntype="query" hint="Get a page's comments" output="false" >
 	<cfargument name="pageName"  	type="string" 	required="false" hint="The page name to use">
 	<cfargument name="pageID"  		type="string" 	required="false" hint="The page ID to use">

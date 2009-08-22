@@ -25,7 +25,6 @@ $Build ID:	@@build_id@@
 	<cfargument name="page" type="string" required="false" default="" hint="The page to pre-pend the root"/>
 	<cfreturn getSetting('showKey') & "/" & arguments.page>
 </cffunction>
-
 <!--- printTime --->
 <cffunction name="printTime" output="false" access="private" returntype="string" hint="Print time in good format">
 	<cfargument name="time" 	type="string" required="true" hint=""/>
@@ -41,7 +40,6 @@ $Build ID:	@@build_id@@
 		<cfreturn timeFormat(arguments.time, "HH:mm:ss tt")>
 	</cfif>
 </cffunction>
-
 <!--- printDate --->
 <cffunction name="printDate" output="false" access="private" returntype="string" hint="Print date in good format">
 	<cfargument name="datetime" type="string" required="true"/>
@@ -55,7 +53,6 @@ $Build ID:	@@build_id@@
 		<cfreturn dateFormat(arguments.datetime, "dddd, mmmm dd, yyyy")>
 	</cfif>
 </cffunction>
-
 <!--- Deliver A File --->
 <cffunction name="DeliverFile" access="private" returntype="void" hint="Cfcontent a file" output="false" >
 	<cfargument name="filename" required="true" type="string" hint="">
