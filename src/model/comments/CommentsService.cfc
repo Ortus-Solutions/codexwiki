@@ -235,7 +235,7 @@ $Build ID:	@@build_id@@
 		  <cfif structKeyExists(arguments,"criteria")>
 		    AND Comment.comment_content = <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.content#%">
 		  </cfif>
-		  ORDER BY comment.comment_createdate desc 
+		  ORDER BY Comment.comment_createdate desc 
 	</cfquery>
 	
 	<cfreturn q>
