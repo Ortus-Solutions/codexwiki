@@ -104,6 +104,7 @@ $Build ID:	@@build_id@@
 			}
 			else{
 				// Just creation page by default
+				rc.onCreateWiki="page/create";
 				arguments.event.setView("wiki/create");
 			}
 		</cfscript>
