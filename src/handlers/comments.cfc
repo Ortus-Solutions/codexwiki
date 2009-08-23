@@ -145,7 +145,7 @@ $Build ID:	@@build_id@@
 			}
 			
 			getPlugin("MessageBox").setMessage(type="info", message=rc.message);
-			setNextRoute(route=getSetting('showKey') & "/" & rc.page.getName() & "##pageComment_#rc.oComment.getCommentID()#");
+			setNextRoute(route=getSetting('showKey') & "/" & rc.page.getName(),suffix="##pageComment_#rc.oComment.getCommentID()#");
 		</cfscript>
 	</cffunction>
 	
@@ -171,7 +171,7 @@ $Build ID:	@@build_id@@
 			}
 			else{
 				getPlugin("MessageBox").setMessage(type="info", message="Comment approved successfully!");
-				setNextRoute(route=getSetting('showKey') & "/" & rc.oComment.getPage().getName() & "##pageComment_#rc.oComment.getCommentID()#");
+				setNextRoute(route=getSetting('showKey') & "/" & rc.oComment.getPage().getName(),suffix="##pageComment_#rc.oComment.getCommentID()#");
 			}
     	</cfscript>
     </cffunction>

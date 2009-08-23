@@ -106,8 +106,8 @@ $Build ID:	@@build_id@@
 	<cfset var page = arguments.comment.getPage().getName()>
 	<cfset var baseURL = getConfigService().getSetting('sesBaseURL')>
 	<cfset var commentURL = "#baseURL#/#getConfigService().getSetting('showKey')#/#page##getConfigService().getRewriteExtension()###pageComment_#arguments.comment.getCommentID()#">
-	<cfset var deleteURL = "#baseURL#/comments/delete/commentID/#arguments.comment.getCommentID()#">
-	<cfset var approveURL = "#baseURL#/comments/approve/commentID/#arguments.comment.getCommentID()#">
+	<cfset var deleteURL = "#baseURL#/comments/delete/commentID/#arguments.comment.getCommentID()##getConfigService().getRewriteExtension()#">
+	<cfset var approveURL = "#baseURL#/comments/approve/commentID/#arguments.comment.getCommentID()##getConfigService().getRewriteExtension()#">
 	<cfset var subject = "New comment posted on page: #page#">
 	<cfset var email = "">
 	<cfset var whoisURL = "http://ws.arin.net/cgi-bin/whois.pl?queryinput=#arguments.comment.getAuthorIP()#">
