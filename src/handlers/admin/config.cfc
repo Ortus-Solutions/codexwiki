@@ -20,10 +20,10 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="config"
-			 extends="codex.handlers.baseHandler"
+<cfcomponent name="Config"
 			 output="false"
-			 hint="Our configuration handler"
+			 hint="Config Controller"
+			 extends="codex.handlers.baseHandler"
 			 autowire="true">
 
 	<!--- Dependencies --->

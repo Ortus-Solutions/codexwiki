@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 		<a href="#event.buildLink(rc.xehUserListing)#" <cfif rc.filter eq "all">class="linkBold"</cfif>>All <cfif rc.filter eq "all">(#rc.qUsers.recordcount#)</cfif></a> |
 		<a href="#event.buildLink(rc.xehUserListing & '/filter/pending')#" <cfif rc.filter eq "pending">class="linkBold"</cfif>>Pending <cfif rc.filter eq "pending">(#rc.qUsers.recordcount#)</cfif></a> |
-		<a href="#event.buildLink(rc.xehUserListing & '/filter/confirmedsss')#" <cfif rc.filter eq "confirmed">class="linkBold"</cfif>>Confirmed <cfif rc.filter eq "confirmed">(#rc.qUsers.recordcount#)</cfif></a> |	
+		<a href="#event.buildLink(rc.xehUserListing & '/filter/confirmed')#" <cfif rc.filter eq "confirmed">class="linkBold"</cfif>>Confirmed <cfif rc.filter eq "confirmed">(#rc.qUsers.recordcount#)</cfif></a> |	
 		<a href="#event.buildLink(rc.xehUserListing & '/filter/inactive')#" <cfif rc.filter eq "inactive">class="linkBold"</cfif>>Inactive <cfif rc.filter eq "inactive">(#rc.qUsers.recordcount#)</cfif></a>
 		
 		<div class="float-right">
