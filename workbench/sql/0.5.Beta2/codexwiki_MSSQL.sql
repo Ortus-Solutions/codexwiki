@@ -577,7 +577,7 @@ GO
 
 INSERT INTO [dbo].[wiki_options] ([option_id], [option_name], [option_value])
 VALUES 
-  (N'9F045002-0E99-A690-7C59F405F98A19BE', N'wiki_search_engine', N'model.search.adapters.DBSearch')
+  (N'9F045002-0E99-A690-7C59F405F98A19BE', N'wiki_search_engine', N'codex.model.search.adapters.DBSearch')
 GO
 
 INSERT INTO [dbo].[wiki_options] ([option_id], [option_name], [option_value])
