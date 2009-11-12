@@ -24,7 +24,8 @@ $Build ID:	@@build_id@@
 			 hint="A plugin to include other wiki pages as content" 
 			 extends="codex.model.plugins.BaseWikiPlugin" 
 			 output="false" 
-			 cache="true">
+			 cache="true"
+			 autowire="true">
 
 	<!--- Dependencies --->  
 	<cfproperty name="WikiService" type="ioc" scope="instance" />
