@@ -40,7 +40,7 @@
 
 	<YourSettings>
 		<!-- Codex System Information -->
-		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta 2'}" />
+		<Setting name="Codex"						value="{'Version':'0.5', 'Suffix':'Beta 3'}" />
 		
 		<!--Transfer Settings -->
 		<Setting name="Transfer_configPath" 		value="/codex/config/transfer.xml.cfm"/>

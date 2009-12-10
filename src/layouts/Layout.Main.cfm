@@ -25,6 +25,11 @@ $Build ID:	@@build_id@@
 	#renderView('tags/meta')#
 	<!--- Base HREF --->
 	<base href="#getSetting('htmlBaseURL')#/" />
+	
+	<!--- RSS Feed --->
+	<link rel="alternate" type="application/rss+xml" title="Latest Wiki Updates" href="#event.buildLink('feed.page.listUpdates')#" />	
+	<link rel="alternate" type="application/rss+xml" title="Wiki pages by Namespace" href="#event.buildLink('feed.page.listByNamespace')#" />	
+	<link rel="alternate" type="application/rss+xml" title="RSS Feed Listing" href="#event.buildLink('feed.directory.list')#" />	
 		<!--- Main CSS --->	<link rel="stylesheet" type="text/css" href="includes/css/style.css" />	<!--- loop around the cssAppendList, to add page specific css --->	<cfloop list="#event.getValue("cssAppendList", "")#" index="css">		<link rel="stylesheet" type="text/css" href="includes/css/#css#.css" />	</cfloop>
 	<cfloop list="#event.getValue("cssFullAppendList", "")#" index="css">
 		<link rel="stylesheet" type="text/css" href="#css#.css" />
