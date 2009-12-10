@@ -87,7 +87,7 @@ $(document).ready(function() {
 	<ul>
 	<cfloop array="#categories#" index="category">
 		<li>
-			<a href="#event.buildLink(pageShowRoot(URLEncodedFormat("Category:" & category.getName())))#">#category.getName()#</a>
+			<a href="#event.buildLink( pageShowRoot("Category:" & urlEncodedFormat(category.getName()) ) )#">#category.getName()#</a>
 		</li>
 	</cfloop>
 	</ul>
