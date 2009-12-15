@@ -535,29 +535,17 @@ $Build ID:	@@build_id@@
 			if( not reFindNoCase("^(flashpaper|pdf|HTML|markup|word)$",event.getValue("print","")) ){
 				return;
 			}
-			else{
-				/* Change Layout Default PDF*/
-				Event.setLayout("Layout.Print");
-				/* PDF? */
-				if ( rc.print eq "pdf" ){
-					event.setValue("layout_extension","pdf");
-				}
-				/* Flash Paper? */
-				else if( rc.print eq "flashpaper"){
-					event.setValue("layout_extension","swf");
-				}
-				/* Markup Language? */
-				else if( rc.print eq "markup"){
-					event.setLayout("Layout.MarkupExport");
-				}
-				/* Word? */
-				else if( rc.print eq "word"){
-					event.setLayout("Layout.word");
-				}
-				/* HTML Language? */
-				else{
-					event.setLayout("Layout.html");
-				}
+			
+			// Print Layout by Default
+			event.setLayout("Layout.Print");
+			
+			// Print Options
+			switch(rc.print){
+				case "pdf"			:{ rc.layout_extension = "pdf"; break; }
+				case "flashpaper" 	:{ rc.layout_extension = "swf"; break; }
+				case "markup"		:{ event.setLayout("Layout.MarkupExport"); break; }
+				case "word"			:{ event.setLayout("Layout.word"); break; }
+				default 			:{ event.setLayout("Layout.html"); }
 			}
 		</cfscript>
 	</cffunction>
