@@ -114,7 +114,7 @@ $Build ID:	@@build_id@@
 				<th width="140" class="center">Date</th>
 				<th width="90" class="center">Author</th>
 				<th>Comment</th>
-				<th width="125" class="center">Actions</th>
+				<th width="135" class="center">Actions</th>
 			</tr>
 			
 			<tr>

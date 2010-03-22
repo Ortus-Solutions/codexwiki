@@ -527,7 +527,7 @@ $Build ID:	@@build_id@@
 		<cfreturn instance.wikiService />
 	</cffunction>
 
-	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout">
+	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout" output="false">
 		<cfargument name="Event" type="any">
 		<cfscript>
 			var rc = event.getCollection();

@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
 	<!--- Validate this bean --->
-	<cffunction name="validate" access="public" returntype="Array" hint="Validate this user data">
+	<cffunction name="validate" access="public" returntype="Array" hint="Validate this user data" output="false">
 		<cfargument name="edit" required="false" type="boolean" hint="Edit Mode or not" default="false">
 		<cfscript>
 			var errors = Arraynew(1);
@@ -139,7 +139,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 	<!--- Configure --->
-	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
+	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator" output="false">
 		<cfscript>
 
 			clearPermissions();

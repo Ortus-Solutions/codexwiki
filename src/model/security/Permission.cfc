@@ -34,7 +34,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- Validate this bean --->
-	<cffunction name="validate" access="public" returntype="Array" hint="Validate this bean">
+	<cffunction name="validate" access="public" returntype="Array" hint="Validate this bean" output="false">
 		<cfscript>
 			var errors = Arraynew(1);
 			
@@ -48,7 +48,7 @@ $Build ID:	@@build_id@@
 	
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
+	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator" output="false">
 		<cfscript>
 			/* Table Config for scaffolding*/
 			var tc = structnew();

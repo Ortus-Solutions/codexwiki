@@ -37,7 +37,7 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator">
+	<cffunction name="configure" access="private" returntype="void" hint="Constructor code for my decorator" output="false">
 		<cfscript>
 			/* Table Config for scaffolding*/
 			var tc = structnew();
