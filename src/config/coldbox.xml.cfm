@@ -118,7 +118,7 @@
 		
 		<!-- Wiki Translation -->
 		<Interceptor class="codex.interceptors.wiki.WikiText">
-			<Property name="ignoreXMLTagList">feed,messagebox,img</Property>
+			<Property name="ignoreXMLTagList">feed,messagebox,img,iframe</Property>
 			<Property name="allowedAttributes">style,url,cache,display,type,maxitems</Property>
 		</Interceptor>
 		<!-- Feed Translations -->
