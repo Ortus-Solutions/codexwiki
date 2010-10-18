@@ -1,3 +1,8 @@
 .DS_Store
 .settings/*
 settings.xml
+src/config/definitions
+src/coldbox
+src/coldspring
+src/transfer
+src/WEB-INF
