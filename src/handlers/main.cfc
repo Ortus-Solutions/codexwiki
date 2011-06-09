@@ -23,14 +23,11 @@ $Build ID:	@@build_id@@
 <cfcomponent extends="baseHandler"			 output="false"			 hint="This is our main wiki handler, all of our funky implicit invocations."			 autowire="true"			 cache="true"			 cacheTimeout="0">
 				 
 	<!--- Dependencies --->
-	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
-	<cfproperty name="ConfigService" 	type="ioc" scope="instance" />
+	<cfproperty name="SecurityService" 	inject="ioc" scope="instance" />
+	<cfproperty name="ConfigService" 	inject="ioc" scope="instance" />
 
 	<cffunction name="init" access="public" returntype="main" output="false">
-		<cfargument name="controller" type="any" required="yes">
 		<cfscript>
-			super.init(arguments.controller);
-			
 			// Show Keys
 			instance.showKey = getSetting('showKey');
 			instance.spaceKey = getSetting('spaceKey');

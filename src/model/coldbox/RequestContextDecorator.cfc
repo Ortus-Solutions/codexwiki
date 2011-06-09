@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="RequestContextDecorator" output="false" extends="coldbox.system.beans.requestContextDecorator">
+<cfcomponent name="RequestContextDecorator" output="false" extends="coldbox.system.web.context.RequestContextDecorator">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 	

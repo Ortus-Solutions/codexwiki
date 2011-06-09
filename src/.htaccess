@@ -12,7 +12,7 @@ RewriteEngine on
 #RewriteRule ^.*%20xp_.*$        /includes/templates/404.html [L,F,NC]
 
 #if this call related to adminstrators or non rewrite folders, you can add more here.
-RewriteCond %{REQUEST_URI} ^/(.*(CFIDE|cfide|CFFormGateway|jrunscripts|railo-context|fckeditor)).*$
+RewriteCond %{REQUEST_URI} ^/(.*(CFIDE|cfide|CFFormGateway|jrunscripts|railo-context|fckeditor|includes)).*$
 RewriteRule ^(.*)$ - [NC,L]
 
 #dealing with flash / flex communication

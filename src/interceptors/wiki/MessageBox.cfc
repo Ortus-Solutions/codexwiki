@@ -20,19 +20,19 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent hint="Wiki Text translation observer" extends="coldbox.system.interceptor" output="false" autowire="true">
+<cfcomponent hint="Wiki Text translation observer" extends="coldbox.system.Interceptor" output="false" autowire="true">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="onWikiPageTranslate" access="public" returntype="void" hint="Intercept Wiki Page Translation" output="false" >
-	<cfargument name="event" required="true" type="coldbox.system.beans.requestContext" hint="The event object.">
+	<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext" hint="The event object.">
 	<cfargument name="interceptData" required="true" type="struct" hint="interceptData of intercepted info.">
 	<cfscript>
 		arguments.interceptData.content.visitContent(getMessageBox(), arguments.interceptData);
 	</cfscript>
 </cffunction>
 
-<cffunction name="setMessageBox" access="public" returntype="void" output="false">
+<cffunction name="setMessageBox" access="public" returntype="void" output="false" inject="ioc:Messagebox">
 	<cfargument name="messageBox" type="codex.model.wiki.parser.MessageBox" required="true">
 	<cfset instance.messageBox = arguments.messageBox />
 </cffunction>

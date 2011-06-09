@@ -2,7 +2,7 @@
 <beans default-autowire="byName">
 	
 	<!-- ColdBox Related Beans -->
-	<bean id="ColdboxFactory" class="coldbox.system.extras.ColdboxFactory" autowire="no" />
+	<bean id="ColdboxFactory" class="coldbox.system.ioc.ColdboxFactory" autowire="no" />
 	<bean id="ColdBoxController" 	factory-bean="ColdBoxFactory" 		factory-method="getColdBox" />
 	<bean id="InterceptorService" 	factory-bean="ColdBoxController" 	factory-method="getinterceptorService" />
 	<bean id="ConfigBean" 			factory-bean="ColdBoxFactory" 		factory-method="getConfigBean" />
@@ -14,9 +14,9 @@
 		<constructor-arg name="plugin"><value>sessionstorage</value></constructor-arg>
 	</bean>
 	<!-- Coldbox-transfer Config Factory -->
-	<bean id="TransferConfigFactory" class="coldbox.system.extras.transfer.TransferConfigFactory" singleton="true" />
+	<bean id="TransferConfigFactory" class="coldbox.system.orm.transfer.TransferConfigFactory" singleton="true" />
 	<!-- coldbox-transfer observer for decorator injections -->
-   	<bean id="TDOBeanInjectorObserver" class="coldbox.system.extras.transfer.TDOBeanInjectorObserver" lazy-init="false">
+   	<bean id="TDOBeanInjectorObserver" class="coldbox.system.orm.transfer.TDOBeanInjectorObserver" lazy-init="false">
    		<constructor-arg name="Transfer"><ref bean="Transfer"></ref></constructor-arg>
    		<constructor-arg name="ColdBoxBeanFactory"><ref bean="BeanInjector"></ref></constructor-arg>
    	</bean>

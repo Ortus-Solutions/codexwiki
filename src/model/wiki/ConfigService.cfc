@@ -31,7 +31,7 @@ $Build ID:	@@build_id@@
 	<cffunction name="init" hint="Constructor" access="public" returntype="ConfigService" output="false">
 		<cfargument name="transfer"    hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-		<cfargument name="configBean"  hint="the configuration beam" type="coldbox.system.beans.configBean" required="Yes">
+		<cfargument name="configBean"  hint="the configuration beam" type="any" required="Yes">
 		<cfscript>
 			/* Init */
 			super.init(argumentCollection=arguments);
@@ -125,7 +125,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 
 	<!--- Get the application's config Bean --->
-	<cffunction name="getConfigBean" access="public" output="false" returntype="coldbox.system.beans.configBean" hint="Get configBean">
+	<cffunction name="getConfigBean" access="public" output="false" returntype="any" hint="Get configBean">
 		<cfreturn instance.configBean/>
 	</cffunction>
 	

@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="baseHandler" extends="coldbox.system.eventhandler" output="false" hint="This is our main base handler" autowire="true">
+<cfcomponent name="baseHandler" output="false" hint="This is our main base handler" autowire="true">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

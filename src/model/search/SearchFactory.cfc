@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- init --->
 	<cffunction name="init" output="false" access="public" returntype="SearchFactory" hint="The search Factory">
-		<cfargument name="configBean" 	 hint="the configuration beam" 	type="coldbox.system.beans.configBean" required="Yes">
+		<cfargument name="configBean" 	 hint="the configuration beam" 	type="any" required="Yes">
 		<cfargument name="configService" type="codex.model.wiki.ConfigService" required="true" default="" hint="The Config Service"/>
 		<cfargument name="transfer"	 	 hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
 		<cfargument name="datasource"    hint="the datasource bean" 		type="transfer.com.sql.Datasource" required="Yes">

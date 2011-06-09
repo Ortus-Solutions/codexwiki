@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 <cffunction name="init" hint="Constructor" access="public" returntype="FeedRenderable" output="false">
 	<cfargument name="feedTag" 		 		type="string" 								required="Yes" hint="">
 	<cfargument name="baseURL" 		 		type="string" 								required="Yes" hint="the base url to draw links from">
-	<cfargument name="coldboxOCM" 	 		type="coldbox.system.cache.cacheManager" 	required="Yes" hint="the coldbox cache. For injecting into Transients">
+	<cfargument name="coldboxOCM" 	 		type="any" 	required="Yes" hint="the coldbox cache. For injecting into Transients">
 	<cfargument name="rssManager" 	 		type="codex.model.rss.RSSManager" 			required="Yes" hint="the rss manager">
 	<cfargument name="rewriteExtension"  	type="string" 								required="Yes" hint="the rewrite extension">
 	<cfscript>
@@ -485,12 +485,12 @@ $Build ID:	@@build_id@@
 	<cfreturn instance.rssManager />
 </cffunction>
 
-<cffunction name="getCacheManager" access="private" returntype="coldbox.system.cache.cacheManager" output="false">
+<cffunction name="getCacheManager" access="private" returntype="any" output="false">
 	<cfreturn instance.cacheManager />
 </cffunction>
 
 <cffunction name="setCacheManager" access="private" returntype="void" output="false">
-	<cfargument name="cacheManager" type="coldbox.system.cache.cacheManager" required="true">
+	<cfargument name="cacheManager" type="any" required="true">
 	<cfset instance.cacheManager = arguments.cacheManager />
 </cffunction>
 

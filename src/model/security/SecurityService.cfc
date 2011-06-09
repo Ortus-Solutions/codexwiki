@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="SecurityService" output="false">
 		<!--- ************************************************************* --->
-		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="coldbox.system.beans.configBean" required="Yes">
+		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="any" required="Yes">
 		<cfargument name="transfer" 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
 		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
 		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service">
@@ -56,7 +56,7 @@ $Build ID:	@@build_id@@
 	<cffunction name="userValidator" access="public" returntype="boolean" output="false" hint="Verifies that the user is in any permission">
 		<!--- ************************************************************* --->
 		<cfargument name="rule" 	required="true" type="struct"   hint="The rule to verify">
-		<cfargument name="messagebox" type="coldbox.system.plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
+		<cfargument name="messagebox" type="coldbox.system.Plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
 		<!--- ************************************************************* --->
 		<cfset var oUser = getUserSession()>
 		<cfset var authResults = false>
@@ -249,7 +249,7 @@ $Build ID:	@@build_id@@
 	</cffunction>
 	
 	<!--- Get/Set config bean. --->
-	<cffunction name="getconfigBean" access="public" returntype="coldbox.system.beans.configBean" output="false">
+	<cffunction name="getconfigBean" access="public" returntype="any" output="false">
 		<cfreturn instance.configBean>
 	</cffunction>
 	

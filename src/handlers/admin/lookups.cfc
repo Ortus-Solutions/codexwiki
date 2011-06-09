@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="LookupService" type="ioc" scope="instance">
+	<cfproperty name="LookupService" inject="ioc" scope="instance">
 
 	<!--- HANDLER PROPERTIES --->
 	<cfset this.prehandler_exception = "display,dspCreate,dspEdit">
@@ -36,10 +36,8 @@ $Build ID:	@@build_id@@
 
 	<!--- This init is mandatory, including the super.init(). ---> 
 	<cffunction name="init" access="public" returntype="Lookups" output="false">
-		<cfargument name="controller" type="any">
 		<cfscript>
 			var qFiles = 0;
-			super.init(arguments.controller);
 			
 			/* Init Instance Variables */
 			instance.cssList = "";

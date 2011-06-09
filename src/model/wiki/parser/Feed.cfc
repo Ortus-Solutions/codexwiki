@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="Feed" output="false">
-	<cfargument name="coldboxOCM" 		hint="the coldbox cache. For injecting into Transients" type="coldbox.system.cache.cacheManager" required="Yes">
+	<cfargument name="coldboxOCM" 		hint="the coldbox cache. For injecting into Transients" type="any" required="Yes">
 	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
 	<cfargument name="rssManager" 		hint="the rss manager" type="codex.model.rss.RSSManager" required="true">
 	<cfscript>
@@ -161,12 +161,12 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
-<cffunction name="getCacheManager" access="private" returntype="coldbox.system.cache.cacheManager" output="false">
+<cffunction name="getCacheManager" access="private" returntype="any" output="false">
 	<cfreturn instance.cacheManager />
 </cffunction>
 
 <cffunction name="setCacheManager" access="private" returntype="void" output="false">
-	<cfargument name="cacheManager" type="coldbox.system.cache.cacheManager" required="true">
+	<cfargument name="cacheManager" type="any" required="true">
 	<cfset instance.cacheManager = arguments.cacheManager />
 </cffunction>
 

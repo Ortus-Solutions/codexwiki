@@ -27,7 +27,7 @@ Description :
 <cfcomponent name="Diff" 
 			 hint="Text file differencing engine" 
 			 output="false"
-			 extends="coldbox.system.plugin"
+			 extends="coldbox.system.Plugin"
 			 cache="true">
 	
 	<cfset this.OPERATION_INSERT="+">

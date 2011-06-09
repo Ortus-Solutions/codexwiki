@@ -27,9 +27,9 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="ConfigService" type="ioc" scope="instance">
-	<cfproperty name="WikiService"	 type="ioc" scope="instance">
-	<cfproperty name="UserService"	 type="ioc" scope="instance">
+	<cfproperty name="ConfigService" inject="ioc" scope="instance">
+	<cfproperty name="WikiService"	 inject="ioc" scope="instance">
+	<cfproperty name="UserService"	 inject="ioc" scope="instance">
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

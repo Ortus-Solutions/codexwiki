@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="paging" 
 			 hint="A paging plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="coldbox.system.Plugin" 
 			 output="false" 
 			 cache="true">
   

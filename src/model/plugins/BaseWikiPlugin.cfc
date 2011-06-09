@@ -22,14 +22,14 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="BaseWikiPlugin" 
 			 hint="The base wiki plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="coldbox.system.Plugin" 
 			 output="false"
 			 autowire="true">
 
-	<!--- Autowired Dependencies --->  
-	<cfproperty name="PluginService" type="ioc" scope="instance">
-	<cfproperty name="ConfigService" type="ioc" scope="instance">
-	<cfproperty name="WikiService" 	 type="ioc" scope="instance">
+	<!--- Autowired Dependencies  
+	<cfproperty name="PluginService" inject="ioc" scope="instance">---> 
+	<cfproperty name="ConfigService" inject="ioc" scope="instance">
+	<cfproperty name="WikiService" 	 inject="ioc" scope="instance">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    

@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="RssManager" output="false">
-	<cfargument name="configBean" type="coldbox.system.beans.configBean" required="true">
+	<cfargument name="configBean" type="any" required="true">
 	<cfargument name="beanInjector" hint="the bean injector" type="any" required="Yes">
 	<cfscript>
 		/* Stores all feed objects lazy loaded */
@@ -74,11 +74,11 @@ $Build ID:	@@build_id@@
 </cffunction>
 
 <!--- Get/set Config Bean --->
-<cffunction name="getconfigBean" access="public" output="false" returntype="coldbox.system.beans.configBean" hint="Get configBean">
+<cffunction name="getconfigBean" access="public" output="false" returntype="any" hint="Get configBean">
 	<cfreturn instance.configBean/>
 </cffunction>
 <cffunction name="setconfigBean" access="public" output="false" returntype="void" hint="Set configBean">
-	<cfargument name="configBean" type="coldbox.system.beans.configBean" required="true"/>
+	<cfargument name="configBean" type="any" required="true"/>
 	<cfset instance.configBean = arguments.configBean/>
 </cffunction>
 

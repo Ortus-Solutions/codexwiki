@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- dependencies --->
-	<cfproperty name="HTML2WikiConverter" type="ioc" scope="instance" />
+	<cfproperty name="HTML2WikiConverter" inject="ioc" scope="instance" />
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	

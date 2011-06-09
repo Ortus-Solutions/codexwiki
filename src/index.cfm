@@ -1,9 +1,9 @@
 <cfsilent>
-<!-----------------------------------------------------------------------
+<!---
+/**
 ********************************************************************************
-Copyright 2008 by 
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
@@ -17,8 +17,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-$Build Date: @@build_date@@
-$Build ID:	@@build_id@@
-********************************************************************************
------------------------------------------------------------------------>
+* @author Luis Majano
+* @hint Codex Platform Application.cfc
+**/
+--->
 </cfsilent>

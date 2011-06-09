@@ -27,10 +27,10 @@ $Build ID:	@@build_id@@
 			 cache="true" cacheTimeout="0">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" 		type="ioc" scope="instance" />
-	<cfproperty name="CommentsService"	type="ioc" scope="instance" />
-	<cfproperty name="SearchEngine" 	type="ioc" scope="instance" />
-	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
+	<cfproperty name="WikiService" 		inject="ioc" scope="instance" />
+	<cfproperty name="CommentsService"	inject="ioc" scope="instance" />
+	<cfproperty name="SearchEngine" 	inject="ioc" scope="instance" />
+	<cfproperty name="SecurityService" 	inject="ioc" scope="instance" />
 
 	<!--- IMPLICIT PROPERTIES --->
 	<cfset this.prehandler_only = "show">
@@ -38,9 +38,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<cffunction name="init" access="public" returntype="page" output="false">
-		<cfargument name="controller" type="any" required="yes">
 		<cfscript>
-			super.init(arguments.controller);
 			
 			// Show Key
 			instance.showKey = getSetting('showKey') & "/";

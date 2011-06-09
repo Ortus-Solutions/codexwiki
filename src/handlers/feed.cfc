@@ -23,12 +23,12 @@ $Build ID:	@@build_id@@
 <cfcomponent hint="handler for wiki rss feeds" extends="baseHandler" autowire="true" output="false">
 
 	<!--- Dependencies --->
-	<cfproperty name="rssManager" type="ioc" scope="instance" />
+	<cfproperty name="rssManager" inject="ioc" scope="instance" />
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 	<cffunction name="show" access="public" returntype="void" output="false">
-		<cfargument name="event" type="coldbox.system.beans.requestContext">
+		<cfargument name="event" type="coldbox.system.web.context.RequestContext">
 		<cfscript>
 			var rc = arguments.event.getCollection();
 	

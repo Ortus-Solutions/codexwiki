@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="CommentsService" 	 type="ioc" scope="instance">
+	<cfproperty name="CommentsService" 	 inject="ioc" scope="instance">
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

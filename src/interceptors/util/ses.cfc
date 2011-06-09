@@ -36,7 +36,7 @@ Description :
 <cfcomponent name="ses"
 			 hint="This is a ses support internceptor"
 			 output="false"
-			 extends="coldbox.system.interceptors.ses">
+			 extends="coldbox.system.Interceptors.SES">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
@@ -53,7 +53,8 @@ Description :
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 	<cffunction name="getCGIElement" access="private" returntype="string" hint="The request element override method" output="true" >
-		<cfargument name="cgielement" required="true" type="string" hint="">
+		<cfargument name="cgielement" 	required="true" hint="The cgi element to retrieve">
+		<cfargument name="Event"  		required="true" hint="The event object.">
 		<cfscript>
 			/* Are we in request ses mode? */
 			if ( structKeyExists(request,"ses") ){
@@ -61,7 +62,7 @@ Description :
 			}
 			/* We are in cgi ses mode. */
 			else{
-				return replace(super.getCGIElement(arguments.cgielement),"//","/","all");
+				return replace(super.getCGIElement(arguments.cgielement,arguments.event),"//","/","all");
 			}
 		</cfscript>
 	</cffunction>

@@ -42,8 +42,8 @@ $Build ID:	@@build_id@@
 	<!--- renderSearch --->
 	<cffunction name="renderSearch" output="false" access="public" returntype="any" hint="Render a search">
 		<cfargument name="result" 		type="struct" 								required="true" hint="The search results"/>
-		<cfargument name="event" 		type="coldbox.system.beans.requestContext" 	required="true" default="" hint="The ColdBox Event Context"/>
-		<cfargument name="controller" 	type="coldbox.system.controller" 			required="true" default="" hint="The coldbox controller"/>
+		<cfargument name="event" 		type="coldbox.system.web.context.RequestContext" 	required="true" default="" hint="The ColdBox Event Context"/>
+		<cfargument name="controller" 	type="coldbox.system.web.Controller" 			required="true" default="" hint="The coldbox controller"/>
 	</cffunction>
 	
 </cfinterface>

@@ -22,8 +22,8 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="user"			 extends="baseHandler"			 output="false"			 hint="Our main handler for user interactivity."			 autowire="true"			 cache="true" cacheTimeout="0">
 	<!--- Dependencies --->
-	<cfproperty name="SecurityService" 	type="ioc" scope="instance" />
-	<cfproperty name="UserService" 		type="ioc" scope="instance" />
+	<cfproperty name="SecurityService" 	inject="ioc" scope="instance" />
+	<cfproperty name="UserService" 		inject="ioc" scope="instance" />
 
 	<!--- Implicit Properties --->
 	<cfset this.prehandler_only = "registration,doregistration">
@@ -82,7 +82,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- registration --->
 	<cffunction name="registration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
 	    <cfset var rc = event.getCollection()>
 	    <cfscript>
 			/* Exit Handler */
@@ -97,7 +97,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- doRegistration --->
 	<cffunction name="doRegistration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
 	  <cfscript>
 			var rc = event.getCollection();
 			var oUser = "";
@@ -153,7 +153,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- usernameCheck --->
 	<cffunction name="usernameCheck" access="public" returntype="void" output="false" hint="Check a username">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
 	    <cfscript>
 			var rc = event.getCollection();
 			var valid = false;
@@ -171,7 +171,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- validateRegistration --->
 	<cffunction name="validateRegistration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
 	    <cfscript>
 			var rc = event.getCollection();
 			var oUserService = getUserService();
@@ -192,7 +192,7 @@ $Build ID:	@@build_id@@
 	
 	<!--- RegistrationConfirmation --->
 	<cffunction name="RegistrationConfirmation" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.beans.requestContext" required="yes">
+		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
 	    <cfset var rc = event.getCollection()>
 	    
 	    <cfset event.setView('users/confirmation')>

@@ -24,18 +24,18 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- DEPENDENCIES ------------------------------------------->
 
-<cffunction name="setBeanPopulator" access="public" returntype="void" output="false">
+<cffunction name="setBeanPopulator" access="public" returntype="void" output="false" inject="ioc:BeanPopulator">
 	<cfargument name="beanPopulator" type="codex.model.transfer.BeanPopulator" required="true">
 	<cfset instance.beanPopulator = arguments.beanPopulator />
 </cffunction>
 
-<cffunction name="setWikiService" access="public" returntype="void" output="false">
+<cffunction name="setWikiService" access="public" returntype="void" output="false" inject="ioc:wikiService">
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 
-<cffunction name="setInterceptorService" access="public" returntype="void" output="false">
-	<cfargument name="interceptorService" type="coldbox.system.services.interceptorService" required="true">
+<cffunction name="setInterceptorService" access="public" returntype="void" output="false" inject="ioc:interceptorService">
+	<cfargument name="interceptorService" type="coldbox.system.web.services.InterceptorService" required="true">
 	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>
 
@@ -298,7 +298,7 @@ $Build ID:	@@build_id@@
 	<cfreturn instance.beanPopulator />
 </cffunction>
 
-<cffunction name="getInterceptorService" access="private" returntype="coldbox.system.services.interceptorService" output="false">
+<cffunction name="getInterceptorService" access="private" returntype="coldbox.system.web.services.InterceptorService" output="false">
 	<cfreturn instance.interceptorService />
 </cffunction>
 

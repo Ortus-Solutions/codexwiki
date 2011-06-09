@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="Avatar" 
 			 hint="An avatar display plugin" 
-			 extends="coldbox.system.plugin" 
+			 extends="coldbox.system.Plugin" 
 			 output="false"
 			 cache="true">
   
