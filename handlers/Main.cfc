@@ -111,12 +111,13 @@ component extends="BaseHandler" accessors="true" singleton{
 		rc.CodexOptions = getColdboxOCM().get('CodexOptions');
 	}	
 	function onMissingTemplate(event){
-		
+		// If we get here then no resource was hit and we DO have a missing template
+		notFound(arguments.event);
 	}
 	
 	function onRequestEnd(event){
-		
 	}
+	
 	function onException(event){
 		var invalidList = "Framework.invalidEventException,Framework.EventHandlerNotRegisteredException";
 			
