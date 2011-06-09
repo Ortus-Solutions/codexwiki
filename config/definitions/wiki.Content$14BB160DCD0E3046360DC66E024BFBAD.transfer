@@ -1,0 +1,956 @@
+<cffunction name="init" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Constructor for Transfer class wiki.Content" output="false">
+<cfargument name="transfer" type="transfer.com.Transfer" required="true" hint="The Transfer library">
+<cfargument name="utility" type="transfer.com.util.Utility" required="true" hint="The Utility object">
+<cfargument name="nullable" type="transfer.com.sql.Nullable" required="true" hint="The Nullable lookup object">
+<cfargument name="thisObject" type="transfer.com.TransferObject" required="true" hint="What is determined to be the base 'this' object for this TransferObject">
+<cfscript>
+instance = StructNew();
+setThisObject(arguments.thisObject);
+setTransfer(arguments.transfer);
+setUtility(arguments.utility);
+setSystem(createObject("java", "java.lang.System"));
+setNullable(arguments.nullable);
+setClassName("wiki.Content");
+setIsDirty(true);
+setIsPersisted(false);
+setIsClone(false);
+setcontentID(getNullable().getNullUUID(getClassName(), "contentID"));
+setcontent("");
+setcomment("");
+setversion(0);
+setcreatedDate(Now());
+setisActive(false);
+setisReadOnly(false);
+setLoaded(StructNew());
+setCategoryisLoaded(true);
+setPageisLoaded(true);
+setUserisLoaded(true);
+setCategoryCollection(ArrayNew(1));
+setCategoryIDCollection(StructNew());
+if(StructKeyExists(this, "configure") OR StructKeyExists(variables, "configure"))
+{
+configure();
+}
+return this;
+</cfscript>
+</cffunction>
+
+<cffunction name="equalsTransfer" access="public" returntype="boolean" default="boolean" hint="If an object is persisted, returns true if they are of the same class and same id. If not, returns true if they are the same object." output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The TransferObject to test against">
+<cfscript>
+if(getIsPersisted())
+{
+if(getClassName() neq arguments.transfer.getClassName())
+{
+return false;
+}
+return (getcontentID() eq arguments.transfer.getcontentID());
+}
+else
+{
+return sameTransfer(arguments.transfer);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontentID" access="public" returntype="uuid" default="uuid" hint="Accessor for property contentID" output="false">
+<cfscript>
+return instance.contentID;
+</cfscript>
+</cffunction>
+
+<cffunction name="setcontentID" access="public" returntype="void" default="void" hint="Mutator for property contentID" output="false">
+<cfargument name="contentID" type="uuid" required="true" hint="The value to set contentID to">
+<cfscript>
+if(NOT StructKeyExists(instance, "contentID") OR getcontentID() neq arguments.contentID)
+{
+instance.contentID = UCase(arguments.contentID);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getcontent" access="public" returntype="string" default="string" hint="Accessor for property content" output="false">
+<cfscript>
+return instance.content;
+</cfscript>
+</cffunction>
+
+<cffunction name="setcontent" access="public" returntype="void" default="void" hint="Mutator for property content" output="false">
+<cfargument name="content" type="string" required="true" hint="The value to set content to">
+<cfscript>
+if(NOT StructKeyExists(instance, "content") OR Compare(getcontent(), arguments.content) neq 0)
+{
+instance.content = (arguments.content);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getcomment" access="public" returntype="string" default="string" hint="Accessor for property comment" output="false">
+<cfscript>
+return instance.comment;
+</cfscript>
+</cffunction>
+
+<cffunction name="setcomment" access="public" returntype="void" default="void" hint="Mutator for property comment" output="false">
+<cfargument name="comment" type="string" required="true" hint="The value to set comment to">
+<cfscript>
+if(NOT StructKeyExists(instance, "comment") OR Compare(getcomment(), arguments.comment) neq 0)
+{
+instance.comment = (arguments.comment);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getversion" access="public" returntype="numeric" default="numeric" hint="Accessor for property version" output="false">
+<cfscript>
+return instance.version;
+</cfscript>
+</cffunction>
+
+<cffunction name="setversion" access="public" returntype="void" default="void" hint="Mutator for property version" output="false">
+<cfargument name="version" type="numeric" required="true" hint="The value to set version to">
+<cfscript>
+if(NOT StructKeyExists(instance, "version") OR getversion() neq arguments.version)
+{
+instance.version = getUtility().trimZero(arguments.version);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getcreatedDate" access="public" returntype="date" default="date" hint="Accessor for property createdDate" output="false">
+<cfscript>
+return instance.createdDate;
+</cfscript>
+</cffunction>
+
+<cffunction name="setcreatedDate" access="public" returntype="void" default="void" hint="Mutator for property createdDate" output="false">
+<cfargument name="createdDate" type="date" required="true" hint="The value to set createdDate to">
+<cfscript>
+if(NOT StructKeyExists(instance, "createdDate") OR getcreatedDate() neq arguments.createdDate)
+{
+instance.createdDate = (arguments.createdDate);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getisActive" access="public" returntype="boolean" default="boolean" hint="Accessor for property isActive" output="false">
+<cfscript>
+return instance.isActive;
+</cfscript>
+</cffunction>
+
+<cffunction name="setisActive" access="public" returntype="void" default="void" hint="Mutator for property isActive" output="false">
+<cfargument name="isActive" type="boolean" required="true" hint="The value to set isActive to">
+<cfscript>
+if(NOT StructKeyExists(instance, "isActive") OR getisActive() neq arguments.isActive)
+{
+instance.isActive = (arguments.isActive);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getisReadOnly" access="public" returntype="boolean" default="boolean" hint="Accessor for property isReadOnly" output="false">
+<cfscript>
+return instance.isReadOnly;
+</cfscript>
+</cffunction>
+
+<cffunction name="setisReadOnly" access="public" returntype="void" default="void" hint="Mutator for property isReadOnly" output="false">
+<cfargument name="isReadOnly" type="boolean" required="true" hint="The value to set isReadOnly to">
+<cfscript>
+if(NOT StructKeyExists(instance, "isReadOnly") OR getisReadOnly() neq arguments.isReadOnly)
+{
+instance.isReadOnly = (arguments.isReadOnly);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryisLoaded" access="public" returntype="boolean" default="boolean" hint="Whether or not the composition 'Category' has been loaded yet" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "Category"))
+{
+setCategoryisLoaded(false);
+}
+return StructFind(getLoaded(), "Category");
+</cfscript>
+</cffunction>
+
+<cffunction name="setCategoryisLoaded" access="private" returntype="void" default="void" hint="Set the loaded state of composition 'arguments.name'" output="false">
+<cfargument name="loaded" type="boolean" required="true" hint="Whether or not this composition has been loaded">
+<cfscript>
+StructInsert(getLoaded(), "Category", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadCategory" access="package" returntype="void" default="void" hint="Lazy load composition 'Category'" output="false">
+<cfif NOT getCategoryisLoaded()>
+<cflock name="transfer.load.wiki.Content.Category.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif NOT getCategoryisLoaded()>
+<cfscript>
+getTransfer().loadManyToMany(getThisObject(), "Category");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="unLoadCategory" access="private" returntype="void" default="void" hint="unload lazy load composition 'Category'" output="false">
+<cfif getCategoryisLoaded()>
+<cflock name="transfer.load.wiki.Content.Category.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif getCategoryisLoaded()>
+<cfscript>
+setCategoryisLoaded(false);
+emptyCategory();
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="getPageisLoaded" access="public" returntype="boolean" default="boolean" hint="Whether or not the composition 'Page' has been loaded yet" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "Page"))
+{
+setPageisLoaded(false);
+}
+return StructFind(getLoaded(), "Page");
+</cfscript>
+</cffunction>
+
+<cffunction name="setPageisLoaded" access="private" returntype="void" default="void" hint="Set the loaded state of composition 'arguments.name'" output="false">
+<cfargument name="loaded" type="boolean" required="true" hint="Whether or not this composition has been loaded">
+<cfscript>
+StructInsert(getLoaded(), "Page", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadPage" access="package" returntype="void" default="void" hint="Lazy load composition 'Page'" output="false">
+<cfif NOT getPageisLoaded()>
+<cflock name="transfer.load.wiki.Content.Page.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif NOT getPageisLoaded()>
+<cfscript>
+getTransfer().loadManyToOne(getThisObject(), "Page");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="unLoadPage" access="private" returntype="void" default="void" hint="unload lazy load composition 'Page'" output="false">
+<cfif getPageisLoaded()>
+<cflock name="transfer.load.wiki.Content.Page.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif getPageisLoaded()>
+<cfscript>
+setPageisLoaded(false);
+StructDelete(instance, "Page");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="getUserisLoaded" access="public" returntype="boolean" default="boolean" hint="Whether or not the composition 'User' has been loaded yet" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "User"))
+{
+setUserisLoaded(false);
+}
+return StructFind(getLoaded(), "User");
+</cfscript>
+</cffunction>
+
+<cffunction name="setUserisLoaded" access="private" returntype="void" default="void" hint="Set the loaded state of composition 'arguments.name'" output="false">
+<cfargument name="loaded" type="boolean" required="true" hint="Whether or not this composition has been loaded">
+<cfscript>
+StructInsert(getLoaded(), "User", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadUser" access="package" returntype="void" default="void" hint="Lazy load composition 'User'" output="false">
+<cfif NOT getUserisLoaded()>
+<cflock name="transfer.load.wiki.Content.User.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif NOT getUserisLoaded()>
+<cfscript>
+getTransfer().loadManyToOne(getThisObject(), "User");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="unLoadUser" access="private" returntype="void" default="void" hint="unload lazy load composition 'User'" output="false">
+<cfif getUserisLoaded()>
+<cflock name="transfer.load.wiki.Content.User.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif getUserisLoaded()>
+<cfscript>
+setUserisLoaded(false);
+StructDelete(instance, "User");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="setMemento" access="public" returntype="void" default="void" hint="set the state of this object from a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+var composite = 0;
+if(NOT getIsPersisted())
+{
+setcontentID(StructFind(arguments.memento, "contentID"));
+}
+setPropertyMemento(arguments.memento);
+setPageisLoaded(false);
+if(StructKeyExists(arguments.memento, "Page"))
+{
+composite = StructFind(arguments.memento, "Page");
+}
+else
+{
+composite = StructNew();
+}
+setPageMemento(composite);
+setUserisLoaded(false);
+setCategoryisLoaded(false);
+if(structKeyExists(arguments.memento, "Category"))
+{
+composite = StructFind(arguments.memento, "Category");
+}
+else
+{
+composite = ArrayNew(1);
+}
+setCategoryMemento(composite);
+</cfscript>
+</cffunction>
+
+<cffunction name="setPropertyMemento" access="public" returntype="void" default="void" hint="set the Property state of this object with a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+setcontent(StructFind(arguments.memento, "content"));
+setcomment(StructFind(arguments.memento, "comment"));
+setversion(StructFind(arguments.memento, "version"));
+setcreatedDate(StructFind(arguments.memento, "createdDate"));
+setisActive(StructFind(arguments.memento, "isActive"));
+setisReadOnly(StructFind(arguments.memento, "isReadOnly"));
+</cfscript>
+</cffunction>
+
+<cffunction name="setPageMemento" access="public" returntype="void" default="void" hint="set the state of composition manytoone 'Page'" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+var composite = 0;
+if(StructIsEmpty(arguments.memento))
+{
+removePage();
+}
+else
+{
+composite = getComposite("wiki.Page", arguments.memento, "pageID");
+setPage(composite);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="setUserMemento" access="public" returntype="void" default="void" hint="set the state of composition manytoone 'User'" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+var composite = 0;
+if(StructIsEmpty(arguments.memento))
+{
+removeUser();
+}
+else
+{
+composite = getComposite("security.User", arguments.memento, "userID");
+setUser(composite);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="setCategoryMemento" access="public" returntype="void" default="void" hint="set the state of composition manytomany 'Category'" output="false">
+<cfargument name="memento" type="array" required="true" hint="the memento to set the state with">
+<cfscript>
+var collection = ArrayNew(1);
+var idcollection = StructNew();
+var counter = 0;
+var len = 0;
+var item = 0;
+var composite = 0;
+</cfscript>
+<cflock name="transfer.wiki.Content.Category.#getcontentID()#" timeout="60">
+<cfscript>
+len = ArrayLen(arguments.memento);
+for(counter = 1; counter lte len; counter = counter + 1)
+{
+composite = arguments.memento[counter];
+StructInsert(composite, "parentContent_transferObject", getThisObject());
+item = getComposite("wiki.Category", composite, "category_id");
+StructInsert(idcollection, "pk:" & item.getcategory_id(), 1, true);
+StructInsert(idcollection, "obj:" & getSystem().identityHashCode(item), 1, true);
+arrayAppend(collection, item);
+}
+setCategoryIDCollection(idcollection);
+setCategoryCollection(collection);
+setCategoryisLoaded(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="getMemento" access="public" returntype="struct" default="struct" hint="Returns the memento for all non-lazy members of this object" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+StructInsert(memento, "contentID", getcontentID());
+StructInsert(memento, "transfer_isDirty", getIsDirty());
+StructInsert(memento, "transfer_isPersisted", getIsPersisted());
+StructInsert(memento, "transfer_isProxied", false);
+StructAppend(memento, getPropertyMemento());
+StructInsert(memento, "Page", getPageMemento());
+StructInsert(memento, "Category", getCategoryMemento());
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getPropertyMemento" access="public" returntype="struct" default="struct" hint="returns the memento for properties" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+StructInsert(memento, "content", getcontent());
+StructInsert(memento, "comment", getcomment());
+StructInsert(memento, "version", getversion());
+StructInsert(memento, "createdDate", getcreatedDate());
+StructInsert(memento, "isActive", getisActive());
+StructInsert(memento, "isReadOnly", getisReadOnly());
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getPageMemento" access="public" returntype="struct" default="struct" hint="returns the memento for manytoone Page" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+if(hasPage())
+{
+memento = getPage().getMemento();
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getUserMemento" access="public" returntype="struct" default="struct" hint="returns the memento for manytoone User" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+if(hasUser())
+{
+memento = getUser().getMemento();
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany Category" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.ArrayList").init();
+var iterator = getCategoryIterator();
+var item = 0;
+while(iterator.hasNext())
+{
+item = iterator.next();
+ArrayAppend(memento, item.getMemento());
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="copyValuesTo" access="public" returntype="void" default="void" hint="Copies the values of this object to one of the same class" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The object to copy values to">
+<cfscript>
+if(arguments.transfer.getClassName() neq "wiki.Content")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'wiki.Content'");
+}
+arguments.transfer.setMemento(getMemento());
+if(getUserisLoaded())
+{
+arguments.transfer.setUserMemento(getUserMemento());
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getPage" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Accessor for Page, wiki.Page" output="false">
+<cfscript>
+if(NOT getPageisLoaded())
+{
+loadPage();
+}
+if(NOT structKeyExists(instance, "Page"))
+{
+throw("ManyToOneNotSetException","A ManyToOne TransferObject has not been initialised.","In TransferObject 'wiki.Content' manytoone 'wiki.Page' does not exist, when calling getPage()");
+}
+return instance.Page;
+</cfscript>
+</cffunction>
+
+<cffunction name="setPage" access="public" returntype="void" default="void" hint="Mutator for Page, wiki.Page" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The wiki.Page to set">
+<cfscript>
+if(arguments.transfer.getClassName() neq "wiki.Page")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'wiki.Page'");
+}
+if((NOT getPageisLoaded()) OR (NOT (StructKeyExists(instance, "Page") AND getPage().equalsTransfer(arguments.transfer))))
+{
+instance.Page = arguments.transfer;
+setIsDirty(true);
+setPageisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="hasPage" access="public" returntype="boolean" default="boolean" hint="Whether or not this object contains a wiki.Page" output="false">
+<cfscript>
+if(NOT getPageisLoaded())
+{
+loadPage();
+}
+return StructKeyExists(instance,"Page");
+</cfscript>
+</cffunction>
+
+<cffunction name="removePage" access="public" returntype="void" default="void" hint="remove the instance of wiki.Page" output="false">
+<cfscript>
+if(NOT getPageisLoaded() OR hasPage())
+{
+StructDelete(instance,"Page");
+setIsDirty(true);
+setPageisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getUser" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Accessor for User, security.User" output="false">
+<cfscript>
+if(NOT getUserisLoaded())
+{
+loadUser();
+}
+if(NOT structKeyExists(instance, "User"))
+{
+throw("ManyToOneNotSetException","A ManyToOne TransferObject has not been initialised.","In TransferObject 'wiki.Content' manytoone 'security.User' does not exist, when calling getUser()");
+}
+return instance.User;
+</cfscript>
+</cffunction>
+
+<cffunction name="setUser" access="public" returntype="void" default="void" hint="Mutator for User, security.User" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The security.User to set">
+<cfscript>
+if(arguments.transfer.getClassName() neq "security.User")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'security.User'");
+}
+if((NOT getUserisLoaded()) OR (NOT (StructKeyExists(instance, "User") AND getUser().equalsTransfer(arguments.transfer))))
+{
+instance.User = arguments.transfer;
+setIsDirty(true);
+setUserisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="hasUser" access="public" returntype="boolean" default="boolean" hint="Whether or not this object contains a security.User" output="false">
+<cfscript>
+if(NOT getUserisLoaded())
+{
+loadUser();
+}
+return StructKeyExists(instance,"User");
+</cfscript>
+</cffunction>
+
+<cffunction name="removeUser" access="public" returntype="void" default="void" hint="remove the instance of security.User" output="false">
+<cfscript>
+if(NOT getUserisLoaded() OR hasUser())
+{
+StructDelete(instance,"User");
+setIsDirty(true);
+setUserisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryCollection" access="private" returntype="array" default="array" hint="Accessor for the internal collection for Category" output="false">
+<cfscript>
+return instance.Category;
+</cfscript>
+</cffunction>
+
+<cffunction name="setCategoryCollection" access="private" returntype="void" default="void" hint="Mutator for the internal collection for Category" output="false">
+<cfargument name="Category" type="array" required="true" hint="The array to set">
+<cfscript>
+instance.Category = arguments.Category;
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryIDCollection" access="private" returntype="struct" default="struct" hint="Accessor for internal id collection, for faster contain*() calls" output="false">
+<cfreturn instance.CategoryIDCollection />
+</cffunction>
+
+<cffunction name="setCategoryIDCollection" access="private" returntype="void" default="void" hint="Mutator for internal id collection, for faster contain*() calls" output="false">
+<cfargument name="collection" type="struct" required="true" hint="the key for the id to be stored under">
+<cfset instance.CategoryIDCollection = arguments.collection />
+</cffunction>
+
+<cffunction name="getCategory" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Returns the wiki.Category object at the given index in the array" output="false">
+<cfargument name="index" type="numeric" required="true" hint="The index in the array to retrieve">
+<cfscript>
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+return getCategoryCollection().get(JavaCast("int", arguments.index - 1));
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryArray" access="public" returntype="array" default="array" hint="returns the entire array of wiki.Category" output="false">
+<cfscript>
+var array = ArrayNew(1);
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+array.addAll(getCategoryCollection());
+return array;
+</cfscript>
+</cffunction>
+
+<cffunction name="getCategoryIterator" access="public" returntype="any" default="any" hint="return a java.util.Iterator of wiki.Category objects" output="false">
+<cfscript>
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+return getCategoryArray().iterator();
+</cfscript>
+</cffunction>
+
+<cffunction name="containsCategory" access="public" returntype="boolean" default="boolean" hint="If this array contains a particular instance of wiki.Category" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to look for">
+<cfargument name="pkCheckOnly" type="boolean" required="false" hint="Expert/Transfer use only: only checks primary keys" default="false">
+<cfscript>
+var composite = 0;
+var array = getCategoryArray();
+var counter = 1;
+var len = 0;
+var check = false;
+var idcollection = getCategoryidCollection();
+if(arguments.object.getClassName() neq "wiki.Category")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'wiki.Category'");
+}
+if(arguments.object.getIsPersisted() AND StructKeyExists(idcollection, "pk:" & arguments.object.getcategory_id()))
+{
+return true;
+}
+if(arguments.pkCheckOnly)
+{
+return false;
+}
+if(StructKeyExists(idcollection, "obj:" & getSystem().identityHashCode(arguments.object)))
+{
+check = true;
+}
+if(NOT check)
+{
+len = ArrayLen(array);
+for(; counter lte len; counter = counter + 1)
+{
+composite = array[counter];
+if(composite.equalsTransfer(arguments.object))
+{
+check = true;
+break;
+}
+}
+}
+if(check AND arguments.object.getIsPersisted())
+{
+StructInsert(idcollection, "pk:" & arguments.object.getcategory_id(), 1, true);
+}
+return check;
+</cfscript>
+</cffunction>
+
+<cffunction name="findCategory" access="public" returntype="numeric" default="numeric" hint="Find the index number that the given object is at in the Array. Returns -1 if it can't be found.'" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to search for">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+var counter = 0;
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+iterator = getCategoryCollection().iterator();
+if(arguments.object.getClassName() neq "wiki.Category")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'wiki.Category'");
+}
+while(iterator.hasNext())
+{
+composite = iterator.next();
+counter = counter + 1;
+if(composite.equalsTransfer(arguments.object))
+{
+return counter;
+}
+}
+return -1;
+</cfscript>
+</cffunction>
+
+<cffunction name="emptyCategory" access="public" returntype="void" default="void" hint="empty the collection, with no change to loading'" output="false">
+<cfscript>
+ArrayClear(getCategoryCollection());
+StructClear(getCategoryIDCollection());
+</cfscript>
+</cffunction>
+
+<cffunction name="addCategory" access="public" returntype="void" default="void" hint="Add an object of type wiki.Category to the array" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to add">
+<cflock name="transfer.wiki.Content.Category.#getcontentID()#" timeout="60">
+<cfscript>
+if(arguments.object.getClassName() neq "wiki.Category")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'wiki.Category'");
+}
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+if(arguments.object.getIsPersisted())
+{
+StructInsert(getCategoryIDCollection(), "pk:" & arguments.object.getcategory_id(), 1, true);
+}
+StructInsert(getCategoryIDCollection(), "obj:" & getSystem().identityHashCode(arguments.object), 1, true);
+ArrayAppend(getCategoryCollection(), arguments.object);
+setIsDirty(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="removeCategory" access="public" returntype="void" default="void" hint="remove an object of type wiki.Category from the array" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="the object to remove">
+<cfscript>
+var iterator = 0;
+var composite = 0;
+if(arguments.object.getClassName() neq "wiki.Category")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.object.getClassName()#' does not match the expected class of 'wiki.Category'");
+}
+</cfscript>
+<cflock name="transfer.wiki.Content.Category.#getcontentID()#" timeout="60">
+<cfscript>
+if(NOT getCategoryisLoaded())
+{
+loadCategory();
+}
+iterator = getCategoryCollection().iterator();
+while(iterator.hasNext())
+{
+composite = iterator.next();
+if(composite.equalsTransfer(arguments.object))
+{
+iterator.remove();
+if(arguments.object.getIsPersisted())
+{
+StructDelete(getCategoryIDCollection(), "pk:" & arguments.object.getcategory_id());
+}
+StructDelete(getCategoryIDCollection(), "obj:" & getSystem().identityHashCode(arguments.object));
+setIsDirty(true);
+return;
+}
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="clearCategory" access="public" returntype="void" default="void" hint="Clear all the elements from the array" output="false">
+<cflock name="transfer.wiki.Content.Category.#getcontentID()#" timeout="60">
+<cfscript>
+emptyCategory();
+setIsDirty(true);
+setCategoryisLoaded(true);
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="sortCategory" access="public" returntype="void" default="void" hint="Sort all elements in the array Category" output="false">
+<cflock name="transfer.wiki.Content.Category.#getcontentID()#" timeout="60">
+<cfscript>
+if(NOT arrayisEmpty(getCategoryCollection()))
+{
+setCategoryCollection(getUtility().quickSort(getCategoryCollection(), CategoryComparator));
+}
+</cfscript>
+</cflock>
+</cffunction>
+
+<cffunction name="CategoryComparator" access="private" returntype="numeric" default="numeric" hint="The Comparator HOF for sorting" output="false">
+<cfargument name="object1" type="transfer.com.TransferObject" required="true" hint="object one">
+<cfargument name="object2" type="transfer.com.TransferObject" required="true" hint="object two">
+<cfscript>
+if(arguments.object1.getname() lt arguments.object2.getname())
+{
+return -1;
+}
+else if(arguments.object1.getname() gt arguments.object2.getname())
+{
+return 1;
+}
+return 0;
+</cfscript>
+</cffunction>
+
+<cffunction name="validateCacheState" access="package" returntype="boolean" default="boolean" hint="if this object is cached, then validate that all it's composites are cached too" output="false">
+<cfscript>
+var iterator = 0;
+var item = 0;
+if(getIsPersisted() AND NOT getTransfer().validateIsCached(getThisObject()))
+{
+return true;
+}
+if(getPageisLoaded() AND hasPage())
+{
+item = getPage();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+if(getUserisLoaded() AND hasUser())
+{
+item = getUser();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+if(getCategoryisLoaded())
+{
+iterator = getCategoryiterator();
+while(iterator.hasNext())
+{
+item = iterator.next();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+}
+return true;
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterCreateTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when creates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDeleteTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when deletes occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+if(className eq "wiki.Category")
+{
+if(getCategoryIsLoaded())
+{
+while(containsCategory(arguments.event.getTransferObject()))
+{
+removeCategory(arguments.event.getTransferObject());
+}
+}
+}
+if(className eq "wiki.Page")
+{
+if(getPageIsLoaded() AND hasPage() AND getPage().equalsTransfer(arguments.event.getTransferObject()))
+{
+removePage(arguments.event.getTransferObject());
+}
+}
+else if(className eq "security.User")
+{
+if(getUserIsLoaded() AND hasUser() AND getUser().equalsTransfer(arguments.event.getTransferObject()))
+{
+removeUser(arguments.event.getTransferObject());
+}
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterUpdateTransferEvent" access="public" returntype="void" default="void" hint="Observer method action for when updates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+switch(arguments.event.getTransferObject().getClassName())
+{
+case "wiki.Category":
+if(getCategoryIsLoaded() AND containsCategory(arguments.event.getTransferObject()))
+{
+sortCategory();
+}
+break;
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDiscardTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when discards occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var discard = false;
+var className = arguments.event.getTransferObject().getClassName();
+if(className eq "wiki.Category")
+{
+if(getCategoryIsLoaded() AND containsCategory(arguments.event.getTransferObject()))
+{
+if(getCategoryisLoaded())
+{
+unloadCategory();
+}
+}
+}
+if(className eq "wiki.Page")
+{
+if(getPageIsLoaded() AND hasPage() AND getPage().equalsTransfer(arguments.event.getTransferObject()))
+{
+if(getPageisLoaded())
+{
+unloadPage();
+}
+}
+}
+else if(className eq "security.User")
+{
+if(getUserIsLoaded() AND hasUser() AND getUser().equalsTransfer(arguments.event.getTransferObject()))
+{
+if(getUserisLoaded())
+{
+unloadUser();
+}
+}
+}
+if(discard)
+{
+getTransfer().discard(getThisObject());
+}
+</cfscript>
+</cffunction>
+
+

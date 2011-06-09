@@ -1,0 +1,484 @@
+<cffunction name="init" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Constructor for Transfer class wiki.Page" output="false">
+<cfargument name="transfer" type="transfer.com.Transfer" required="true" hint="The Transfer library">
+<cfargument name="utility" type="transfer.com.util.Utility" required="true" hint="The Utility object">
+<cfargument name="nullable" type="transfer.com.sql.Nullable" required="true" hint="The Nullable lookup object">
+<cfargument name="thisObject" type="transfer.com.TransferObject" required="true" hint="What is determined to be the base 'this' object for this TransferObject">
+<cfscript>
+instance = StructNew();
+setThisObject(arguments.thisObject);
+setTransfer(arguments.transfer);
+setUtility(arguments.utility);
+setSystem(createObject("java", "java.lang.System"));
+setNullable(arguments.nullable);
+setClassName("wiki.Page");
+setIsDirty(true);
+setIsPersisted(false);
+setIsClone(false);
+setpageID(getNullable().getNullUUID(getClassName(), "pageID"));
+setname("");
+settitle("");
+setpassword("");
+setdescription("");
+setkeywords("");
+setallowComments(false);
+setLoaded(StructNew());
+setNamespaceisLoaded(true);
+if(StructKeyExists(this, "configure") OR StructKeyExists(variables, "configure"))
+{
+configure();
+}
+return this;
+</cfscript>
+</cffunction>
+
+<cffunction name="equalsTransfer" access="public" returntype="boolean" default="boolean" hint="If an object is persisted, returns true if they are of the same class and same id. If not, returns true if they are the same object." output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The TransferObject to test against">
+<cfscript>
+if(getIsPersisted())
+{
+if(getClassName() neq arguments.transfer.getClassName())
+{
+return false;
+}
+return (getpageID() eq arguments.transfer.getpageID());
+}
+else
+{
+return sameTransfer(arguments.transfer);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getpageID" access="public" returntype="uuid" default="uuid" hint="Accessor for property pageID" output="false">
+<cfscript>
+return instance.pageID;
+</cfscript>
+</cffunction>
+
+<cffunction name="setpageID" access="public" returntype="void" default="void" hint="Mutator for property pageID" output="false">
+<cfargument name="pageID" type="uuid" required="true" hint="The value to set pageID to">
+<cfscript>
+if(NOT StructKeyExists(instance, "pageID") OR getpageID() neq arguments.pageID)
+{
+instance.pageID = UCase(arguments.pageID);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getname" access="public" returntype="string" default="string" hint="Accessor for property name" output="false">
+<cfscript>
+return instance.name;
+</cfscript>
+</cffunction>
+
+<cffunction name="setname" access="public" returntype="void" default="void" hint="Mutator for property name" output="false">
+<cfargument name="name" type="string" required="true" hint="The value to set name to">
+<cfscript>
+if(NOT StructKeyExists(instance, "name") OR Compare(getname(), arguments.name) neq 0)
+{
+instance.name = (arguments.name);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="gettitle" access="public" returntype="string" default="string" hint="Accessor for property title" output="false">
+<cfscript>
+return instance.title;
+</cfscript>
+</cffunction>
+
+<cffunction name="settitle" access="public" returntype="void" default="void" hint="Mutator for property title" output="false">
+<cfargument name="title" type="string" required="true" hint="The value to set title to">
+<cfscript>
+if(NOT StructKeyExists(instance, "title") OR Compare(gettitle(), arguments.title) neq 0)
+{
+instance.title = (arguments.title);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="settitleNull" access="public" returntype="void" default="void" hint="Set title to its NULL value'" output="false">
+<cfscript>
+var nullValue = getNullable().getNullstring(getClassName(), "title");
+settitle(nullValue);
+</cfscript>
+</cffunction>
+
+<cffunction name="gettitleIsNull" access="public" returntype="boolean" default="boolean" hint="Returns whether or not title's value matches the set NULL value'" output="false">
+<cfscript>
+return getNullable().checkNullstring(getThisObject(), "title", gettitle());
+</cfscript>
+</cffunction>
+
+<cffunction name="getpassword" access="public" returntype="string" default="string" hint="Accessor for property password" output="false">
+<cfscript>
+return instance.password;
+</cfscript>
+</cffunction>
+
+<cffunction name="setpassword" access="public" returntype="void" default="void" hint="Mutator for property password" output="false">
+<cfargument name="password" type="string" required="true" hint="The value to set password to">
+<cfscript>
+if(NOT StructKeyExists(instance, "password") OR Compare(getpassword(), arguments.password) neq 0)
+{
+instance.password = (arguments.password);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="setpasswordNull" access="public" returntype="void" default="void" hint="Set password to its NULL value'" output="false">
+<cfscript>
+var nullValue = getNullable().getNullstring(getClassName(), "password");
+setpassword(nullValue);
+</cfscript>
+</cffunction>
+
+<cffunction name="getpasswordIsNull" access="public" returntype="boolean" default="boolean" hint="Returns whether or not password's value matches the set NULL value'" output="false">
+<cfscript>
+return getNullable().checkNullstring(getThisObject(), "password", getpassword());
+</cfscript>
+</cffunction>
+
+<cffunction name="getdescription" access="public" returntype="string" default="string" hint="Accessor for property description" output="false">
+<cfscript>
+return instance.description;
+</cfscript>
+</cffunction>
+
+<cffunction name="setdescription" access="public" returntype="void" default="void" hint="Mutator for property description" output="false">
+<cfargument name="description" type="string" required="true" hint="The value to set description to">
+<cfscript>
+if(NOT StructKeyExists(instance, "description") OR Compare(getdescription(), arguments.description) neq 0)
+{
+instance.description = (arguments.description);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="setdescriptionNull" access="public" returntype="void" default="void" hint="Set description to its NULL value'" output="false">
+<cfscript>
+var nullValue = getNullable().getNullstring(getClassName(), "description");
+setdescription(nullValue);
+</cfscript>
+</cffunction>
+
+<cffunction name="getdescriptionIsNull" access="public" returntype="boolean" default="boolean" hint="Returns whether or not description's value matches the set NULL value'" output="false">
+<cfscript>
+return getNullable().checkNullstring(getThisObject(), "description", getdescription());
+</cfscript>
+</cffunction>
+
+<cffunction name="getkeywords" access="public" returntype="string" default="string" hint="Accessor for property keywords" output="false">
+<cfscript>
+return instance.keywords;
+</cfscript>
+</cffunction>
+
+<cffunction name="setkeywords" access="public" returntype="void" default="void" hint="Mutator for property keywords" output="false">
+<cfargument name="keywords" type="string" required="true" hint="The value to set keywords to">
+<cfscript>
+if(NOT StructKeyExists(instance, "keywords") OR Compare(getkeywords(), arguments.keywords) neq 0)
+{
+instance.keywords = (arguments.keywords);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="setkeywordsNull" access="public" returntype="void" default="void" hint="Set keywords to its NULL value'" output="false">
+<cfscript>
+var nullValue = getNullable().getNullstring(getClassName(), "keywords");
+setkeywords(nullValue);
+</cfscript>
+</cffunction>
+
+<cffunction name="getkeywordsIsNull" access="public" returntype="boolean" default="boolean" hint="Returns whether or not keywords's value matches the set NULL value'" output="false">
+<cfscript>
+return getNullable().checkNullstring(getThisObject(), "keywords", getkeywords());
+</cfscript>
+</cffunction>
+
+<cffunction name="getallowComments" access="public" returntype="boolean" default="boolean" hint="Accessor for property allowComments" output="false">
+<cfscript>
+return instance.allowComments;
+</cfscript>
+</cffunction>
+
+<cffunction name="setallowComments" access="public" returntype="void" default="void" hint="Mutator for property allowComments" output="false">
+<cfargument name="allowComments" type="boolean" required="true" hint="The value to set allowComments to">
+<cfscript>
+if(NOT StructKeyExists(instance, "allowComments") OR getallowComments() neq arguments.allowComments)
+{
+instance.allowComments = (arguments.allowComments);
+setIsDirty(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getNamespaceisLoaded" access="public" returntype="boolean" default="boolean" hint="Whether or not the composition 'Namespace' has been loaded yet" output="false">
+<cfscript>
+if(NOT StructKeyExists(getLoaded(), "Namespace"))
+{
+setNamespaceisLoaded(false);
+}
+return StructFind(getLoaded(), "Namespace");
+</cfscript>
+</cffunction>
+
+<cffunction name="setNamespaceisLoaded" access="private" returntype="void" default="void" hint="Set the loaded state of composition 'arguments.name'" output="false">
+<cfargument name="loaded" type="boolean" required="true" hint="Whether or not this composition has been loaded">
+<cfscript>
+StructInsert(getLoaded(), "Namespace", arguments.loaded, true);
+</cfscript>
+</cffunction>
+
+<cffunction name="loadNamespace" access="package" returntype="void" default="void" hint="Lazy load composition 'Namespace'" output="false">
+<cfif NOT getNamespaceisLoaded()>
+<cflock name="transfer.load.wiki.Page.Namespace.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif NOT getNamespaceisLoaded()>
+<cfscript>
+getTransfer().loadManyToOne(getThisObject(), "Namespace");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="unLoadNamespace" access="private" returntype="void" default="void" hint="unload lazy load composition 'Namespace'" output="false">
+<cfif getNamespaceisLoaded()>
+<cflock name="transfer.load.wiki.Page.Namespace.#getSystem().identityHashCode(this)#" timeout="60">
+<cfif getNamespaceisLoaded()>
+<cfscript>
+setNamespaceisLoaded(false);
+StructDelete(instance, "Namespace");
+</cfscript>
+</cfif>
+</cflock>
+</cfif>
+</cffunction>
+
+<cffunction name="setMemento" access="public" returntype="void" default="void" hint="set the state of this object from a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+var composite = 0;
+if(NOT getIsPersisted())
+{
+setpageID(StructFind(arguments.memento, "pageID"));
+}
+setPropertyMemento(arguments.memento);
+setNamespaceisLoaded(false);
+if(StructKeyExists(arguments.memento, "Namespace"))
+{
+composite = StructFind(arguments.memento, "Namespace");
+}
+else
+{
+composite = StructNew();
+}
+setNamespaceMemento(composite);
+</cfscript>
+</cffunction>
+
+<cffunction name="setPropertyMemento" access="public" returntype="void" default="void" hint="set the Property state of this object with a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+setname(StructFind(arguments.memento, "name"));
+settitle(StructFind(arguments.memento, "title"));
+setpassword(StructFind(arguments.memento, "password"));
+setdescription(StructFind(arguments.memento, "description"));
+setkeywords(StructFind(arguments.memento, "keywords"));
+setallowComments(StructFind(arguments.memento, "allowComments"));
+</cfscript>
+</cffunction>
+
+<cffunction name="setNamespaceMemento" access="public" returntype="void" default="void" hint="set the state of composition manytoone 'Namespace'" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+var composite = 0;
+if(StructIsEmpty(arguments.memento))
+{
+removeNamespace();
+}
+else
+{
+composite = getComposite("wiki.Namespace", arguments.memento, "namespace_id");
+setNamespace(composite);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="getMemento" access="public" returntype="struct" default="struct" hint="Returns the memento for all non-lazy members of this object" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+StructInsert(memento, "pageID", getpageID());
+StructInsert(memento, "transfer_isDirty", getIsDirty());
+StructInsert(memento, "transfer_isPersisted", getIsPersisted());
+StructInsert(memento, "transfer_isProxied", false);
+StructAppend(memento, getPropertyMemento());
+StructInsert(memento, "Namespace", getNamespaceMemento());
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getPropertyMemento" access="public" returntype="struct" default="struct" hint="returns the memento for properties" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+StructInsert(memento, "name", getname());
+StructInsert(memento, "title", gettitle());
+StructInsert(memento, "password", getpassword());
+StructInsert(memento, "description", getdescription());
+StructInsert(memento, "keywords", getkeywords());
+StructInsert(memento, "allowComments", getallowComments());
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="getNamespaceMemento" access="public" returntype="struct" default="struct" hint="returns the memento for manytoone Namespace" output="false">
+<cfscript>
+var memento = createObject("java", "java.util.HashMap").init();
+if(hasNamespace())
+{
+memento = getNamespace().getMemento();
+}
+return memento;
+</cfscript>
+</cffunction>
+
+<cffunction name="copyValuesTo" access="public" returntype="void" default="void" hint="Copies the values of this object to one of the same class" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The object to copy values to">
+<cfscript>
+if(arguments.transfer.getClassName() neq "wiki.Page")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'wiki.Page'");
+}
+arguments.transfer.setMemento(getMemento());
+</cfscript>
+</cffunction>
+
+<cffunction name="getNamespace" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Accessor for Namespace, wiki.Namespace" output="false">
+<cfscript>
+if(NOT getNamespaceisLoaded())
+{
+loadNamespace();
+}
+if(NOT structKeyExists(instance, "Namespace"))
+{
+throw("ManyToOneNotSetException","A ManyToOne TransferObject has not been initialised.","In TransferObject 'wiki.Page' manytoone 'wiki.Namespace' does not exist, when calling getNamespace()");
+}
+return instance.Namespace;
+</cfscript>
+</cffunction>
+
+<cffunction name="setNamespace" access="public" returntype="void" default="void" hint="Mutator for Namespace, wiki.Namespace" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The wiki.Namespace to set">
+<cfscript>
+if(arguments.transfer.getClassName() neq "wiki.Namespace")
+{
+throw("InvalidTransferClassException","The supplied Transfer class was not the one specified in the configuration file ","The Transfer class of '#arguments.transfer.getClassName()#' does not match the expected class of 'wiki.Namespace'");
+}
+if((NOT getNamespaceisLoaded()) OR (NOT (StructKeyExists(instance, "Namespace") AND getNamespace().equalsTransfer(arguments.transfer))))
+{
+instance.Namespace = arguments.transfer;
+setIsDirty(true);
+setNamespaceisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="hasNamespace" access="public" returntype="boolean" default="boolean" hint="Whether or not this object contains a wiki.Namespace" output="false">
+<cfscript>
+if(NOT getNamespaceisLoaded())
+{
+loadNamespace();
+}
+return StructKeyExists(instance,"Namespace");
+</cfscript>
+</cffunction>
+
+<cffunction name="removeNamespace" access="public" returntype="void" default="void" hint="remove the instance of wiki.Namespace" output="false">
+<cfscript>
+if(NOT getNamespaceisLoaded() OR hasNamespace())
+{
+StructDelete(instance,"Namespace");
+setIsDirty(true);
+setNamespaceisLoaded(true);
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="validateCacheState" access="package" returntype="boolean" default="boolean" hint="if this object is cached, then validate that all it's composites are cached too" output="false">
+<cfscript>
+var iterator = 0;
+var item = 0;
+if(getIsPersisted() AND NOT getTransfer().validateIsCached(getThisObject()))
+{
+return true;
+}
+if(getNamespaceisLoaded() AND hasNamespace())
+{
+item = getNamespace();
+if(item.getIsClone() OR NOT getTransfer().validateIsCached(item))
+{
+return false;
+}
+}
+return true;
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterCreateTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when creates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDeleteTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when deletes occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+if(className eq "wiki.Namespace")
+{
+if(getNamespaceIsLoaded() AND hasNamespace() AND getNamespace().equalsTransfer(arguments.event.getTransferObject()))
+{
+removeNamespace(arguments.event.getTransferObject());
+}
+}
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterUpdateTransferEvent" access="public" returntype="void" default="void" hint="Observer method action for when updates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var className = arguments.event.getTransferObject().getClassName();
+</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDiscardTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when discards occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+var discard = false;
+var className = arguments.event.getTransferObject().getClassName();
+if(className eq "wiki.Namespace")
+{
+if(getNamespaceIsLoaded() AND hasNamespace() AND getNamespace().equalsTransfer(arguments.event.getTransferObject()))
+{
+if(getNamespaceisLoaded())
+{
+unloadNamespace();
+}
+}
+}
+if(discard)
+{
+getTransfer().discard(getThisObject());
+}
+</cfscript>
+</cffunction>
+
+

@@ -9,11 +9,4 @@
 	<natures>
 		<nature>com.adobe.ide.coldfusion.projectNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>coldbox</name>
-			<type>2</type>
-			<location>/Users/lmajano/Sites/cboxdev/core/coldbox</location>
-		</link>
-	</linkedResources>
 </projectDescription>

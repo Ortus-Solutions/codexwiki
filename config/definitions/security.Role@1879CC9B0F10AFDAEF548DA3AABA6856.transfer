@@ -1,0 +1,224 @@
+<cffunction name="emptyPermission" access="public" returntype="void" default="void" hint="empty the collection, with no change to loading'" output="false">
+<cfscript>
+getTransferObject().emptyPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getIsLoaded" access="public" returntype="boolean" default="boolean" hint="easy way to determine if the data is loaded, since this is a TransferObject, it must be loaded, and therefore returns true." output="false">
+<cfscript>
+return getTransferObject().getIsLoaded(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getLoadedObject" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Returns itself, as there is no object to load" output="false">
+<cfscript>
+return getTransferObject().getLoadedObject(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getIsClone" access="public" returntype="boolean" default="boolean" hint="If this object is a clone or not" output="false">
+<cfscript>
+return getTransferObject().getIsClone(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDeleteTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when deletes occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+getTransferObject().actionAfterDeleteTransferEvent(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPermission" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Returns the security.Permission object at the given index in the array" output="false">
+<cfargument name="index" type="numeric" required="true" hint="The index in the array to retrieve">
+<cfscript>
+return getTransferObject().getPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getMemento" access="public" returntype="struct" default="struct" hint="Returns the memento for all non-lazy members of this object" output="false">
+<cfscript>
+return getTransferObject().getMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="equalsTransfer" access="public" returntype="boolean" default="boolean" hint="If an object is persisted, returns true if they are of the same class and same id. If not, returns true if they are the same object." output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The TransferObject to test against">
+<cfscript>
+return getTransferObject().equalsTransfer(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setMemento" access="public" returntype="void" default="void" hint="set the state of this object from a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+getTransferObject().setMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="sortPermission" access="public" returntype="void" default="void" hint="Sort all elements in the array Permission" output="false">
+<cfscript>
+getTransferObject().sortPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getrole" access="public" returntype="string" default="string" hint="Accessor for property role" output="false">
+<cfscript>
+return getTransferObject().getrole(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="findPermission" access="public" returntype="numeric" default="numeric" hint="Find the index number that the given object is at in the Array. Returns -1 if it can't be found.'" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to search for">
+<cfscript>
+return getTransferObject().findPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="sameTransfer" access="public" returntype="boolean" default="boolean" hint="Checks to see if 2 transfer objects are the same" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="Yes" hint="The transfer object to check if we are equal">
+<cfscript>
+return getTransferObject().sameTransfer(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPermissionArray" access="public" returntype="array" default="array" hint="returns the entire array of security.Permission" output="false">
+<cfscript>
+return getTransferObject().getPermissionArray(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPermissionIterator" access="public" returntype="any" default="any" hint="return a java.util.Iterator of security.Permission objects" output="false">
+<cfscript>
+return getTransferObject().getPermissionIterator(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterUpdateTransferEvent" access="public" returntype="void" default="void" hint="Observer method action for when updates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+getTransferObject().actionAfterUpdateTransferEvent(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPermissionMemento" access="public" returntype="array" default="array" hint="returns the memento for the manytomany Permission" output="false">
+<cfscript>
+return getTransferObject().getPermissionMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setPropertyMemento" access="public" returntype="void" default="void" hint="set the Property state of this object with a memento" output="false">
+<cfargument name="memento" type="struct" required="true" hint="the memento to set the state with">
+<cfscript>
+getTransferObject().setPropertyMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterDiscardTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when discards occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+getTransferObject().actionAfterDiscardTransferEvent(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="containsPermission" access="public" returntype="boolean" default="boolean" hint="If this array contains a particular instance of security.Permission" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to look for">
+<cfargument name="pkCheckOnly" type="boolean" required="false" hint="Expert/Transfer use only: only checks primary keys" default="false">
+<cfscript>
+return getTransferObject().containsPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="addPermission" access="public" returntype="void" default="void" hint="Add an object of type security.Permission to the array" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="The object to add">
+<cfscript>
+getTransferObject().addPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getdescription" access="public" returntype="string" default="string" hint="Accessor for property description" output="false">
+<cfscript>
+return getTransferObject().getdescription(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="clone" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Get a deep clone of this object" output="false">
+<cfscript>
+return getTransferObject().clone(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setrole" access="public" returntype="void" default="void" hint="Mutator for property role" output="false">
+<cfargument name="role" type="string" required="true" hint="The value to set role to">
+<cfscript>
+getTransferObject().setrole(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setPermissionMemento" access="public" returntype="void" default="void" hint="set the state of composition manytomany 'Permission'" output="false">
+<cfargument name="memento" type="array" required="true" hint="the memento to set the state with">
+<cfscript>
+getTransferObject().setPermissionMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getOriginalTransferObject" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Returns this object" output="false">
+<cfscript>
+return getTransferObject().getOriginalTransferObject(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setroleID" access="public" returntype="void" default="void" hint="Mutator for property roleID" output="false">
+<cfargument name="roleID" type="uuid" required="true" hint="The value to set roleID to">
+<cfscript>
+getTransferObject().setroleID(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getIsDirty" access="public" returntype="boolean" default="boolean" hint="If this object's data is differnt from that stored in the DB." output="false">
+<cfscript>
+return getTransferObject().getIsDirty(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="removePermission" access="public" returntype="void" default="void" hint="remove an object of type security.Permission from the array" output="false">
+<cfargument name="object" type="transfer.com.TransferObject" required="true" hint="the object to remove">
+<cfscript>
+getTransferObject().removePermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="init" access="public" returntype="transfer.com.TransferObject" default="transfer.com.TransferObject" hint="Constructor for Transfer class security.Role" output="false">
+<cfargument name="transfer" type="transfer.com.Transfer" required="true" hint="The Transfer library">
+<cfargument name="utility" type="transfer.com.util.Utility" required="true" hint="The Utility object">
+<cfargument name="nullable" type="transfer.com.sql.Nullable" required="true" hint="The Nullable lookup object">
+<cfargument name="thisObject" type="transfer.com.TransferObject" required="true" hint="What is determined to be the base 'this' object for this TransferObject">
+<cfscript>
+return getTransferObject().init(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getIsProxy" access="public" returntype="boolean" default="boolean" hint="returns whether or not this is a proxy object. Since this is a TrasferObject, it returns false." output="false">
+<cfscript>
+return getTransferObject().getIsProxy(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="copyValuesTo" access="public" returntype="void" default="void" hint="Copies the values of this object to one of the same class" output="false">
+<cfargument name="transfer" type="transfer.com.TransferObject" required="true" hint="The object to copy values to">
+<cfscript>
+getTransferObject().copyValuesTo(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getClassName" access="public" returntype="string" default="string" hint="The class name of the TransferObject" output="false">
+<cfscript>
+return getTransferObject().getClassName(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getIsPersisted" access="public" returntype="boolean" default="boolean" hint="If this object is stored in the database" output="false">
+<cfscript>
+return getTransferObject().getIsPersisted(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPropertyMemento" access="public" returntype="struct" default="struct" hint="returns the memento for properties" output="false">
+<cfscript>
+return getTransferObject().getPropertyMemento(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getPermissionisLoaded" access="public" returntype="boolean" default="boolean" hint="Whether or not the composition 'Permission' has been loaded yet" output="false">
+<cfscript>
+return getTransferObject().getPermissionisLoaded(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="getroleID" access="public" returntype="uuid" default="uuid" hint="Accessor for property roleID" output="false">
+<cfscript>
+return getTransferObject().getroleID(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="actionAfterCreateTransferEvent" access="public" returntype="void" default="void" hint="Observer action method for when creates occur" output="false">
+<cfargument name="event" type="transfer.com.events.TransferEvent" required="true" hint="The Transfer Event Object">
+<cfscript>
+getTransferObject().actionAfterCreateTransferEvent(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="clearPermission" access="public" returntype="void" default="void" hint="Clear all the elements from the array" output="false">
+<cfscript>
+getTransferObject().clearPermission(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+<cffunction name="setdescription" access="public" returntype="void" default="void" hint="Mutator for property description" output="false">
+<cfargument name="description" type="string" required="true" hint="The value to set description to">
+<cfscript>
+getTransferObject().setdescription(argumentCollection=arguments);</cfscript>
+</cffunction>
+
+
