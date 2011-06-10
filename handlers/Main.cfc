@@ -21,8 +21,8 @@ limitations under the License.
 component extends="BaseHandler" accessors="true" singleton{
 
 	// Dependencies
-	property name="securityService" inject="ioc";
-	property name="configService" 	inject="ioc";
+	property name="securityService" inject="model";
+	property name="configService" 	inject="model";
 
 	
 	function init(){

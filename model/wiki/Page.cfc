@@ -23,7 +23,7 @@ $Build ID:	@@build_id@@
 <cfcomponent extends="transfer.com.TransferDecorator" hint="An actual wiki page" output="false" accessors="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="wikiService" inject="ioc:wikiService">
+	<cfproperty name="wikiService" inject="model">
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

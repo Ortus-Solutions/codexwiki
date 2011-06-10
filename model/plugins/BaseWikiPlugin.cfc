@@ -27,9 +27,9 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- Autowired Dependencies  
-	<cfproperty name="PluginService" inject="ioc" scope="instance">---> 
-	<cfproperty name="ConfigService" inject="ioc" scope="instance">
-	<cfproperty name="WikiService" 	 inject="ioc" scope="instance">
+	<cfproperty name="PluginService" inject="model" scope="instance">---> 
+	<cfproperty name="ConfigService" inject="model" scope="instance">
+	<cfproperty name="WikiService" 	 inject="model" scope="instance">
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    

@@ -20,7 +20,7 @@ $Build Date: @@build_date@@
 $Build ID:	@@build_id@@
 ********************************************************************************
 ----------------------------------------------------------------------->
-<cfcomponent name="paging" 
+<cfcomponent name="Paging" 
 			 hint="A paging plugin" 
 			 extends="coldbox.system.Plugin" 
 			 output="false" 
@@ -28,7 +28,7 @@ $Build ID:	@@build_id@@
   
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
-    <cffunction name="init" access="public" returntype="paging" output="false">
+    <cffunction name="init" access="public" returntype="Paging" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
 			var CodexOptions = 0;
@@ -36,7 +36,7 @@ $Build ID:	@@build_id@@
 	  		super.Init(arguments.controller);
 	  		
 	  		/* Properties */
-	  		setpluginName("paging");
+	  		setpluginName("Paging");
 	  		setpluginVersion("1.0");
 	  		setpluginDescription("Paging plugin");
 	  		

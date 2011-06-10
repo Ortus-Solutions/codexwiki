@@ -21,7 +21,7 @@ limitations under the License.
 component extends="coldbox.system.Interceptor" accessors="true" {
 
 	// Dependencies
-	property name="wikiText" inject="ioc:WikiText";
+	property name="wikiText" inject="model:WikiText";
 
 	/**
 	* Configure interceptor

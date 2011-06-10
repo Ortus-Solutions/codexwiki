@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 cache="true" cacheTimeout="0">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" 		inject="ioc" scope="instance" />
+	<cfproperty name="WikiService" 		inject="model" scope="instance" />
 
 
 <!------------------------------------------- IMPLICIT ------------------------------------------>

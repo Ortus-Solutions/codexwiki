@@ -22,7 +22,7 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="user"			 extends="codex.handlers.baseHandler"			 output="false"			 hint="The user profile handler"			 autowire="true">
 	<!--- Dependencies --->
-	<cfproperty name="UserService" inject="ioc" scope="instance">
+	<cfproperty name="UserService" inject="model" scope="instance">
 <!------------------------------------------- PUBLIC ------------------------------------------->	<!--- preHandler --->
 	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="Pre handler operation">
 		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">

@@ -68,6 +68,34 @@ $(document).ready(function() {
 			<img src="includes/images/history.png" border="0" alt="history" />
 			<a href="#event.buildLink(rc.onShowHistory & '/' & rc.urlPage)#" title="Page History">Page History</a>
 		</cfif>
+		
+		<!--- Management Tool Bar --->
+		<cfif not event.valueExists("print")>
+			<!--- Only edit if not read only --->
+			<cfif ( 
+					rc.content.getisReadOnly() AND 
+					(
+				    	rc.content.getUser().getuserid() EQ rc.oUser.getUserid() 
+				    	OR
+				    	rc.oUser.checkPermission("WIKI_ADMIN") 
+				    )
+				  ) 
+				  OR
+				  NOT rc.content.getisReadOnly()>
+				<cfif rc.oUser.checkPermission("WIKI_EDIT")>
+					<img src="includes/images/page_edit.png" alt="edit" border="0"  />
+					<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#">
+						<span>Edit</span>
+					</a>
+				</cfif>
+				<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
+					<img src="includes/images/bin_closed.png" alt="edit" border="0" />
+					<a id="deletePageButton" href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#">
+						<span>Delete</span>
+					</a>
+				</cfif>
+			</cfif>			
+		</cfif>
 	</div>
 </div>
 </cfif>
@@ -133,11 +161,6 @@ $(document).ready(function() {
 		
 		<img src="includes/images/pdf_16x16.png" border="0" alt="pdf" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/pdf'))#" target="_blank">PDF</a> |
-		
-		<cfif getSetting("CFMLEngine",1) neq "RAILO">
-		<img src="includes/images/flash_16x16.png" border="0" alt="swf" />
-		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/flashpaper'))#" target="_blank">SWF</a> |
-		</cfif>
 		
 		<img src="includes/images/html_16x16.png" border="0" alt="html" />
 		<a href="#event.buildLink(pageShowRoot(rc.urlPage & '/HTML'))#" target="_blank">HTML</a> |

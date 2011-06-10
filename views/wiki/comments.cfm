@@ -82,7 +82,7 @@ function approveComment(commentID){
 			
 			<!--- Comment Avatar --->
 			<div class="pageCommentPicture">
-			#getMyPlugin("avatar").renderAvatar(email=rc.qComments.authorEmail,size=60)#
+			#getMyPlugin("Avatar").renderAvatar(email=rc.qComments.authorEmail,size=60)#
 			</div>
 			
 			<!--- Comment Author --->

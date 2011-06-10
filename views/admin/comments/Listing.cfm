@@ -135,7 +135,7 @@ $(document).ready(function() {
 			</td>
 			<td>
 				<!--- Avatar --->
-				#getMyPlugin("avatar").renderAvatar(email:rc.qComments.authorEmail,size:32)#
+				#getMyPlugin("Avatar").renderAvatar(email:rc.qComments.authorEmail,size:32)#
 				<!--- Name --->
 				#rc.qComments.Author#<br />
 				<cfif len(rc.qComments.authorURL)>

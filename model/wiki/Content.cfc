@@ -24,17 +24,17 @@ $Build ID:	@@build_id@@
 
 <!------------------------------------------- DEPENDENCIES ------------------------------------------->
 
-<cffunction name="setBeanPopulator" access="public" returntype="void" output="false" inject>
+<cffunction name="setBeanPopulator" access="public" returntype="void" output="false" inject="model">
 	<cfargument name="beanPopulator" type="codex.model.transfer.BeanPopulator" required="true">
 	<cfset instance.beanPopulator = arguments.beanPopulator />
 </cffunction>
 
-<cffunction name="setWikiService" access="public" returntype="void" output="false" inject>
+<cffunction name="setWikiService" access="public" returntype="void" output="false" inject="model">
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>
 
-<cffunction name="setInterceptorService" access="public" returntype="void" output="false" inject>
+<cffunction name="setInterceptorService" access="public" returntype="void" output="false" inject="model">
 	<cfargument name="interceptorService" type="coldbox.system.web.services.InterceptorService" required="true">
 	<cfset instance.interceptorService = arguments.interceptorService />
 </cffunction>

@@ -27,10 +27,10 @@ $Build ID:	@@build_id@@
 			 cache="true" cacheTimeout="0">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" 		inject="ioc" scope="instance" />
-	<cfproperty name="CommentsService"	inject="ioc" scope="instance" />
-	<cfproperty name="SearchEngine" 	inject="ioc" scope="instance" />
-	<cfproperty name="SecurityService" 	inject="ioc" scope="instance" />
+	<cfproperty name="WikiService" 		inject="model" scope="instance" />
+	<cfproperty name="CommentsService"	inject="model" scope="instance" />
+	<cfproperty name="SearchEngine" 	inject="model" scope="instance" />
+	<cfproperty name="SecurityService" 	inject="model" scope="instance" />
 
 	<!--- IMPLICIT PROPERTIES --->
 	<cfset this.prehandler_only = "show">
@@ -272,12 +272,12 @@ $Build ID:	@@build_id@@
 	</cffunction>
 
 	<!--- diff --->
-	<cffunction name="diff" access="public" returntype="void" output="false" hint="Diff pages">
+	<cffunction name="Diff" access="public" returntype="void" output="false" hint="Diff pages">
 		<cfargument name="Event" type="any" required="yes">
 	    <cfscript>
 		    var rc = event.getCollection();
 			var pageName = arguments.event.getValue("page");
-			var oDiffer = getMyPlugin("diff");
+			var oDiffer = getMyPlugin("Diff");
 
 			/* Validate Versions */
 			if( not event.valueExists("version") OR not event.valueExists("old_version") ){
@@ -540,7 +540,6 @@ $Build ID:	@@build_id@@
 			// Print Options
 			switch(rc.print){
 				case "pdf"			:{ rc.layout_extension = "pdf"; break; }
-				case "flashpaper" 	:{ rc.layout_extension = "swf"; break; }
 				case "markup"		:{ event.setLayout("Layout.MarkupExport"); break; }
 				case "word"			:{ event.setLayout("Layout.word"); break; }
 				default 			:{ event.setLayout("Layout.html"); }

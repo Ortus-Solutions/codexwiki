@@ -21,7 +21,7 @@ limitations under the License.
 component extends="coldbox.system.Interceptor" accessors="true"{
 
 	// Dependencies
-	property name="messagebox" inject="ioc:Messagebox";
+	property name="messagebox" inject="model:Messagebox";
 
 	/**
 	* Custom Observer when pages are translated

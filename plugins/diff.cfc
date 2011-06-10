@@ -37,7 +37,7 @@ Description :
 	
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
-    <cffunction name="init" access="public" returntype="diff" output="false">
+    <cffunction name="init" access="public" returntype="Diff" output="false">
 		<cfargument name="controller" type="any" required="true">
 		<cfscript>
 			var CodexOptions = 0;

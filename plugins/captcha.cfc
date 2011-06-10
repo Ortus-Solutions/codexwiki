@@ -14,7 +14,7 @@ This plugin is free to use and modify and is provided with NO WARRANTY of mercha
 Updates
 11/16/2008 - Luis Majano - Cleanup
 ----------------------------------------------------------------------->
-<cfcomponent name="captcha" 
+<cfcomponent name="Captcha" 
 			 hint="plugin for CF8 built in captcha functionality" 
 			 extends="coldbox.system.Plugin" 
 			 output="false"
@@ -27,7 +27,7 @@ Updates
         
 		<cfscript>
   		super.Init(arguments.controller);
-  		setpluginName("captcha");
+  		setpluginName("Captcha");
   		setpluginVersion("0.30");
   		setpluginDescription("CAPTCHA plugin for CF8 cfimage captcha functionality");
 		
@@ -49,7 +49,7 @@ Updates
 		
 		<cfset setCaptchaCode(arguments.text) />
 		<cfsavecontent variable="ret">
-			<cfimage action="captcha" 
+			<cfimage action="Captcha" 
 					 text="#arguments.text#"
 					 width="#arguments.width#" 
 					 height="#arguments.height#" />

@@ -127,7 +127,7 @@ $Build ID:	@@build_id@@
 				<td class="center">#printDate(createddate)# #printTime(createddate,"short")#</td>
 				<td class="center">
 					<!--- Avatar --->
-					#getMyPlugin("avatar").renderAvatar(email:email,size:32)#
+					#getMyPlugin("Avatar").renderAvatar(email:email,size:32)#
 					<!--- UserName --->
 					#username#
 				</td>

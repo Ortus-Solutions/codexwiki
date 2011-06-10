@@ -96,7 +96,8 @@ component{
 			},
 			lookups_imgPath 	= "includes/lookups/images",
 			lookups_cssPath 	= "includes/lookups/styles",
-			lookups_packagePath = "includes/lookups/js",
+			lookups_jsPath 		= "includes/lookups/js",
+			lookups_packagePath = "admin",
 			lookups_dsn			= "codex"
 		};
 		
@@ -146,15 +147,8 @@ component{
 		
 		//WireBox Integration
 		wireBox = { 
-			enabled = false,
+			enabled = true,
 			singletonReload=false 
-		};
-		//IOC Integration
-		ioc = {
-			framework 		= "wirebox",
-			reload 	  	  	= false,
-			objectCaching 	= false,
-			definitionFile  = "codex.config.CodexWireBox"
 		};
 		
 		//Datasources
@@ -180,7 +174,7 @@ component{
 			// Codex Security
 			{class="coldbox.system.Interceptors.Security", 
 				properties= {
-					rulesSource = "ioc", rulesBean = "SecurityService", rulesBeanMethod = "getSecurityRules", validatorIOC="SecurityService"
+					rulesSource = "model", rulesModel = "SecurityService", rulesModelMethod = "getSecurityRules", validatorModel="SecurityService"
 				}
 			},
 			// Wiki Translations
@@ -214,7 +208,6 @@ component{
 		coldbox.customErrorTemplate = "";	
 		// wirebox
 		wirebox.singletonReload = false;
-		ioc.reload = false;
 		// paid modules (LM box only)
 		arrayAppend(coldbox.modulesExternalLocation, "/codex/_modules");
 	}

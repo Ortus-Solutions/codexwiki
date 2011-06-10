@@ -62,7 +62,7 @@ $Build ID:	@@build_id@@
 		
 		<!--- Determine if we need to render the avatar --->
 		<cfif rc.codexoptions.wiki_gravatar_display>
-			<cfsavecontent variable="avatar">
+			<cfsavecontent variable="Avatar">
 			<cfoutput>
 			<img align="middle" src="http://www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&r=#rc.CodexOptions.wiki_gravatar_rating#&s=#arguments.size#" alt="#emailTarget#'s Gravatar" />
 			</cfoutput>

@@ -162,7 +162,7 @@ $(document).ready(function() {
 			</td>
 			<td>
 				<!--- Avatar --->
-				#getMyPlugin("avatar").renderAvatar(email:user_email,size:32)#
+				#getMyPlugin("Avatar").renderAvatar(email:user_email,size:32)#
 				<!--- Name --->
 				#user_fname# #user_lname#
 				<!--- Default Image --->

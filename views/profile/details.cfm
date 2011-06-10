@@ -36,7 +36,7 @@ Below you can see your current profile in the system. You can click on the <stro
 <fieldset >
 	<legend>My Details</legend>
 	<p>
-	#getMyPlugin("avatar").renderAvatar()#<br />
+	#getMyPlugin("Avatar").renderAvatar()#<br />
 	<label class="inline">Name: </label> #rc.oUser.getfname()# #rc.oUser.getlname()#<br />
 	<label class="inline">Email: </label> #rc.oUser.getEmail()#<br />
 	<label class="inline">Username: </label> #rc.oUser.getUsername()#<br />

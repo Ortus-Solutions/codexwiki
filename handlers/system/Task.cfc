@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 			 cacheTimeout="0">
 
 	<!--- Dependencies --->
-	<cfproperty name="SearchEngine" inject="ioc" scope="instance">
+	<cfproperty name="SearchEngine" inject="model" scope="instance">
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

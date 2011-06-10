@@ -131,7 +131,7 @@ $Build ID:	@@build_id@@
 		
 	</fieldset>
 	
-	<fieldset name="captcha">
+	<fieldset name="Captcha">
 		<legend>Confirmation</legend>
 		<!--- Display CAPTCHA image --->  
    		#getMyPlugin('captcha').display()#<br />  

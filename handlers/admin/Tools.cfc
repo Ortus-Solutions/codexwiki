@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- dependencies --->
-	<cfproperty name="HTML2WikiConverter" inject="ioc" scope="instance" />
+	<cfproperty name="HTML2WikiConverter" inject="model" scope="instance" />
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
 	
@@ -44,8 +44,8 @@ $Build ID:	@@build_id@@
 	    <cfset var rc = event.getCollection()>
 	    <cfscript>
 			/* Setup the Cfc Viewer */
-			rc.cfcViewer = getPlugin("cfcViewer").setup(dirpath="/codex/model",
-														dirLink="#getSetting('sesBaseURL')#/admin/tools/api#event.getRewriteExtension()#?");
+			rc.cfcViewer = getMyPlugin("CFCViewer").setup(dirpath="/codex/model",
+														  dirLink="#getSetting('sesBaseURL')#/admin/tools/api#event.getRewriteExtension()#?");
 
 			/* Setup the view */
 			event.setView("admin/tools/api");

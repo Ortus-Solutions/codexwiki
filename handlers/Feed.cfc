@@ -23,7 +23,7 @@ $Build ID:	@@build_id@@
 <cfcomponent hint="handler for wiki rss feeds" extends="baseHandler" autowire="true" output="false">
 
 	<!--- Dependencies --->
-	<cfproperty name="rssManager" inject="ioc" scope="instance" />
+	<cfproperty name="rssManager" inject="model" scope="instance" />
 	
 <!------------------------------------------- PUBLIC ------------------------------------------->
 

@@ -21,7 +21,7 @@ limitations under the License.
 component extends="coldbox.system.Interceptor" accessors="true"{
 
 	// Dependencies
-	property name="wikiPlugins" inject="ioc:WikiPlugins";
+	property name="wikiPlugins" inject="model:WikiPlugins";
 
 	/**
 	* Custom Observer when pages are translated

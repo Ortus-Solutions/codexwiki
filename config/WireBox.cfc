@@ -48,17 +48,13 @@ component extends="coldbox.system.ioc.config.Binder"{
 		};
 		
 		// ColdBox Related Objects
-		mapPath("coldbox.system.ioc.ColdboxFactory").asSingleton();
-		map("ColdBoxController").toFactoryMethod(factory="ColdBoxFactory",method="getColdBox");
-		map("InterceptorService").toFactoryMethod(factory="ColdBoxController",method="getinterceptorService");
-		map("ConfigBean").toFactoryMethod(factory="ColdBoxFactory",method="getConfigBean");
-		map("ColdboxOCM").toFactoryMethod(factory="ColdboxFactory",method="getColdBoxOCM");
-		map("BeanInjector").toFactoryMethod(factory="ColdBoxFactory",method="getPlugin")
-			.methodArg(name="plugin",value="beanFactory");
-		map("sessionstorage").toFactoryMethod(factory="ColdboxFactory",method="getPlugin")
-			.methodArg(name="plugin",value="sessionstorage");
-		map("CodexDatasource").toFactoryMethod(factory="ColdBoxFactory",method="getDatasource")
-			.methodArg(name="alias",value="codex");
+		map("ColdBoxController").toDSL("coldbox");
+		map("InterceptorService").toDSL("coldbox:interceptorService");
+		map("ConfigBean").toDSL("coldbox:configBean");
+		map("ColdboxOCM").toDSL("cachebox:default");
+		map("BeanInjector").toDSL("wirebox");
+		map("sessionstorage").toDSL("coldbox:plugin:sessionStorage");
+		map("CodexDatasource").toDSL("coldbox:datasource:codex");
 			
 		// Transfer Related Objects
 		mapPath("coldbox.system.orm.transfer.TransferConfigFactory").asSingleton();
@@ -69,8 +65,7 @@ component extends="coldbox.system.ioc.config.Binder"{
 		mapPath("coldbox.system.orm.transfer.TDOBeanInjectorObserver")
 			.initArg(name="Transfer",ref="Transfer")
 			.initArg(name="ColdBoxBeanFactory",ref="BeanInjector")
-			.asSingleton()
-			.asEagerInit();
+			.asSingleton().asEagerInit();
 		mapPath("transfer.TransferFactory")
 			.initArg(name="configuration",ref="TransferConfig")
 			.asSingleton();
@@ -86,8 +81,7 @@ component extends="coldbox.system.ioc.config.Binder"{
 		mapPath("codex.model.transfer.BeanPopulator")
 			.asSingleton();
 		mapPath("codex.model.util.JavaLoader")
-			.asSingleton()
-			.asEagerInit();
+			.asSingleton().asEagerInit();
 		mapPath("codex.model.lookups.LookupService")
 			.asSingleton();
 			

@@ -80,7 +80,7 @@ CodeX Wiki Plugins</h2>
 		<tr <cfif currentrow mod 2 eq 0>class="even"</cfif>>
 			<td>#name#</td>
 			<td class="center">
-				<a href="javascript:confirmDelete('#jsstringFormat(getPlugin('Utilities').ripExtension(name))#','#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('Utilities').ripExtension(name))#')" 
+				<a href="javascript:confirmDelete('#jsstringFormat(getPlugin('FileUtils').ripExtension(name))#','#event.buildLink(rc.xehRemove & '/plugin/' & getPlugin('FileUtils').ripExtension(name))#')" 
 				   title="Remove Plugin"><img src="includes/images/bin_closed.png" alt="remove" border="0"/></a>
 			</td>
 		</tr>

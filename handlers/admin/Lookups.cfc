@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- Dependencies --->
-	<cfproperty name="LookupService" inject="ioc" scope="instance">
+	<cfproperty name="LookupService" inject="model" scope="instance">
 
 	<!--- HANDLER PROPERTIES --->
 	<cfset this.prehandler_exception = "display,dspCreate,dspEdit">

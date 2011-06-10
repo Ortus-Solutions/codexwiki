@@ -31,7 +31,7 @@ $Build ID:	@@build_id@@
 <!--- Content Disposition --->
 <cfheader name="Content-Disposition" value="inline; filename=#fileTitle#.#rc.layout_extension#">
 <!--- CFFDocument --->
-<cfdocument pagetype="letter" format="#Event.getValue("print","flashpaper")#">
+<cfdocument pagetype="letter" format="#Event.getValue("print","pdf")#">
 	
 	<!--- Header --->
 	<cfdocumentitem type="header">

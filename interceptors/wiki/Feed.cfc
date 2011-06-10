@@ -21,7 +21,7 @@ limitations under the License.
 component extends="coldbox.system.Interceptor" accessors="true" {
 
 	// Dependencies
-	property name="feed" inject="ioc:Feed";
+	property name="feed" inject="model:Feed";
 
 	/**
 	* Custom Observer when pages are translated

@@ -22,8 +22,8 @@ $Build ID:	@@build_id@@
 ----------------------------------------------------------------------->
 <cfcomponent name="user"			 extends="baseHandler"			 output="false"			 hint="Our main handler for user interactivity."			 autowire="true"			 cache="true" cacheTimeout="0">
 	<!--- Dependencies --->
-	<cfproperty name="SecurityService" 	inject="ioc" scope="instance" />
-	<cfproperty name="UserService" 		inject="ioc" scope="instance" />
+	<cfproperty name="SecurityService" 	inject="model" scope="instance" />
+	<cfproperty name="UserService" 		inject="model" scope="instance" />
 
 	<!--- Implicit Properties --->
 	<cfset this.prehandler_only = "registration,doregistration">
@@ -110,7 +110,7 @@ $Build ID:	@@build_id@@
 			}
 			
 			/* Validate Captcha */
-			if( not getMyPlugin("captcha").validate(rc.captchacode) ){
+			if( not getMyPlugin("Captcha").validate(rc.captchacode) ){
 				ArrayAppend(errors, "Invalid security code. Please try again.");
 			}
 			

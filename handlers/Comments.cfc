@@ -26,8 +26,8 @@ $Build ID:	@@build_id@@
 			 autowire="true">
 
 	<!--- dependencies --->
-	<cfproperty name="WikiService" 		inject="ioc" scope="instance" />
-	<cfproperty name="CommentsService"	inject="ioc" scope="instance" />
+	<cfproperty name="WikiService" 		inject="model" scope="instance" />
+	<cfproperty name="CommentsService"	inject="model" scope="instance" />
 
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
@@ -95,7 +95,7 @@ $Build ID:	@@build_id@@
     		var rc = event.getCollection();
     		var results = false;
 			
-			if( getMyPlugin("captcha").validate(rc.captchacode) ){
+			if( getMyPlugin("Captcha").validate(rc.captchacode) ){
 				results = true;
 			}
 			
