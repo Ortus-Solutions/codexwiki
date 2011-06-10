@@ -29,10 +29,10 @@ $Build ID:	@@build_id@@
 
 	<cffunction name="init" hint="Constructor" access="public" returntype="SecurityService" output="false">
 		<!--- ************************************************************* --->
-		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="any" required="Yes">
-		<cfargument name="transfer" 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes">
-		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service">
+		<cfargument name="configBean" 	hint="the ColdBox config Bean"  type="any" required="Yes" inject>
+		<cfargument name="transfer" 	hint="the Transfer ORM" 		type="transfer.com.Transfer" required="Yes" inject>
+		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes" inject>
+		<cfargument name="ConfigService" 	required="true" type="codex.model.wiki.ConfigService" hint="The config service" inject>
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Init */
@@ -257,7 +257,7 @@ $Build ID:	@@build_id@@
 	<cffunction name="getUserService" access="public" returntype="codex.model.security.UserService" output="false">
 		<cfreturn instance.UserService>
 	</cffunction>
-	<cffunction name="setUserService" access="public" returntype="void" output="false">
+	<cffunction name="setUserService" access="public" returntype="void" output="false" inject>
 		<cfargument name="UserService" type="codex.model.security.UserService" required="true">
 		<cfset instance.UserService = arguments.UserService>
 	</cffunction>

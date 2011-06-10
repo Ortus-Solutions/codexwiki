@@ -47,7 +47,7 @@ All pages under the Category ''#getName()#'':<br/>
 	</cfif>
 </cffunction>
 
-<cffunction name="setWikiService" access="public" returntype="void" output="false">
+<cffunction name="setWikiService" access="public" returntype="void" output="false" inject>
 	<cfargument name="wikiService" type="codex.model.wiki.WikiService" required="true">
 	<cfset instance.wikiService = arguments.wikiService />
 </cffunction>

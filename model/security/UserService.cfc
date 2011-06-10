@@ -29,10 +29,10 @@ $Build ID:	@@build_id@@
 
 	<cffunction name="init" hint="Constructor" access="public" output="false" returntype="UserService">
 		<!--- ************************************************************* --->
-		<cfargument name="transfer" 	 type="transfer.com.Transfer" 				required="Yes" hint="the Transfer ORM">
-		<cfargument name="transaction" 	 type="transfer.com.sql.transaction.Transaction" required="Yes" hint="The Transfer transaction">
-		<cfargument name="Datasource" 	 type="transfer.com.sql.Datasource" 		required="Yes" hint="the Datasource obj">
-		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service">
+		<cfargument name="transfer" 	 type="transfer.com.Transfer" 				required="Yes" hint="the Transfer ORM" inject>
+		<cfargument name="transaction" 	 type="transfer.com.sql.transaction.Transaction" required="Yes" hint="The Transfer transaction" inject>
+		<cfargument name="Datasource" 	 type="transfer.com.sql.Datasource" 		required="Yes" hint="the Datasource obj" inject>
+		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service" inject>
 		<!--- ************************************************************* --->
 		<cfscript>
 			/* Init */

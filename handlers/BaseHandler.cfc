@@ -19,10 +19,10 @@ limitations under the License.
 **/
 component{
 
-	function setNextRoute(route,persist,varStruct,addToken,suffix){
-		var event = getController().getRequestService().getContext();
-		arguments.route = arguments.route & event.getRewriteExtension() & arguments.suffix;
-		getController().setNextRoute(argumentCollection=arguments);
+	function setNextRoute(route,persist,varStruct,addToken,suffix=""){
+		var _event = getController().getRequestService().getContext();
+		arguments.event = arguments.route & _event.getRewriteExtension() & arguments.suffix;
+		getController().setNextEvent(argumentCollection=arguments);
 	}
 	
 	function setNextEvent(event,queryString="",addToken,persist,varStruct){

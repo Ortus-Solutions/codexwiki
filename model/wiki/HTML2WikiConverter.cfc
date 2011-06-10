@@ -36,7 +36,7 @@ $Build ID:	@@build_id@@
 	</cfscript>
 	
 	<cffunction name="init" hint="Constructor" access="public" returntype="HTML2WikiConverter" output="false">
-		<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object"/>
+		<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object" inject/>
 		<cfscript>
 			
 			/* Setup Translators */

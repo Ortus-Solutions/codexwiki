@@ -26,8 +26,8 @@ $Build ID:	@@build_id@@
 
 	<cffunction name="init" returntype="LookupService" output="false" hint="Constructor">
 		<!--- ************************************************************* --->
-		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
-		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
+		<cfargument name="transfer" 	hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes" inject>
+		<cfargument name="transaction" 	hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes" inject>
 		<!--- ************************************************************* --->
 		<cfscript>
 			instance = StructNew();

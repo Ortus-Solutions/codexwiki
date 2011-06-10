@@ -25,11 +25,11 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiService" output="false">
-	<cfargument name="transfer" 		hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
-	<cfargument name="datasource" 		hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes">
-	<cfargument name="transaction" 		hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-	<cfargument name="securityService" 	hint="the security service" type="codex.model.security.SecurityService" required="Yes">
-	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
+	<cfargument name="transfer" 		hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes" inject>
+	<cfargument name="datasource" 		hint="the datasource bean" type="transfer.com.sql.Datasource" required="Yes" inject>  
+	<cfargument name="transaction" 		hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes" inject>
+	<cfargument name="securityService" 	hint="the security service" type="codex.model.security.SecurityService" required="Yes" inject>
+	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes" inject>
 	<cfscript>
 	
 		super.init(argumentCollection=arguments);

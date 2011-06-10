@@ -135,7 +135,7 @@ $Build ID:	@@build_id@@
 				args = StructNew();
 				args.objectKey = key;
 				/* Get the rendered Feed Content */
-				args.myObject = getRenderedFeed();
+				args.object = getRenderedFeed();
 
 				//if there is no cache item, use the CB default value
 				if(StructKeyExists(feedData, "cache"))

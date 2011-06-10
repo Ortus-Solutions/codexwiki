@@ -29,9 +29,9 @@ $Build ID:	@@build_id@@
 
 	<!--- Init --->
 	<cffunction name="init" hint="Constructor" access="public" returntype="ConfigService" output="false">
-		<cfargument name="transfer"    hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
-		<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes">
-		<cfargument name="configBean"  hint="the configuration beam" type="any" required="Yes">
+		<cfargument name="transfer"    hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes" inject>
+		<cfargument name="transaction" hint="The Transfer transaction" type="transfer.com.sql.transaction.Transaction" required="Yes" inject>
+		<cfargument name="configBean"  hint="the configuration beam" type="any" required="Yes" inject>
 		<cfscript>
 			/* Init */
 			super.init(argumentCollection=arguments);

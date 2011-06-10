@@ -146,15 +146,15 @@ component{
 		
 		//WireBox Integration
 		wireBox = { 
-			enabled = true,
+			enabled = false,
 			singletonReload=false 
 		};
 		//IOC Integration
 		ioc = {
-			framework 		= "coldspring",
+			framework 		= "wirebox",
 			reload 	  	  	= false,
 			objectCaching 	= false,
-			definitionFile  = "/codex/config/coldspring.xml.cfm"
+			definitionFile  = "codex.config.CodexWireBox"
 		};
 		
 		//Datasources
@@ -204,6 +204,7 @@ component{
 	* Development settings
 	*/
 	function development(){
+		// coldbox settings
 		coldbox.debugMode = false;
 		coldbox.debugPassword = "";
 		coldbox.reinitPassword = "";
@@ -213,7 +214,9 @@ component{
 		coldbox.customErrorTemplate = "";	
 		// wirebox
 		wirebox.singletonReload = false;
-		ioc.reload = false;	
+		ioc.reload = false;
+		// paid modules (LM box only)
+		arrayAppend(coldbox.modulesExternalLocation, "/codex/_modules");
 	}
 
 }

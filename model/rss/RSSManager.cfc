@@ -25,8 +25,8 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="RssManager" output="false">
-	<cfargument name="configBean" type="any" required="true">
-	<cfargument name="beanInjector" hint="the bean injector" type="any" required="Yes">
+	<cfargument name="configBean" type="any" required="true" inject>
+	<cfargument name="beanInjector" hint="the bean injector" type="any" required="Yes" inject>
 	<cfscript>
 		/* Stores all feed objects lazy loaded */
 		setFeedCollection(StructNew());

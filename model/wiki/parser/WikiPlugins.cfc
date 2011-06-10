@@ -29,7 +29,7 @@ $Build ID:	@@build_id@@
 </cfscript>
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiPlugins" output="false">
-	<cfargument name="ColdBoxController" type="coldbox.system.web.Controller" required="true" hint="The coldbox Controller, needed to create plugins and settings."/>
+	<cfargument name="ColdBoxController" type="coldbox.system.web.Controller" required="true" hint="The coldbox Controller, needed to create plugins and settings." inject>
 	<cfscript>
 		/* Setup the coldbox controller */
 		instance.controller = arguments.ColdBoxController;

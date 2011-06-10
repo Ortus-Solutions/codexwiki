@@ -25,7 +25,7 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="BeanPopulator" output="false">
-	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes">
+	<cfargument name="transfer" hint="the Transfer ORM" type="transfer.com.Transfer" required="Yes" inject>
 	<cfargument name="serviceMap" hint="the map of service objects to map composite transfer class names to" type="struct" required="No" default="#StructNew()#">
 	<cfscript>
 		setTransfer(arguments.transfer);

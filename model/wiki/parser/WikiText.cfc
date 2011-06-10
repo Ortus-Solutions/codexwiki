@@ -25,8 +25,8 @@ $Build ID:	@@build_id@@
 <!------------------------------------------- PUBLIC ------------------------------------------->
 
 <cffunction name="init" hint="Constructor" access="public" returntype="WikiText" output="false">
-	<cfargument name="configService" hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes">
-	<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object"/>
+	<cfargument name="configService" hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes" inject>
+	<cfargument name="javaLoader" type="codex.model.util.JavaLoader" required="true" hint="The java loader object" inject>
 	<cfscript>
 		variables.instance = StructNew();
 		instance.configService = arguments.configService;

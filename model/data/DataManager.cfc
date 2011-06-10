@@ -28,8 +28,8 @@ $Build ID:	@@build_id@@
 	
 	<!--- Constructor --->
 	<cffunction name="init" access="public" returntype="DataManager" hint="construtor" output="false">
-		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service">
-		<cfargument name="beanInjector"  type="any" required="true" hint="the bean injector">
+		<cfargument name="ConfigService" type="codex.model.wiki.ConfigService" 		required="true" hint="The config service" inject>
+		<cfargument name="beanInjector"  type="any" required="true" hint="the bean injector" inject>
 		<cfscript>
 			
 			return this;
