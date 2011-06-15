@@ -56,8 +56,8 @@ component{
 			requestContextDecorator 	= "codex.model.coldbox.RequestContextDecorator",
 			
 			//Error/Exception Handling
-			exceptionHandler		= "Main.onException",
-			onInvalidEvent			= "",
+			exceptionHandler		= "",
+			onInvalidEvent			= "Main.notFound",
 			customErrorTemplate		= "",
 				
 			//Application Aspects

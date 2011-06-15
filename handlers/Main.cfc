@@ -21,93 +21,91 @@ limitations under the License.
 component extends="BaseHandler" accessors="true" singleton{
 
 	// Dependencies
-	property name="securityService" inject="model";
-	property name="configService" 	inject="model";
+	property name="securityService" inject;
+	property name="configService" 	inject;
+	property name="showKey"			inject="coldbox:setting:showKey";
+	property name="spaceKey"		inject="coldbox:setting:spaceKey";
 
-	
-	function init(){
-		// Show Keys
-		instance.showKey 	= getSetting('showKey');
-		instance.spaceKey 	= getSetting('spaceKey');
-		
-		return this;
-	}
+/************************************** PUBLIC *********************************************/
 
 	function onAppInit(event){
-		// Get Wiki Options
-		var Options = getConfigService().getOptions();
+		// Cache Wiki Options at startup
+		getColdboxOCM().set("CodexOptions", configService.getOptions() , 0);
 		
-		// Cache Them
-		getColdboxOCM().set("CodexOptions",Options,0);
-		
+		// TODO: Why these checks?
 		// Check ShowKey
-		if( getSetting("ShowKey") eq "" or getSetting("ShowKey") eq "page"){
+		if( NOT len(showKey) OR showKey eq "page"){
 			$throw(message="Invalid Show Key Detected",
-				  detail="The ShowKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
+				  detail="The ShowKey setting cannot be left blank or named 'page'. Please change it in the configuration file.",
 				  type="Codex.InvalidShowKeyException");
 		}
 		
-		// Check SpaceKEy
-		if( getSetting("SpaceKey") eq "" or getSetting("SpaceKey") eq "page"){
+		// Check SpaceKey
+		if( NOT len(SpaceKey) or SpaceKey eq "page"){
 			$throw(message="Invalid Space Key Detected",
-				  detail="The SpaceKey setting cannot be left blank or named 'page'. Please change it in the coldbox.xml",
+				  detail="The SpaceKey setting cannot be left blank or named 'page'. Please change it in the configuration file",
 				  type="Codex.InvalidSpaceKeyException");
 		}
 	}
 
 	function onRequestStart(event){
 		var rc = event.getCollection();
+		
 		// Setup the global exit handlers For the admin
 		rc.xehAdmin = "admin/main/home";
+		// TODO: move this to admin module once created
+		// Only if in admin
 		if( reFindnocase("^admin",event.getCurrentEvent()) ){
-			/* Admin Menu */
+			// Admin Menu */
 			rc.xehAdminUsers = "admin/users/list";
 			rc.xehAdminRoles = "admin/roles/list";
 			
-			/* Wiki Admin */
+			// Wiki Admin */
 			rc.xehAdminNamespace = "admin/namespace/list";
 			rc.xehAdminCategories = "admin/categories/list";
 			rc.xehAdminComments = "admin/comments/list";
 			
-			/* Plugin Menu */
+			// Plugin Menu */
 			rc.xehAdminPlugins = "admin/plugins/list";
 			rc.xehAdminPluginDocs = "admin/plugins/docs";
 			
-			/* Tools Menu */
+			// Tools Menu */
 			rc.xehAdminAPI = "admin/tools/api";
 			rc.xehAdminConverter = "admin/tools/converter";
 			
-			/* Settings Menu */
+			// Settings Menu */
 			rc.xehAdminOptions = "admin/config/options";
 			rc.xehAdminCommentOptions = "admin/config/comments";
 			rc.xehAdminCustomHTML = "admin/config/customhtml";
 			rc.xehAdminLookups = "admin/lookups/display";
 		}
 
-		/* Setup the global exit handlers for the Profile Section */
+		// Setup the global exit handlers for the Profile Section */
 		rc.xehUserProfile = "profile/user/details";
 
-		/* Setup the global exit handlers For the public site*/
-		rc.xehDashboard = "#instance.showKey#/Dashboard";
-		rc.xehSpecialHelp = "#instance.showkey#/Help:Contents";
-		rc.xehSpecialFeeds = "#instance.showKey#/Special:Feeds";
-		rc.xehSpecialCategory = "#instance.showKey#/Special:Categories";
+		// Setup the global exit handlers For the public site*/
+		rc.xehDashboard = "#showKey#/Dashboard";
+		rc.xehSpecialHelp = "#showKey#/Help:Contents";
+		rc.xehSpecialFeeds = "#showKey#/Special:Feeds";
+		rc.xehSpecialCategory = "#showKey#/Special:Categories";
 		rc.xehWikiSearch = "page/search";
 		rc.xehPageDirectory = "page/directory";
 		rc.xehSpaceDirectory = "spaces";
 		
-		/* Global User Exit Handlers */
+		// Global User Exit Handlers */
 		rc.xehUserdoLogin = "user/doLogin";
 		rc.xehUserLogin = "user/login";
 		rc.xehUserLogout = "user/logout";
 		rc.xehUserRegistration = "user/registration";
 		rc.xehUserReminder = "user/reminder";
 
-		/* Get a user from session */
-		rc.oUser = getSecurityService().getUserSession();
-		/* Get the wiki's custom HTML */
-		rc.oCustomHTML = getConfigService().getCustomHTML();
-		/* Get the wiki's Options */
+		// Get a user from session
+		rc.oUser = securityService.getUserSession();
+		
+		// Get the wiki's custom HTML
+		rc.oCustomHTML = configService.getCustomHTML();
+		
+		// Get the wiki's Options
 		rc.CodexOptions = getColdboxOCM().get('CodexOptions');
 	}	
 	function onMissingTemplate(event){
@@ -115,23 +113,9 @@ component extends="BaseHandler" accessors="true" singleton{
 		notFound(arguments.event);
 	}
 	
-	function onRequestEnd(event){
-	}
+	function onRequestEnd(event){}
 	
-	function onException(event){
-		var invalidList = "Framework.invalidEventException,Framework.EventHandlerNotRegisteredException";
-			
-		//Grab Exception From request collection, placed by ColdBox
-		var exceptionBean = event.getValue("ExceptionBean");
-		/* Log our exception to our logs */
-		getPlugin("logger").logErrorWithBean(exceptionBean);
-		
-		/* Test for 404 errors */
-		if( listfindnocase(invalidList,exceptionBean.getType()) ){
-			setNextRoute("notfound");
-		}
-	}
-				function notFound(event){
+	function notFound(event){
 		event.setHTTPHeader(statusCode=404,statusText="PageNotFound")
 			.setView("main/notFound");	
 	}
