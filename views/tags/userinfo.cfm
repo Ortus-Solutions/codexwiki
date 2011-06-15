@@ -13,7 +13,12 @@
 		<!--- Don't Show if in login event' --->
 		<form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#" onsubmit="onLoginForm()">
 			<!--- ref Route --->
+			<cfif structKeyExists(rc,"_securedURL")>
 			<input type="hidden" name="_securedURL" value="#event.getValue("_securedURL","")#">
+			<cfelse>
+			<!--- TODO: abstract the cgi and path info into the request context --->
+			<input type="hidden" name="_securedURL" value="#cgi.script_name##cgi.path_info#">
+			</cfif>
 			<p>
 			<label for="username">Username</label>
 			<input type="text" name="username" id="username" size="20" maxlength="50" />

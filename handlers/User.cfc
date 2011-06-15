@@ -17,213 +17,178 @@ limitations under the License.
 ********************************************************************************
 * @author Luis Majano
 **/
-component extends="BaseHandler" singleton{
+component extends="BaseHandler" accessors="true"  singleton{
 	
 	// Dependencies
-	property name="SecurityService" 	inject="model" scope="instance";
-	property name="UserService" 		inject="model" scope="instance";
+	property name="SecurityService" 	inject;
+	property name="UserService" 		inject;
 
 	//Implicit Properties
 	this.prehandler_only = "registration,doregistration";
 	
 /************************************** IMPLICIT *********************************************/
 
-	function preHandler(event){
+	function preHandler(event,action,eventArguments){
 		var rc = event.getCollection();
 			
 		// Check For Registration setting
-		if( not rc.CodexOptions.wiki_registration ){
-			getPlugin("messagebox").setMessage(type="warning", message="Wiki registration is not enabled.");
+		if( NOT rc.CodexOptions.wiki_registration ){
+			getPlugin("MessageBox").setMessage(type="warn", message="Wiki registration is not enabled.");
 			setNextRoute(rc.xehDashboard);
 		}
 	}
 
-
 /************************************** PUBLIC EVENTS *********************************************/	
 	
 	
+	function login(event){
+		var rc = event.getCollection();
+		
+		// js append list
+		rc.jsAppendList = "formvalidation";
+		
+		event.setView("user/login");
+	}
+	
+	function doLogin(event){
+		var rc 			= event.getCollection();
+		var refRoute 	= event.getValue("_securedURL","");
+
+		// Validate Login 
+		if( not event.getTrimValue('username','').length() or
+		 	not event.getTrimValue('password','').length() ){
+			// Invalid Login
+			getPlugin("MessageBox").warn("Please enter all the required fields to log in.");
+			// relocate
+			setNextEvent("user/login");
+		}
+		
+		// Validate Credentials
+		if ( getSecurityService().authenticateUser(rc.username, rc.password) ){
+			/// Service logged user in, now just relocate.
+			if( findnocase("login",refRoute) OR NOT refRoute.length() ){
+				// relocate home if no refRoute found
+				setNextEvent(getSetting('ShowKey'));
+			}
+			else{
+				setNextEvent(URL=refRoute);
+			}
+		}
+		else{
+			getPlugin("MessageBox").setMessage("error", "The credentials you provided are not valid or your user is not active. Please try again.");
+			setNextEvent(event="user/login");
+		}
+	}
+	
+	function logout(event){
+		getSecurityService().cleanUserSession();		setNextEvent(event=getSetting("showKey"));	}
+		function reminder(event){
+		var rc = event.getCollection();				// Exit Handlers		rc.xehDoReminder = "user/doPasswordReminder";		// js
+		rc.jsAppendList = "formvalidation";
+				event.setView("user/reminder");	}	
+	function doPasswordReminder(event){		var rc 		= event.getCollection();		var errors 	= "";		var oUser 	= "";				// Param email		event.paramValue("email","");				// Validate email		if( not trim(rc.email).length() ){			errors = errors & "Please enter an email address<br />";			}		else{
+			// Try To get User			oUser = userService.getUserByEmail( rc.email );			if( NOT oUser.getisPersisted() ){				errors = errors & "The email address you entered is not in our system. Please try again.<br />";			}
+		}					
+		// Check if Errors		if( NOT errors.length() ){			// Send Reminder			getSecurityService().sendPasswordReminder( oUser );			getPlugin("MessageBox").info("Password reminder sent!");		}		else{			getPlugin("MessageBox").error(messageArray=errors);		}		// Re Route		setNextEvent("user/reminder");	}
+	
+	function registration(event){
+		// Exit Handler
+		rc.xehDoRegistration = "user/doRegistration";
+		rc.xehValidateUsername = "user/usernameCheck";
+		// JS
+		rc.jsAppendList = "formvalidation";
+		
+		event.setView('user/registration');
+	}
+	
+	function doRegistration(event){
+		var rc 				= event.getCollection();
+		var oUser 			= "";
+		var errors 			= ArrayNew(1);
+		
+		// Validate Password comparison
+		if( compare(rc.password,rc.c_password) neq 0 ){
+			ArrayAppend(errors,"The passwords you entered are not the same. Please try again.");
+		}
+		
+		// Validate Captcha
+		if( not getMyPlugin("Captcha").validate( rc.captchacode ) ){
+			ArrayAppend(errors, "Invalid security code. Please try again.");
+		}
+		
+		// Check valid username
+		if( not userService.isUsernameValid( event.getValue("username","") ) ){
+			ArrayAppend(errors,"The username you choose is already taken. Please try another one.");
+		}
+		
+		// Validate
+		if( arraylen(errors) ){
+			getPlugin("MessageBox").error(messageArray=errors);
+			// Back to Registration
+			registration(arguments.event);
+			return;
+		}
+		
+		// create new user object and populate it with form data
+		oUser = populateModel( userService.getUser() );
+		// Validate it
+		errors = oUser.validate();
+		// Error Checks on user creation
+		if( arraylen(errors) ){
+			getPlugin("MessageBox").error(messageArray=errors);
+			// Back to Registration
+			registration(arguments.event);
+			return;			
+		}
+		else{
+			// Set Default Wiki Role for successful registration: TODO: Move to service layer
+			oUser.setRole( userService.getRole(rc.CodexOptions.wiki_defaultrole_id) );
+			// Set Unconfirmed, jsut to be safe. TODO: Move to service layer
+			oUser.setisConfirmed( false );
+			// Register User
+			userService.registerUser( oUser );
+			// Set Messages
+			getPlugin("MessageBox").info("User added successfully");
+			setNextEvent("user/RegistrationConfirmation");
+		}
+	}
+	
+	function usernameCheck(event){
+		var rc 		= event.getCollection();
+		var valid 	= false;
+		
+		event.paramValue("username","");
+		
+		if( NOT len(rc.username) ){
+			valid = false;
+		}
+		else{
+			valid = userService.isUsernameValid( rc.username );
+		}
+		
+		event.renderdata(data=valid);
+	}
+	
+	function validateRegistration(event){
+		var rc = event.getCollection();
+		
+		// create new user object according to incoming confirmation number
+		rc.oUser = userService.getUser( event.getValue('confirm','') );
+		
+		// Validate confirmation number
+		if(NOT userService.confirmUser( rc.oUser ) ){
+			getPlugin("MessageBox").warn("The confirmation number is not valid!");
+		}
+		else{
+			getPlugin("MessageBox").info("Confirmation number is valid! Thank You!");
+		}
+		
+		event.setView("user/validated");			
+	}
+	
+	function registrationConfirmation(event){
+		var rc = event.getCollection();
+	    event.setView('user/confirmation');
+	}
+	
 }
-
-<cfcomponent name="user"			 extends="baseHandler"			 output="false"			 hint="Our main handler for user interactivity."			 autowire="true"			 cache="true" cacheTimeout="0">
-	<!--- Dependencies --->
-	<cfproperty name="SecurityService" 	inject="model" scope="instance" />
-	<cfproperty name="UserService" 		inject="model" scope="instance" />
-
-	<!--- Implicit Properties --->
-	<cfset this.prehandler_only = "registration,doregistration">
-
-<!----------------------------------------- IMPLICIT ------------------------------------->	
-
-	<!--- preHandler --->
-	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="Handler interceptor">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			var rc = event.getCollection();
-			
-			/* Check For Registration setting */
-			if( not rc.CodexOptions.wiki_registration ){
-				getPlugin("messagebox").setMessage(type="warning", message="Wiki registration is not enabled.");
-				setNextRoute(rc.xehDashboard);
-			}
-		</cfscript>
-	</cffunction>	
-<!------------------------------------------- PUBLIC ------------------------------------------->	<cffunction name="login" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			var rc = event.getCollection();			/* JS */
-			rc.jsAppendList = "formvalidation";
-			
-			/* login view */			event.setView("users/login");		</cfscript>	</cffunction>	<cffunction name="doLogin" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-			var refRoute = event.getValue("_securedURL","");
-
-			/* Validate */
-			if( not trim(event.getValue('username','')).length() or
-			 	not trim(event.getValue('password','')).length() ){
-				/* Invalid Login */
-				getPlugin("messagebox").setMessage("warning", "Please enter all the required fields to log in.");
-				/* relocate to invalid route */
-				setNextRoute(route="user/login");
-			}
-			
-			/* Validate Credentials */
-			if ( getSecurityService().authenticateUser(rc.username,rc.password) ){
-				/* Service logged user in, now just relocate. */
-				if( findnocase("login",refRoute) or refRoute.length() eq 0 ){
-					setNextRoute(getSetting('ShowKey'));
-				}
-				else{
-					relocate(refRoute);
-				}
-			}
-			else{
-				getPlugin("messagebox").setMessage("error", "The credentials you provided are not valid or your user is not active. Please try again.");
-				setNextRoute(route="user/login");
-			}
-		</cfscript>
-	</cffunction>	<cffunction name="logout" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			getSecurityService().cleanUserSession();			setNextRoute(route=getSetting("showKey"));		</cfscript>			</cffunction>	<cffunction name="reminder" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			var rc = event.getCollection();						/* Exit Handlers */			rc.xehDoReminder = "user/doPasswordReminder";			/* JS */
-			rc.jsAppendList = "formvalidation";
-						event.setView("users/reminder");		</cfscript>	</cffunction>	<cffunction name="doPasswordReminder" access="public" returntype="void" output="false">		<cfargument name="Event" type="any">		<cfscript>			var rc = event.getCollection();			var errors = "";			var oUser = "";						/* Param email */			event.paramValue("email","");						/* Validate email */			if( not trim(rc.email).length() ){				errors = errors & "Please enter an email address<br />";				}			if( not getPlugin("Utilities").isEmail(rc.email) ){				errors = errors & "The email you entered is not a valid email address: #rc.email#<br />";			}			/* Try To get User */			oUser = getUserService().getUserByEmail(rc.email);			if( not oUser.getisPersisted() ){				errors = errors & "The email address you entered is not in our system. Please try again.<br />";			}						/* Check if Errors */			if( not errors.length() ){				/* Send Reminder */				getSecurityService().sendPasswordReminder(oUser);				getPlugin("messagebox").setMessage("info", "Password reminder sent!");			}			else{				getPlugin("messagebox").setMessage("error", errors);			}			/* Re Route */			setNextRoute("user/reminder");		</cfscript>	</cffunction>
-	
-	<!--- registration --->
-	<cffunction name="registration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
-	    <cfset var rc = event.getCollection()>
-	    <cfscript>
-			/* Exit Handler */
-			rc.xehDoRegistration = "user/doRegistration";
-			rc.xehValidateUsername = "user/usernameCheck";
-			/* JS */
-			rc.jsAppendList = "formvalidation";
-			/* View */
-			event.setView('users/registration');
-		</cfscript>
-	</cffunction>
-	
-	<!--- doRegistration --->
-	<cffunction name="doRegistration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
-	  <cfscript>
-			var rc = event.getCollection();
-			var oUser = "";
-			var oUserService = getUserService();
-			var errors = ArrayNew(1);
-			
-			/* Validate Passwords */
-			if( compare(rc.password,rc.c_password) neq 0 ){
-				ArrayAppend(errors,"The passwords you entered are not the same. Please try again.");
-			}
-			
-			/* Validate Captcha */
-			if( not getMyPlugin("Captcha").validate(rc.captchacode) ){
-				ArrayAppend(errors, "Invalid security code. Please try again.");
-			}
-			
-			if( not getUserService().isUsernameValid(event.getValue("username","")) ){
-				ArrayAppend(errors,"The username you choose is already taken. Please try another one.");
-			}
-			
-			/* Validate */
-			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				/* Run Registration */
-				registration(arguments.event);
-				return;
-			}
-			
-			/* create new user object. */
-			oUser = oUserService.getUser();
-			/* Populate it */
-			getPlugin("beanFactory").populateBean(oUser);
-			/* Validate it */
-			errors = oUser.validate();
-			/* Error Checks */
-			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
-				setNextRoute(route="admin.users/new");
-			}
-			else{
-				/* Set Default Wiki Role */
-				oUser.setRole(oUserService.getRole(rc.CodexOptions.wiki_defaultrole_id));
-				/* Set Unconfirmed, jsut to be safe. */
-				oUser.setisConfirmed(false);
-				/* Save User */
-				oUserService.registerUser(oUser);
-				/* Set Messagebox */
-				getPlugin("messagebox").setMessage("info","User added successfully");
-				setNextRoute(route="user/RegistrationConfirmation");
-			}
-		</cfscript> 
-	</cffunction>
-	
-	<!--- usernameCheck --->
-	<cffunction name="usernameCheck" access="public" returntype="void" output="false" hint="Check a username">
-		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
-	    <cfscript>
-			var rc = event.getCollection();
-			var valid = false;
-			
-			if( len(event.getTrimValue("username","")) eq 0){
-				valid = false;
-			}
-			else{
-				valid = getUserService().isUsernameValid(event.getValue("username",""));
-			}
-			/* Render Data */
-			event.renderdata(data=valid);
-		</cfscript> 
-	</cffunction>
-	
-	<!--- validateRegistration --->
-	<cffunction name="validateRegistration" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
-	    <cfscript>
-			var rc = event.getCollection();
-			var oUserService = getUserService();
-			
-			
-			/* create new user object. */
-			rc.oUser = oUserService.getUser(event.getValue('confirm',''));
-			/* Validate */
-			if(not oUserService.confirmUser(rc.oUser) ){
-				getPlugin("messagebox").setMessage(type="warning", message="The confirmation number is not valid.");
-			}
-			else{
-				getPlugin("messagebox").setMessage(type="info", message="Confirmation number is valid");
-			}
-			event.setView("users/validated");			
-		</cfscript>
-	</cffunction>
-	
-	<!--- RegistrationConfirmation --->
-	<cffunction name="RegistrationConfirmation" access="public" returntype="void" output="false" hint="">
-		<cfargument name="Event" type="coldbox.system.web.context.RequestContext" required="yes">
-	    <cfset var rc = event.getCollection()>
-	    
-	    <cfset event.setView('users/confirmation')>
-	</cffunction>
-<!------------------------------------------- PACKAGE ------------------------------------------->
-
-<!------------------------------------------- PRIVATE ------------------------------------------->
-	<!--- Get the security service --->	<cffunction name="getSecurityService" access="private" returntype="codex.model.security.SecurityService" output="false">
-		<cfreturn instance.SecurityService>
-	</cffunction>		<!--- Get the User service --->	<cffunction name="getUserService" access="private" returntype="codex.model.security.UserService" output="false">		<cfreturn instance.UserService>	</cffunction></cfcomponent>
