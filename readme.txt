@@ -1,7 +1,6 @@
 ********************************************************************************
-Copyright 2008 by 
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
@@ -15,31 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-Welcome to Codex
+Welcome to Codex Platform
 ********************************************************************************
 
-CodeX Wiki requires the following:
+CodexPlatform requires the following:
 
-Transfer 1.1 or greater
-ColdBox 2.6.4 or greater
-ColdSpring 1.2 or greater
-
-The version for this release of Codex is the following:
-
-Releases
-
-- Version 0.5 Beta 2 (August 2009)
-This version includes new versions of our java libraries, so please if you are 
-upgrading from a previous version, make sure that you delete the ENTIRE
-/codex/model/wiki/parser/lib/bliki/*.jar list of jar files and replace them
-with the new set of *.jar files of the beta 2 release.
-- Commenting System
-- Lots of UI improvements
-- Lots and lots of fixes.
-- ColdBox 2.6.4 ONLY!!
-
-- Version 0.5 Beta 1 (Nov 2008)
-An incredible amount of changes and updates, please see bug tracker.
+ColdBox 3.1.0 or above
+ColdFusion 9 or compatible
 
 ********************************************************************************
 Database Installation

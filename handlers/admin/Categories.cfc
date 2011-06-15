@@ -84,7 +84,7 @@ $Build ID:	@@build_id@@
 			oCategory = instance.wikiService.getCategory();
 			/* Error Checks */
 			if( len(event.getTrimValue("name")) eq 0 ){
-				getPlugin("messagebox").setMessage(type="error",message="Please enter a category name.");
+				getPlugin("MessageBox").setMessage(type="error",message="Please enter a category name.");
 				new(event);
 			}
 			else{
@@ -93,7 +93,7 @@ $Build ID:	@@build_id@@
 				/* Save */
 				instance.wikiService.saveCategory(oCategory);
 				/* Info message */
-				getPlugin("messagebox").setMessage("info","Category added successfully");
+				getPlugin("MessageBox").setMessage("info","Category added successfully");
 				setNextRoute(route="admin/categories/list");
 			}
 		</cfscript>
@@ -114,7 +114,7 @@ $Build ID:	@@build_id@@
 			
 			/* Verify incoming user id */
 			if( not event.valueExists("category_id") ){
-				getPlugin("messagebox").setMessage("warning", "category id not detected");
+				getPlugin("MessageBox").setMessage("warning", "category id not detected");
 				setNextRoute("admin/categories/list");
 			}
 
@@ -146,11 +146,11 @@ $Build ID:	@@build_id@@
 				instance.wikiService.deleteCategory(oCategory.getCategory_id());
 				// Create New Category
 				instance.wikiService.saveCategory(oClonedCategory);
-				getPlugin("messagebox").setMessage("info","Category Updated!");
+				getPlugin("MessageBox").setMessage("info","Category Updated!");
 				setNextRoute(route="admin/categories/list");
 			}
 			else{
-				getPlugin("messagebox").setMessage("warning","Category did not change, no updates made!");
+				getPlugin("MessageBox").setMessage("warning","Category did not change, no updates made!");
 				setNextRoute(route="admin/categories/list");
 			}
 		</cfscript>
@@ -172,16 +172,16 @@ $Build ID:	@@build_id@@
 						//Remove it.
 						instance.wikiService.deleteCategory(listGetAt(rc.category_id,i));
 						//set message box
-						getPlugin("messagebox").setMessage("info","Category removed");
+						getPlugin("MessageBox").setMessage("info","Category removed");
 					}
 				}
 				else{
 					/* Messagebox. */
-					getPlugin("messagebox").setMessage("warning", "No Records Selected");
+					getPlugin("MessageBox").setMessage("warning", "No Records Selected");
 				}
 			}
 			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing Category. #e.message# #e.detail#");
+				getPlugin("MessageBox").setMessage("error", "Error removing Category. #e.message# #e.detail#");
 			}
 
 			/* Relocate back to listing */

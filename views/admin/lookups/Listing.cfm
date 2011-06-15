@@ -66,7 +66,7 @@ $Build ID:	@@build_id@@
 <p>From here you can manage all the lookup tables in the system as defined in your coldbox.xml (lookups_tables)</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form>

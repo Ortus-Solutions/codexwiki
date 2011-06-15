@@ -51,7 +51,7 @@ $Build ID:	@@build_id@@
 </p>
 
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">

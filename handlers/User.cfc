@@ -1,8 +1,7 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright 2008 by 
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
@@ -16,10 +15,35 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-$Build Date: @@build_date@@
-$Build ID:	@@build_id@@
-********************************************************************************
------------------------------------------------------------------------>
+* @author Luis Majano
+**/
+component extends="BaseHandler" singleton{
+	
+	// Dependencies
+	property name="SecurityService" 	inject="model" scope="instance";
+	property name="UserService" 		inject="model" scope="instance";
+
+	//Implicit Properties
+	this.prehandler_only = "registration,doregistration";
+	
+/************************************** IMPLICIT *********************************************/
+
+	function preHandler(event){
+		var rc = event.getCollection();
+			
+		// Check For Registration setting
+		if( not rc.CodexOptions.wiki_registration ){
+			getPlugin("messagebox").setMessage(type="warning", message="Wiki registration is not enabled.");
+			setNextRoute(rc.xehDashboard);
+		}
+	}
+
+
+/************************************** PUBLIC EVENTS *********************************************/	
+	
+	
+}
+
 <cfcomponent name="user"			 extends="baseHandler"			 output="false"			 hint="Our main handler for user interactivity."			 autowire="true"			 cache="true" cacheTimeout="0">
 	<!--- Dependencies --->
 	<cfproperty name="SecurityService" 	inject="model" scope="instance" />

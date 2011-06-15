@@ -127,12 +127,12 @@ $Build ID:	@@build_id@@
 			
 			errors = oClonedComment.validate();
 			if( ArrayLen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				edit(event);
 			}
 			else{
 				instance.commentsService.save(oClonedComment);
-				getPlugin("messagebox").setMessage("info","Comment updated!");
+				getPlugin("MessageBox").setMessage("info","Comment updated!");
 				setNextRoute(route="admin/comments/list");
 			}
 		</cfscript>

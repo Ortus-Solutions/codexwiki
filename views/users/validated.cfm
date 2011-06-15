@@ -26,7 +26,7 @@ $Build ID:	@@build_id@@
 </h2>
 
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <p>
 	<cfif rc.oUser.getisConfirmed()>

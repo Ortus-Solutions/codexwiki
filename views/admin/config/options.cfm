@@ -63,7 +63,7 @@ $Build ID:	@@build_id@@
 	From here you can manage the overal Codex System Options. Please be careful when editing the main options as it affects the entire wiki installation.
 </p>
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" id="optionForm" name="optionForm">

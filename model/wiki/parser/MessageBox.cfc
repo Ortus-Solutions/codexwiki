@@ -27,7 +27,7 @@ $Build ID:	@@build_id@@
 <cffunction name="init" hint="Constructor" access="public" returntype="MessageBox" output="false">
 	<cfargument name="configService" 	hint="the configuration service" type="codex.model.wiki.ConfigService" required="Yes" inject>
 	<cfscript>
-		super.init("messagebox",arguments.configService);
+		super.init("MessageBox",arguments.configService);
 
 		return this;
 	</cfscript>

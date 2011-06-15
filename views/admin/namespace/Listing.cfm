@@ -62,7 +62,7 @@ $(document).ready(function() {
 <p>From here you can manage all the wiki page namespaces.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Results Form --->
 <form name="namespaceForm" id="namespaceForm" action="#event.buildLink(rc.xehDelete)#" method="post">

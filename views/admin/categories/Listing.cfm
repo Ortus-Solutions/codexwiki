@@ -58,7 +58,7 @@ $Build ID:	@@build_id@@
 <p>From here you can manage all the wiki categories.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Results Form --->
 <form name="categoriesForm" id="categoriesForm" action="#event.buildLink(rc.xehDelete)#" method="post">

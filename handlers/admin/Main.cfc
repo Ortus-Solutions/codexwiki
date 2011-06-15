@@ -68,7 +68,7 @@ $Build ID:	@@build_id@@
 		    /* Flag for Reinit */
 		    getController().setColdboxInitiated(false);
 		    /* MB */
-			getPlugin("messagebox").setMessage(type="info", message="Application Reinitialized");
+			getPlugin("MessageBox").setMessage(type="info", message="Application Reinitialized");
 			/* Re Route */
 			setNextRoute('admin/main/home');
 		</cfscript>     

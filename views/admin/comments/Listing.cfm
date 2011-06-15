@@ -64,7 +64,7 @@ $(document).ready(function() {
 <h2><img src="includes/images/comments.png" alt="Comments" /> Comment Inbox</h2>
 <p>This screen shows the latest 50 comments entered into your system.</p>
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 
 <!--- Table Manager Jumper --->

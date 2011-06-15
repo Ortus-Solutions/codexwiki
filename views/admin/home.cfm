@@ -41,7 +41,7 @@ function confirmDelete(id){
 <cfoutput>
 	
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Welcome --->
 <h2><img src="includes/images/shield.png" alt="welcome" /> Welcome to your CodeX Administrator dashboard</h2>

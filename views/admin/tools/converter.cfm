@@ -48,7 +48,7 @@ $Build ID:	@@build_id@@
 <p>Please use the form below to convert HTML code to a markup language</p>
 
 
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form name="converterForm" id="converterForm" action="#event.buildLink(rc.xehonSubmit)#" method="post">

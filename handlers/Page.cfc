@@ -134,13 +134,13 @@ $Build ID:	@@build_id@@
 					setNextRoute(route=instance.showKey & page.getName());
 				}
 				else{
-					getPlugin("messagebox").setMessage(type="warning", message="The password you entered is incorrect.");
+					getPlugin("MessageBox").setMessage(type="warning", message="The password you entered is incorrect.");
 					setNextRoute(route=instance.showKey & page.getName());				
 				}
 			}
 			else{
 				// Message and take home
-				getPlugin("messagebox").setMessage(type="error", message="Page not found in our system");
+				getPlugin("MessageBox").setMessage(type="error", message="Page not found in our system");
 				setNextEvent(instance.showKey);
 			}
 			
@@ -281,7 +281,7 @@ $Build ID:	@@build_id@@
 
 			/* Validate Versions */
 			if( not event.valueExists("version") OR not event.valueExists("old_version") ){
-				getPlugin("messagebox").setMessage(type="warning", message="No version information passed in.");
+				getPlugin("MessageBox").setMessage(type="warning", message="No version information passed in.");
 				setNextRoute('page/showHistory/#rc.page#');
 			}
 
@@ -359,7 +359,7 @@ $Build ID:	@@build_id@@
 
 			/* Messagebox when search is not available */
 			if ( StructKeyExists(result, "error") ){
-				getPlugin("messagebox").setMessage("error", result.error );
+				getPlugin("MessageBox").setMessage("error", result.error );
 			}
 			else{
 				/* Render Results */
@@ -436,7 +436,7 @@ $Build ID:	@@build_id@@
 			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
 			if(ArrayLen(messages)){
 				/* MB & content set */
-				getPlugin("messagebox").setMessage(type="warning", messageArray=messages);
+				getPlugin("MessageBox").setMessage(type="warning", messageArray=messages);
 				rc.content = oContent;
 				/* Save Version for non dirty edits */
 				rc.content.setVersion(oActiveContent.getVersion());
@@ -447,7 +447,7 @@ $Build ID:	@@build_id@@
 			
 			/* Check for Version Modifications just before saving */
 			if( oActiveContent.getVersion() neq rc.pageVersion ){
-				getPlugin("messagebox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
+				getPlugin("MessageBox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
 				/* ReRoute */
 				setNextRoute(route=instance.showKey & rc.pageName);
 			}

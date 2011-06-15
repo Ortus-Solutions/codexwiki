@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Create a new category in the wiki system, this also creates the special category page.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="categoriesForm" id="categoriesForm" action="#event.buildLink(rc.xehCreate)#" method="post">

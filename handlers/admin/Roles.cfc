@@ -92,13 +92,13 @@ $Build ID:	@@build_id@@
 			errors = oRole.validate();
 			/* Error Checks */
 			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				new(event);
 			}
 			else{
 				/* Save Role */
 				oUserService.save(oRole);
-				getPlugin("messagebox").setMessage("info","Role added successfully");
+				getPlugin("MessageBox").setMessage("info","Role added successfully");
 				setNextRoute(route="admin/roles/list");
 			}
 		</cfscript>
@@ -119,7 +119,7 @@ $Build ID:	@@build_id@@
 			
 			/* Verify incoming user id */
 			if( not event.valueExists("roleID") ){
-				getPlugin("messagebox").setMessage("warning", "role id not detected");
+				getPlugin("MessageBox").setMessage("warning", "role id not detected");
 				setNextRoute("admin/roles/list");
 			}
 
@@ -149,7 +149,7 @@ $Build ID:	@@build_id@@
 			/* Validate it */
 			errors = oClonedRole.validate();
 			if( ArrayLen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				edit(event);
 			}
 			else{
@@ -157,7 +157,7 @@ $Build ID:	@@build_id@@
 				oUserService.save(oClonedRole);
 				
 				/* Message of success */
-				getPlugin("messagebox").setMessage("info","Role updated!");
+				getPlugin("MessageBox").setMessage("info","Role updated!");
 				setNextRoute(route="admin/roles/list");
 			}
 		</cfscript>
@@ -176,7 +176,7 @@ $Build ID:	@@build_id@@
 
 			/* Verify incoming role id */
 			if( not event.valueExists("roleID") ){
-				getPlugin("messagebox").setMessage("warning", "role id not detected");
+				getPlugin("MessageBox").setMessage("warning", "role id not detected");
 				setNextRoute("admin/roles/list");
 			}
 
@@ -204,7 +204,7 @@ $Build ID:	@@build_id@@
 
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('roleID') ){
-				getPlugin("messagebox").setMessage("warning", "permission or role id not detected");
+				getPlugin("MessageBox").setMessage("warning", "permission or role id not detected");
 				setNextRoute("admin/roles/permissions/roleID/#rc.roleID#");
 			}
 
@@ -217,10 +217,10 @@ $Build ID:	@@build_id@@
 				/* Add Perm and save */
 				oRole.addPermission(oPerm);
 				getUserService().save(oRole);
-				getPlugin("messagebox").setMessage("info", "permission added");
+				getPlugin("MessageBox").setMessage("info", "permission added");
 			}
 			else{
-				getPlugin("messagebox").setMessage("warning", "permission already in role");
+				getPlugin("MessageBox").setMessage("warning", "permission already in role");
 			}
 
 			/* relocate */
@@ -238,7 +238,7 @@ $Build ID:	@@build_id@@
 
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('roleID') ){
-				getPlugin("messagebox").setMessage("warning", "permission or role id not detected");
+				getPlugin("MessageBox").setMessage("warning", "permission or role id not detected");
 				setNextRoute("admin/roles/permissions/roleID/#rc.roleID#");
 			}
 
@@ -249,7 +249,7 @@ $Build ID:	@@build_id@@
 			/* Remove Permission */
 			oRole.removePermission(oPerm);
 			getUserService().save(oRole);
-			getPlugin("messagebox").setMessage("info", "permission removed");
+			getPlugin("MessageBox").setMessage("info", "permission removed");
 
 			/* relocate */
 			setNextRoute('admin/roles/permissions/roleID/#rc.roleID#');
@@ -274,16 +274,16 @@ $Build ID:	@@build_id@@
 						//Remove it.
 						getUserService().delete(oRole);
 						//set message box
-						getPlugin("messagebox").setMessage("info","Role(s) removed");
+						getPlugin("MessageBox").setMessage("info","Role(s) removed");
 					}
 				}
 				else{
 					/* Messagebox. */
-					getPlugin("messagebox").setMessage("warning", "No Records Selected");
+					getPlugin("MessageBox").setMessage("warning", "No Records Selected");
 				}
 			}
 			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing role. You can only remove roles that do not have any internal links in the system. #e.message# #e.detail#");
+				getPlugin("MessageBox").setMessage("error", "Error removing role. You can only remove roles that do not have any internal links in the system. #e.message# #e.detail#");
 			}
 
 			/* Relocate back to listing */

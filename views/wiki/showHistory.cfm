@@ -92,7 +92,7 @@ $Build ID:	@@build_id@@
 </h1>
 
 <!--- MessageBox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <p>Below is the current history for this page.  You can preview the version by clicking on the version link.</p>
 

@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Create a new namespace in the wiki system.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="namespaceForm" id="namespaceForm" action="#event.buildLink(rc.xehCreate)#" method="post">

@@ -1,24 +1,19 @@
 <!-----------------------------------------------------------------------
 ********************************************************************************
-Copyright 2008 by
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); 
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+    		
+	http://www.apache.org/licenses/LICENSE-2.0 
 
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
 limitations under the License.
-********************************************************************************
-$Build Date: @@build_date@@
-$Build ID:	@@build_id@@
-********************************************************************************
 ----------------------------------------------------------------------->
 <cfcomponent extends="baseHandler"
 			 output="false"
@@ -41,19 +36,19 @@ $Build ID:	@@build_id@@
 		<cfscript>	
 			// Check if Comments enabled?
 			if( rc.codexOptions.comments_enabled EQ FALSE ){
-				getPlugin("messagebox").setMessage(type="warning", message="Comments are not enabled in the wiki.");
+				getPlugin("MessageBox").setMessage(type="warning", message="Comments are not enabled in the wiki.");
 				setNextEvent(getSetting("DefaultEvent"));
 			}
 			
 			// Check if only registered users are allowed to comment 
 			if( rc.codexOptions.comments_registration AND  NOT rc.oUser.getIsAuthorized() ){
-			    getPlugin("messagebox").setMessage(type="warning", message="Only registered users can comment.");
+			    getPlugin("MessageBox").setMessage(type="warning", message="Only registered users can comment.");
 				setNextEvent(getSetting("DefaultEvent"));
 			}
 			
 			// Delete & Approve Permission
 			if( listFindNoCase("approve,delete",event.getCurrentAction()) AND NOT rc.oUser.checkPermission("COMMENT_MODERATION") ){
-				getPlugin("messagebox").setMessage(type="warning", message="You cannot delete or moderate comments.");
+				getPlugin("MessageBox").setMessage(type="warning", message="You cannot delete or moderate comments.");
 				setNextEvent(getSetting("DefaultEvent"));
 			}
 			

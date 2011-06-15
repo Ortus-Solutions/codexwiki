@@ -57,7 +57,7 @@ Log in to the wiki system by using the form below.
 <br /><br />
 </p>
 <!--- Message Box --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <form name="loginform" id="loginform" method="post" action="#event.buildLink(rc.xehUserDoLogin)#">
 	<input type="hidden" name="_securedURL" value="#event.getValue("_securedURL","")#">

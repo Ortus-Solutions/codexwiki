@@ -55,7 +55,7 @@ $Build ID:	@@build_id@@
 Please enter all the required information to update your profile details
 </p>
 
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Profile Details --->
 <form name="detailsForm" id="detailsForm"

@@ -51,7 +51,7 @@ CodeX Wiki Plugins</h2>
 </p>
 
 <!--- Box --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <form name="uploadForm" id="uploadForm" 
 	  action="#event.buildLink(rc.xehUpload)#" 

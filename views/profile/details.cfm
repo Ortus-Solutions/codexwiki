@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 Below you can see your current profile in the system. You can click on the <strong>Edit Profile</strong> button to make changes to your profile.
 </p>
 
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 	
 <!--- Profile Details --->
 <fieldset >

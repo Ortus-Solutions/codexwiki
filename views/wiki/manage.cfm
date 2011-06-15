@@ -70,7 +70,7 @@ $(document).ready(function() {
 	"<a href="#event.buildLink(pageShowRoot(URLEncodedFormat(rc.content.getPage().getName())))#">#rc.content.getPage().getCleanName()#</a>"
 </h1>
 <!--- MessageBox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.onSubmit)#" method="post" onsubmit="submitForm()">

@@ -43,7 +43,7 @@ $Build ID:	@@build_id@@
 	Please enter below the custom HTML that should be placed on the wiki pages.
 </p>
 
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehonSubmit)#" method="post" class="uniForm" onsubmit="submitForm()">

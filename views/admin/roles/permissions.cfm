@@ -50,7 +50,7 @@ $Build ID:	@@build_id@@
 <p>From here you can manage the role's permissions.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Add Permission  --->
 <form name="addPermForm" id="addPermForm" method="POST" action="#event.buildLink(rc.xehAddPerm)#">

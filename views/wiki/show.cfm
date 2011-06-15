@@ -101,7 +101,7 @@ $(document).ready(function() {
 </cfif>
 
 <!--- Messsagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Content --->
 <p id="wikiContent">#rc.content.render()#</p>

@@ -66,7 +66,7 @@ $(document).ready(function() {
 <p>From here you can manage and search for all the wiki users.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="searchFilterForm" id="searchFilterForm" method="POST" action="#event.buildLink(rc.xehUserListing)#">

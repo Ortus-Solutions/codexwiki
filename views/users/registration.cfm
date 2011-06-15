@@ -84,7 +84,7 @@ $Build ID:	@@build_id@@
 </p>
 
 <!--- MessageBox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <form name="registerForm" id="registerForm" method="post" action="#event.buildLink(rc.xehDoRegistration)#">
 

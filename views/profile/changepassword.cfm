@@ -56,7 +56,7 @@ Please enter the information below, to change your password
 </p>
 
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Profile Details --->
 <form name="passwordForm" id="passwordForm"

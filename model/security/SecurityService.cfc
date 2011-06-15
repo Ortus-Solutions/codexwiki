@@ -56,7 +56,7 @@ $Build ID:	@@build_id@@
 	<cffunction name="userValidator" access="public" returntype="boolean" output="false" hint="Verifies that the user is in any permission">
 		<!--- ************************************************************* --->
 		<cfargument name="rule" 	required="true" type="struct"   hint="The rule to verify">
-		<cfargument name="messagebox" type="coldbox.system.Plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
+		<cfargument name="MessageBox" type="coldbox.system.Plugins.messagebox" required="true" hint="The ColdBox messagebox plugin. You can use to set a redirection message"/>
 		<!--- ************************************************************* --->
 		<cfset var oUser = getUserSession()>
 		<cfset var authResults = false>

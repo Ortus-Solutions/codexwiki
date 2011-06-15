@@ -75,7 +75,7 @@ $Build ID:	@@build_id@@
 			oPlugin.loadPlugins();
 			
 			/* Setup */
-			getPlugin("messagebox").setMessage(type="info", message="Plugin Removed Successfully");
+			getPlugin("MessageBox").setMessage(type="info", message="Plugin Removed Successfully");
 			
 			/* ReRoute */
 			setNextRoute(route="admin/plugins/list");
@@ -90,17 +90,17 @@ $Build ID:	@@build_id@@
 		<cfscript>	
 			/* Verify */
 			if( len(event.getTrimValue('filePlugin')) eq 0){
-				getPlugin("messagebox").setMessage(type="warning", message="Please choose a file to upload");
+				getPlugin("MessageBox").setMessage(type="warning", message="Please choose a file to upload");
 			}
 			else if( listLast(event.getTrimValue("filePlugin"),".") neq "cfc" ){
-				getPlugin("messagebox").setMessage(type="warning", message="Only cfc uploads are allowed");
+				getPlugin("MessageBox").setMessage(type="warning", message="Only cfc uploads are allowed");
 			}
 			else{
 				/* Upload File */
 				oPlugin.uploadPlugin('filePlugin');
 				oPlugin.loadPlugins();
 				/* Setup */
-				getPlugin("messagebox").setMessage(type="info", message="Plugin Installed Successfully");
+				getPlugin("MessageBox").setMessage(type="info", message="Plugin Installed Successfully");
 			}
 			
 			setNextRoute(route="admin/plugins/list");
@@ -114,7 +114,7 @@ $Build ID:	@@build_id@@
 		<cfscript>	
 			getMyPlugin("wiki.WikiPlugins").loadPlugins();
 			
-			getPlugin("messagebox").setMessage(type="info", message="WikiPlugins has refreshed its internal plugins cache.");
+			getPlugin("MessageBox").setMessage(type="info", message="WikiPlugins has refreshed its internal plugins cache.");
 			
 			setNextRoute(route='admin/plugins/list');
 		</cfscript>

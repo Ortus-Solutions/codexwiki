@@ -111,7 +111,7 @@ $Build ID:	@@build_id@@
 
 			/* Validate username */
 			if( not oUserService.isUsernameValid(event.getValue("username","")) ){
-				getPlugin("messagebox").setMessage("error","The username you choose is already taken. Please try another one.");
+				getPlugin("MessageBox").setMessage("error","The username you choose is already taken. Please try another one.");
 				new(arguments.event);
 				return;
 			}
@@ -124,7 +124,7 @@ $Build ID:	@@build_id@@
 			errors = oUser.validate();
 			/* Error Checks */
 			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				setNextRoute(route="admin/users/new");
 			}
 			else{
@@ -133,7 +133,7 @@ $Build ID:	@@build_id@@
 				/* Save User */
 				oUserService.saveUser(oUser);
 
-				getPlugin("messagebox").setMessage("info","User added successfully");
+				getPlugin("MessageBox").setMessage("info","User added successfully");
 				setNextRoute(route="admin/users/list");
 			}
 		</cfscript>
@@ -154,7 +154,7 @@ $Build ID:	@@build_id@@
 			
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){
-				getPlugin("messagebox").setMessage("warning", "user id not detected");
+				getPlugin("MessageBox").setMessage("warning", "user id not detected");
 				setNextRoute("admin/users/list");
 			}
 
@@ -186,7 +186,7 @@ $Build ID:	@@build_id@@
 			/* Validate it */
 			errors = oClonedUser.validate(edit=true);
 			if( ArrayLen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				setNextRoute(route="admin/users/edit/user_id/#rc.user_id#");
 			}
 			else{
@@ -202,7 +202,7 @@ $Build ID:	@@build_id@@
 				oUserService.saveUser(User=oClonedUser,isPasswordChange=passChange);
 				
 				/* Message of success */
-				getPlugin("messagebox").setMessage("info","User updated!");
+				getPlugin("MessageBox").setMessage("info","User updated!");
 				setNextRoute(route="admin/users/list");
 			}
 		</cfscript>
@@ -221,7 +221,7 @@ $Build ID:	@@build_id@@
 
 			/* Verify incoming user id */
 			if( not event.valueExists("user_id") ){
-				getPlugin("messagebox").setMessage("warning", "user id not detected");
+				getPlugin("MessageBox").setMessage("warning", "user id not detected");
 				setNextRoute("admin/users/list");
 			}
 
@@ -250,7 +250,7 @@ $Build ID:	@@build_id@@
 
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
-				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
+				getPlugin("MessageBox").setMessage("warning", "permission or user id not detected");
 				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
 			}
 
@@ -262,10 +262,10 @@ $Build ID:	@@build_id@@
 			if( not oUser.containsPermission(oPerm) ){
 				/* Add Perm and save */
 				getUserService().saveUserPerm(oUser,oPerm);
-				getPlugin("messagebox").setMessage("info", "permission added");
+				getPlugin("MessageBox").setMessage("info", "permission added");
 			}
 			else{
-				getPlugin("messagebox").setMessage("warning", "permission already in user");
+				getPlugin("MessageBox").setMessage("warning", "permission already in user");
 			}
 
 			/* relocate */
@@ -283,7 +283,7 @@ $Build ID:	@@build_id@@
 
 			/* Check Permission and user */
 			if( not event.valueExists('permissionID') or not event.valueExists('user_id') ){
-				getPlugin("messagebox").setMessage("warning", "permission or user id not detected");
+				getPlugin("MessageBox").setMessage("warning", "permission or user id not detected");
 				setNextRoute("admin/users/permissions/user_id/#rc.user_id#");
 			}
 
@@ -293,7 +293,7 @@ $Build ID:	@@build_id@@
 
 			/* Remove Permission */
 			getUserService().deleteUserPerm(oUser,oPerm);
-			getPlugin("messagebox").setMessage("info", "permission removed");
+			getPlugin("MessageBox").setMessage("info", "permission removed");
 
 			/* relocate */
 			setNextRoute('admin/users/permissions/user_id/#rc.user_id#');
@@ -318,16 +318,16 @@ $Build ID:	@@build_id@@
 						//Remove it.
 						getUserService().deleteUser(oUser);
 						//set message box
-						getPlugin("messagebox").setMessage("info","User(s) removed");
+						getPlugin("MessageBox").setMessage("info","User(s) removed");
 					}
 				}
 				else{
 					/* Messagebox. */
-					getPlugin("messagebox").setMessage("warning", "No Records Selected");
+					getPlugin("MessageBox").setMessage("warning", "No Records Selected");
 				}
 			}
 			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing user. You can only remove users that do not have any internal links in the system. #e.message# #e.detail#");
+				getPlugin("MessageBox").setMessage("error", "Error removing user. You can only remove users that do not have any internal links in the system. #e.message# #e.detail#");
 			}
 
 			/* Relocate back to listing */

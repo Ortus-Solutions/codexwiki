@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Edit the namespace below.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="categoriesForm" id="categoriesForm" action="#event.buildlink(rc.xehUpdate & '/category_id/' & rc.category_id)#" method="POST">

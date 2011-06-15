@@ -91,14 +91,14 @@ $Build ID:	@@build_id@@
 			errors = oNamespace.validate();
 			/* Error Checks */
 			if( arraylen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				new(event);
 			}
 			else{
 				/* Save Namespace */
 				oNamespace.setCreatedDate(now());
 				instance.wikiService.save(oNamespace);
-				getPlugin("messagebox").setMessage("info","Namespace added successfully");
+				getPlugin("MessageBox").setMessage("info","Namespace added successfully");
 				setNextRoute(route="admin/namespace/list");
 			}
 		</cfscript>
@@ -119,7 +119,7 @@ $Build ID:	@@build_id@@
 			
 			/* Verify incoming user id */
 			if( not event.valueExists("namespaceID") ){
-				getPlugin("messagebox").setMessage("warning", "namespace id not detected");
+				getPlugin("MessageBox").setMessage("warning", "namespace id not detected");
 				setNextRoute("admin/namespace/list");
 			}
 
@@ -148,7 +148,7 @@ $Build ID:	@@build_id@@
 			/* Validate it */
 			errors = oClonedNamespace.validate();
 			if( ArrayLen(errors) ){
-				getPlugin("messagebox").setMessage(type="error",messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error",messageArray=errors);
 				edit(event);
 			}
 			else{
@@ -156,7 +156,7 @@ $Build ID:	@@build_id@@
 				oClonedNamespace.setCreatedDate(now());
 				instance.wikiService.save(oClonedNamespace);
 				/* Message of success */
-				getPlugin("messagebox").setMessage("info","Namespace updated!");
+				getPlugin("MessageBox").setMessage("info","Namespace updated!");
 				setNextRoute(route="admin/namespace/list");
 			}
 		</cfscript>
@@ -178,16 +178,16 @@ $Build ID:	@@build_id@@
 						//Remove it.
 						instance.wikiService.deleteNamespace(listGetAt(rc.namespaceID,i));
 						//set message box
-						getPlugin("messagebox").setMessage("info","Namespace(s) and all of it's associated pages removed");
+						getPlugin("MessageBox").setMessage("info","Namespace(s) and all of it's associated pages removed");
 					}
 				}
 				else{
 					/* Messagebox. */
-					getPlugin("messagebox").setMessage("warning", "No Records Selected");
+					getPlugin("MessageBox").setMessage("warning", "No Records Selected");
 				}
 			}
 			catch(Any e){
-				getPlugin("messagebox").setMessage("error", "Error removing Namespace. #e.message# #e.detail#");
+				getPlugin("MessageBox").setMessage("error", "Error removing Namespace. #e.message# #e.detail#");
 			}
 
 			/* Relocate back to listing */

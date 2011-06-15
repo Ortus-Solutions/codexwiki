@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Edit the comment below.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="commentForm" id="commentForm" action="#event.buildlink(rc.xehUpdate & '/commentID/' & rc.commentID)#">

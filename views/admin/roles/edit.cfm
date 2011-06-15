@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Edit the role below.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="roleForm" id="roleForm" action="#event.buildlink(rc.xehUpdate & '/roleID/' & rc.roleID)#">

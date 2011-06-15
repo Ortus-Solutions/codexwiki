@@ -30,7 +30,7 @@ $Build ID:	@@build_id@@
 </h1>
 
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <div id="searchResults">
 #event.getValue("searchResults","")#

@@ -36,7 +36,7 @@ function prepareCommentSubmit(){
 <p>Please use the form below to enter a new comment into the system</p>
 
 <!--- Messagebox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <form name="addNewCommentForm" id="addNewCommentForm" action="#event.buildLink(rc.xehSave)#" method="POST">
 	

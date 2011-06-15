@@ -64,7 +64,7 @@ $Build ID:	@@build_id@@
 			getConfigService().saveCustomHTML(oCustomHTML);
 			
 			/* mb */
-			getPlugin("messagebox").setMessage("info", "Custom HTML Saved!");
+			getPlugin("MessageBox").setMessage("info", "Custom HTML Saved!");
 			
 			/* Re Route */
 			setNextRoute('admin/config/customhtml');
@@ -121,7 +121,7 @@ $Build ID:	@@build_id@@
 			/* Re-Cache */
 			getColdboxOCM().set("CodexOptions",newOptions,0);
 			/* Mb */
-			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
+			getPlugin("MessageBox").setMessage(type="info", message="Options Saved and Re-Cached");
 			/* Re-Route */
 			setNextRoute(route="admin/config/options");
 		</cfscript>
@@ -175,7 +175,7 @@ $Build ID:	@@build_id@@
 			/* Re-Cache */
 			getColdboxOCM().set("CodexOptions",newOptions,0);
 			/* Mb */
-			getPlugin("messagebox").setMessage(type="info", message="Options Saved and Re-Cached");
+			getPlugin("MessageBox").setMessage(type="info", message="Options Saved and Re-Cached");
 			/* Re-Route */
 			setNextRoute(route="admin/config/comments");
 		</cfscript>

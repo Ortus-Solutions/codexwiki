@@ -50,7 +50,7 @@ $(document).ready(function() {
 </h1>
 
 <!--- MessageBox --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Form --->
 <form action="#event.buildLink(rc.xehPasswordCheck)#" method="post" name="passwordForm" id="passwordForm">

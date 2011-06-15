@@ -59,7 +59,7 @@ $Build ID:	@@build_id@@
 <p>Edit the namespace below.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="namespaceForm" id="namespaceForm" action="#event.buildlink(rc.xehUpdate & '/namespaceID/' & rc.namespaceID)#">

@@ -58,7 +58,7 @@ $Build ID:	@@build_id@@
 <p>From here you can manage all the wiki roles.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Results Form --->
 <form name="roleForm" id="roleForm" action="#event.buildLink(rc.xehDelete)#" method="post">

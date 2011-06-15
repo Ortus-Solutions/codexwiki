@@ -134,7 +134,7 @@ $Build ID:	@@build_id@@
 			getLookupService().cleanDictionary();
 			
 			/* Messagebox. */
-			getPlugin("messagebox").setMessage("info", "Metadata Dictionary Cleaned.");
+			getPlugin("MessageBox").setMessage("info", "Metadata Dictionary Cleaned.");
 					
 			/* Relocate back to listing */
 			setNextRoute(route="#instance.viewPackage#lookups/display");
@@ -157,11 +157,11 @@ $Build ID:	@@build_id@@
 				getLookupService().delete(rc.lookupclass,listgetAt(rc.lookupid,i));
 			}
 			/* Messagebox. */
-			getPlugin("messagebox").setMessage("info", "Record(s) Deleted Successfully.");
+			getPlugin("MessageBox").setMessage("info", "Record(s) Deleted Successfully.");
 		}
 		else{
 			/* Messagebox. */
-			getPlugin("messagebox").setMessage("warning", "No Records Selected");
+			getPlugin("MessageBox").setMessage("warning", "No Records Selected");
 		}
 				
 		/* Relocate back to listing */
@@ -229,7 +229,7 @@ $Build ID:	@@build_id@@
 			errors = oLookup.validate();
 			if( ArrayLen(errors) ){
 				/* MB for error */
-				getPlugin("messagebox").setMessage(type="error", messageArray=errors);
+				getPlugin("MessageBox").setMessage(type="error", messageArray=errors);
 				/* Show Creation Form again to fix errors */
 				dspCreate(event);
 				/* Finalize this event */

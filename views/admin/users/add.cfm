@@ -60,7 +60,7 @@ $Build ID:	@@build_id@@
 <p>Please fill out all the information below to create a new user. Please note that all passwords are encrypted.</p>
 
 <!--- Render Messagebox. --->
-#getPlugin("messagebox").renderit()#
+#getPlugin("MessageBox").renderit()#
 
 <!--- Table Manager Jumper --->
 <form name="userForm" id="userForm" action="#event.buildLink(rc.xehUserCreate)#" method="post">
