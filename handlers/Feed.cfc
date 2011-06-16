@@ -1,8 +1,7 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright 2008 by 
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
@@ -16,35 +15,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-$Build Date: @@build_date@@
-$Build ID:	@@build_id@@
-********************************************************************************
------------------------------------------------------------------------>
-<cfcomponent hint="handler for wiki rss feeds" extends="baseHandler" autowire="true" output="false">
+* @author Luis Majano
+**/
+component extends="BaseHandler"{
 
-	<!--- Dependencies --->
-	<cfproperty name="rssManager" inject="model" scope="instance" />
+	// Dependencies
+	property name="rssManager" inject;
+
+/************************************** PUBLIC *********************************************/
 	
-<!------------------------------------------- PUBLIC ------------------------------------------->
+	function show(event){
+		var rc = arguments.event.getCollection();
 
-	<cffunction name="show" access="public" returntype="void" output="false">
-		<cfargument name="event" type="coldbox.system.web.context.RequestContext">
-		<cfscript>
-			var rc = arguments.event.getCollection();
+		var data = rssManager.getRSS(rc.source, rc.feed, rc);
+		
+		// Render RSS
+		event.renderData(data=data,contentType="text/xml;UTF-8");
+	}
 	
-			rc.rss = getRssManager().getRSS(rc.source, rc.feed, rc);
-			
-			/* Just render, no need for layout or view. */
-			event.renderData(data=rc.rss,contentType="text/xml;UTF-8");
-		</cfscript>
-	</cffunction>
-
-<!------------------------------------------- PACKAGE ------------------------------------------->
-
-<!------------------------------------------- PRIVATE ------------------------------------------->
-
-	<cffunction name="getRssManager" access="private" returntype="codex.model.rss.RSSManager" output="false">
-		<cfreturn instance.rssManager />
-	</cffunction>
-
-</cfcomponent>
+}
