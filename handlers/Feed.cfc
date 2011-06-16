@@ -24,9 +24,7 @@ component extends="BaseHandler"{
 
 /************************************** PUBLIC *********************************************/
 	
-	function show(event){
-		var rc = arguments.event.getCollection();
-
+	function show(event,rc,prc){
 		var data = rssManager.getRSS(rc.source, rc.feed, rc);
 		
 		// Render RSS

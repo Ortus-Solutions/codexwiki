@@ -24,9 +24,7 @@ component extends="BaseHandler" accessors="true"{
 
 /************************************** PUBLIC *********************************************/
 	
-	function viewer(event){
-		var rc = event.getCollection();
-		
+	function viewer(event,rc,prc){
 		event.paramValue("namespace","");
 		
 		// CSS & JS
@@ -49,8 +47,7 @@ component extends="BaseHandler" accessors="true"{
 		event.setView(name='space/viewer',nolayout=event.getValue("nolayout",false));
 	}
 	
-	function directory(event){
-		var rc 			= event.getCollection();
+	function directory(event,rc,prc){
 		var ids 		= "";
 		var qDefault 	= 0;
 

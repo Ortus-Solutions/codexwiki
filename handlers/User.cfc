@@ -41,17 +41,14 @@ component extends="BaseHandler" accessors="true"  singleton{
 /************************************** PUBLIC EVENTS *********************************************/	
 	
 	
-	function login(event){
-		var rc = event.getCollection();
-		
+	function login(event,rc,prc){
 		// js append list
 		rc.jsAppendList = "formvalidation";
 		
 		event.setView("user/login");
 	}
 	
-	function doLogin(event){
-		var rc 			= event.getCollection();
+	function doLogin(event,rc,prc){
 		var refRoute 	= event.getValue("_securedURL","");
 
 		// Validate Login 
@@ -80,18 +77,18 @@ component extends="BaseHandler" accessors="true"  singleton{
 		}
 	}
 	
-	function logout(event){
+	function logout(event,rc,prc){
 		getSecurityService().cleanUserSession();		setNextEvent(event=getSetting("showKey"));	}
-		function reminder(event){
-		var rc = event.getCollection();				// Exit Handlers		rc.xehDoReminder = "user/doPasswordReminder";		// js
+		function reminder(event,rc,prc){
+		// Exit Handlers		rc.xehDoReminder = "user/doPasswordReminder";		// js
 		rc.jsAppendList = "formvalidation";
 				event.setView("user/reminder");	}	
-	function doPasswordReminder(event){		var rc 		= event.getCollection();		var errors 	= "";		var oUser 	= "";				// Param email		event.paramValue("email","");				// Validate email		if( not trim(rc.email).length() ){			errors = errors & "Please enter an email address<br />";			}		else{
+	function doPasswordReminder(event,rc,prc){		var errors 	= "";		var oUser 	= "";				// Param email		event.paramValue("email","");				// Validate email		if( not trim(rc.email).length() ){			errors = errors & "Please enter an email address<br />";			}		else{
 			// Try To get User			oUser = userService.getUserByEmail( rc.email );			if( NOT oUser.getisPersisted() ){				errors = errors & "The email address you entered is not in our system. Please try again.<br />";			}
 		}					
 		// Check if Errors		if( NOT errors.length() ){			// Send Reminder			getSecurityService().sendPasswordReminder( oUser );			getPlugin("MessageBox").info("Password reminder sent!");		}		else{			getPlugin("MessageBox").error(messageArray=errors);		}		// Re Route		setNextEvent("user/reminder");	}
 	
-	function registration(event){
+	function registration(event,rc,prc){
 		// Exit Handler
 		rc.xehDoRegistration = "user/doRegistration";
 		rc.xehValidateUsername = "user/usernameCheck";
@@ -101,8 +98,7 @@ component extends="BaseHandler" accessors="true"  singleton{
 		event.setView('user/registration');
 	}
 	
-	function doRegistration(event){
-		var rc 				= event.getCollection();
+	function doRegistration(event,rc,prc){
 		var oUser 			= "";
 		var errors 			= ArrayNew(1);
 		
@@ -153,8 +149,7 @@ component extends="BaseHandler" accessors="true"  singleton{
 		}
 	}
 	
-	function usernameCheck(event){
-		var rc 		= event.getCollection();
+	function usernameCheck(event,rc,prc){
 		var valid 	= false;
 		
 		event.paramValue("username","");
@@ -169,9 +164,7 @@ component extends="BaseHandler" accessors="true"  singleton{
 		event.renderdata(data=valid);
 	}
 	
-	function validateRegistration(event){
-		var rc = event.getCollection();
-		
+	function validateRegistration(event,rc,prc){
 		// create new user object according to incoming confirmation number
 		rc.oUser = userService.getUser( event.getValue('confirm','') );
 		
@@ -186,9 +179,8 @@ component extends="BaseHandler" accessors="true"  singleton{
 		event.setView("user/validated");			
 	}
 	
-	function registrationConfirmation(event){
-		var rc = event.getCollection();
-	    event.setView('user/confirmation');
+	function registrationConfirmation(event,rc,prc){
+		event.setView('user/confirmation');
 	}
 	
 }

@@ -28,7 +28,7 @@ component extends="BaseHandler" accessors="true" singleton{
 
 /************************************** PUBLIC *********************************************/
 
-	function onAppInit(event){
+	function onAppInit(event,rc,prc){
 		// Cache Wiki Options at startup
 		getColdboxOCM().set("CodexOptions", configService.getOptions() , 0);
 		
@@ -48,9 +48,7 @@ component extends="BaseHandler" accessors="true" singleton{
 		}
 	}
 
-	function onRequestStart(event){
-		var rc = event.getCollection();
-		
+	function onRequestStart(event,rc,prc){
 		// Setup the global exit handlers For the admin
 		rc.xehAdmin = "admin/main/home";
 		// TODO: move this to admin module once created
@@ -108,14 +106,14 @@ component extends="BaseHandler" accessors="true" singleton{
 		// Get the wiki's Options
 		rc.CodexOptions = getColdboxOCM().get('CodexOptions');
 	}	
-	function onMissingTemplate(event){
+	function onMissingTemplate(event,rc,prc){
 		// If we get here then no resource was hit and we DO have a missing template
 		notFound(arguments.event);
 	}
 	
-	function onRequestEnd(event){}
+	function onRequestEnd(event,rc,prc){}
 	
-	function notFound(event){
+	function notFound(event,rc,prc){
 		event.setHTTPHeader(statusCode=404,statusText="PageNotFound")
 			.setView("main/notFound");	
 	}
