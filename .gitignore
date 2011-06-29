@@ -7,3 +7,4 @@ WEB-INF
 .project
 _modules/*
 logs/*
+dist/*
