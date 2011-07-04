@@ -14,10 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and 
 limitations under the License.
-********************************************************************************
-* @author Luis Majano
-* @hint This is our main wiki handler
-**/
+*********************************************************************************/
 component extends="BaseHandler" accessors="true" singleton{
 
 	// Dependencies
@@ -28,11 +25,13 @@ component extends="BaseHandler" accessors="true" singleton{
 
 /************************************** PUBLIC *********************************************/
 
+	/**
+	* Application start handler
+	*/
 	function onAppInit(event,rc,prc){
 		// Cache Wiki Options at startup
-		getColdboxOCM().set("CodexOptions", configService.getOptions() , 0);
+		getColdboxOCM().set("CodexOptions", configService.getOptions(), 0);
 		
-		// TODO: Why these checks?
 		// Check ShowKey
 		if( NOT len(showKey) OR showKey eq "page"){
 			$throw(message="Invalid Show Key Detected",
@@ -48,6 +47,9 @@ component extends="BaseHandler" accessors="true" singleton{
 		}
 	}
 
+	/**
+	* Request start procedures
+	*/
 	function onRequestStart(event,rc,prc){
 		// Setup the global exit handlers For the admin
 		rc.xehAdmin = "admin/main/home";
@@ -99,20 +101,27 @@ component extends="BaseHandler" accessors="true" singleton{
 
 		// Get a user from session
 		rc.oUser = securityService.getUserSession();
-		
 		// Get the wiki's custom HTML
 		rc.oCustomHTML = configService.getCustomHTML();
-		
 		// Get the wiki's Options
-		rc.CodexOptions = getColdboxOCM().get('CodexOptions');
+		rc.codexOptions = getColdboxOCM().get('CodexOptions');
 	}	
+	/**
+	* onMissingTemplate driver
+	*/
 	function onMissingTemplate(event,rc,prc){
 		// If we get here then no resource was hit and we DO have a missing template
 		notFound(arguments.event);
 	}
 	
+	/**
+	* Request end procedures
+	*/
 	function onRequestEnd(event,rc,prc){}
 	
+	/**
+	* page not found procedures
+	*/
 	function notFound(event,rc,prc){
 		event.setHTTPHeader(statusCode=404,statusText="PageNotFound")
 			.setView("main/notFound");	

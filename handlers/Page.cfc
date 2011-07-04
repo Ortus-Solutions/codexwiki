@@ -1,549 +1,512 @@
-<!-----------------------------------------------------------------------
+/**
 ********************************************************************************
-Copyright 2008 by
-Luis Majano (Ortus Solutions, Corp) and Mark Mandel (Compound Theory)
-www.transfer-orm.org |  www.coldboxframework.com
+* Copyright Since 2011 CodexPlatform
+* www.codexplatform.com | www.coldbox.org | www.ortussolutions.com
 ********************************************************************************
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); 
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+    		
+	http://www.apache.org/licenses/LICENSE-2.0 
 
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
 limitations under the License.
-********************************************************************************
-$Build Date: @@build_date@@
-$Build ID:	@@build_id@@
-********************************************************************************
------------------------------------------------------------------------>
-<cfcomponent extends="baseHandler"
-			 output="false"
-			 hint="This is our main page handler"
-			 autowire="true"
-			 cache="true" cacheTimeout="0">
+*********************************************************************************/
+component extends="BaseHandler" singleton{
 
-	<!--- dependencies --->
-	<cfproperty name="WikiService" 		inject="model" scope="instance" />
-	<cfproperty name="CommentsService"	inject="model" scope="instance" />
-	<cfproperty name="SearchEngine" 	inject="model" scope="instance" />
-	<cfproperty name="SecurityService" 	inject="model" scope="instance" />
+	// Dependencies
+	property name="WikiService" 	inject;
+	property name="CommentsService"	inject;
+	property name="SearchEngine" 	inject;
+	property name="SecurityService" inject;
+	property name="showKey"			inject="coldbox:setting:showKey";
 
-	<!--- IMPLICIT PROPERTIES --->
-	<cfset this.prehandler_only = "show">
+	// Implicit Properties
+	this.prehandler_only = "show";
 
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
+/************************************** ONDICOMPLETE *********************************************/
 
-	<cffunction name="init" access="public" returntype="page" output="false">
-		<cfscript>
-			
-			// Show Key
-			instance.showKey = getSetting('showKey') & "/";
+	function onDIComplete(){
+		showKey &= "/";
+	}
 
-			return this;
-		</cfscript>
-	</cffunction>
-
-<!------------------------------------------- IMPLICIT ------------------------------------------>
-
-	<!--- preHandler --->
-	<cffunction name="preHandler" access="public" returntype="void" output="false" hint="handler interceptor">
-		<cfargument name="Event" type="any" required="yes">
-		<cfscript>
-			var rc = event.getCollection();
-			
-			//default page comes from the settings
-			event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
-			// Get Content For Page To Try To Display
-			rc.content = getWikiService().getContent(pageName=rc.page);
-			// Page Security Handling
-			if( rc.content.getPage().isProtected() AND NOT instance.securityService.isPageViewable(rc.content.getPage()) ){
-				event.overrideEvent('page.protected');
-			}
-			// Printable Doctype Check
-			isPrintFormat(arguments.event);
-		</cfscript>
-	</cffunction>
-
-<!------------------------------------------- PUBLIC ------------------------------------------>
+/************************************** IMPLICIT EVENTS *********************************************/
 	
-	<cffunction name="show" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="any" required="yes">
-		<cfscript>
-			var rc = arguments.event.getCollection();
-
-			// Exit Handlers
-			rc.onEditWiki="page/edit";
-			rc.onCreateWiki="page/new";
-			rc.onDeleteWiki="page/delete";
-			rc.onShowHistory="page/showHistory";
-			rc.xehComments = "comments.add";
-			rc.xehCommentRemove = "comments.delete";
-			rc.xehCommentStatus = "comments.approve";
-
-			// Appends CSS & JS
-			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm,formvalidation";
-			
-			// Decode Page
-			rc.urlPage = URLEncodedFormat(rc.page);
-			
-			// Get Comments if activated
-			if( rc.codexoptions.comments_enabled ){
-				rc.qComments = instance.CommentsService.getPageComments(pageID=rc.content.getPage().getPageID(),moderation=rc.oUser.checkPermission("COMMENT_MODERATION"));
-			}
-			
-			// Change view if persisted
-			if(rc.content.getIsPersisted()){
-				// Normal Display
-				arguments.event.setView("wiki/show");
-			}
-			else{
-				// Just creation page by default
-				rc.onCreateWiki="page/create";
-				arguments.event.setView("wiki/create");
-			}
-		</cfscript>
-	</cffunction>
+	function preHandler(event,action,eventArguments){
+		var rc = event.getCollection();
+		
+		//default page comes from the settings
+		event.paramValue("page", rc.CodexOptions.wiki_defaultpage );
+		// Get Content For Page To Try To Display
+		rc.content = wikiService.getContent(pageName=rc.page);
+		// Page Security Handling
+		if( rc.content.getPage().isProtected() AND NOT securityService.isPageViewable(rc.content.getPage()) ){
+			event.overrideEvent('page.protected');
+		}
+		// Printable Doctype Check
+		isPrintFormat(arguments.event,rc);
+	}
 	
-	<cffunction name="protected" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="any" required="yes">
-		<cfscript>	
-			var rc = event.getCollection();
-			// JS
-			rc.jsAppendList = "formvalidation";
-			// Exit Handler
-			rc.xehPasswordCheck = "page/passwordCheck";
-			// View
-			arguments.event.setView("wiki/showProtected");
-		</cfscript>
-	</cffunction>
+/************************************** PUBLIC EVENTS *********************************************/
 	
-	<cffunction name="passwordCheck" access="public" returntype="void" output="false">
-		<cfargument name="Event" type="any" required="yes">
-		<cfscript>	
-			var rc = event.getCollection();
-			// Get The Page submitted
-			var page = getWikiService().getPage(pageID=event.getValue("pageID",""));
-			// Check page exists 
-			if( page.getIsPersisted() ){
-				// Check if password is valid?
-				if( instance.securityService.authorizePage(page,event.getTrimValue("PagePassword","")) ){
-					setNextRoute(route=instance.showKey & page.getName());
-				}
-				else{
-					getPlugin("MessageBox").setMessage(type="warning", message="The password you entered is incorrect.");
-					setNextRoute(route=instance.showKey & page.getName());				
-				}
-			}
-			else{
-				// Message and take home
-				getPlugin("MessageBox").setMessage(type="error", message="Page not found in our system");
-				setNextEvent(instance.showKey);
-			}
-			
-		</cfscript>
-	</cffunction>
+	/**
+	* Show wiki pages
+	*/
+	function show(event,rc,prc){
+
+		// Exit Handlers
+		rc.onEditWiki		="page/edit";
+		rc.onCreateWiki		="page/new";
+		rc.onDeleteWiki		="page/delete";
+		rc.onShowHistory	="page/showHistory";
+		rc.xehComments 		= "comments.add";
+		rc.xehCommentRemove = "comments.delete";
+		rc.xehCommentStatus = "comments.approve";
+
+		// Custom CSS & JS
+		rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,confirm,formvalidation";
+		
+		// Decode Page
+		rc.urlPage = URLEncodedFormat(rc.page);
+		
+		// Get Comments if activated
+		if( rc.codexoptions.comments_enabled ){
+			rc.qComments = commentsService.getPageComments(pageID=rc.content.getPage().getPageID(),moderation=rc.oUser.checkPermission("COMMENT_MODERATION"));
+		}
+		
+		// Change view if persisted
+		if( rc.content.getIsPersisted() ){
+			// Normal Display
+			arguments.event.setView("wiki/show");
+		}
+		else{
+			// Just creation page by default
+			rc.onCreateWiki="page/create";
+			arguments.event.setView("wiki/create");
+		}
+	}
 	
-	<cffunction name="new" access="public" returntype="void" output="false" hint="New Page">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-	    	var rc = event.getCollection();
-			
-			rc.xehCreate = "page.create";
-			
-			if( NOT rc.oUser.checkPermission("WIKI_CREATE") ){
-				getPlugin("MessageBox").setMessage(type="warning", message="You do not have permission to create new pages");
-				setNextRoute(route=instance.showKey);
-				return;
-			}
-			
-			rc.qNameSpaces = getWikiService().getNamespaces();
-			
-			event.setView("wiki/newpage");
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="create" access="public" returntype="void" output="false" hint="Show the Create a new page">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			/* Dispatch manage */
-			manage(arguments.event);
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="doCreate" access="public" returntype="void" output="false" hint="Create a new page">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			/* Dispatch manage */
-			process(arguments.event);
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="edit" access="public" returntype="void" output="false" hint="Show the edit page">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			/* Dispatch manage */
-			manage(arguments.event);
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="doEdit" access="public" returntype="void" output="false" hint="Update a page">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			/* Dispatch manage */
-			process(arguments.event);
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="renderContent" access="public" returntype="void" output="false" hint="Render Content">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			var content = getWikiService().getContent(arguments.event.getValue('contentid',0));
-			/* Render Data */
-			event.renderData(type='PLAIN', data=content.render(),contentType='text/html');
-		</cfscript>
-	</cffunction>
+	/**
+	* Protected pages
+	*/
+	function protected(event,rc,prc){	
+		// JS
+		rc.jsAppendList = "formvalidation";
+		// Exit Handler
+		rc.xehPasswordCheck = "page/passwordCheck";
+		// View
+		arguments.event.setView("wiki/protected");
+	}
 	
-	<cffunction name="renderPage" access="public" returntype="void" output="false" hint="Render a Page's Content">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			var content = getWikiService().getContent(pageName=event.getValue("page",""));
-			/* Render Data */
-			event.renderData(type='PLAIN', data=content.render(),contentTYpe='text/html');
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="renderPreview" access="public" returntype="void" output="false" hint="Render Content Previews">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-		    var rc = event.getCollection();
-			var oContent = getWikiService().getContent();
-			var tmpContent = 0;
-			
-			if( event.valueExists("pagename") )
-			{
-				/* Get and set it for preview rendering. */
-				oContent.setPage(getWikiService().getPage(pageName=rc.pageName));
-				/* Put User also */
-				tmpContent = getWikiService().getContent(pageName=rc.pageName);
-				
-				/* may not be persisted, so do a check for a user, if it exists */
-				if(tmpContent.hasUser())
-				{
-					oContent.setUser(tmpContent.getUser());
-				}
+	/**
+	* Page Password checks
+	*/
+	function passwordCheck(event,rc,prc){
+		// Get The Page submitted
+		var page = wikiService.getPage(pageID=event.getValue("pageID",""));
+		
+		// Check page exists 
+		if( page.getIsPersisted() ){
+			// Check if password is valid?
+			if( NOT securityService.authorizePage(page, event.getTrimValue("PagePassword","")) ){
+				// Invalid Message
+				getPlugin("MessageBox").setMessage(type="warning", message="The password you entered is incorrect.");				
 			}
 			
-			/* Get Content */
-			oContent.populate(arguments.event.getCollection());
-						
-			/* Render Data */
-			event.renderData(data=oContent.render());
-		</cfscript>
-	</cffunction>
+			// Take to Page
+			setNextEvent(showKey & page.getName());
+		}
+		else{
+			// Message and take home
+			getPlugin("MessageBox").setMessage(type="error", message="Page not found in our system");
+			setNextEvent(showKey);
+		}			
+	}
+	
+	/**
+	* New pages
+	*/
+	function new(event,rc,prc){
+    	// exit handlers
+    	rc.xehCreate = "page.create";
+		
+		// check if I can create pages
+		if( NOT rc.oUser.checkPermission("WIKI_CREATE") ){
+			getPlugin("MessageBox").setMessage(type="warning", message="You do not have permission to create new pages");
+			setNextEvent(showKey);
+			return;
+		}
+		
+		// Get namespaces
+		rc.qNameSpaces = wikiService.getNamespaces();
+		// new page
+		event.setView("wiki/new");
+	}
 
-	<cffunction name="showHistory" hint="shows a page's history" access="public" returntype="void" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-			var pageName = arguments.event.getValue("page");
+	/**
+	* Page Creation Editor
+	*/
+	function create(event,rc,prc){
+		// Dispatch manage
+		manage(arguments.event,arguments.rc,arguments.prc);
+	}
+	
+	/**
+	* Create a new page
+	*/
+	function doCreate(event,rc,prc){
+		// Dispatch manage
+		process(arguments.event,arguments.rc,arguments.prc);
+	}
 
-			/* Get the Page */
-			rc.page = getWikiService().getPage(pageName=pageName);
-			/* Get the History */
-			rc.History = getWikiService().getPageHistory(pageName);
+	/**
+	* Edit a page
+	*/
+	function edit(event,rc,prc){
+		// Dispatch manage
+		manage(arguments.event,arguments.rc,arguments.prc);
+	}
 
-			/* CSS & JS */
-			rc.cssAppendList = "page.showHistory";
-			rc.jsAppendList = "jquery.simplemodal,confirm";
+	/**
+	* Save an edited page
+	*/
+	function doEdit(event,rc,prc){
+		// Dispatch manage
+		process(arguments.event,arguments.rc,arguments.prc);
+	}
 
-			/* Exit Handlers */
-			rc.onReplaceActive ="page/replaceActive";
-			rc.onDelete ="page/deleteContent";
-			rc.onPreview = "page/renderContent";
-			rc.onDiff = "page/diff";
+	/**
+	* Render Content on history or other previews by content ID
+	*/
+	function renderContent(event,rc,prc){
+		var content = wikiService.getContent( arguments.event.getValue('contentid',0) );
+		// Render out content
+		event.renderData(type='HTML',data=content.render());
+	}
+	
+	/**
+	* Render Content on history or other previews by Page Name
+	*/
+	function renderPage(event,rc,prc){
+		var content = wikiService.getContent(pageName=event.getValue("page",""));
+		// Render out content
+		event.renderData(type='HTML',data=content.render());
+	}
+	
+	/**
+	* Render wiki markup previews
+	*/
+	function renderPreview(event,rc,prc){
+	    // get new cotent object
+	    var oContent 	= wikiService.getContent();
+		var tmpContent 	= 0;
+		
+		if( event.valueExists("pagename") )
+		{
+			// Get and set it for preview rendering.
+			oContent.setPage( wikiService.getPage(pageName=rc.pageName) );
+			// Put User also
+			tmpContent = wikiService.getContent(pageName=rc.pageName);
+			// may not be persisted, so do a check for a user, if it exists
+			if( tmpContent.hasUser() ){
+				oContent.setUser( tmpContent.getUser() );
+			}
+		}
+		
+		// Get Content from incoming form
+		oContent.populate( rc );
+		// Render the content
+		event.renderData(data=oContent.render(),type="HTML");
+	}
+
+	/**
+	* Show page history
+	*/
+	function showHistory(event,rc,prc){
+		var pageName = arguments.event.getValue("page");
+
+		// Get the Page
+		rc.page = wikiService.getPage(pageName=pageName);
+		// Get the History
+		rc.history = wikiService.getPageHistory( pageName );
+
+		// custom css js
+		rc.cssAppendList = "page.showHistory";
+		rc.jsAppendList = "jquery.simplemodal,confirm";
+
+		// Exit Handlers
+		rc.onReplaceActive 	= "page/replaceActive";
+		rc.onDelete 		= "page/deleteContent";
+		rc.onPreview 		= "page/renderContent";
+		rc.onDiff 			= "page/diff";
+
+		// view
+		arguments.event.setView("wiki/showHistory");
+	}
+
+	/**
+	* History Diffs
+	*/
+	function diff(event,rc,prc){
+	   	var pageName = arguments.event.getValue("page");
+		var oDiffer = getMyPlugin("Diff");
+
+		/* Validate Versions */
+		if( not event.valueExists("version") OR not event.valueExists("old_version") ){
+			getPlugin("MessageBox").setMessage(type="warning", message="No version information passed in.");
+			setNextEvent('page/showHistory/#rc.page#');
+		}
+
+		/* CSS & JS */
+		rc.cssAppendList = "page.showHistory";
+		rc.jsAppendList = "jquery.simplemodal,confirm";
+
+		/* Exit Handler */
+		rc.onShowHistory = "page/showHistory";
+
+		/* Get the Page content */
+		rc.page = wikiService.getPage(pageName=pageName);
+		rc.CurrentContent = wikiService.getContentByPageVersion(pageName=pagename,version=rc.version);
+		rc.oldContent = wikiService.getContentByPageVersion(pageName=pagename,version=rc.old_version);
+
+		/* Diff Setup */
+		rc.diff = oDiffer.DiffArrays(listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
+		rc.parallel = oDiffer.parallelize(rc.diff,listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
+		
+		/* Diff CSS */
+		rc.diffcss = structnew();
+		rc.diffcss["+"] = "ins";
+		rc.diffcss["-"] = "del";
+		rc.diffcss["!"] = "upd";
+		rc.diffcss[""] = "";
+
+		/* View */
+		event.setView("wiki/showDiff");
+	}
+
+	/**
+	* Delete page content
+	*/
+	function deleteContent(event,rc,prc){
+		var content = wikiService.getContent(arguments.event.getValue("contentid"));
+		var page 	= content.getPage();
+
+		wikiService.deleteContent(content);
+
+		setNextEvent("page/showHistory/" & page.getName());
+	}
+
+	/**
+	* Replace the active page
+	*/
+	function replaceActive(event,rc,prc){
+		var content = wikiService.getContent(arguments.event.getValue("contentid"));
+		var page = content.getPage();
+
+		content.replaceActive();
+
+		setNextEvent("page/showHistory/" & page.getName());
+	}
+
+	/**
+	* Delete the entire page
+	*/
+	function delete(event,rc,prc){
+		//s'not really a content id, it's a page id
+		var pageid = arguments.event.getValue("contentid");
+		var page = wikiService.getPage(pageid);
+
+		wikiService.deletePage(pageid);
+
+		setNextEvent(event=showKey & page.getName(), persist="page");
+	}
+
+	/**
+	* search content
+	*/
+	function search(event,rc,prc){
+		var search_query = arguments.event.getValue("search_query", "");
+		var result = searchEngine.search(search_query);
+
+		/* Messagebox when search is not available */
+		if ( StructKeyExists(result, "error") ){
+			getPlugin("MessageBox").setMessage("error", result.error );
+		}
+		else{
+			/* Render Results */
+			rc.searchResults = searchEngine.renderSearch(result,arguments.event,getController());
+		}
+		/* Set View to render */
+		arguments.event.setView("wiki/search");
+	}
+
+	/**
+	* Space page directory
+	*/
+	function directory(event,rc,prc){
+		var ids = "";
+		var qDefault = 0;
+
+		/* Required */
+		rc.jsAppendList = 'jquery.uitablefilter';
+		
+		/* Get All Pages */
+		rc.qPages = wikiService.getPages();
+		/* Get All Namespaces */
+		rc.qNameSpaces = wikiService.getNamespaces();
+		/* Filter the default Namespace */
+		qDefault = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="isDefault",value=1,cfsqltype="cf_sql_integer");
+
+		/* Filter */
+		ids = event.getValue("namespaces",qDefault.namespace_id);
+		if( right(ids,1) eq "," ){
+			ids = left(ids, len(ids)-1 );
+		}
+		rc.qPages = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="namespace_id",value=ids,list=true);
+
+		/* View */
+		if( event.valueExists('pagesTable') ){
 
 			/* View */
-			arguments.event.setView("wiki/showHistory");
-		</cfscript>
-	</cffunction>
+			event.setView('wiki/directoryPagesTable',true);
+		}
+		else{
+			event.setView('wiki/directory');
+		}
+	}
 
-	<!--- diff --->
-	<cffunction name="Diff" access="public" returntype="void" output="false" hint="Diff pages">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-		    var rc = event.getCollection();
-			var pageName = arguments.event.getValue("page");
-			var oDiffer = getMyPlugin("Diff");
+/************************************** PRIVATE *********************************************/
 
-			/* Validate Versions */
-			if( not event.valueExists("version") OR not event.valueExists("old_version") ){
-				getPlugin("MessageBox").setMessage(type="warning", message="No version information passed in.");
-				setNextRoute('page/showHistory/#rc.page#');
+	/**
+	* process saving
+	*/
+	private function process(event,rc,prc){
+		var messages = 0;
+		var oContent = 0;
+		var activeContent = 0;
+		var x =1;
+		var thisCategory = 0;
+		
+		/* Param Values */
+		event.paramValue("isReadOnly",false);
+		event.paramValue("RenamePageName","");
+		
+		/* Get the page we are working with */
+		rc.page = wikiService.getPage(pageName=rc.pageName);
+		/* Get new Content object */
+		oContent = rc.page.getNewContentVersion(rc);
+		/* Get the currently active Content if any*/
+		oActiveContent = wikiService.getContent(pageName=rc.pageName);
+		
+		/* Validate Content */
+		messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
+		if(ArrayLen(messages)){
+			/* MB & content set */
+			getPlugin("MessageBox").setMessage(type="warning", messageArray=messages);
+			rc.content = oContent;
+			/* Save Version for non dirty edits */
+			rc.content.setVersion(oActiveContent.getVersion());
+			/* ReRoute with persistence */
+			setNextEvent(event="page/edit/" & rc.pageName, persist="content");
+		}
+		
+		
+		/* Check for Version Modifications just before saving */
+		if( oActiveContent.getVersion() neq rc.pageVersion ){
+			getPlugin("MessageBox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
+			/* ReRoute */
+			setNextEvent(showKey & rc.pageName);
+		}
+		
+		/* Populate content with Categories from select */
+		if( len(event.getTrimValue("contentCategories","")) ){
+			oContent.clearCategory();
+			for(x=1; x lte listLen(rc.contentCategories); x=x+1){
+				thisCategory = wikiService.getCategory(categoryID=listGetAt(rc.contentCategories,x));
+				oContent.addCategory(thisCategory);
 			}
+		}
+		
+		/* Save New Content to page */
+		rc.page.addContentVersion(oContent);
+		
+		/* Check for Page Renaming */
+		if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
+			rc.page.setName(rc.RenamePageName);
+			rc.pageName = rc.RenamePageName;
+		}
+		
+		/* Set Page Extra Properties */
+		rc.page.setTitle(event.getTrimValue("title"));
+		rc.page.setPassword(event.getTrimValue("PagePassword"));
+		rc.page.setDescription(event.getTrimValue("Description"));
+		rc.page.setKeywords(event.getTrimValue("Keywords"));
+		rc.page.setAllowComments(event.getValue("allowComments","false"));
+		
+		/* Save this Page */
+		wikiService.savePage(rc.page);
+		
+		/* Re Route */
+		setNextEvent(event=showKey & rc.pageName,persist="page");
+	}
 
-			/* CSS & JS */
-			rc.cssAppendList = "page.showHistory";
-			rc.jsAppendList = "jquery.simplemodal,confirm";
+	/**
+	* Manage create/editor
+	*/
+	private function manage(event,rc,prc){
+		var content = 0;
 
-			/* Exit Handler */
-			rc.onShowHistory = "page/showHistory";
+		/* Custom JS */
+		rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
+		/* Markitup Editor */
+		rc.cssFullAppendList = "includes/scripts/markitup/skins/markitup/style,includes/scripts/markitup/sets/wiki/style";
 
-			/* Get the Page content */
-			rc.page = getWikiService().getPage(pageName=pageName);
-			rc.CurrentContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.version);
-			rc.oldContent = getWikiService().getContentByPageVersion(pageName=pagename,version=rc.old_version);
+		/* if no content, get for management */
+		if( not arguments.event.valueExists("content") ){
+			rc.content = wikiService.getContent(pageName=rc.page);
+		}
 
-			/* Diff Setup */
-			rc.diff = oDiffer.DiffArrays(listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
-			rc.parallel = oDiffer.parallelize(rc.diff,listToArray(rc.oldContent.getContent(),chr(10)), listToArray(rc.CurrentContent.getContent(),chr(10)));
-			
-			/* Diff CSS */
-			rc.diffcss = structnew();
-			rc.diffcss["+"] = "ins";
-			rc.diffcss["-"] = "del";
-			rc.diffcss["!"] = "upd";
-			rc.diffcss[""] = "";
+		/* Check Persistence and set Exit Handlers */
+		if( rc.content.getPage().getIsPersisted() ) {
+			rc.onSubmit = "page/doEdit";
+		}
+		else{
+			rc.onSubmit = "page/doCreate";
+		}
+		rc.onPreview = "page/renderPreview";
+		rc.onPageRender = "page/renderPage";
+		rc.onCancel = "wiki";
+		rc.onCheatSheet = "Help:Cheatsheet";
+		
+		/* Categories */
+		rc.qCategories = wikiService.listCategories();
 
-			/* View */
-			event.setView("wiki/showDiff");
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="deleteContent" hint="delete's a content object" access="public" returntype="string" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var content = getWikiService().getContent(arguments.event.getValue("contentid"));
-			var page = content.getPage();
-
-			getWikiService().deleteContent(content);
-
-			setNextRoute(route="page/showHistory/" & page.getName());
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="replaceActive" hint="delete's a content object" access="public" returntype="string" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var content = getWikiService().getContent(arguments.event.getValue("contentid"));
-			var page = content.getPage();
-
-			content.replaceActive();
-
-			setNextRoute(route="page/showHistory/" & page.getName());
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="delete" hint="delete a wiki page" access="public" returntype="void" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			//s'not really a content id, it's a page id
-			var pageid = arguments.event.getValue("contentid");
-			var page = getWikiService().getPage(pageid);
-
-			getWikiService().deletePage(pageid);
-
-			setNextRoute(route=instance.showKey & page.getName(), persist="page");
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="search" hint="searchs active pages" access="public" returntype="void" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-			var search_query = arguments.event.getValue("search_query", "");
-			var result = instance.SearchEngine.search(search_query);
-
-			/* Messagebox when search is not available */
-			if ( StructKeyExists(result, "error") ){
-				getPlugin("MessageBox").setMessage("error", result.error );
-			}
-			else{
-				/* Render Results */
-				rc.searchResults = instance.SearchEngine.renderSearch(result,arguments.event,getController());
-			}
-			/* Set View to render */
-			arguments.event.setView("wiki/search");
-		</cfscript>
-	</cffunction>
-
-	<!--- directory --->
-	<cffunction name="directory" access="public" returntype="void" output="false" hint="Pages Directory">
-		<cfargument name="Event" type="any" required="yes">
-	    <cfscript>
-			var rc = event.getCollection();
-			var ids = "";
-			var qDefault = 0;
-
-			/* Required */
-			rc.jsAppendList = 'jquery.uitablefilter';
-			
-			/* Get All Pages */
-			rc.qPages = getWikiService().getPages();
-			/* Get All Namespaces */
-			rc.qNameSpaces = getWikiService().getNamespaces();
-			/* Filter the default Namespace */
-			qDefault = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="isDefault",value=1,cfsqltype="cf_sql_integer");
-
-			/* Filter */
-			ids = event.getValue("namespaces",qDefault.namespace_id);
-			if( right(ids,1) eq "," ){
-				ids = left(ids, len(ids)-1 );
-			}
-			rc.qPages = getPlugin("queryHelper").filterQuery(qry=rc.qPages,field="namespace_id",value=ids,list=true);
-
-			/* View */
-			if( event.valueExists('pagesTable') ){
-
-				/* View */
-				event.setView('wiki/directoryPagesTable',true);
-			}
-			else{
-				event.setView('wiki/directory');
-			}
-		</cfscript>
-	</cffunction>
-
-<!------------------------------------------- PACKAGE ------------------------------------------->
-
-<!------------------------------------------- PRIVATE ------------------------------------------->
-
-	<cffunction name="process" hint="processes the wiki details as a save or update" access="private" returntype="void" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-			var messages = 0;
-			var oContent = 0;
-			var activeContent = 0;
-			var x =1;
-			var thisCategory = 0;
-			
-			/* Param Values */
-			event.paramValue("isReadOnly",false);
-			event.paramValue("RenamePageName","");
-			
-			/* Get the page we are working with */
-			rc.page = getWikiService().getPage(pageName=rc.pageName);
-			/* Get new Content object */
-			oContent = rc.page.getNewContentVersion(rc);
-			/* Get the currently active Content if any*/
-			oActiveContent = getWikiService().getContent(pageName=rc.pageName);
-			
-			/* Validate Content */
-			messages = oContent.validate(isCommentsMandatory=rc.CodexOptions.wiki_comments_mandatory);
-			if(ArrayLen(messages)){
-				/* MB & content set */
-				getPlugin("MessageBox").setMessage(type="warning", messageArray=messages);
-				rc.content = oContent;
-				/* Save Version for non dirty edits */
-				rc.content.setVersion(oActiveContent.getVersion());
-				/* ReRoute with persistence */
-				setNextRoute(route="page/edit/" & rc.pageName, persist="content");
-			}
-			
-			
-			/* Check for Version Modifications just before saving */
-			if( oActiveContent.getVersion() neq rc.pageVersion ){
-				getPlugin("MessageBox").setMessage(type="warning", message="Page was not saved as you where editing an old version of the page. Displaying current version");
-				/* ReRoute */
-				setNextRoute(route=instance.showKey & rc.pageName);
-			}
-			
-			/* Populate content with Categories from select */
-			if( len(event.getTrimValue("contentCategories","")) ){
-				oContent.clearCategory();
-				for(x=1; x lte listLen(rc.contentCategories); x=x+1){
-					thisCategory = getWikiService().getCategory(categoryID=listGetAt(rc.contentCategories,x));
-					oContent.addCategory(thisCategory);
-				}
-			}
-			
-			/* Save New Content to page */
-			rc.page.addContentVersion(oContent);
-			
-			/* Check for Page Renaming */
-			if( rc.page.getIsPersisted() and len(event.getTrimValue("renamePageName","")) ){
-				rc.page.setName(rc.RenamePageName);
-				rc.pageName = rc.RenamePageName;
-			}
-			
-			/* Set Page Extra Properties */
-			rc.page.setTitle(event.getTrimValue("title"));
-			rc.page.setPassword(event.getTrimValue("PagePassword"));
-			rc.page.setDescription(event.getTrimValue("Description"));
-			rc.page.setKeywords(event.getTrimValue("Keywords"));
-			rc.page.setAllowComments(event.getValue("allowComments","false"));
-			
-			/* Save this Page */
-			getWikiService().savePage(rc.page);
-			
-			/* Re Route */
-			setNextRoute(route=instance.showKey & rc.pageName, persist="page");
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="manage" hint="manage a wiki page" access="private" returntype="void" output="false">
-		<cfargument name="event" type="any">
-		<cfscript>
-			var rc = arguments.event.getCollection();
-			var content = 0;
-
-			/* Custom JS */
-			rc.jsAppendList = "simplemodal.helper,jquery.simplemodal,jquery.textarearesizer.compressed,markitup/jquery.markitup.pack,markitup/sets/wiki/set";
-			/* Markitup Editor */
-			rc.cssFullAppendList = "includes/scripts/markitup/skins/markitup/style,includes/scripts/markitup/sets/wiki/style";
-
-			/* if no content, get for management */
-			if( not arguments.event.valueExists("content") ){
-				rc.content = getWikiService().getContent(pageName=rc.page);
-			}
-
-			/* Check Persistence and set Exit Handlers */
-			if( rc.content.getPage().getIsPersisted() ) {
-				rc.onSubmit = "page/doEdit";
-			}
-			else{
-				rc.onSubmit = "page/doCreate";
-			}
-			rc.onPreview = "page/renderPreview";
-			rc.onPageRender = "page/renderPage";
-			rc.onCancel = "wiki";
-			rc.onCheatSheet = "Help:Cheatsheet";
-			
-			/* Categories */
-			rc.qCategories = getWikiService().listCategories();
-
-			/* View */
-			arguments.event.setView("wiki/manage");
-		</cfscript>
-	</cffunction>
-
-	<cffunction name="getWikiService" access="private" returntype="codex.model.wiki.WikiService" output="false">
-		<cfreturn instance.wikiService />
-	</cffunction>
-
-	<cffunction name="isPrintFormat" access="private" returntype="void" hint="Check for print in the event and change layout" output="false">
-		<cfargument name="Event" type="any">
-		<cfscript>
-			var rc = event.getCollection();
-			
-			if( not reFindNoCase("^(flashpaper|pdf|HTML|markup|word)$",event.getValue("print","")) ){
-				return;
-			}
-			
-			// Print Layout by Default
-			event.setLayout("Layout.Print");
-			
-			// Print Options
-			switch(rc.print){
-				case "pdf"			:{ rc.layout_extension = "pdf"; break; }
-				case "markup"		:{ event.setLayout("Layout.MarkupExport"); break; }
-				case "word"			:{ event.setLayout("Layout.word"); break; }
-				default 			:{ event.setLayout("Layout.html"); }
-			}
-		</cfscript>
-	</cffunction>
-</cfcomponent>
+		/* View */
+		arguments.event.setView("wiki/manage");
+	}
+	
+	/**
+	* Checks if pages need printing layouts
+	*/
+	private function isPrintFormat(event,rc){
+		// Regex of valid print options
+		if( NOT reFindNoCase("^(pdf|HTML|markup|word)$",event.getValue("print","")) ){
+			return;
+		}
+		
+		// Print Layout Selection
+		event.setLayout("Layout.Print");
+		
+		// Print Options
+		switch(rc.print){
+			case "pdf"			:{ rc.layout_extension = "pdf"; break; }
+			case "markup"		:{ event.setLayout("Layout.MarkupExport"); break; }
+			case "word"			:{ event.setLayout("Layout.word"); break; }
+			default 			:{ event.setLayout("Layout.html"); }
+		}
+	}
+	
+}

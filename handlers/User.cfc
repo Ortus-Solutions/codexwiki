@@ -14,9 +14,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and 
 limitations under the License.
-********************************************************************************
-* @author Luis Majano
-**/
+*********************************************************************************/
 component extends="BaseHandler" accessors="true"  singleton{
 	
 	// Dependencies
@@ -34,7 +32,7 @@ component extends="BaseHandler" accessors="true"  singleton{
 		// Check For Registration setting
 		if( NOT rc.CodexOptions.wiki_registration ){
 			getPlugin("MessageBox").setMessage(type="warn", message="Wiki registration is not enabled.");
-			setNextRoute(rc.xehDashboard);
+			setNextEvent(rc.xehDashboard);
 		}
 	}
 
