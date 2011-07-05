@@ -85,13 +85,13 @@ $(document).ready(function() {
 				<cfif rc.oUser.checkPermission("WIKI_EDIT")>
 					<img src="includes/images/page_edit.png" alt="edit" border="0"  />
 					<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#">
-						<span>Edit</span>
+						<span>Edit Page</span>
 					</a>
 				</cfif>
 				<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
 					<img src="includes/images/bin_closed.png" alt="edit" border="0" />
 					<a id="deletePageButton" href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#">
-						<span>Delete</span>
+						<span>Delete Page</span>
 					</a>
 				</cfif>
 			</cfif>			
@@ -124,33 +124,6 @@ $(document).ready(function() {
 
 <!--- Management Tool Bar --->
 <cfif not event.valueExists("print")>
-	<!--- Only edit if not read only --->
-	<cfif ( 
-			rc.content.getisReadOnly() AND 
-			(
-		    	rc.content.getUser().getuserid() EQ rc.oUser.getUserid() 
-		    	OR
-		    	rc.oUser.checkPermission("WIKI_ADMIN") 
-		    )
-		  ) 
-		  OR
-		  NOT rc.content.getisReadOnly()>
-		<div id="wikiPageActionBar">
-			<cfif rc.oUser.checkPermission("WIKI_EDIT")>
-			<a href="#event.buildLink(rc.onEditWiki & '/' & rc.urlPage)#" class="buttonLinks">
-				<img src="includes/images/page_edit.png" alt="edit" border="0"  />
-				<span>Edit Page</span>
-			</a>
-			</cfif>
-			&nbsp;
-			<cfif rc.oUser.checkPermission("WIKI_DELETE_PAGE")>
-			<a id="deletePageButton" href="#event.buildLink(rc.onDeleteWiki & '/id/' & rc.content.getPage().getPageID())#" class="buttonLinks">
-				<img src="includes/images/bin_closed.png" alt="edit" border="0" />
-				<span>Delete Page</span>
-			</a>
-			</cfif>
-		</div>
-	</cfif>
 	
 	<!--- Format Bar --->
 	<div id="downloadFormatsBar">

@@ -303,11 +303,14 @@ component extends="BaseHandler" singleton{
 	* Replace the active page
 	*/
 	function replaceActive(event,rc,prc){
-		var content = wikiService.getContent(arguments.event.getValue("contentid"));
-		var page = content.getPage();
-
+		// get the content to make active
+		var content = wikiService.getContent( arguments.event.getValue("contentid") );
+		var page 	= content.getPage();
+		
+		// replace it
 		content.replaceActive();
 
+		// relocate back to page.
 		setNextEvent("page/showHistory/" & page.getName());
 	}
 
@@ -316,11 +319,11 @@ component extends="BaseHandler" singleton{
 	*/
 	function delete(event,rc,prc){
 		//s'not really a content id, it's a page id
-		var pageid = arguments.event.getValue("contentid");
-		var page = wikiService.getPage(pageid);
-
+		var pageid 	= arguments.event.getValue("contentid");
+		var page 	= wikiService.getPage( pageid );
+		// delete the page
 		wikiService.deletePage(pageid);
-
+		// relocate back to it
 		setNextEvent(event=showKey & page.getName(), persist="page");
 	}
 
@@ -328,18 +331,19 @@ component extends="BaseHandler" singleton{
 	* search content
 	*/
 	function search(event,rc,prc){
-		var search_query = arguments.event.getValue("search_query", "");
-		var result = searchEngine.search(search_query);
+		var search_query 	= arguments.event.getValue("search_query", "");
+		var result 			= searchEngine.search( search_query );
 
-		/* Messagebox when search is not available */
-		if ( StructKeyExists(result, "error") ){
+		// Messagebox when search is not available
+		if ( structKeyExists(result, "error") ){
 			getPlugin("MessageBox").setMessage("error", result.error );
 		}
 		else{
-			/* Render Results */
+			// Render Results
 			rc.searchResults = searchEngine.renderSearch(result,arguments.event,getController());
 		}
-		/* Set View to render */
+		
+		// Set View to render
 		arguments.event.setView("wiki/search");
 	}
 

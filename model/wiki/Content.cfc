@@ -143,21 +143,23 @@ $Build ID:	@@build_id@@
 
 <cffunction name="replaceActive" hint="replaces the currently active content, with a copy of this one" access="public" returntype="void" output="false">
 	<cfscript>
-		getWikiService().saveContentVersion(copy());
+		getWikiService().saveContentVersion( copy() );
 	</cfscript>
 </cffunction>
 
 <cffunction name="copy" hint="makes a copy of this object" access="public" returntype="Content" output="false">
 	<cfscript>
+		// get a new content object
 		var content = getWikiService().getContent();
 		var memento = getPropertyMemento();
-
+		
 		StructDelete(memento, "isActive");
-		StructDelete(memento, "createDate");
-
-		content.populate(memento);
-		content.setPage(getPage());
-
+		StructDelete(memento, "isReadOnly");
+		StructDelete(memento, "createdDate");
+		
+		content.setPage( getPage() );
+		content.populate( memento );
+		
 		return content;
 	</cfscript>
 </cffunction>
