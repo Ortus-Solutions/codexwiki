@@ -251,7 +251,6 @@ $Build ID:	@@build_id@@
 			</cfloop>
 		</select>
 		
-		<br /><br />
 		<!--- Max Band Gap --->
 		<label for="wiki_paging_bandgap">Paging Band Gap</label>
 		<em>The number of pages to have in the paging carrousel.</em><br />

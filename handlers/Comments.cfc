@@ -25,6 +25,7 @@ component extends="BaseHandler"{
 /************************************** IMPLICIT *********************************************/
 
 	function preHandler(event,action,eventArguments){
+		var rc = event.getCollection();
 		// Check if Comments enabled?
 		if( rc.codexOptions.comments_enabled EQ FALSE ){
 			getPlugin("MessageBox").warn("Comments are not enabled in the wiki.");
